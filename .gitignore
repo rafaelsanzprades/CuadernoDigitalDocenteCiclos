@@ -1,0 +1,7 @@
+*.json
+__pycache__/
+*.pyc
+temp_data_gen.py
+* - copia.py
+*.xlsx
+*.pdf
