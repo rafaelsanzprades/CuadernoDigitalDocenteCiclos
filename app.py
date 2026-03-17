@@ -258,7 +258,7 @@ if 'menu' not in st.session_state:
     st.session_state.menu = "Datos"
 
 if 'info_modulo' not in st.session_state:
-    st.session_state.info_modulo = {"modulo": "FPM-it-1-0237 ICTVE", "centro": "IES Ándalan", "profesorado": "Rafa Sanz", "h_boa": 149, "h_sem": 5, "p_ev": 15, "pond_1t": 30, "pond_2t": 30, "pond_3t": 40}
+    st.session_state.info_modulo = {"modulo": "FPM-it-1-0237 ICTVE", "centro": "IES Andalán", "profesorado": "Rafael Sanz Prades", "h_boa": 149, "h_sem": 5, "p_ev": 15, "pond_1t": 30, "pond_2t": 30, "pond_3t": 40}
 # Aseguramos valores por defecto para la distribución de evaluación por trimestres
 for k, v in {
     "t1_ev2": 40, "t1_ev3": 25, "t1_tri": 35,
@@ -1046,6 +1046,22 @@ elif menu == "Fechas":
     else:
         st.info('No hay anotaciones de festivos, eventos relevantes o FEOE.')
 
+    st.divider()
+    st.markdown("### 📥 Documentos en PDF")
+    if st.button("📄 Generar y Descargar Calendario Académico (PDF)"):
+        with st.spinner("Generando PDF..."):
+            pdf_buffer = generar_pdf_calendario(
+                st.session_state.info_modulo,
+                st.session_state.info_fechas,
+                st.session_state.planning_ledger,
+                st.session_state.calendar_notes
+            )
+            st.download_button(
+                label="⬇️ Haz clic aquí para descargar el fichero PDF",
+                data=pdf_buffer,
+                file_name=f"Calendario_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
+                mime="application/pdf"
+            )
 
     st.divider()
     st.subheader("🗓️ Modificación de Festivos y Relevantes")
