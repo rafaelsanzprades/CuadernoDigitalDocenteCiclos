@@ -1,0 +1,15 @@
+[theme]
+# Botones "primary" en teal azulado
+primaryColor = "#0d7377"
+
+# Fondo oscuro principal
+backgroundColor = "#0e1117"
+
+# Fondo del sidebar y widgets
+secondaryBackgroundColor = "#1a1d24"
+
+# Color del texto general
+textColor = "#fafafa"
+
+# Fuente
+font = "sans serif"
