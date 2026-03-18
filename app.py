@@ -14,7 +14,7 @@ st.toast("✅ Aplicación v8.2 - Afinación visual del PDF")
 # ==========================================
 # 2. FUNCIONES DE GUARDADO Y CARGA (JSON) / PDF
 # ==========================================
-from pdf_generator import generar_pdf_calendario
+from pdf_calendario_academico import generar_pdf_calendario
 def serialize_date(obj):
     if isinstance(obj, (date, datetime)): return obj.strftime("%d/%m/%Y")
     return obj
@@ -493,9 +493,23 @@ st.markdown(
 )
 
 with st.sidebar:
-    st.title("📓 Cuaderno Digital")
-    st.markdown('<p class="user-subtitle">Rafael Sanz Prades</p>', unsafe_allow_html=True)
-    
+    st.title("Cuaderno Digital Docente Ciclos FP")
+    st.markdown("<br>", unsafe_allow_html=True)    
+    # 5.2 Gestión de Archivos (Movido arriba)
+    with st.expander("Gestión de módulos"):
+        n_file = st.text_input("Módulo actual:", value="0237-ictve")
+        if st.button("💾 Guardar"):
+            guardar_datos(n_file)
+            st.success("¡Guardado!")
+        f_list = [f for f in os.listdir(".") if f.endswith(".json")]
+        if f_list:
+            sel = st.selectbox("Cargar módulo:", ["--"] + f_list)
+            if sel != "--" and st.button("📂 Cargar"):
+                cargar_datos(sel)
+                st.rerun()
+
+    st.markdown("<hr>", unsafe_allow_html=True)
+
     # 5.1 Menú de Navegación (Real Buttons)
     opciones_menu = ["Datos", "Fechas", "Planificación", "Seguimiento", "Alumnado", "Evaluación", "Resultados"]
     # Redirigir si el menú activo era uno de los eliminados
@@ -518,21 +532,25 @@ with st.sidebar:
     # Recalcular reparto de horas automáticamente en cada interacción
     repartir_horas_previstas()
 
-    st.markdown("<br><br>", unsafe_allow_html=True)
+    st.markdown("<hr>", unsafe_allow_html=True)
     
-    # 5.2 Gestión de Archivos (al final)
-    with st.expander("💾 Gestión de sesiones"):
-        n_file = st.text_input("Sesión actual:", value="0237-ictve")
-        if st.button("💾 Guardar"):
-            guardar_datos(n_file)
-            st.success("¡Guardado correctamente!")
-        f_list = [f for f in os.listdir(".") if f.endswith(".json")]
-        if f_list:
-            sel = st.selectbox("Cargar nueva:", ["--"] + f_list)
-            if sel != "--" and st.button("📂 Cargar"):
-                cargar_datos(sel)
-                st.rerun()
-    st.info("Carga nueva .json para cambiar de módulo")
+    with st.expander("📥 Descargas .pdf"):
+        pdf_buffer = generar_pdf_calendario(
+            st.session_state.info_modulo,
+            st.session_state.info_fechas,
+            st.session_state.planning_ledger,
+            st.session_state.calendar_notes
+        )
+        st.download_button(
+            label="Calendario académico",
+            data=pdf_buffer,
+            file_name=f"Calendario_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
+            mime="application/pdf",
+            type="secondary",
+            use_container_width=True
+        )
+    st.markdown("<br><hr>", unsafe_allow_html=True)
+    st.markdown('<p class="user-subtitle">(c) Rafael Sanz Prades</p>', unsafe_allow_html=True)
     
 # ==========================================
 # Cabecera de página estilizada
@@ -965,30 +983,18 @@ elif menu == "Fechas":
 
 
     st.divider()
-    st.markdown('### 📌 Resumen Festivos, fechas relevantes y FEOE')
+    st.markdown('### 📌 Resumen Festivos y fechas relevantes')
 
-    # 1. Rango auto de FEOE para pre-calcularlo sin depender del expander
-    ini_feoe = st.session_state.info_fechas.get("ini_feoe", date(2026, 3, 16))
-    fin_feoe = st.session_state.info_fechas.get("fin_feoe", date(2026, 5, 29))
-    fechas_auto_feoe = set()
-    curr_f = ini_feoe
-    while curr_f <= fin_feoe:
-        if curr_f.weekday() < 5:
-            fechas_auto_feoe.add(curr_f.strftime("%d/%m/%Y"))
-        curr_f += timedelta(days=1)
-
-    # 2. Recopilar datos
+    # 1. Recopilar datos
     ls = []
     count_f = 0
     count_r = 0
-    count_feoe = 0
     fechas_f    = {k[2:] for k in st.session_state.calendar_notes if k.startswith('f_')}
     fechas_r    = {k[2:] for k in st.session_state.calendar_notes if k.startswith('r_')}
-    fechas_feoe = {k[5:] for k in st.session_state.calendar_notes if k.startswith('feoe_')}
     
-    # Todas las fechas candidatas (con anotaciones o dentro del rango FEOE auto)
+    # Todas las fechas candidatas
     fechas_all  = sorted(
-        fechas_f.union(fechas_r).union(fechas_feoe).union(fechas_auto_feoe),
+        fechas_f.union(fechas_r),
         key=lambda d: datetime.strptime(d, '%d/%m/%Y')
     )
     dias_semana_dict = {0: 'Lun', 1: 'Mar', 2: 'Mié', 3: 'Jue', 4: 'Vie', 5: 'Sáb', 6: 'Dom'}
@@ -1002,20 +1008,10 @@ elif menu == "Fechas":
         festivo  = st.session_state.calendar_notes.get(f'f_{fecha}', '').strip()
         relevan  = st.session_state.calendar_notes.get(f'r_{fecha}', '').strip()
         
-        # FEOE: guardado por usuario o auto
-        feoe_guardado = st.session_state.calendar_notes.get(f'feoe_{fecha}', None)
-        if feoe_guardado is not None:
-            feoe_val = feoe_guardado.strip()
-        elif fecha in fechas_auto_feoe:
-            feoe_val = "FEOE"
-        else:
-            feoe_val = ""
-
-        if festivo or relevan or feoe_val:
-            ls.append({'Fecha': fecha, 'Día': dia_semana, 'Festivos': festivo, 'Relevantes': relevan, 'FEOE': feoe_val})
+        if festivo or relevan:
+            ls.append({'Fecha': fecha, 'Día': dia_semana, 'Festivos': festivo, 'Relevantes': relevan})
             if festivo:  count_f += 1
             if relevan:  count_r += 1
-            if feoe_val: count_feoe += 1
 
     if ls:
         df_festivos = pd.DataFrame(ls)
@@ -1026,42 +1022,21 @@ elif menu == "Fechas":
                 "Día":       st.column_config.TextColumn("🗓️ Día"),
                 "Festivos":  st.column_config.TextColumn("🎉 Festivos"),
                 "Relevantes":st.column_config.TextColumn("🔔 Relevantes"),
-                "FEOE":      st.column_config.TextColumn("🏢 FEOE"),
             },
             hide_index=True,
             width="stretch"
         )
         
         st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
-        c1, c2, c3 = st.columns(3)
+        c1, c2 = st.columns(2)
         with c1: 
             with st.container(border=True):
                 st.metric("Total Festivos", count_f)
         with c2: 
             with st.container(border=True):
                 st.metric("Total Relevantes", count_r)
-        with c3: 
-            with st.container(border=True):
-                st.metric("Total FEOE", count_feoe)
     else:
-        st.info('No hay anotaciones de festivos, eventos relevantes o FEOE.')
-
-    st.divider()
-    st.markdown("### 📥 Documentos en PDF")
-    if st.button("📄 Generar y Descargar Calendario Académico (PDF)"):
-        with st.spinner("Generando PDF..."):
-            pdf_buffer = generar_pdf_calendario(
-                st.session_state.info_modulo,
-                st.session_state.info_fechas,
-                st.session_state.planning_ledger,
-                st.session_state.calendar_notes
-            )
-            st.download_button(
-                label="⬇️ Haz clic aquí para descargar el fichero PDF",
-                data=pdf_buffer,
-                file_name=f"Calendario_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
-                mime="application/pdf"
-            )
+        st.info('No hay anotaciones de festivos o eventos relevantes.')
 
     st.divider()
     st.subheader("🗓️ Modificación de Festivos y Relevantes")
@@ -1070,10 +1045,6 @@ elif menu == "Fechas":
     for n, m, a in meses_curso:
         with st.expander(f"📅 {n} {a}"):
             cal = calendar.monthcalendar(a, m)
-
-            # Rango FEOE (días L-V dentro del intervalo configurado)
-            ini_feoe = st.session_state.info_fechas.get("ini_feoe", date(2026, 3, 16))
-            fin_feoe = st.session_state.info_fechas.get("fin_feoe", date(2026, 5, 29))
 
             filas_cal = []
             for week in cal:
@@ -1087,23 +1058,13 @@ elif menu == "Fechas":
                         festivo   = st.session_state.calendar_notes.get(f"f_{fecha_str}", "")
                         relevante = st.session_state.calendar_notes.get(f"r_{fecha_str}", "")
 
-                        # FEOE: auto si el día L-V está en el rango; el usuario puede editarlo
-                        feoe_guardado = st.session_state.calendar_notes.get(f"feoe_{fecha_str}", None)
-                        if feoe_guardado is not None:
-                            feoe_v = feoe_guardado          # respeta lo que el usuario haya escrito
-                        elif ini_feoe <= fecha_obj <= fin_feoe and num_dia_semana < 5:
-                            feoe_v = "FEOE"                 # relleno automático
-                        else:
-                            feoe_v = ""
-
-                        filas_cal.append({"Fecha": fecha_str, "Día": nombre_dia, "Festivos": festivo, "Relevantes": relevante, "FEOE": feoe_v})
+                        filas_cal.append({"Fecha": fecha_str, "Día": nombre_dia, "Festivos": festivo, "Relevantes": relevante})
 
             ed_cal = st.data_editor(pd.DataFrame(filas_cal), hide_index=True, width="stretch", key=f"calendario_{n}_{a}")
 
             for _, row in ed_cal.iterrows():
                 st.session_state.calendar_notes[f"f_{row['Fecha']}"]    = row['Festivos']
                 st.session_state.calendar_notes[f"r_{row['Fecha']}"]    = row['Relevantes']
-                st.session_state.calendar_notes[f"feoe_{row['Fecha']}"] = row['FEOE']
 
 
 # --- PESTAÑA: ALUMNADO ---
