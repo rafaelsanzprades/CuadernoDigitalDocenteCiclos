@@ -133,6 +133,8 @@ def repartir_horas_previstas():
     dias_semana = ["Lun", "Mar", "Mié", "Jue", "Vie"]
     
     # Consolidar todos los días lectivos de los 3 trimestres
+    feoe_ini = st.session_state.info_fechas.get("ini_feoe")
+    feoe_fin = st.session_state.info_fechas.get("fin_feoe")
     for tri in ["1t", "2t", "3t"]:
         if f"ini_{tri}" not in st.session_state.info_fechas or f"fin_{tri}" not in st.session_state.info_fechas:
             continue
@@ -140,6 +142,9 @@ def repartir_horas_previstas():
         fin = st.session_state.info_fechas[f"fin_{tri}"]
         curr = ini
         while curr <= fin:
+            if feoe_ini and feoe_fin and feoe_ini <= curr <= feoe_fin:
+                curr += timedelta(days=1)
+                continue
             if curr.weekday() < 5:
                 fecha_str = curr.strftime("%d/%m/%Y")
                 # Solo si NO es festivo
@@ -258,32 +263,45 @@ if 'menu' not in st.session_state:
     st.session_state.menu = "Datos"
 
 if 'info_modulo' not in st.session_state:
-    st.session_state.info_modulo = {"modulo": "FPM-it-1-0237 ICTVE", "centro": "IES Andalán", "profesorado": "Rafael Sanz Prades", "h_boa": 149, "h_sem": 5, "p_ev": 15, "pond_1t": 30, "pond_2t": 30, "pond_3t": 40}
-# Aseguramos valores por defecto para la distribución de evaluación por trimestres
-for k, v in {
-    "t1_ev2": 40, "t1_ev3": 25, "t1_tri": 35,
-    "t2_ev2": 60, "t2_ev3": 35, "t2_tri": 35,
-    "t3_ev2": 0, "t3_ev3": 40, "t3_tri": 40
-}.items():
-    st.session_state.info_modulo.setdefault(k, v)
+    st.session_state.info_modulo = {
+        "modulo": "", 
+        "curso": "1º",
+        "centro": "", 
+        "profesorado": "", 
+        "h_boa": 0, 
+        "h_sem": 0, 
+        "p_ev": 15, 
+        "pond_1t": 33, 
+        "pond_2t": 33, 
+        "pond_3t": 34
+    }
 
 if 'info_fechas' not in st.session_state:
-    st.session_state.info_fechas = {"ini_1t": date(2025, 9, 15), "fin_1t": date(2025, 11, 28), "ini_2t": date(2025, 12, 1), "fin_2t": date(2026, 3, 13), "ini_3t": date(2026, 3, 16), "fin_3t": date(2026, 5, 29)}
-# Valores por defecto FEOE
-for k, v in {"ini_feoe": date(2026, 3, 16), "fin_feoe": date(2026, 5, 29), "h_sem_feoe": 8}.items():
-    st.session_state.info_fechas.setdefault(k, v)
+    st.session_state.info_fechas = {
+        "ini_curso": date(datetime.now().year, 9, 1),
+        "fin_curso": date(datetime.now().year + 1, 6, 30),
+        "ini_1t": date(datetime.now().year, 9, 15), 
+        "fin_1t": date(datetime.now().year, 11, 30), 
+        "ini_2t": date(datetime.now().year, 12, 1), 
+        "fin_2t": date(datetime.now().year + 1, 3, 15), 
+        "ini_3t": date(datetime.now().year + 1, 3, 16), 
+        "fin_3t": date(datetime.now().year + 1, 6, 15),
+        "ini_feoe": date(datetime.now().year + 1, 3, 16), 
+        "fin_feoe": date(datetime.now().year + 1, 6, 15), 
+        "h_sem_feoe": 8
+    }
+
 if 'horario' not in st.session_state:
-    st.session_state.horario = {"Lun": 1, "Mar": 2, "Mié": 1, "Jue": 1, "Vie": 0}
+    st.session_state.horario = {"Lun": 0, "Mar": 0, "Mié": 0, "Jue": 0, "Vie": 0}
 if 'calendar_notes' not in st.session_state: 
     st.session_state.calendar_notes = {}
 if 'df_ra' not in st.session_state: 
-    st.session_state.df_ra = pd.DataFrame([{"ID": "RA01", "% Pond": 15.0, "Descripción": "Configuración inicial"}])
+    st.session_state.df_ra = pd.DataFrame(columns=["ID", "% Pond", "Descripción"])
 if 'df_ud' not in st.session_state: 
-    st.session_state.df_ud = pd.DataFrame([{"ID": "UD01", "Horas": 12, "Título": "Introducción"}])
+    st.session_state.df_ud = pd.DataFrame(columns=["ID", "Horas", "Título"])
 if 'df_pr' not in st.session_state: 
-    st.session_state.df_pr = pd.DataFrame([{"ID": "Pr01", "Práctica": "Práctica 1"}])
+    st.session_state.df_pr = pd.DataFrame(columns=["ID", "Práctica"])
 if 'df_al' not in st.session_state: 
-    # Mantenemos las columnas exactas que se veían en tu imagen original
     st.session_state.df_al = pd.DataFrame(columns=["ID", "Estado", "Apellidos", "Nombre", "Nacimiento", "Repite", "Matrícula", "Edad", "Comentarios", "email", "Móvil"])
 
 if 'df_eval' not in st.session_state:
@@ -307,9 +325,13 @@ if 'planning_ledger' not in st.session_state:
 # --- CARGAR FICHERO POR DEFECTO ---
 if 'app_init_done' not in st.session_state:
     st.session_state.app_init_done = True
-    st.session_state.active_module = "0237-ictve"
-    if os.path.exists("0237-ictve.json"):
-        cargar_datos("0237-ictve.json")
+    f_list = [f for f in os.listdir(".") if f.endswith(".json")]
+    if f_list:
+        # Cargar el primer archivo encontrado genéricamente
+        st.session_state.active_module = f_list[0].replace(".json", "")
+        cargar_datos(f_list[0])
+    else:
+        st.session_state.active_module = "nuevo-modulo"
 
 # ==========================================
 # 5. INTERFAZ: MENÚ LATERAL Y ESTILOS
@@ -514,14 +536,14 @@ with st.sidebar:
             st.session_state.confirm_load = sel
 
         if st.session_state.get("confirm_load"):
-            st.warning(f"⚠️ Al cargar `{st.session_state.confirm_load}` perderás los cambios no guardados. ¿Continuar?")
+            st.warning(f"⚠️ Al cargar `{st.session_state.confirm_load}` perderá los cambios. ¿Seguro?")
             c1, c2 = st.columns(2)
-            if c1.button("✅ Sí, cargar", type="primary", use_container_width=True):
+            if c1.button("✅ Sí", type="primary", use_container_width=True, key="conf_load_btn"):
                 cargar_datos(st.session_state.confirm_load)
                 st.session_state.active_module = st.session_state.confirm_load.replace(".json", "")
                 st.session_state.confirm_load = None
                 st.rerun()
-            if c2.button("❌ Cancelar", use_container_width=True, key="canc_load"):
+            if c2.button("❌ No", use_container_width=True, key="canc_load"):
                 st.session_state.confirm_load = None
                 st.rerun()
                 
@@ -536,30 +558,32 @@ with st.sidebar:
             file_to_save = st.session_state.confirm_save
             filename_full = file_to_save if file_to_save.endswith(".json") else f"{file_to_save}.json"
             if os.path.exists(filename_full):
-                st.warning(f"⚠️ `{filename_full}` ya existe. ¿Sobreescribir datos?")
+                st.warning(f"⚠️ `{filename_full}` ya existe. ¿Sobreescribir?")
             else:
-                st.info(f"✅ Se creará un nuevo archivo: `{filename_full}`. ¿Continuar?")
+                st.info(f"✅ Se creará un nuevo: `{filename_full}`. ¿Continuar?")
                 
             c3, c4 = st.columns(2)
-            if c3.button("✅ Sí, guardar", type="primary", use_container_width=True):
+            if c3.button("✅ Sí", type="primary", use_container_width=True, key="conf_save_btn"):
                 guardar_datos(file_to_save)
                 st.session_state.active_module = file_to_save.replace(".json", "")
                 st.session_state.confirm_save = None
                 st.success("¡Guardado!")
-            if c4.button("❌ Cancelar", use_container_width=True, key="canc_save"):
+            if c4.button("❌ No", use_container_width=True, key="canc_save"):
                 st.session_state.confirm_save = None
                 st.rerun()
 
     st.markdown("<hr>", unsafe_allow_html=True)
 
     # 5.1 Menú de Navegación (Real Buttons)
-    opciones_menu = ["Datos", "Fechas", "Planificación", "Seguimiento", "Alumnado", "Evaluación", "Resultados"]
+    opciones_menu = ["Datos", "Fechas", "Planificación", "Resumen", "Seguimiento", "Alumnado", "Evaluación", "Resultados"]
     # Redirigir si el menú activo era uno de los eliminados
     if st.session_state.menu not in opciones_menu:
         st.session_state.menu = "Datos"
     for opcion in opciones_menu:
+        # Añadir subrayado Unicode para el label de Resumen
+        btn_label = "R\u0332e\u0332s\u0332u\u0332m\u0332e\u0332n\u0332" if opcion == "Resumen" else opcion
         if st.button(
-            opcion, 
+            btn_label, 
             width="stretch", 
             type="primary" if st.session_state.menu == opcion else "secondary",
             key=f"btn_{opcion}"
@@ -628,12 +652,12 @@ def badge(diff, valor_real, unidad=""):
 if menu == "Datos":
     st.subheader("📝 Datos generales")
 
-    # Fila 1: Módulo didáctico y Nº Trimestres
-    c1_1, c1_2 = st.columns([3, 1])
+    # Fila 1: Módulo didáctico y Curso
+    c1_1, c1_2 = st.columns([4, 1])
     with c1_1:
         st.session_state.info_modulo["modulo"] = st.text_input("Módulo didáctico", st.session_state.info_modulo.get("modulo", ""))
     with c1_2:
-        st.text_input("Nº de Trimestres", value="3", disabled=True)
+        st.session_state.info_modulo["curso"] = st.text_input("Curso", st.session_state.info_modulo.get("curso", "1º"))
 
     # Fila 2: Centro educativo y Profesorado
     c2_1, c2_2 = st.columns(2)
@@ -642,15 +666,17 @@ if menu == "Datos":
     with c2_2:
         st.session_state.info_modulo["profesorado"] = st.text_input("Profesorado", st.session_state.info_modulo.get("profesorado", st.session_state.info_modulo.get("profesor", "")))
         
-    # Fila 3: H.Sem, H.BOA, %P. EvC y H.FEOE
-    c3_1, c3_2, c3_3, c3_4 = st.columns(4)
+    # Fila 3: Nº Trimestres, H.Sem, H.BOA, %P. EvC y H.FEOE
+    c3_1, c3_2, c3_3, c3_4, c3_5 = st.columns([1, 1, 1, 1, 1])
     with c3_1:
-        st.session_state.info_modulo["h_sem"] = st.number_input("H. Sem.", 0, 40, st.session_state.info_modulo.get("h_sem", 5))
+        st.text_input("Nº de Trimestres", value="3", disabled=True)
     with c3_2:
-        st.session_state.info_modulo["h_boa"] = st.number_input("H. BOA", 0, 500, st.session_state.info_modulo.get("h_boa", 149))
+        st.session_state.info_modulo["h_sem"] = st.number_input("H. Sem.", 0, 40, st.session_state.info_modulo.get("h_sem", 5))
     with c3_3:
-        st.session_state.info_modulo["p_ev"] = st.number_input("% P.Ev", 0, 100, st.session_state.info_modulo.get("p_ev", 15))
+        st.session_state.info_modulo["h_boa"] = st.number_input("H. BOA", 0, 500, st.session_state.info_modulo.get("h_boa", 149))
     with c3_4:
+        st.session_state.info_modulo["p_ev"] = st.number_input("% P.Ev", 0, 100, st.session_state.info_modulo.get("p_ev", 15))
+    with c3_5:
         st.session_state.info_modulo["h_feoe"] = st.number_input("H. FEOE", 0, 500, st.session_state.info_modulo.get("h_feoe", 400))
 
 
@@ -721,18 +747,8 @@ if menu == "Datos":
 
 # --- PESTAÑA: Planificación ---
 elif menu == "Planificación":
-    # --- Resumen N.UD. y N.Práct. ---
-    st.subheader("📊 Resumen de Unidades Didácticas y Prácticas")
-    rd1, rd2 = st.columns(2)
-    with rd1:
-        with st.container(border=True):
-            st.metric("N. Unidades Didácticas", len(st.session_state.df_ud))
-    with rd2:
-        with st.container(border=True):
-            st.metric("N. Prácticas", len(st.session_state.df_pr))
-
     st.divider()
-    st.subheader("📚 Unidades didácticas y su relación con los RA")
+    st.subheader("📚 Unidades didácticas y su relación con los Resultados de Aprendizaje")
     lista_ra_ids = st.session_state.df_ra["ID"].tolist()
     
     # Sincronizar columnas de UD con RA actuales
@@ -769,40 +785,8 @@ elif menu == "Planificación":
         
     st.session_state.df_ud = ed_ud
 
-    # --- Resumen UDs por Trimestre ---
-    st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
-    st.markdown("##### Resumen de Unidades por Trimestre")
-    
-    uds_por_tri = {"1t": set(), "2t": set(), "3t": set()}
-    for tri in ["1t", "2t", "3t"]:
-        ini_t = st.session_state.info_fechas.get(f"ini_{tri}")
-        fin_t = st.session_state.info_fechas.get(f"fin_{tri}")
-        if ini_t and fin_t:
-            curr = ini_t
-            while curr <= fin_t:
-                d_str = curr.strftime("%d/%m/%Y")
-                for ud in st.session_state.planning_ledger.get(d_str, []):
-                    uds_por_tri[tri].add(ud)
-                curr += timedelta(days=1)
-
-    c_tri1, c_tri2, c_tri3 = st.columns(3)
-    def render_caja_tri(caja, titulo, uds_set):
-        with caja:
-            st.markdown(f"<div style='text-align: center; font-size: 1.1rem; color: #fff;'><strong>{titulo}</strong></div>", unsafe_allow_html=True)
-            with st.container(border=True):
-                if uds_set:
-                    # Mostrar todas concatenadas en un único div sin márgenes agresivos
-                    html_content = "<div>" + "".join([f"<div style='text-align: center; color: #ddd; font-weight: 500; line-height: 1.5;'>{ud}</div>" for ud in sorted(uds_set)]) + "</div>"
-                    st.markdown(html_content, unsafe_allow_html=True)
-                else:
-                    st.markdown("<div style='text-align: center; color: #888;'>-</div>", unsafe_allow_html=True)
-
-    render_caja_tri(c_tri1, "1er Tri.", uds_por_tri["1t"])
-    render_caja_tri(c_tri2, "2º Tri.", uds_por_tri["2t"])
-    render_caja_tri(c_tri3, "3er Tri.", uds_por_tri["3t"])
-
     st.divider()
-    st.subheader("🛠️ Prácticas y su relación con los RA")
+    st.subheader("🛠️ Prácticas y su relación con los Resultados de Aprendizaje")
 
     # 1. Columnas básicas de df_pr
     cols_basicas_pr = ["ID", "Práctica"]
@@ -852,52 +836,26 @@ elif menu == "Planificación":
 
     st.session_state.df_pr = ed_pr
 
-    # --- Resumen de UDs y Prácticas por RA ---
-    st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
-    st.markdown("##### Resumen por Resultados de Aprendizaje de Unidades Didácticas y Prácticas")
-    
-    with st.container(border=True):
-        # Mapeo de RAs
-        ra_info = {}
-        for _, row in st.session_state.df_ra.iterrows():
-            ra_info[row["ID"]] = row.get("Descripción", "")
-            
-        for ra_id in lista_ra_ids:
-            # Fila de RA (padre)
-            desc_ra_completa = ra_info.get(ra_id, "")
-            st.markdown(f"<div style='color: #fff; font-size: 1.05rem; margin-top: 5px;'><strong>{ra_id}</strong> <span style='color: #ccc; font-size: 0.95rem;'>{desc_ra_completa}</span></div>", unsafe_allow_html=True)
-            
-            # Recopilar UDs que tienen check en este RA
-            uds_list = []
-            if ra_id in st.session_state.df_ud.columns:
-                for _, ud_row in st.session_state.df_ud.iterrows():
-                    if ud_row[ra_id] == True:
-                        uds_list.append(str(ud_row["ID"]))
 
-            # Recopilar Prácticas que tienen check en este RA
-            prs_list = []
-            if ra_id in st.session_state.df_pr.columns:
-                for _, pr_row in st.session_state.df_pr.iterrows():
-                    if pr_row[ra_id] == True:
-                        prs_list.append(str(pr_row["ID"]))
-                        
-            # Filas identadas (hijas)
-            html_hijas = ""
-            if uds_list:
-                html_hijas += f"<div style='margin-left: 25px; margin-bottom: 2px; color: #ffe599; border-left: 2px solid #d4af37; padding-left: 10px;'>{', '.join(uds_list)}</div>"
-            else:
-                html_hijas += "<div style='margin-left: 25px; margin-bottom: 2px; color: #666; font-style: italic; border-left: 2px solid #444; padding-left: 10px;'>Sin UDs asignadas</div>"
-
-            if prs_list:
-                html_hijas += f"<div style='margin-left: 25px; margin-bottom: 12px; color: #add8e6; border-left: 2px solid #0d7377; padding-left: 10px;'>{', '.join(prs_list)}</div>"
-            else:
-                html_hijas += "<div style='margin-left: 25px; margin-bottom: 12px; color: #666; font-style: italic; border-left: 2px solid #444; padding-left: 10px;'>Sin prácticas asignadas</div>"
-
-            st.markdown(html_hijas, unsafe_allow_html=True)
 
 
 # --- PESTAÑA: FECHAS ---
 elif menu == "Fechas":
+    st.subheader("📚 Fechas curso académico")
+    c_fc1, c_fc2, c_fc3, c_fc4 = st.columns(4)
+    with c_fc1:
+        st.session_state.info_fechas["ini_curso"] = st.date_input("Inicio curso", st.session_state.info_fechas.get("ini_curso", date(2025, 9, 1)), format="DD/MM/YYYY", key="d_ini_curso_v")
+    with c_fc2:
+        ini_cls = st.date_input("Inicio clases (1T)", st.session_state.info_fechas.get("ini_1t", date(2025, 9, 15)), format="DD/MM/YYYY", key="d_ini_clases_v")
+        st.session_state.info_fechas["ini_1t"] = ini_cls
+    with c_fc3:
+        fin_cls = st.date_input("Fin clases (3T)", st.session_state.info_fechas.get("fin_3t", date(2026, 6, 20)), format="DD/MM/YYYY", key="d_fin_clases_v")
+        st.session_state.info_fechas["fin_3t"] = fin_cls
+    with c_fc4:
+        st.session_state.info_fechas["fin_curso"] = st.date_input("Fin curso", st.session_state.info_fechas.get("fin_curso", date(2026, 6, 30)), format="DD/MM/YYYY", key="d_fin_curso_v")
+        
+    st.divider()
+
     suma_horario = sum(st.session_state.horario.values())
     c_sub1, c_sub2 = st.columns([3, 1])
     with c_sub1:
@@ -922,7 +880,7 @@ elif menu == "Fechas":
     diff_boa_f = h_real_f - st.session_state.info_modulo.get('h_boa', 0)
     cf1, cf2 = st.columns([3, 1])
     with cf1:
-        st.subheader("🗓️ Fechas por trimestres")
+        st.subheader("🗓️ Fechas por Trimestres")
     with cf2:
         st.markdown(badge(diff_boa_f, h_real_f, " h"), unsafe_allow_html=True)
     c1, c2, c3 = st.columns(3)
@@ -957,7 +915,7 @@ elif menu == "Fechas":
     p_ev_val_f = st.session_state.info_modulo.get("p_ev", 15)
     h_p_ev_f = (p_ev_val_f / 100) * h_real_fechas
     
-    st.markdown("##### Resumen Fechas por trimestres")
+    st.markdown("##### Resumen Fechas por Trimestres")
     cf_a, cf_b, cf_c = st.columns(3)
     with cf_a:
         with st.container(border=True):
@@ -1268,11 +1226,16 @@ elif menu == "Seguimiento":
     
     # Consolidar todos los lectivos
     all_lectivos = []
+    feoe_ini = st.session_state.info_fechas.get("ini_feoe")
+    feoe_fin = st.session_state.info_fechas.get("fin_feoe")
     for tri in ["1t", "2t", "3t"]:
         if f"ini_{tri}" in st.session_state.info_fechas and f"fin_{tri}" in st.session_state.info_fechas:
             curr = st.session_state.info_fechas[f"ini_{tri}"]
             fin = st.session_state.info_fechas[f"fin_{tri}"]
             while curr <= fin:
+                if feoe_ini and feoe_fin and feoe_ini <= curr <= feoe_fin:
+                    curr += timedelta(days=1)
+                    continue
                 if curr.weekday() < 5:
                     f_str = curr.strftime("%d/%m/%Y")
                     # No festivo y con horas en el horario
@@ -1632,3 +1595,96 @@ elif menu == "Resultados":
 
     else:
         st.info("Falta información. Asegúrate de tener alumnado matriculado y Resultados de Aprendizaje definidos en su correspondiente pestaña.")
+
+# --- PESTAÑA: RESUMEN ---
+elif menu == "Resumen":
+    # --- Resumen N.UD. y N.Práct. ---
+    st.subheader("📊 Unidades Didácticas y Prácticas")
+    rd1, rd2 = st.columns(2)
+    with rd1:
+        with st.container(border=True):
+            st.metric("N. Unidades Didácticas", len(st.session_state.df_ud))
+    with rd2:
+        with st.container(border=True):
+            st.metric("N. Prácticas", len(st.session_state.df_pr))
+
+
+    # --- Resumen UDs por Trimestre ---
+    st.divider()    
+    st.markdown("### 📊 Unidades didácticas por Trimestre")
+    
+    uds_por_tri = {"1t": set(), "2t": set(), "3t": set()}
+    for tri in ["1t", "2t", "3t"]:
+        ini_t = st.session_state.info_fechas.get(f"ini_{tri}")
+        fin_t = st.session_state.info_fechas.get(f"fin_{tri}")
+        if ini_t and fin_t:
+            curr = ini_t
+            while curr <= fin_t:
+                d_str = curr.strftime("%d/%m/%Y")
+                for ud in st.session_state.planning_ledger.get(d_str, []):
+                    uds_por_tri[tri].add(ud)
+                curr += timedelta(days=1)
+
+    c_tri1, c_tri2, c_tri3 = st.columns(3)
+    def render_caja_tri(caja, titulo, uds_set):
+        with caja:
+            st.markdown(f"<div style='text-align: center; font-size: 1.1rem; color: #fff;'><strong>{titulo}</strong></div>", unsafe_allow_html=True)
+            with st.container(border=True):
+                if uds_set:
+                    # Mostrar todas concatenadas en un único div sin márgenes agresivos
+                    html_content = "<div>" + "".join([f"<div style='text-align: center; color: #ddd; font-weight: 500; line-height: 1.5;'>{ud}</div>" for ud in sorted(uds_set)]) + "</div>"
+                    st.markdown(html_content, unsafe_allow_html=True)
+                else:
+                    st.markdown("<div style='text-align: center; color: #888;'>-</div>", unsafe_allow_html=True)
+
+    render_caja_tri(c_tri1, "1er Tri.", uds_por_tri["1t"])
+    render_caja_tri(c_tri2, "2º Tri.", uds_por_tri["2t"])
+    render_caja_tri(c_tri3, "3er Tri.", uds_por_tri["3t"])
+
+    st.divider()   
+    st.markdown("### 📊 Relación entre Resultados de Aprendizaje, Unidades Didácticas y Prácticas", unsafe_allow_html=True)
+    
+    lista_ra_ids = st.session_state.df_ra["ID"].tolist() if not st.session_state.df_ra.empty else []
+    
+    if lista_ra_ids:
+        with st.container(border=True):
+            # Mapeo de RAs
+            ra_info = {}
+            if not st.session_state.df_ra.empty:
+                for _, row in st.session_state.df_ra.iterrows():
+                    ra_info[row["ID"]] = row.get("Descripción", "")
+                
+            for ra_id in lista_ra_ids:
+                # Fila de RA (padre)
+                desc_ra_completa = ra_info.get(ra_id, "")
+                st.markdown(f"<div style='color: #fff; font-size: 1.05rem; margin-top: 5px;'><strong>{ra_id}</strong> <span style='color: #ccc; font-size: 0.95rem;'>{desc_ra_completa}</span></div>", unsafe_allow_html=True)
+                
+                # Recopilar UDs que tienen check en este RA
+                uds_list = []
+                if not st.session_state.df_ud.empty and ra_id in st.session_state.df_ud.columns:
+                    for _, ud_row in st.session_state.df_ud.iterrows():
+                        if ud_row.get(ra_id, False) == True:
+                            uds_list.append(str(ud_row["ID"]))
+
+                # Recopilar Prácticas que tienen check en este RA
+                prs_list = []
+                if not st.session_state.df_pr.empty and ra_id in st.session_state.df_pr.columns:
+                    for _, pr_row in st.session_state.df_pr.iterrows():
+                        if pr_row.get(ra_id, False) == True:
+                            prs_list.append(str(pr_row["ID"]))
+                            
+                # Filas identadas (hijas)
+                html_hijas = ""
+                if uds_list:
+                    html_hijas += f"<div style='margin-left: 25px; margin-bottom: 2px; color: #ffe599; border-left: 2px solid #d4af37; padding-left: 10px;'>{', '.join(uds_list)}</div>"
+                else:
+                    html_hijas += "<div style='margin-left: 25px; margin-bottom: 2px; color: #666; font-style: italic; border-left: 2px solid #444; padding-left: 10px;'>Sin UDs asignadas</div>"
+
+                if prs_list:
+                    html_hijas += f"<div style='margin-left: 25px; margin-bottom: 12px; color: #add8e6; border-left: 2px solid #0d7377; padding-left: 10px;'>{', '.join(prs_list)}</div>"
+                else:
+                    html_hijas += "<div style='margin-left: 25px; margin-bottom: 12px; color: #666; font-style: italic; border-left: 2px solid #444; padding-left: 10px;'>Sin prácticas asignadas</div>"
+
+                st.markdown(html_hijas, unsafe_allow_html=True)
+    else:
+        st.info("No hay Resultados de Aprendizaje (RAs) definidos.")
