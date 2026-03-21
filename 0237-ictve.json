@@ -3902,5 +3902,169 @@
             "CE7.h": true,
             "CE7.i": true
         }
+    ],
+    "df_sesiones": [
+        {
+            "ID": "SES01",
+            "Num_Sesion": 1,
+            "Tipo_Actividad": "Tª (Teoría)",
+            "RA_CE": "",
+            "Contenidos": "Presentación y evaluación inicial del alumnado, que bien puede ser verbal.",
+            "Aspectos_Clave": "Ilusionar y comprender su necesidad profesional para mejorar su empleabilidad.",
+            "Recursos": "Pizarra y proyector"
+        },
+        {
+            "ID": "SES02",
+            "Num_Sesion": 2,
+            "Tipo_Actividad": "Tª (Teoría)",
+            "RA_CE": "1/a",
+            "Contenidos": "Tª 1. Características y análisis de las necesidades informáticas de los sistemas de teleco.",
+            "Aspectos_Clave": "Identificación de requerimientos, escalabilidad y adaptabilidad a necesidades específicas.",
+            "Recursos": "Pizarra y proyector"
+        },
+        {
+            "ID": "SES03",
+            "Num_Sesion": 3,
+            "Tipo_Actividad": "Pª (Práctica)",
+            "RA_CE": "1/f",
+            "Contenidos": "Pª 0. Preparación del taller.",
+            "Aspectos_Clave": "Prevención de riesgos uso herramientas.",
+            "Recursos": "Aula CM3"
+        },
+        {
+            "ID": "SES04",
+            "Num_Sesion": 4,
+            "Tipo_Actividad": "Tª (Teoría)",
+            "RA_CE": "1/ab",
+            "Contenidos": "Tª 2. Arquitectura hardware de un sistema informático.",
+            "Aspectos_Clave": "Estructura del sistema, componentes principales (CPU, memoria, almacenamiento).",
+            "Recursos": "Pizarra y proyector"
+        },
+        {
+            "ID": "SES05",
+            "Num_Sesion": 5,
+            "Tipo_Actividad": "Tª (Teoría)",
+            "RA_CE": "1/bc",
+            "Contenidos": "Tª 2. Subsistemas de E/S. Controladores, sistemas de bus.",
+            "Aspectos_Clave": "Gestión de entradas/salidas, tipos de buses (PCI, USB), controladores y su función.",
+            "Recursos": "Pizarra y proyector"
+        },
+        {
+            "ID": "SES06",
+            "Num_Sesion": 6,
+            "Tipo_Actividad": "Tª (Teoría)",
+            "RA_CE": "1/abc",
+            "Contenidos": "Tª 3. Elementos hardware de un sistema informático. Características y tipología.",
+            "Aspectos_Clave": "Procesadores, placas base, tarjetas gráficas, memoria RAM, etc. Diferencias entre tipos y modelos.",
+            "Recursos": "Pizarra y proyector"
+        },
+        {
+            "ID": "SES07",
+            "Num_Sesion": 7,
+            "Tipo_Actividad": "Pª (Práctica)",
+            "RA_CE": "1/abc",
+            "Contenidos": "Pª 1. Informe de ampliación sobre elementos hardware.",
+            "Aspectos_Clave": "Además, explicar en esta UD1 como hacer un informe tomando notas en papel y posteriormente GDocs.",
+            "Recursos": "Set atornilladores, tijeras y alicates"
+        },
+        {
+            "ID": "SES08",
+            "Num_Sesion": 8,
+            "Tipo_Actividad": "Tª (Teoría)",
+            "RA_CE": "1/c",
+            "Contenidos": "Tª 4. Dispositivos de almacenamiento. Tipología, instalación y configuración. Alimentación.",
+            "Aspectos_Clave": "HDD, SSD, NVMe. Métodos de instalación, configuraciones RAID. Tipos fuentes y selección.",
+            "Recursos": "Pizarra y proyector"
+        },
+        {
+            "ID": "SES09",
+            "Num_Sesion": 9,
+            "Tipo_Actividad": "Pª (Práctica)",
+            "RA_CE": "1/abc",
+            "Contenidos": "Pª 2. Montaje y desmontaje de un ordenador, incluido el procesador y su radiador.",
+            "Aspectos_Clave": "Hacer el ciclo completo, especial atención a volver a colocar la pasta térmica.",
+            "Recursos": "Herramientas, Cámara, GDocs"
+        },
+        {
+            "ID": "SES10",
+            "Num_Sesion": 10,
+            "Tipo_Actividad": "Tª (Teoría)",
+            "RA_CE": "1/cde",
+            "Contenidos": "Tª 5. Software en un sistema informático.",
+            "Aspectos_Clave": "Tipos de software: sistema, aplicación y utilidades. Compatibilidad con el hardware.",
+            "Recursos": "Pizarra y proyector"
+        },
+        {
+            "ID": "SES11",
+            "Num_Sesion": 11,
+            "Tipo_Actividad": "Tª (Teoría)",
+            "RA_CE": "1/cde",
+            "Contenidos": "Tª 6. Sistemas operativos: concepto. Aplicaciones informáticas.",
+            "Aspectos_Clave": "Definición de SO, funciones principales. Windows, Linux, MacOS. Aplicaciones y gestión recursos.",
+            "Recursos": "Pizarra y proyector"
+        },
+        {
+            "ID": "SES12",
+            "Num_Sesion": 12,
+            "Tipo_Actividad": "Pª (Práctica)",
+            "RA_CE": "1/abcd",
+            "Contenidos": "Pª 3. Cont. Pª 2, Administrar dispositivos e incluir tarjetas nuevas, por ejemplo, red.",
+            "Aspectos_Clave": "Manejo de herramientas de diagnóstico de ordenadores personales.",
+            "Recursos": "Herramientas, Cámara, GDocs"
+        },
+        {
+            "ID": "SES13",
+            "Num_Sesion": 13,
+            "Tipo_Actividad": "Tª (Teoría)",
+            "RA_CE": "1/def",
+            "Contenidos": "Tª 7. Periféricos: características y tipología.",
+            "Aspectos_Clave": "Dispositivos de entrada (teclados, ratones), salida (monitores, impresoras) y mixtos.",
+            "Recursos": "Pizarra y proyector"
+        },
+        {
+            "ID": "SES14",
+            "Num_Sesion": 14,
+            "Tipo_Actividad": "Tª (Teoría)",
+            "RA_CE": "1/def",
+            "Contenidos": "Tª 8. Equipamientos y tecnologías aplicadas a sistemas informáticos de teleco.",
+            "Aspectos_Clave": "Equipos específicos: routers, switches, servidores. Tecnologías actuales (fibra óptica, 5G).",
+            "Recursos": "Pizarra y proyector"
+        },
+        {
+            "ID": "SES15",
+            "Num_Sesion": 15,
+            "Tipo_Actividad": "Pª (Práctica)",
+            "RA_CE": "1/ef",
+            "Contenidos": "Pª 4. Intercambiar periféricos convencionales entre equipos.",
+            "Aspectos_Clave": "Atender los equipos como si fuese un servicio técnico oficial.",
+            "Recursos": "Herramientas, Cámara, GDocs"
+        },
+        {
+            "ID": "SES16",
+            "Num_Sesion": 16,
+            "Tipo_Actividad": "IE (Instrumento de Evaluación)",
+            "RA_CE": "1/abcdef",
+            "Contenidos": "IE 1. Corrección del cuaderno del taller.",
+            "Aspectos_Clave": "Corrección tanto en papel como en GDocs.",
+            "Recursos": "Cuaderno y GDocs"
+        },
+        {
+            "ID": "SES17",
+            "Num_Sesion": 17,
+            "Tipo_Actividad": "IE (Instrumento de Evaluación)",
+            "RA_CE": "1/abcdef",
+            "Contenidos": "IE 2. Preparación del examen teórico-práctico.",
+            "Aspectos_Clave": "Ronda de preguntas cortas con debate en grupo.",
+            "Recursos": "Aula CM1"
+        },
+        {
+            "ID": "SES18",
+            "Num_Sesion": 18,
+            "Tipo_Actividad": "IE (Instrumento de Evaluación)",
+            "RA_CE": "1/abcdef",
+            "Contenidos": "IE 3. Examen teórico-práctico.",
+            "Aspectos_Clave": "Desarrollo dual: escrito y soporte práctico.",
+            "Recursos": "Aula CM1 y CM3"
+        }
     ]
 }

@@ -14,6 +14,11 @@ import os
 from pdf_calendario_academico import generar_pdf_calendario
 from pdf_seguimiento_diario import generar_pdf_seguimiento
 from pdf_boletin_competencial import generar_pdf_boletin
+from pdf_programacion_aula import generar_pdf_programacion_aula
+from pdf_dua import generar_pdf_dua
+from pdf_contingencia import generar_pdf_contingencia
+from pdf_ace import generar_pdf_ace
+from pdf_tareas_comp import generar_pdf_tareas_comp
 def serialize_date(obj):
     if isinstance(obj, (date, datetime)): return obj.strftime("%d/%m/%Y")
     return obj
@@ -44,6 +49,13 @@ def guardar_datos(nombre_archivo):
         "df_sgmt": st.session_state.df_sgmt.to_dict(orient="records") if 'df_sgmt' in st.session_state else [],
         "daily_ledger": st.session_state.daily_ledger if 'daily_ledger' in st.session_state else {},
         "planning_ledger": st.session_state.planning_ledger if 'planning_ledger' in st.session_state else {},
+        "config_aula": st.session_state.config_aula if 'config_aula' in st.session_state else {},
+        "df_sesiones": st.session_state.df_sesiones.to_dict(orient="records") if 'df_sesiones' in st.session_state else [],
+        "config_contexto": st.session_state.config_contexto if 'config_contexto' in st.session_state else {},
+        "df_dua": st.session_state.df_dua.to_dict(orient="records") if 'df_dua' in st.session_state else [],
+        "df_contingencia": st.session_state.df_contingencia.to_dict(orient="records") if 'df_contingencia' in st.session_state else [],
+        "df_ace": st.session_state.df_ace.to_dict(orient="records") if 'df_ace' in st.session_state else [],
+        "df_tareas": st.session_state.df_tareas.to_dict(orient="records") if 'df_tareas' in st.session_state else [],
     }
     with open(nombre_archivo, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
@@ -95,6 +107,13 @@ def cargar_datos(nombre_archivo):
     st.session_state.df_sgmt = pd.DataFrame(data.get("df_sgmt", []))
     st.session_state.daily_ledger = data.get("daily_ledger", {})
     st.session_state.planning_ledger = data.get("planning_ledger", {})
+    st.session_state.config_aula = data.get("config_aula", {"Metodología": "", "Atención a la diversidad": ""})
+    st.session_state.df_sesiones = pd.DataFrame(data.get("df_sesiones", []))
+    st.session_state.config_contexto = data.get("config_contexto", {"entorno": "", "perfil": "", "metodologia": ""})
+    st.session_state.df_dua = pd.DataFrame(data.get("df_dua", []))
+    st.session_state.df_contingencia = pd.DataFrame(data.get("df_contingencia", []))
+    st.session_state.df_ace = pd.DataFrame(data.get("df_ace", []))
+    st.session_state.df_tareas = pd.DataFrame(data.get("df_tareas", []))
 
 # ==========================================
 # 3. FUNCIONES DE LÓGICA Y CÁLCULO
@@ -341,6 +360,25 @@ if 'daily_ledger' not in st.session_state:
 
 if 'planning_ledger' not in st.session_state:
     st.session_state.planning_ledger = {}
+
+if 'config_aula' not in st.session_state:
+    st.session_state.config_aula = {"Metodología": "", "Atención a la diversidad": ""}
+
+if 'df_sesiones' not in st.session_state:
+    st.session_state.df_sesiones = pd.DataFrame(columns=[
+        "ID", "Num_Sesion", "Tipo_Actividad", "RA_CE", "Contenidos", "Aspectos_Clave", "Recursos"
+    ])
+
+if 'config_contexto' not in st.session_state:
+    st.session_state.config_contexto = {"entorno": "", "perfil": "", "metodologia": ""}
+if 'df_dua' not in st.session_state:
+    st.session_state.df_dua = pd.DataFrame(columns=["ID", "Barrera", "Medida_Metodologica", "Medida_Acceso", "Medida_Evaluacion", "Alumnado_Aula"])
+if 'df_contingencia' not in st.session_state:
+    st.session_state.df_contingencia = pd.DataFrame(columns=["ID", "Escenario", "Organizacion", "Actividades", "Seguimiento"])
+if 'df_ace' not in st.session_state:
+    st.session_state.df_ace = pd.DataFrame(columns=["ID", "Tipo", "RA_Vinculados", "Actividad", "Trimestre", "Entidad", "Evaluacion"])
+if 'df_tareas' not in st.session_state:
+    st.session_state.df_tareas = pd.DataFrame(columns=["ID", "Nombre_Tarea", "Reto", "RA_Asociados", "Instrumento"])
 
 # --- CARGAR FICHERO POR DEFECTO ---
 if 'app_init_done' not in st.session_state:
@@ -595,7 +633,14 @@ with st.sidebar:
     st.markdown("<br>", unsafe_allow_html=True)
 
     # 5.1 Menú de Navegación (Real Buttons)
-    opciones_menu = ["Módulo didáctico", "Calendario lectivo", "Matriz programación", "Resumen docente", "Seguimiento diario", "Matrícula alumnado", "Instrumentos de evaluación", "Evaluación FEOE", "Calificación numérica", "Progreso porcentual"]
+    opciones_menu = [
+        "Módulo didáctico", "Calendario lectivo", "Matriz programación", 
+        "Programación de aula", "Atención a la diversidad (DUA)", 
+        "Plan de contingencia", "AC y Extraescolares (ACE)", 
+        "Desarrollo Tareas (TC)", "Resumen docente", "Seguimiento diario", 
+        "Matrícula alumnado", "Instrumentos de evaluación", 
+        "Evaluación FEOE", "Calificación numérica", "Progreso porcentual"
+    ]
     # Redirigir si el menú activo era uno de los eliminados
     if st.session_state.menu not in opciones_menu:
         st.session_state.menu = "Módulo didáctico"
@@ -673,6 +718,48 @@ with st.sidebar:
             mime="application/pdf",
             type="secondary",
             use_container_width=True
+        )
+
+        pdf_buffer_prog = generar_pdf_programacion_aula(
+            st.session_state.info_modulo,
+            st.session_state.config_aula,
+            st.session_state.df_sesiones
+        )
+        st.download_button(
+            label="Programación de aula",
+            data=pdf_buffer_prog,
+            file_name=f"Programacion_Aula_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
+            mime="application/pdf",
+            type="secondary",
+            use_container_width=True
+        )
+
+        pdf_buffer_dua = generar_pdf_dua(st.session_state.info_modulo, st.session_state.df_dua)
+        st.download_button(
+            label="Medidas Inclusión (DUA)", data=pdf_buffer_dua,
+            file_name=f"Medidas_DUA_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
+            mime="application/pdf", type="secondary", use_container_width=True
+        )
+
+        pdf_buffer_cont = generar_pdf_contingencia(st.session_state.info_modulo, st.session_state.df_contingencia)
+        st.download_button(
+            label="Plan Contingencia", data=pdf_buffer_cont,
+            file_name=f"Plan_Contingencia_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
+            mime="application/pdf", type="secondary", use_container_width=True
+        )
+
+        pdf_buffer_ace = generar_pdf_ace(st.session_state.info_modulo, st.session_state.df_ace)
+        st.download_button(
+            label="Actividades Extraescolares (ACE)", data=pdf_buffer_ace,
+            file_name=f"Actividades_ACE_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
+            mime="application/pdf", type="secondary", use_container_width=True
+        )
+
+        pdf_buffer_tar = generar_pdf_tareas_comp(st.session_state.info_modulo, st.session_state.df_tareas)
+        st.download_button(
+            label="Diseño Tareas Competenciales", data=pdf_buffer_tar,
+            file_name=f"Tareas_Compt_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
+            mime="application/pdf", type="secondary", use_container_width=True
         )
     st.markdown("<br><hr>", unsafe_allow_html=True)
     st.markdown('<p class="user-subtitle">(c) Rafael Sanz Prades</p>', unsafe_allow_html=True)
@@ -803,7 +890,17 @@ if menu == "Módulo didáctico":
     
     st.session_state.df_ra = ed_ra
 
-
+    st.divider()
+    st.subheader("🌍 Contextualización y Metodología")
+    with st.expander("Entorno socioeconómico y perfil del alumnado", expanded=False):
+        c_entorno, c_perfil = st.columns(2)
+        with c_entorno:
+            st.session_state.config_contexto["entorno"] = st.text_area("Entorno socioeconómico", value=st.session_state.config_contexto.get("entorno", ""), height=120)
+        with c_perfil:
+            st.session_state.config_contexto["perfil"] = st.text_area("Perfil del alumnado", value=st.session_state.config_contexto.get("perfil", ""), height=120)
+            
+    with st.expander("Metodología General del Módulo", expanded=False):
+        st.session_state.config_contexto["metodologia"] = st.text_area("Estrategias metodológicas, recursos, espacios y desdobles", value=st.session_state.config_contexto.get("metodologia", ""), height=150)
 
 # --- PESTAÑA: Planificación ---
 elif menu == "Matriz programación":
@@ -1824,6 +1921,109 @@ elif menu == "Progreso porcentual":
     else:
         st.info("Falta información. Asegúrate de tener alumnado matriculado y Resultados de Aprendizaje definidos en su correspondiente pestaña.")
 
+# --- PESTAÑA: PROGRAMACIÓN DE AULA ---
+elif menu == "Programación de aula":
+    st.subheader("📚 Programación de Aula (Secuenciación de Sesiones)")
+    st.markdown("Diseña y estructura las sesiones para cada Unidad Didáctica, definiendo la tipología, RA/CE asociados, contenidos y recursos.")
+    
+    # 1. Configuración General (Metodología y Atención a la diversidad)
+    with st.expander("⚙️ Configuración General de la Unidad", expanded=False):
+        c_met, c_div = st.columns(2)
+        with c_met:
+            new_met = st.text_area("Metodología (ej. activa, participativa, ABP)", value=st.session_state.config_aula.get("Metodología", ""), height=100)
+        with c_div:
+            new_div = st.text_area("Atención a la diversidad (adaptaciones no significativas)", value=st.session_state.config_aula.get("Atención a la diversidad", ""), height=100)
+            
+        if new_met != st.session_state.config_aula.get("Metodología") or new_div != st.session_state.config_aula.get("Atención a la diversidad"):
+            st.session_state.config_aula["Metodología"] = new_met
+            st.session_state.config_aula["Atención a la diversidad"] = new_div
+            
+    st.divider()
+    
+    # 2. Formulario de Registro de Sesiones
+    with st.form("registro_sesion"):
+        st.markdown("**➕ Añadir Nueva Sesión**")
+        c1, c2, c3 = st.columns([1, 2, 2])
+        with c1:
+            num_ses = st.number_input("Nº Sesión", min_value=1, step=1, value=len(st.session_state.df_sesiones)+1)
+        with c2:
+            tipo_act = st.selectbox("Tipo de Actividad", options=["Tª (Teoría)", "Pª (Práctica)", "IE (Instrumento de Evaluación)", "Pª+ (Ampliación/Refuerzo)"])
+        with c3:
+            ra_ce_input = st.text_input("RA / CE vinculados", placeholder="Ej: RA1, CE1.a")
+            
+        c4, c5 = st.columns(2)
+        with c4:
+            contenidos_input = st.text_area("Contenidos / Descripción de la actividad", placeholder="Ej: Preparación del taller, Examen teórico...", height=80)
+        with c5:
+            aspectos_input = st.text_area("Aspectos Clave", placeholder="Ej: Seguridad e higiene, Conceptos básicos...", height=80)
+        
+        recursos_input = st.text_input("Recursos", placeholder="Ej: Aula Taller, Proyector, Herramienta X...")
+        
+        submit_btn = st.form_submit_button("Añadir Sesión", type="primary")
+        
+        if submit_btn:
+            new_ses_id = generar_siguiente_id(st.session_state.df_sesiones, "SES")
+            new_session = {
+                "ID": new_ses_id,
+                "Num_Sesion": num_ses,
+                "Tipo_Actividad": tipo_act,
+                "RA_CE": ra_ce_input,
+                "Contenidos": contenidos_input,
+                "Aspectos_Clave": aspectos_input,
+                "Recursos": recursos_input
+            }
+            st.session_state.df_sesiones = pd.concat([st.session_state.df_sesiones, pd.DataFrame([new_session])], ignore_index=True)
+            st.success("Sesión añadida correctamente.")
+            st.rerun()
+
+    st.divider()
+
+    # 3. Tabla de Secuenciación (Visualización y edición)
+    st.markdown("### 📋 Secuenciación de Sesiones Registradas")
+    if not st.session_state.df_sesiones.empty:
+        # Ordenamos por número de sesión por si acaso
+        st.session_state.df_sesiones = st.session_state.df_sesiones.sort_values(by="Num_Sesion").reset_index(drop=True)
+        
+        ed_ses = st.data_editor(
+            st.session_state.df_sesiones,
+            column_config={
+                "ID": st.column_config.TextColumn("ID", disabled=True, width="small"),
+                "Num_Sesion": st.column_config.NumberColumn("Nº", min_value=1, step=1, width="small"),
+                "Tipo_Actividad": st.column_config.SelectboxColumn("Tipo", options=["Tª (Teoría)", "Pª (Práctica)", "IE (Instrumento de Evaluación)", "Pª+ (Ampliación/Refuerzo)"], width="medium"),
+                "RA_CE": st.column_config.TextColumn("RA/CE", width="medium"),
+                "Contenidos": st.column_config.TextColumn("Contenidos", width="large"),
+                "Aspectos_Clave": st.column_config.TextColumn("Aspectos Clave", width="medium"),
+                "Recursos": st.column_config.TextColumn("Recursos", width="medium")
+            },
+            num_rows="dynamic",
+            hide_index=True,
+            use_container_width=True,
+            key="tabla_sesiones"
+        )
+        st.session_state.df_sesiones = ed_ses
+    else:
+        st.info("No hay sesiones registradas. Utiliza el formulario arriba para empezar a añadir sesiones.")
+
+    # 4. Diagrama de flujo opcional
+    with st.expander("🗺️ Ver Flujograma Tipo (Ejemplo)", expanded=False):
+        st.markdown(
+            "```mermaid\n"
+            "graph LR\n"
+            "    subgraph Evaluación Inicial\n"
+            "        A(Prueba Nivel) --> B[Teoría Tªxe]\n"
+            "    end\n"
+            "    subgraph Desarrollo\n"
+            "        B --> C[Preparación Pª0]\n"
+            "        C --> D[Práctica Pªx]\n"
+            "    end\n"
+            "    subgraph Cierre y Evaluación\n"
+            "        D --> E(Cuaderno Taller IE1)\n"
+            "        E --> F[Repaso IE2]\n"
+            "        F --> G((Examen IE3))\n"
+            "    end\n"
+            "```"
+        )
+
 # --- PESTAÑA: RESUMEN ---
 elif menu == "Resumen docente":
     # --- Resumen N.UD. y N.Práct. ---
@@ -1908,11 +2108,92 @@ elif menu == "Resumen docente":
                 else:
                     html_hijas += "<div style='margin-left: 25px; margin-bottom: 2px; color: #666; font-style: italic; border-left: 2px solid #444; padding-left: 10px;'>Sin UDs asignadas</div>"
 
-                if prs_list:
-                    html_hijas += f"<div style='margin-left: 25px; margin-bottom: 12px; color: #add8e6; border-left: 2px solid #0d7377; padding-left: 10px;'>{', '.join(prs_list)}</div>"
-                else:
-                    html_hijas += "<div style='margin-left: 25px; margin-bottom: 12px; color: #666; font-style: italic; border-left: 2px solid #444; padding-left: 10px;'>Sin prácticas asignadas</div>"
-
                 st.markdown(html_hijas, unsafe_allow_html=True)
     else:
         st.info("No hay Resultados de Aprendizaje definidos.")
+
+# --- PESTAÑA: DUA ---
+elif menu == "Atención a la diversidad (DUA)":
+    st.subheader("🧩 Medidas de Respuesta Educativa para la Inclusión (DUA)")
+    st.markdown("Registra las adaptaciones curriculares no significativas o medidas DUA aplicadas en el aula.")
+    
+    ed_dua = st.data_editor(
+        st.session_state.df_dua,
+        column_config={
+            "ID": st.column_config.TextColumn("ID", disabled=True, width="small"),
+            "Alumnado_Aula": st.column_config.TextColumn("Alumnado o Aula", width="medium"),
+            "Barrera": st.column_config.TextColumn("Barrera Detectada", width="medium"),
+            "Medida_Metodologica": st.column_config.TextColumn("Medida Metodológica / Org.", width="large"),
+            "Medida_Acceso": st.column_config.TextColumn("Medida de Acceso", width="medium"),
+            "Medida_Evaluacion": st.column_config.TextColumn("Medida de Evaluación", width="medium"),
+        },
+        num_rows="dynamic", hide_index=True, use_container_width=True, key="tabla_dua"
+    )
+    if len(ed_dua) > len(st.session_state.df_dua):
+        ed_dua.iloc[-1, 0] = generar_siguiente_id(st.session_state.df_dua, "DUA")
+    st.session_state.df_dua = ed_dua
+
+# --- PESTAÑA: CONTINGENCIA ---
+elif menu == "Plan de contingencia":
+    st.subheader("🛡️ Plan de Contingencia")
+    st.markdown("Define las actuaciones ante situaciones excepcionales que impidan el desarrollo normal de las clases.")
+    
+    ed_cont = st.data_editor(
+        st.session_state.df_contingencia,
+        column_config={
+            "ID": st.column_config.TextColumn("ID", disabled=True, width="small"),
+            "Escenario": st.column_config.SelectboxColumn("Escenario", options=["Ausencia de Profesorado", "Ausencia de Alumnado", "Interrupción Generalizada", "Otros"], width="medium"),
+            "Organizacion": st.column_config.TextColumn("Organización y Acceso", width="large"),
+            "Actividades": st.column_config.TextColumn("Actividades Alternativas", width="large"),
+            "Seguimiento": st.column_config.TextColumn("Seguimiento y Ajustes", width="medium"),
+        },
+        num_rows="dynamic", hide_index=True, use_container_width=True, key="tabla_contingencia"
+    )
+    if len(ed_cont) > len(st.session_state.df_contingencia):
+        ed_cont.iloc[-1, 0] = generar_siguiente_id(st.session_state.df_contingencia, "PC")
+    st.session_state.df_contingencia = ed_cont
+
+# --- PESTAÑA: ACE ---
+elif menu == "AC y Extraescolares (ACE)":
+    st.subheader("🚌 Actividades Complementarias y Extraescolares")
+    st.markdown("Programa las salidas y actividades que refuerzan los Resultados de Aprendizaje.")
+    
+    lista_ra_ids = st.session_state.df_ra["ID"].tolist() if not st.session_state.df_ra.empty else []
+    
+    ed_ace = st.data_editor(
+        st.session_state.df_ace,
+        column_config={
+            "ID": st.column_config.TextColumn("ID", disabled=True, width="small"),
+            "Tipo": st.column_config.SelectboxColumn("Tipo", options=["Complementaria", "Extraescolar"], width="medium"),
+            "RA_Vinculados": st.column_config.SelectboxColumn("RA Vinculados", options=lista_ra_ids, width="medium"),
+            "Actividad": st.column_config.TextColumn("Descripción de la Actividad", width="large"),
+            "Trimestre": st.column_config.SelectboxColumn("Trimestre", options=["1T", "2T", "3T"], width="small"),
+            "Entidad": st.column_config.TextColumn("Entidad Colaboradora", width="medium"),
+            "Evaluacion": st.column_config.TextColumn("Actividad de Evaluación", width="medium"),
+        },
+        num_rows="dynamic", hide_index=True, use_container_width=True, key="tabla_ace"
+    )
+    if len(ed_ace) > len(st.session_state.df_ace):
+        ed_ace.iloc[-1, 0] = generar_siguiente_id(st.session_state.df_ace, "ACE")
+    st.session_state.df_ace = ed_ace
+
+# --- PESTAÑA: TAREAS COMPETENCIALES ---
+elif menu == "Desarrollo Tareas (TC)":
+    st.subheader("🎯 Diseño de Tareas Competenciales")
+    st.markdown("Define retos o productos integrados que evalúan varios Resultados de Aprendizaje de forma globalizada.")
+    
+    ed_tar = st.data_editor(
+        st.session_state.df_tareas,
+        column_config={
+            "ID": st.column_config.TextColumn("ID", disabled=True, width="small"),
+            "Nombre_Tarea": st.column_config.TextColumn("Título de la Tarea", width="medium"),
+            "Reto": st.column_config.TextColumn("Contexto Productivo y Reto", width="large"),
+            "RA_Asociados": st.column_config.TextColumn("RA y CE Relacionados", width="medium"),
+            "Instrumento": st.column_config.TextColumn("Instrumento de Calificación", width="medium"),
+        },
+        num_rows="dynamic", hide_index=True, use_container_width=True, key="tabla_tareas"
+    )
+    if len(ed_tar) > len(st.session_state.df_tareas):
+        ed_tar.iloc[-1, 0] = generar_siguiente_id(st.session_state.df_tareas, "TC")
+    st.session_state.df_tareas = ed_tar
+
