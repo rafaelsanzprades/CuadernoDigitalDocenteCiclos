@@ -17,11 +17,11 @@ def _draw_page_decorations(canv, doc):
     # Let's keep a tiny top-header with the Document Name
     canv.setFont("Helvetica-Bold", 10)
     canv.setFillColor(colors.HexColor("#777777"))
-    canv.drawCentredString(W / 2, H - 1.2 * cm, doc.cal_titulo)
+    canv.drawCentredString(W / 2, H - 1.5 * cm, doc.cal_titulo)
     
     canv.setFont("Helvetica", 9)
     canv.setFillColor(colors.HexColor("#777777"))
-    canv.drawRightString(W - 1.5 * cm, 1 * cm, doc.cal_pie)
+    canv.drawRightString(W - 1 * cm, 1 * cm, doc.cal_pie)
     canv.restoreState()
 
 def generar_pdf_seguimiento(info_modulo, info_fechas, horario, planning_ledger, calendar_notes):
@@ -37,8 +37,8 @@ def generar_pdf_seguimiento(info_modulo, info_fechas, horario, planning_ledger, 
         topMargin=top_margin, bottomMargin=bottom_margin,
     )
 
-    doc.cal_titulo = f"Seguimiento Diario. {info_modulo.get('modulo', 'Módulo')}"
-    doc.cal_pie = f"{info_modulo.get('centro', '')} ({info_modulo.get('profesorado', '')})"
+    doc.cal_titulo = f"Seguimiento diario. {info_modulo.get('modulo', 'Módulo')}"
+    doc.cal_pie = f"{info_modulo.get('centro', 'IES Andalán')} ({info_modulo.get('profesorado', 'Rafael Sanz Prades')})"
 
     frame = Frame(margin, bottom_margin, W - 2*margin, H - top_margin - bottom_margin, id='main')
     template = PageTemplate(id='seg', frames=[frame], onPage=_draw_page_decorations)

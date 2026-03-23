@@ -15,10 +15,6 @@ from pdf_calendario_academico import generar_pdf_calendario
 from pdf_seguimiento_diario import generar_pdf_seguimiento
 from pdf_boletin_competencial import generar_pdf_boletin
 from pdf_programacion_aula import generar_pdf_programacion_aula
-from pdf_dua import generar_pdf_dua
-from pdf_contingencia import generar_pdf_contingencia
-from pdf_ace import generar_pdf_ace
-from pdf_tareas_comp import generar_pdf_tareas_comp
 def serialize_date(obj):
     if isinstance(obj, (date, datetime)): return obj.strftime("%d/%m/%Y")
     return obj
@@ -788,34 +784,6 @@ with st.sidebar:
             mime="application/pdf",
             type="secondary",
             use_container_width=True
-        )
-
-        pdf_buffer_dua = generar_pdf_dua(st.session_state.info_modulo, st.session_state.df_dua)
-        st.download_button(
-            label="Medidas Inclusión (DUA)", data=pdf_buffer_dua,
-            file_name=f"Medidas_DUA_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
-            mime="application/pdf", type="secondary", use_container_width=True
-        )
-
-        pdf_buffer_cont = generar_pdf_contingencia(st.session_state.info_modulo, st.session_state.df_contingencia)
-        st.download_button(
-            label="Plan Contingencia", data=pdf_buffer_cont,
-            file_name=f"Plan_Contingencia_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
-            mime="application/pdf", type="secondary", use_container_width=True
-        )
-
-        pdf_buffer_ace = generar_pdf_ace(st.session_state.info_modulo, st.session_state.df_ace)
-        st.download_button(
-            label="Actividades Extraescolares (ACE)", data=pdf_buffer_ace,
-            file_name=f"Actividades_ACE_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
-            mime="application/pdf", type="secondary", use_container_width=True
-        )
-
-        pdf_buffer_tar = generar_pdf_tareas_comp(st.session_state.info_modulo, st.session_state.df_tareas)
-        st.download_button(
-            label="Diseño Tareas Competenciales", data=pdf_buffer_tar,
-            file_name=f"Tareas_Compt_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
-            mime="application/pdf", type="secondary", use_container_width=True
         )
     st.markdown("<br><hr>", unsafe_allow_html=True)
     st.markdown('<p class="user-subtitle">(c) Rafael Sanz Prades</p>', unsafe_allow_html=True)

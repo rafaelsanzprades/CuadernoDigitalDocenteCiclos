@@ -19,9 +19,9 @@ def _draw_page_decorations(canv, doc):
     W, H = landscape(A4)
 
     # ---- CABECERA: Título centrado ----
-    canv.setFont("Helvetica-Bold", 12)
-    canv.setFillColor(colors.HexColor("#2f2f2f"))
-    canv.drawCentredString(W / 2, H - 2.0 * cm, doc.cal_titulo)
+    canv.setFont("Helvetica-Bold", 10)
+    canv.setFillColor(colors.HexColor("#777777"))
+    canv.drawCentredString(W / 2, H - 1.5 * cm, doc.cal_titulo)
 
     # ---- PIE: Referencia abajo a la derecha ----
     canv.setFont("Helvetica", 9)
@@ -29,7 +29,6 @@ def _draw_page_decorations(canv, doc):
     canv.drawRightString(W - 1 * cm, 1 * cm, doc.cal_pie)
 
     canv.restoreState()
-
 
 # ------------------------------------------------------------------ #
 #  Función principal                                                  #
@@ -57,8 +56,8 @@ def generar_pdf_calendario(info_modulo, info_fechas, planning_ledger, calendar_n
     ini_feoe = info_fechas.get("ini_feoe", date(2026, 3, 16))
     fin_feoe = info_fechas.get("fin_feoe", date(2026, 5, 29))
     
-    doc.cal_titulo = f"Calendario Académico {ini.year} – {fin.year}"
-    doc.cal_pie    = f"{info_modulo.get('codigo', 'FPM-it-1-0237')} {info_modulo.get('centro', 'IES Andalán')} ({info_modulo.get('profesorado', 'Rafa Sanz')})"
+    doc.cal_titulo = f"Calendario Académico {ini.year} – {fin.year}. {info_modulo.get('modulo', 'Módulo')}"
+    doc.cal_pie    = f"{info_modulo.get('centro', 'IES Andalán')} ({info_modulo.get('profesorado', 'Rafael Sanz Prades')})"
 
     frame = Frame(margin, bottom_margin, W - 2*margin, H - top_margin - bottom_margin, id='main')
     template = PageTemplate(id='cal', frames=[frame], onPage=_draw_page_decorations)
