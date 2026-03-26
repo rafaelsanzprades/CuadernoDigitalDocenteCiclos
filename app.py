@@ -788,11 +788,11 @@ with st.sidebar:
 
 
     # 5.1 Menú de Navegación (3 bloques)
-    opciones_globales = ["Contextualización", "Calendario académico"]
+    opciones_globales = ["Contextualización", "Planes e inclusión", "Calendario académico"]
     opciones_pd = [
         "Módulo didáctico", "Matrices RA → CE → UD",
-        "Instrumentos de evaluación", "Planes e inclusión",
-        "Resumen docente", "Programación de aula"
+        "Instrumentos de evaluación",
+        "Programación de aula"
     ]
     opciones_curso = [
         "Seguimiento diario", "Matrícula alumnado", "Calificación académica",
@@ -1045,9 +1045,9 @@ with st.sidebar:
 st.markdown(f'<div class="pestaña-header"><h2>{menu}</h2></div>', unsafe_allow_html=True)
 
 # --- MEJORA #9: Banner + CSS overlay de solo lectura ---
-_es_seccion_global = menu in ["Contextualización", "Calendario académico"]
+_es_seccion_global = menu in ["Contextualización", "Planes e inclusión", "Calendario académico"]
 _es_seccion_pd = menu in ["Módulo didáctico", "Matrices RA → CE → UD",
-                           "Instrumentos de evaluación", "Planes e inclusión",
+                           "Instrumentos de evaluación",
                            "Resumen docente", "Programación de aula"]
 _es_seccion_curso = menu in ["Seguimiento diario", "Matrícula alumnado",
                               "Calificación académica", "Calificación FEOE", "Evaluación continua"]
@@ -1205,16 +1205,80 @@ if menu == "Módulo didáctico":
     suma_criterios = st.session_state.info_modulo["criterio_conocimiento"] + st.session_state.info_modulo["criterio_procedimiento_ejercicios"] + st.session_state.info_modulo["criterio_procedimiento_practicas"] + st.session_state.info_modulo.get("criterio_tareas", st.session_state.info_modulo.get("criterio_actitud_participacion", 30))
     badge_criterios.markdown(badge(suma_criterios - 100, suma_criterios, "%"), unsafe_allow_html=True)
 
- 
+    # ── Resumen ──────────────────────────────────────────────────
     st.divider()
-    st.markdown("### ⚙️ Configuración del módulo")
-    st.session_state.config_contexto["metodologia"] = st.text_area("Estrategias metodológicas, recursos, espacios y desdobles", value=st.session_state.config_contexto.get("metodologia", ""), height=150)
-    new_met = st.text_area("Metodología (ej. activa, participativa, ABP)", value=st.session_state.config_aula.get("Metodología", ""), height=100)
-    new_div = st.text_area("Atención a la diversidad (adaptaciones no significativas)", value=st.session_state.config_aula.get("Atención a la diversidad", ""), height=100)
-        
-    if new_met != st.session_state.config_aula.get("Metodología") or new_div != st.session_state.config_aula.get("Atención a la diversidad"):
-        st.session_state.config_aula["Metodología"] = new_met
-        st.session_state.config_aula["Atención a la diversidad"] = new_div
+    st.subheader("📊 Módulo. Unidades Didácticas y Prácticas")
+    rd1, rd2 = st.columns(2)
+    with rd1:
+        with st.container(border=True):
+            st.metric("N. Unidades Didácticas", len(st.session_state.df_ud))
+    with rd2:
+        with st.container(border=True):
+            st.metric("N. Prácticas", len(st.session_state.df_pr))
+
+    st.divider()
+    st.markdown("### 📊 Unidades didácticas por Trimestre")
+    uds_por_tri = {"1t": set(), "2t": set(), "3t": set()}
+    for tri in ["1t", "2t", "3t"]:
+        ini_t = st.session_state.info_fechas.get(f"ini_{tri}")
+        fin_t = st.session_state.info_fechas.get(f"fin_{tri}")
+        if ini_t and fin_t:
+            curr = ini_t
+            while curr <= fin_t:
+                d_str = curr.strftime("%d/%m/%Y")
+                for ud in st.session_state.planning_ledger.get(d_str, []):
+                    uds_por_tri[tri].add(ud)
+                curr += timedelta(days=1)
+    c_tri1, c_tri2, c_tri3 = st.columns(3)
+    def render_caja_tri(caja, titulo, uds_set):
+        with caja:
+            st.markdown(f"<div style='text-align:center;font-size:1.1rem;color:#fff;'><strong>{titulo}</strong></div>", unsafe_allow_html=True)
+            with st.container(border=True):
+                if uds_set:
+                    html_content = "<div>" + "".join([f"<div style='text-align:center;color:#ddd;font-weight:500;line-height:1.5;'>{ud}</div>" for ud in sorted(uds_set)]) + "</div>"
+                    st.markdown(html_content, unsafe_allow_html=True)
+                else:
+                    st.markdown("<div style='text-align:center;color:#888;'>-</div>", unsafe_allow_html=True)
+    render_caja_tri(c_tri1, "1er Tri.", uds_por_tri["1t"])
+    render_caja_tri(c_tri2, "2º Tri.", uds_por_tri["2t"])
+    render_caja_tri(c_tri3, "3er Tri.", uds_por_tri["3t"])
+
+    st.divider()
+    st.markdown("### 📊 Relación entre Resultados de Aprendizaje y Unidades Didácticas", unsafe_allow_html=True)
+    lista_ra_ids_res = st.session_state.df_ra["id_ra"].tolist() if not st.session_state.df_ra.empty else []
+    if lista_ra_ids_res:
+        with st.container(border=True):
+            ra_info_res = {}
+            for _, row in st.session_state.df_ra.iterrows():
+                try:
+                    pct_val = float(pd.to_numeric(row.get("peso_ra", 0.0), errors="coerce"))
+                    if pd.isna(pct_val): pct_val = 0.0
+                except Exception:
+                    pct_val = 0.0
+                ra_info_res[row["id_ra"]] = {"desc": row.get("desc_ra", ""), "pct": pct_val}
+            for ra_id in lista_ra_ids_res:
+                info = ra_info_res.get(ra_id, {"desc": "", "pct": 0.0})
+                pct  = info.get("pct", 0.0)
+                sp   = f"{int(pct)}%" if pct == int(pct) else f"{pct:.1f}%"
+                st.markdown(f"<div style='color:#fff;font-size:1.05rem;margin-top:5px;'><strong>{ra_id} ({sp}).</strong> <span style='color:#ccc;font-size:0.95rem;'>{info.get('desc','')}</span></div>", unsafe_allow_html=True)
+                uds_list_res = []
+                if not st.session_state.df_ud.empty and ra_id in st.session_state.df_ud.columns:
+                    for _, ud_row in st.session_state.df_ud.iterrows():
+                        try:
+                            val_ra = float(ud_row.get(ra_id, 0.0))
+                            val_h  = int(ud_row.get("horas_ud", ud_row.get("Horas", 0)))
+                        except Exception:
+                            val_ra = 0.0; val_h = 0
+                        if val_ra > 0.0:
+                            s = f"{int(val_ra)}%" if val_ra == int(val_ra) else f"{val_ra:.1f}%"
+                            uds_list_res.append(f"{str(ud_row['id_ud'])} ({val_h}h) - {s}")
+                html_h = f"<div style='margin-left:25px;color:#ffe599;border-left:2px solid #d4af37;padding-left:10px;'>{', '.join(uds_list_res)}</div>" if uds_list_res else "<div style='margin-left:25px;color:#666;font-style:italic;border-left:2px solid #444;padding-left:10px;'>Sin UDs asignadas</div>"
+                st.markdown(html_h, unsafe_allow_html=True)
+    else:
+        st.info("No hay Resultados de Aprendizaje definidos.")
+
+
+
 
 # --- PESTAÑA: Planificación ---
 elif menu == "Matrices RA → CE → UD":
@@ -1366,85 +1430,152 @@ elif menu == "Matrices RA → CE → UD":
     st.subheader("🧩 CE. Criterios de Evaluación")
     
     with st.expander("➕ Añadir nuevo Criterio de evaluación", expanded=False):
-        st.markdown("*💡 Utiliza este formulario si prefieres una introducción de datos más visual para añadir Criterios en lugar de escribir directamente en la tabla inferior.*")
+        st.caption("Las UDs vinculadas se calculan automáticamente desde la matriz RA→UD.")
         with st.form("form_nuevo_ce"):
-            col_f1, col_f2 = st.columns(2)
-            with col_f1:
-                f_ra = st.selectbox("RA Asociado", options=st.session_state.df_ra["id_ra"].tolist() if not st.session_state.df_ra.empty else [""])
-                f_id_ce = st.text_input("ID-CE (Ej: CE1.a)")
-                f_peso = st.number_input("Peso %", min_value=0, max_value=100, step=1, value=0)
-            with col_f2:
-                opts_ud = st.session_state.df_ud["id_ud"].tolist() + ["Sin asignar"] if not st.session_state.df_ud.empty else ["Sin asignar"]
-                f_ud = st.selectbox("Asignar a UD", options=opts_ud)
-                f_og = st.text_input("OG")
-                f_cpe = st.text_input("CPE")
-                
-            f_desc = st.text_area("Descripción CE", height=100)
-            
-            submit_ce = st.form_submit_button("Añadir Criterio", type="primary")
+            # Fila 1: RA | FEOE | ID-CE | % CE
+            fc1, fc2, fc3, fc4 = st.columns([3, 1, 3, 1])
+            with fc1:
+                f_ra = st.selectbox("RA asociado", options=st.session_state.df_ra["id_ra"].tolist() if not st.session_state.df_ra.empty else [""])
+            with fc2:
+                f_feoe = st.checkbox("FEOE", value=False)
+            with fc3:
+                f_id_ce = st.text_input("ID-CE")
+            with fc4:
+                f_peso = st.number_input("% CE", min_value=0, max_value=100, step=1, value=0)
+
+            # Fila 3: OG + CPE
+            fc5, fc6 = st.columns(2)
+            with fc5:
+                f_og = st.text_input("OG vinculado")
+            with fc6:
+                f_cpe = st.text_input("CPE vinculada")
+
+            # Descripción completa
+            f_desc = st.text_area("Criterio de Evaluación", height=90, placeholder="Descripción completa del criterio…")
+
+            submit_ce = st.form_submit_button("➕ Añadir Criterio", type="primary", use_container_width=True)
             if submit_ce:
                 if f_id_ce.strip() == "":
                     st.error("El ID-CE es obligatorio.")
                 else:
                     nuevo_ce = {
                         "id_ra": f_ra,
+                        "id_ce": f_id_ce,
+                        "peso_ce": f_peso,
+                        "feoe": f_feoe,
+                        "id_ud": _ud_por_ra.get(f_ra, ""),
+                        "desc_ce": f_desc,
                         "og_vinc": f_og,
                         "cpe_vinc": f_cpe,
-                        "id_ce": f_id_ce,
-                        "desc_ce": f_desc,
-                        "peso_ce": f_peso,
-                        "id_ud": f_ud
                     }
                     st.session_state.df_ce = pd.concat([st.session_state.df_ce, pd.DataFrame([nuevo_ce])], ignore_index=True)
                     st.rerun()
 
 
+    # ── Asegurar que feoe exista en df_ce ────────────────────
+    if "feoe" not in st.session_state.df_ce.columns:
+        st.session_state.df_ce["feoe"] = False
+
+    # ── Calcular UD por RA desde df_ud (columnas dinámicas) ────
+    # df_ud tiene columnas: id_ud, horas_ud, desc_ud, RA1, RA2...
+    _ra_ids = st.session_state.df_ra["id_ra"].tolist() if not st.session_state.df_ra.empty else []
+    _ud_por_ra = {}  # {"RA1": "UD01, UD03", ...}
+    for _ra in _ra_ids:
+        if _ra in st.session_state.df_ud.columns:
+            _uds = st.session_state.df_ud.loc[
+                pd.to_numeric(st.session_state.df_ud[_ra], errors="coerce").fillna(0) > 0,
+                "id_ud"
+            ].tolist()
+            _ud_por_ra[_ra] = ", ".join(str(u) for u in _uds) if _uds else ""
+
     columnas_config_ce = {
-        "id_ra": st.column_config.SelectboxColumn("RA", options=st.session_state.df_ra["id_ra"].tolist()),
+        "id_ra":   st.column_config.SelectboxColumn("RA", options=st.session_state.df_ra["id_ra"].tolist()),
+        "id_ce":   st.column_config.TextColumn("ID-CE"),
+        "peso_ce": st.column_config.NumberColumn("% CE", min_value=0, max_value=100, step=1),
+        "feoe":    st.column_config.CheckboxColumn("FEOE", width="small"),
+        "_ud_calc": st.column_config.TextColumn("UD", disabled=True, width="medium"),
+        "desc_ce": st.column_config.TextColumn("Criterios de evaluación"),
         "og_vinc": st.column_config.TextColumn("OG"),
         "cpe_vinc": st.column_config.TextColumn("CPE"),
-        "id_ce": st.column_config.TextColumn("ID-CE"),
-        "desc_ce": st.column_config.TextColumn("Criterios de evaluación"),
-        "peso_ce": st.column_config.NumberColumn(
-            "% CE", min_value=0, max_value=100, step=1
-        ),
-        "id_ud": st.column_config.SelectboxColumn(
-            "UD",
-            options=st.session_state.df_ud["id_ud"].tolist() + ["Sin asignar"]
-        )
     }
 
-    columnas_ordenadas = ["id_ce", "peso_ce", "id_ra", "id_ud", "desc_ce", "cpe_vinc", "og_vinc"]
-    
-    # Asegurar que existan y purgar el resto
-    for c in columnas_ordenadas:
+    columnas_ordenadas_base = ["id_ra", "id_ce", "peso_ce", "feoe", "id_ud", "desc_ce", "cpe_vinc", "og_vinc"]
+
+    # Asegurar columnas base en df_ce
+    for c in columnas_ordenadas_base:
         if c not in st.session_state.df_ce.columns:
-            st.session_state.df_ce[c] = 0.0 if c == "peso_ce" else ""
-            
-    st.session_state.df_ce = st.session_state.df_ce[columnas_ordenadas]
-    
-    ed_ce = st.data_editor(
-        st.session_state.df_ce,
-        column_order=columnas_ordenadas,
-        column_config=columnas_config_ce,
-        num_rows="dynamic",
-        hide_index=True,
-        use_container_width=True,
-        key="tabla_ce"
-    )
+            st.session_state.df_ce[c] = False if c == "feoe" else (0.0 if c == "peso_ce" else "")
 
-    # Validar ponderaciones
-    if not ed_ce.empty:
-        # Rellenar RA vacíos temporalmente para agrupar
-        ed_ce_val = ed_ce.copy()
-        ed_ce_val["id_ra"] = ed_ce_val["id_ra"].fillna("")
-        ed_ce_val["peso_ce"] = pd.to_numeric(ed_ce_val["peso_ce"], errors="coerce").fillna(0)
-        errores_ponderacion = ed_ce_val.groupby('id_ra')['peso_ce'].sum()
-        for ra, total in errores_ponderacion.items():
-            if ra != "" and total != 100:
-                st.warning(f"⚠️ ¡Atención! La suma de ponderaciones de los CE del **{ra}** es {total}%. Debería ser 100%.")
+    st.session_state.df_ce = st.session_state.df_ce[columnas_ordenadas_base]
 
-    st.session_state.df_ce = ed_ce
+    # ── Config de columnas (sin id_ra — es el encabezado del expander) ──
+    columnas_config_ce_ra = {
+        "id_ce":    st.column_config.TextColumn("ID-CE", width="small"),
+        "peso_ce":  st.column_config.NumberColumn("% CE", min_value=0, max_value=100, step=1, width="small"),
+        "feoe":     st.column_config.CheckboxColumn("FEOE", width="small"),
+        "_ud_calc": st.column_config.TextColumn("UDs vinculadas", disabled=True),
+        "desc_ce":  st.column_config.TextColumn("Criterio de Evaluación"),
+        "og_vinc":  st.column_config.TextColumn("OG", width="small"),
+        "cpe_vinc": st.column_config.TextColumn("CPE", width="small"),
+    }
+    cols_sub = ["id_ce", "peso_ce", "feoe", "_ud_calc", "desc_ce", "og_vinc", "cpe_vinc"]
+
+    # ── Expander por RA ────────────────────────────────────────
+    df_ce_nuevo = []
+    _changed_ce = False
+
+    for _ra_row in st.session_state.df_ra.itertuples():
+        _ra_id   = _ra_row.id_ra
+        _ra_desc = getattr(_ra_row, "desc_ra", "")
+        _mask = st.session_state.df_ce["id_ra"].astype(str) == str(_ra_id)
+        _df_ra_ce = st.session_state.df_ce[_mask].copy().reset_index(drop=True)
+
+        # Calcular UD y % suma para el encabezado
+        _suma_ra = pd.to_numeric(_df_ra_ce["peso_ce"], errors="coerce").fillna(0).sum()
+        _ud_str  = _ud_por_ra.get(_ra_id, "—")
+        _n_ce    = len(_df_ra_ce)
+        _label   = f"🧩 {_ra_id}  ·  {_n_ce} CE  ·  Σ {_suma_ra:.0f}%  ·  UDs: {_ud_str}"
+        _warn    = "  ⚠️" if abs(_suma_ra - 100) > 0.5 and _n_ce > 0 else ""
+
+        with st.expander(f"{_label}{_warn}", expanded=False):
+            if abs(_suma_ra - 100) > 0.5 and _n_ce > 0:
+                st.warning(f"La suma de % CE para {_ra_id} es {_suma_ra:.0f}% — debería ser 100%")
+
+            # Preparar display
+            _df_disp = _df_ra_ce.copy()
+            _df_disp["_ud_calc"] = _ud_por_ra.get(_ra_id, "")
+            _df_disp = _df_disp[cols_sub]
+
+            _ed = st.data_editor(
+                _df_disp,
+                column_config=columnas_config_ce_ra,
+                num_rows="dynamic",
+                hide_index=True,
+                use_container_width=True,
+                key=f"tabla_ce_{_ra_id}",
+                disabled=ro_pd
+            )
+
+            # Detectar cambios
+            _ed_base = _ed.drop(columns=["_ud_calc"], errors="ignore")
+            _orig_base = _df_ra_ce[["id_ce","peso_ce","feoe","desc_ce","og_vinc","cpe_vinc"]]
+            if not _ed_base.reset_index(drop=True).equals(_orig_base.reset_index(drop=True)):
+                _changed_ce = True
+
+            # Reconstruir filas con id_ra
+            _ed_save = _ed.drop(columns=["_ud_calc"], errors="ignore").copy()
+            _ed_save["id_ra"] = _ra_id
+            _ed_save["id_ud"] = _ud_por_ra.get(_ra_id, "")
+            _ed_save = _ed_save[columnas_ordenadas_base]
+            df_ce_nuevo.append(_ed_save)
+
+    # Filas sin RA asignado (si las hay)
+    _sin_ra = st.session_state.df_ce[~st.session_state.df_ce["id_ra"].isin(_ra_ids)].copy()
+    if not _sin_ra.empty:
+        df_ce_nuevo.append(_sin_ra[columnas_ordenadas_base])
+
+    if _changed_ce:
+        st.session_state.df_ce = pd.concat(df_ce_nuevo, ignore_index=True) if df_ce_nuevo else st.session_state.df_ce.iloc[0:0]
 
 
 
@@ -1680,48 +1811,38 @@ elif menu == "Matrícula alumnado":
 
     df_al_work = st.session_state.df_al.copy()
 
-    # ── Orden de columnas ──────────────────────────────────────
-    _col_priority = ["ID", "Estado", "Apellidos", "Nombre", "Edad", "Nacimiento"]
+    # ── Normalizar Edad como numérico ──────────────────────────
+    if "Edad" in df_al_work.columns:
+        df_al_work["Edad"] = pd.to_numeric(df_al_work["Edad"], errors="coerce")
+
+    # ── Columna calculada 🌸 para menores de 18 ────────────────
+    df_al_work["🌸"] = False
+    if "Edad" in df_al_work.columns:
+        df_al_work["🌸"] = df_al_work["Edad"].fillna(99) < 18
+    _n_menores = int(df_al_work["🌸"].sum())
+    if _n_menores:
+        st.caption(f"🌸 {_n_menores} alumno(s) menor(es) de 18 años")
+
+    # ── Orden de columnas: ID, 🌸, Estado, Apellidos, Nombre, Edad, Nacimiento, resto ──
+    _col_priority = ["ID", "🌸", "Estado", "Apellidos", "Nombre", "Edad", "Nacimiento"]
     _col_rest = [c for c in df_al_work.columns if c not in _col_priority]
     _col_order = [c for c in _col_priority if c in df_al_work.columns] + _col_rest
     df_al_work = df_al_work[_col_order]
 
-    # ── Detectar menores de 18 (columna Edad numérica) ─────────
-    _tiene_edad = "Edad" in df_al_work.columns
-    if _tiene_edad:
-        df_al_work["Edad"] = pd.to_numeric(df_al_work["Edad"], errors="coerce")
-        _menores_idx = df_al_work.index[df_al_work["Edad"].fillna(99) < 18].tolist()
-    else:
-        _menores_idx = []
-
-    # ── Vista estilizada (solo lectura) con fondo rosa ─────────
-    if _tiene_edad and _menores_idx:
-        st.caption(f"🌸 {len(_menores_idx)} alumno(s) menor(es) de 18 años aparecen con fondo rosa")
-
-    def _style_menores(row):
-        if row.name in _menores_idx:
-            return ["background-color: #ffccd5; color: #7a0020"] * len(row)
-        return [""] * len(row)
-
-    _styled = df_al_work.style.apply(_style_menores, axis=1)
-    st.dataframe(_styled, hide_index=True, use_container_width=True)
-
-    st.markdown("---")
-    st.caption("✏️ Editor — los cambios se guardan automáticamente al modificar")
-
-    # ── Editor de datos ────────────────────────────────────────
+    # ── Configuración de columnas ──────────────────────────────
     config_al = {
-        "ID": st.column_config.TextColumn("ID-AL", width="small", disabled=True, pinned=True),
+        "ID":     st.column_config.TextColumn("ID-AL", width="small", disabled=True, pinned=True),
+        "🌸":     st.column_config.CheckboxColumn("🌸", disabled=True, width="small"),
         "Estado": st.column_config.SelectboxColumn("Estado", options=["Alta", "Baja"], default="Alta"),
-        "Apellidos": st.column_config.TextColumn("Apellidos"),
-        "Nombre": st.column_config.TextColumn("Nombre"),
-        "Edad": st.column_config.NumberColumn("Edad", min_value=0, max_value=99, step=1),
-        "Nacimiento": st.column_config.TextColumn("Fecha nacimiento"),
-        "Repite": st.column_config.CheckboxColumn("Repite"),
-        "Matrícula": st.column_config.TextColumn("Matrícula"),
+        "Apellidos":   st.column_config.TextColumn("Apellidos"),
+        "Nombre":      st.column_config.TextColumn("Nombre"),
+        "Edad":        st.column_config.NumberColumn("Edad", min_value=0, max_value=99, step=1),
+        "Nacimiento":  st.column_config.TextColumn("Fecha nacimiento"),
+        "Repite":      st.column_config.CheckboxColumn("Repite"),
+        "Matrícula":   st.column_config.TextColumn("Matrícula"),
         "Comentarios": st.column_config.TextColumn("Comentarios"),
-        "email": st.column_config.TextColumn("email"),
-        "Móvil": st.column_config.TextColumn("Móvil"),
+        "email":       st.column_config.TextColumn("email"),
+        "Móvil":       st.column_config.TextColumn("Móvil"),
     }
 
     ed_al = st.data_editor(
@@ -1734,9 +1855,11 @@ elif menu == "Matrícula alumnado":
         disabled=ro_curso
     )
 
-    if not ed_al.equals(df_al_work):
-        # Devolver al orden interno original antes de procesar
-        st.session_state.df_al = procesar_lista_alumnado(ed_al)
+    # ── Al modificar: quitar 🌸 (calculada) y guardar ──────────
+    _ed_sin_flor = ed_al.drop(columns=["🌸"], errors="ignore")
+    _work_sin_flor = df_al_work.drop(columns=["🌸"], errors="ignore")
+    if not _ed_sin_flor.equals(_work_sin_flor):
+        st.session_state.df_al = procesar_lista_alumnado(_ed_sin_flor)
         st.rerun()
 
 
@@ -1994,43 +2117,82 @@ elif menu == "Instrumentos de evaluación":
                         st.session_state.df_act = pd.concat([st.session_state.df_act, pd.DataFrame([nueva_act])], ignore_index=True)
                         st.rerun()
 
-        columnas_config_act = {
-            "id_act": st.column_config.TextColumn("ID-IA", disabled=True, width="small", pinned=True),
-            "tri_act": st.column_config.SelectboxColumn("Tri.", options=["1T", "2T", "3T"], width="small", pinned=True),
-            "Tipo": st.column_config.SelectboxColumn("Tipo", options=["Teoría", "Práctica", "Informes", "Tareas"], width="medium", pinned=True),
-            "desc_act": st.column_config.TextColumn("Instrumentos y/o Actividades", width="large", pinned=True),
+        columnas_config_act_base = {
+            "id_act":    st.column_config.TextColumn("ID-IA", disabled=True, width="small", pinned=True),
+            "Tipo":      st.column_config.SelectboxColumn("Tipo", options=["Teoría", "Práctica", "Informes", "Tareas"], width="medium"),
+            "desc_act":  st.column_config.TextColumn("Instrumento / Actividad"),
+            "peso_act":  st.column_config.NumberColumn("% Pond.", min_value=0, max_value=100, step=1, width="small"),
+            "is_active": st.column_config.CheckboxColumn("✓", width="small"),
         }
+        for ce in lista_ce_ids:
+            columnas_config_act_base[ce] = st.column_config.CheckboxColumn(ce, default=False, width="small")
 
-        # Columnas visibles: 4 fijas + checkboxes CE (sin auxiliares ce_vinc, peso_act, etc.)
-        cols_visibles = ["id_act", "tri_act", "Tipo", "desc_act"]
-        for col in cols_visibles:
+        # Asegurar columnas en df_act
+        cols_base = ["id_act", "tri_act", "Tipo", "desc_act", "peso_act", "is_active", "crit_calif"]
+        for col in cols_base:
             if col not in st.session_state.df_act.columns:
-                st.session_state.df_act[col] = ""
-
+                st.session_state.df_act[col] = "" if col not in ("peso_act", "is_active") else (0.0 if col == "peso_act" else True)
         for ce in lista_ce_ids:
             if ce not in st.session_state.df_act.columns:
                 st.session_state.df_act[ce] = False
-            columnas_config_act[ce] = st.column_config.CheckboxColumn(ce, default=False, width="small")
 
-        # Reestructurar df_act con SOLO columnas visibles (igual que hace UD con df_visual)
-        cols_finales = cols_visibles + lista_ce_ids
+        cols_finales = ["id_act", "tri_act", "Tipo", "desc_act", "peso_act", "is_active", "crit_calif"] + lista_ce_ids
         st.session_state.df_act = st.session_state.df_act.reindex(columns=cols_finales, fill_value=False)
 
-        ed_act = st.data_editor(
-            st.session_state.df_act,
-            column_config=columnas_config_act,
-            num_rows="dynamic",
-            hide_index=True,
-            width="stretch",
-            key="tabla_act",
-            height=max(400, (len(st.session_state.df_act) + 1) * 35 + 39)
-        )
+        # ── Expanders por trimestre ────────────────────────────────
+        cols_display = ["id_act", "Tipo", "desc_act", "peso_act", "is_active"] + lista_ce_ids
+        trimestres = [("1T", "1er Trimestre"), ("2T", "2º Trimestre"), ("3T", "3er Trimestre")]
+        df_act_nuevo = []
+        _changed_act = False
 
-        if len(ed_act) > len(st.session_state.df_act):
-            new_id = generar_siguiente_id(st.session_state.df_act, "ACT")
-            ed_act.iloc[-1, 0] = new_id
+        for tri_key, tri_nombre in trimestres:
+            _mask_tri = st.session_state.df_act["tri_act"].astype(str).str.upper() == tri_key
+            _df_tri = st.session_state.df_act[_mask_tri].copy().reset_index(drop=True)
+            _n_act  = len(_df_tri)
+            _suma_p = pd.to_numeric(_df_tri["peso_act"], errors="coerce").fillna(0).sum()
+            _label  = f"📋 {tri_nombre}  ·  {_n_act} actividades  ·  Σ {_suma_p:.0f}%"
 
-        st.session_state.df_act = ed_act
+            with st.expander(_label, expanded=False):
+                _df_disp = _df_tri[cols_display]
+                _ed = st.data_editor(
+                    _df_disp,
+                    column_config=columnas_config_act_base,
+                    num_rows="dynamic",
+                    hide_index=True,
+                    use_container_width=True,
+                    key=f"tabla_act_{tri_key}",
+                    disabled=ro_pd
+                )
+                # Detectar cambios
+                if not _ed.reset_index(drop=True).equals(_df_tri[cols_display].reset_index(drop=True)):
+                    _changed_act = True
+
+                # Auto-asignar nuevas filas: generar ID y tri_act
+                _ed_save = _ed.copy()
+                _ed_save["tri_act"] = tri_key
+                # Generar IDs para filas nuevas (vacías)
+                _ids_existentes = [r for r in st.session_state.df_act["id_act"].tolist() if r]
+                for idx in _ed_save.index:
+                    if not str(_ed_save.at[idx, "id_act"]).strip():
+                        _next_n = len(_ids_existentes) + 1
+                        _new_id = f"ACT{_next_n:02d}"
+                        while _new_id in _ids_existentes:
+                            _next_n += 1
+                            _new_id = f"ACT{_next_n:02d}"
+                        _ed_save.at[idx, "id_act"] = _new_id
+                        _ids_existentes.append(_new_id)
+
+                _ed_save["crit_calif"] = _df_tri["crit_calif"].values[:len(_ed_save)] if len(_ed_save) <= len(_df_tri) else ""
+                _ed_save = _ed_save.reindex(columns=cols_finales, fill_value=False)
+                df_act_nuevo.append(_ed_save)
+
+        # Filas sin trimestre asignado
+        _sin_tri = st.session_state.df_act[~st.session_state.df_act["tri_act"].astype(str).str.upper().isin(["1T","2T","3T"])].copy()
+        if not _sin_tri.empty:
+            df_act_nuevo.append(_sin_tri.reindex(columns=cols_finales, fill_value=False))
+
+        if _changed_act:
+            st.session_state.df_act = pd.concat(df_act_nuevo, ignore_index=True) if df_act_nuevo else st.session_state.df_act.iloc[0:0]
 
 
 # --- PESTAÑA: FEOE ---
@@ -2401,72 +2563,105 @@ elif menu == "Evaluación continua":
 
 # --- PESTAÑA: PROGRAMACIÓN DE AULA ---
 elif menu == "Programación de aula":
-    st.subheader("📚 Programación de Aula (Secuenciación de Sesiones)")
+    st.subheader("📚 Programación de aula")
     st.markdown("Diseña y estructura las sesiones para cada Unidad Didáctica, definiendo la tipología, RA/CE asociados, contenidos y recursos.")
     
-    # 3. Tabla de Secuenciación (Visualización y edición)
-    st.markdown("### 📋 Secuenciación de Sesiones Registradas")
-    if not st.session_state.df_sesiones.empty:
-        # Ordenamos por número de sesión por si acaso
-        st.session_state.df_sesiones = st.session_state.df_sesiones.sort_values(by="Num_Sesion").reset_index(drop=True)
-        
-        ed_ses = st.data_editor(
-            st.session_state.df_sesiones,
-            column_config={
-                "id_act": st.column_config.TextColumn("ID", disabled=True, width="small"),
-                "Num_Sesion": st.column_config.NumberColumn("Nº", min_value=1, step=1, width="small"),
-                "Tipo_Actividad": st.column_config.SelectboxColumn("Tipo", options=["Tª (Teoría)", "Pª (Práctica)", "IE (Instrumento de Evaluación)", "Pª+ (Ampliación/Refuerzo)"], width="medium"),
-                "RA_CE": st.column_config.TextColumn("RA/CE", width="medium"),
-                "Contenidos": st.column_config.TextColumn("Contenidos", width="large"),
-                "Aspectos_Clave": st.column_config.TextColumn("Aspectos Clave", width="medium"),
-                "Recursos": st.column_config.TextColumn("Recursos", width="medium")
-            },
-            num_rows="dynamic",
-            hide_index=True,
-            use_container_width=True,
-            key="tabla_sesiones"
-        )
-        st.session_state.df_sesiones = ed_ses
-    else:
-        st.info("No hay sesiones registradas. Utiliza la tabla o el formulario de abajo para empezar a añadir sesiones.")
-    
-    # 4. Formulario oculto bajo la tabla
+    # ── Asegurar columna id_ud en df_sesiones ─────────────────
+    if "id_ud" not in st.session_state.df_sesiones.columns:
+        st.session_state.df_sesiones["id_ud"] = ""
+
+    _uds_prog = st.session_state.df_ud[["id_ud", "desc_ud"]].copy() if not st.session_state.df_ud.empty else pd.DataFrame(columns=["id_ud","desc_ud"])
+    _lista_uds_prog = _uds_prog["id_ud"].tolist()
+
+    # ── Formulario añadir sesión (ahora con selector de UD) ───
     with st.expander("➕ Añadir Nueva Sesión", expanded=False):
-        st.markdown("*💡 Utiliza este formulario si prefieres una introducción de datos más visual y guiada en lugar de escribir directamente en la tabla.*")
         with st.form("registro_sesion"):
-            c1, c2, c3 = st.columns([1, 2, 2])
-            with c1:
-                num_ses = st.number_input("Nº Sesión", min_value=1, step=1, value=len(st.session_state.df_sesiones)+1)
-            with c2:
+            fc1, fc2, fc3 = st.columns([2, 2, 1])
+            with fc1:
+                ud_sel = st.selectbox("Unidad Didáctica", options=_lista_uds_prog if _lista_uds_prog else ["Sin UD"])
+            with fc2:
                 tipo_act = st.selectbox("Tipo de Actividad", options=["Tª (Teoría)", "Pª (Práctica)", "IE (Instrumento de Evaluación)", "Pª+ (Ampliación/Refuerzo)"])
-            with c3:
-                ra_ce_input = st.text_input("RA / CE vinculados", placeholder="Ej: RA1, CE1.a")
-                
+            with fc3:
+                num_ses = st.number_input("Nº Sesión", min_value=1, step=1, value=len(st.session_state.df_sesiones)+1)
+            ra_ce_input = st.text_input("RA / CE vinculados", placeholder="Ej: RA1, CE1.a")
             c4, c5 = st.columns(2)
             with c4:
-                contenidos_input = st.text_area("Contenidos / Descripción de la actividad", placeholder="Ej: Preparación del taller, Examen teórico...", height=80)
+                contenidos_input = st.text_area("Contenidos / Descripción", placeholder="Ej: Preparación del taller, Examen teórico...", height=80)
             with c5:
                 aspectos_input = st.text_area("Aspectos Clave", placeholder="Ej: Seguridad e higiene, Conceptos básicos...", height=80)
-            
             recursos_input = st.text_input("Recursos", placeholder="Ej: Aula Taller, Proyector, Herramienta X...")
-            
-            submit_btn = st.form_submit_button("Añadir Sesión", type="primary")
-            
-            if submit_btn:
+            if st.form_submit_button("➕ Añadir Sesión", type="primary", use_container_width=True):
                 new_ses_id = generar_siguiente_id(st.session_state.df_sesiones, "SES")
                 new_session = {
-                    "ID": new_ses_id,
-                    "Num_Sesion": num_ses,
-                    "Tipo_Actividad": tipo_act,
-                    "RA_CE": ra_ce_input,
-                    "Contenidos": contenidos_input,
-                    "Aspectos_Clave": aspectos_input,
-                    "Recursos": recursos_input
+                    "ID": new_ses_id, "id_ud": ud_sel,
+                    "Num_Sesion": num_ses, "Tipo_Actividad": tipo_act,
+                    "RA_CE": ra_ce_input, "Contenidos": contenidos_input,
+                    "Aspectos_Clave": aspectos_input, "Recursos": recursos_input
                 }
                 st.session_state.df_sesiones = pd.concat([st.session_state.df_sesiones, pd.DataFrame([new_session])], ignore_index=True)
-                st.success("Sesión añadida correctamente.")
                 st.rerun()
 
+    # ── Config columnas sesiones ───────────────────────────────
+    _col_cfg_ses = {
+        "ID":             st.column_config.TextColumn("ID", disabled=True, width="small"),
+        "Num_Sesion":     st.column_config.NumberColumn("Nº", min_value=1, step=1, width="small"),
+        "Tipo_Actividad": st.column_config.SelectboxColumn("Tipo", options=["Tª (Teoría)", "Pª (Práctica)", "IE (Instrumento de Evaluación)", "Pª+ (Ampliación/Refuerzo)"], width="medium"),
+        "RA_CE":          st.column_config.TextColumn("RA/CE", width="small"),
+        "Contenidos":     st.column_config.TextColumn("Contenidos", width="large"),
+        "Aspectos_Clave": st.column_config.TextColumn("Aspectos Clave", width="medium"),
+        "Recursos":       st.column_config.TextColumn("Recursos", width="medium"),
+    }
+    _cols_ses_disp = ["ID", "Num_Sesion", "Tipo_Actividad", "RA_CE", "Contenidos", "Aspectos_Clave", "Recursos"]
+
+    # ── Expanders por UD ───────────────────────────────────────
+    st.markdown("### 📋 Secuenciación de Unidades didácticas")
+    _df_ses_changed = False
+    _df_ses_nuevo = []
+
+    # UDs con sesiones + UDs definidas (en orden de df_ud)
+    _uds_con_sesiones = st.session_state.df_sesiones["id_ud"].dropna().unique().tolist()
+    _uds_en_orden = _lista_uds_prog + [u for u in _uds_con_sesiones if u not in _lista_uds_prog and str(u).strip()]
+
+    for _ud_id in _uds_en_orden:
+        _ud_info = _uds_prog[_uds_prog["id_ud"] == _ud_id]
+        _ud_desc = _ud_info["desc_ud"].values[0] if not _ud_info.empty else ""
+        _mask_ud = st.session_state.df_sesiones["id_ud"].astype(str) == str(_ud_id)
+        _df_ud_ses = st.session_state.df_sesiones[_mask_ud].sort_values("Num_Sesion").reset_index(drop=True)
+        _n_ses = len(_df_ud_ses)
+        _label_ud = f"📋 {_ud_id}  ·  {_n_ses} sesiones" + (f"  —  {_ud_desc}" if _ud_desc else "")
+
+        with st.expander(_label_ud, expanded=False):
+            if _df_ud_ses.empty:
+                st.caption("Sin sesiones. Usa el formulario de arriba para añadir.")
+            else:
+                _df_disp_ud = _df_ud_ses[[c for c in _cols_ses_disp if c in _df_ud_ses.columns]]
+                _ed_ud = st.data_editor(
+                    _df_disp_ud,
+                    column_config=_col_cfg_ses,
+                    num_rows="dynamic",
+                    hide_index=True,
+                    use_container_width=True,
+                    key=f"tabla_ses_{_ud_id}",
+                    disabled=ro_pd
+                )
+                if not _ed_ud.reset_index(drop=True).equals(_df_disp_ud.reset_index(drop=True)):
+                    _df_ses_changed = True
+                _ed_save = _ed_ud.copy()
+                _ed_save["id_ud"] = _ud_id
+                _df_ses_nuevo.append(_ed_save)
+
+    # Sesiones sin UD asignada
+    _sin_ud = st.session_state.df_sesiones[
+        ~st.session_state.df_sesiones["id_ud"].astype(str).isin([str(u) for u in _uds_en_orden])
+    ].copy()
+    if not _sin_ud.empty:
+        with st.expander(f"📋 Sin UD asignada  ·  {len(_sin_ud)} sesiones", expanded=False):
+            _ed_sin = st.data_editor(_sin_ud[[c for c in _cols_ses_disp if c in _sin_ud.columns]], column_config=_col_cfg_ses, num_rows="dynamic", hide_index=True, use_container_width=True, key="tabla_ses_sin_ud", disabled=ro_pd)
+            _ed_sin["id_ud"] = ""
+            _df_ses_nuevo.append(_ed_sin)
+
+    if _df_ses_changed and _df_ses_nuevo:
+        st.session_state.df_sesiones = pd.concat(_df_ses_nuevo, ignore_index=True)
 
 
     st.divider()
@@ -2521,113 +2716,25 @@ elif menu == "Contextualización":
     st.session_state.config_contexto["elenco_situaciones"] = st.text_area("Elenco de situaciones", st.session_state.config_contexto.get("elenco_situaciones", ""), height=120)
     st.session_state.config_contexto["circunstancias_ocultas"] = st.text_area("Circunstancias ocultas", st.session_state.config_contexto.get("circunstancias_ocultas", ""), height=120)
 
-# --- PESTAÑA: RESUMEN ---
-elif menu == "Resumen docente":
-    # --- Resumen N.UD. y N.Práct. ---
-    st.subheader("📊 Módulo. Unidades Didácticas y Prácticas")
-    rd1, rd2 = st.columns(2)
-    with rd1:
-        with st.container(border=True):
-            st.metric("N. Unidades Didácticas", len(st.session_state.df_ud))
-    with rd2:
-        with st.container(border=True):
-            st.metric("N. Prácticas", len(st.session_state.df_pr))
+    # ── Configuración del módulo (datos de pd.json + ciclos-fp.json) ─────
+    st.divider()
+    st.markdown("### ⚙️ Configuración del módulo")
+    st.session_state.config_contexto["metodologia"] = st.text_area(
+        "Estrategias metodológicas, recursos, espacios y desdobles",
+        value=st.session_state.config_contexto.get("metodologia", ""), height=150)
+    _new_met = st.text_area(
+        "Metodología (ej. activa, participativa, ABP)",
+        value=st.session_state.config_aula.get("Metodología", ""), height=100)
+    _new_div = st.text_area(
+        "Atención a la diversidad (adaptaciones no significativas)",
+        value=st.session_state.config_aula.get("Atención a la diversidad", ""), height=100)
+    if _new_met != st.session_state.config_aula.get("Metodología") or \
+       _new_div != st.session_state.config_aula.get("Atención a la diversidad"):
+        st.session_state.config_aula["Metodología"] = _new_met
+        st.session_state.config_aula["Atención a la diversidad"] = _new_div
 
 
-    # --- Resumen UDs por Trimestre ---
-    st.divider()    
-    st.markdown("### 📊 Unidades didácticas por Trimestre")
-    
-    uds_por_tri = {"1t": set(), "2t": set(), "3t": set()}
-    for tri in ["1t", "2t", "3t"]:
-        ini_t = st.session_state.info_fechas.get(f"ini_{tri}")
-        fin_t = st.session_state.info_fechas.get(f"fin_{tri}")
-        if ini_t and fin_t:
-            curr = ini_t
-            while curr <= fin_t:
-                d_str = curr.strftime("%d/%m/%Y")
-                for ud in st.session_state.planning_ledger.get(d_str, []):
-                    uds_por_tri[tri].add(ud)
-                curr += timedelta(days=1)
 
-    c_tri1, c_tri2, c_tri3 = st.columns(3)
-    def render_caja_tri(caja, titulo, uds_set):
-        with caja:
-            st.markdown(f"<div style='text-align: center; font-size: 1.1rem; color: #fff;'><strong>{titulo}</strong></div>", unsafe_allow_html=True)
-            with st.container(border=True):
-                if uds_set:
-                    # Mostrar todas concatenadas en un único div sin márgenes agresivos
-                    html_content = "<div>" + "".join([f"<div style='text-align: center; color: #ddd; font-weight: 500; line-height: 1.5;'>{ud}</div>" for ud in sorted(uds_set)]) + "</div>"
-                    st.markdown(html_content, unsafe_allow_html=True)
-                else:
-                    st.markdown("<div style='text-align: center; color: #888;'>-</div>", unsafe_allow_html=True)
-
-    render_caja_tri(c_tri1, "1er Tri.", uds_por_tri["1t"])
-    render_caja_tri(c_tri2, "2º Tri.", uds_por_tri["2t"])
-    render_caja_tri(c_tri3, "3er Tri.", uds_por_tri["3t"])
-
-    st.divider()   
-    st.markdown("### 📊 Relación entre Resultados de Aprendizaje y Unidades Didácticas", unsafe_allow_html=True)
-    
-    lista_ra_ids = st.session_state.df_ra["id_ra"].tolist() if not st.session_state.df_ra.empty else []
-    
-    if lista_ra_ids:
-        with st.container(border=True):
-            # Mapeo de RAs
-            ra_info = {}
-            if not st.session_state.df_ra.empty:
-                for _, row in st.session_state.df_ra.iterrows():
-                    try:
-                        pct_val = float(pd.to_numeric(row.get("peso_ra", 0.0), errors="coerce"))
-                        if pd.isna(pct_val): pct_val = 0.0
-                    except Exception:
-                        pct_val = 0.0
-                    ra_info[row["id_ra"]] = {
-                        "desc": row.get("desc_ra", ""),
-                        "pct": pct_val
-                    }
-                
-            for ra_id in lista_ra_ids:
-                # Fila de RA (padre)
-                info = ra_info.get(ra_id, {"desc": "", "pct": 0.0})
-                desc_ra_completa = info.get("desc", "")
-                pct = info.get("pct", 0.0)
-                str_pct = f"{int(pct)}%" if pct.is_integer() else f"{pct:.1f}%"
-                
-                st.markdown(f"<div style='color: #fff; font-size: 1.05rem; margin-top: 5px;'><strong>{ra_id} ({str_pct}).</strong> <span style='color: #ccc; font-size: 0.95rem;'>{desc_ra_completa}</span></div>", unsafe_allow_html=True)
-                
-                # Recopilar UDs que están asociadas a este RA (tienen % > 0)
-                uds_list = []
-                if not st.session_state.df_ud.empty and ra_id in st.session_state.df_ud.columns:
-                    for _, ud_row in st.session_state.df_ud.iterrows():
-                        try:
-                            val_ra = float(ud_row.get(ra_id, 0.0))
-                            val_h = int(ud_row.get("Horas", 0))
-                        except Exception:
-                            val_ra = 0.0
-                            val_h = 0
-                        
-                        if val_ra > 0.0:
-                            str_pct = f"{int(val_ra)}%" if val_ra.is_integer() else f"{val_ra:.1f}%"
-                            uds_list.append(f"{str(ud_row['id_ud'])} ({val_h}h) - {str_pct}")
-
-                # Recopilar Prácticas que tienen check en este RA
-                prs_list = []
-                if not st.session_state.df_pr.empty and ra_id in st.session_state.df_pr.columns:
-                    for _, pr_row in st.session_state.df_pr.iterrows():
-                        if pr_row.get(ra_id, False) == True:
-                            prs_list.append(str(pr_row["ID"]))
-                            
-                # Filas identadas (hijas)
-                html_hijas = ""
-                if uds_list:
-                    html_hijas += f"<div style='margin-left: 25px; margin-bottom: 2px; color: #ffe599; border-left: 2px solid #d4af37; padding-left: 10px;'>{', '.join(uds_list)}</div>"
-                else:
-                    html_hijas += "<div style='margin-left: 25px; margin-bottom: 2px; color: #666; font-style: italic; border-left: 2px solid #444; padding-left: 10px;'>Sin UDs asignadas</div>"
-
-                st.markdown(html_hijas, unsafe_allow_html=True)
-    else:
-        st.info("No hay Resultados de Aprendizaje definidos.")
 
 # --- PESTAÑA: PLANES E INCLUSIÓN ---
 elif menu == "Planes e inclusión":
