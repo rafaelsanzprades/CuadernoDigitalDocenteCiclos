@@ -1,6 +1,33 @@
+# Directorios excluidos de GitHub
+APP-Curso-PD-JJ-RECURSOS/
+APP-Curso-PD-JJ/
+BOE - BOA/
+Currículos/
+MejoraDocente/
+PD FPGB 3013 IED/
+
+# Python
 __pycache__/
-*.pyc
-temp_data_gen.py
-* - copia.py
-*.xlsx
-*.pdf
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# IDEs
+.vscode/
+.idea/
+
+# Archivos temporales
+*.bak
+*.bak.json
+*.tmp
