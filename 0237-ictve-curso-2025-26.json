@@ -1112,7 +1112,7 @@
             "Sep_Prv": 13,
             "Sep_Imp": 13,
             "Oct_Prv": 12,
-            "Oct_Imp": 12,
+            "Oct_Imp": 11,
             "Nov_Prv": 0,
             "Nov_Imp": 0,
             "Dic_Prv": 0,
@@ -1247,7 +1247,7 @@
             "Feb_Prv": 0,
             "Feb_Imp": 0,
             "Mar_Prv": 10,
-            "Mar_Imp": 8,
+            "Mar_Imp": 10,
             "Abr_Prv": 0,
             "Abr_Imp": 0,
             "May_Prv": 0,
@@ -1272,7 +1272,7 @@
             "Feb_Prv": 0,
             "Feb_Imp": 0,
             "Mar_Prv": 1,
-            "Mar_Imp": 0,
+            "Mar_Imp": 1,
             "Abr_Prv": 9,
             "Abr_Imp": 0,
             "May_Prv": 0,
@@ -1358,7 +1358,7 @@
         },
         {
             "id_ud": "UD11",
-            "horas_ud": 10,
+            "horas_ud": 14,
             "Sep_Prv": 0,
             "Sep_Imp": 0,
             "Oct_Prv": 0,
@@ -1388,7 +1388,7 @@
             "seguimiento": ""
         },
         "02/10/2025": {
-            "sin_docencia": false,
+            "sin_docencia": true,
             "seguimiento": ""
         },
         "06/10/2025": {

@@ -206,7 +206,7 @@
             "RA6": 5.0,
             "RA7": 5.0,
             "id_ud": "UD11",
-            "horas_ud": 10,
+            "horas_ud": 14,
             "desc_ud": "Mantenimiento de instalaciones de ICT"
         }
     ],
@@ -982,7 +982,7 @@
             "id_act": "ACT03",
             "tri_act": "1T",
             "Tipo": "Informes",
-            "desc_act": "1T Informes",
+            "desc_act": "1T Práctica 1",
             "peso_act": 0.0,
             "is_active": true,
             "crit_calif": "",
@@ -1042,8 +1042,8 @@
         {
             "id_act": "ACT04",
             "tri_act": "1T",
-            "Tipo": "Tareas",
-            "desc_act": "1T Tareas",
+            "Tipo": "Informes",
+            "desc_act": "1T Práctica 2",
             "peso_act": 0.0,
             "is_active": true,
             "crit_calif": "",
@@ -1063,6 +1063,128 @@
             "CE2.f": true,
             "CE2.g": true,
             "CE2.h": true,
+            "CE3.a": false,
+            "CE3.b": false,
+            "CE3.c": false,
+            "CE3.d": false,
+            "CE3.e": false,
+            "CE3.f": false,
+            "CE3.g": false,
+            "CE3.h": false,
+            "CE4.a": false,
+            "CE4.b": false,
+            "CE4.c": false,
+            "CE4.d": false,
+            "CE4.e": false,
+            "CE4.f": false,
+            "CE5.a": false,
+            "CE5.b": false,
+            "CE5.c": false,
+            "CE5.d": false,
+            "CE5.e": false,
+            "CE5.f": false,
+            "CE6.a": false,
+            "CE6.b": false,
+            "CE6.c": false,
+            "CE6.d": false,
+            "CE6.e": false,
+            "CE6.f": false,
+            "CE6.g": false,
+            "CE7.a": false,
+            "CE7.b": false,
+            "CE7.c": false,
+            "CE7.d": false,
+            "CE7.e": false,
+            "CE7.f": false,
+            "CE7.g": false,
+            "CE7.h": false,
+            "CE7.i": false
+        },
+        {
+            "id_act": null,
+            "tri_act": "1T",
+            "Tipo": "Informes",
+            "desc_act": "1T Práctica 3",
+            "peso_act": NaN,
+            "is_active": true,
+            "crit_calif": "",
+            "CE1.a": false,
+            "CE1.b": false,
+            "CE1.c": false,
+            "CE1.d": false,
+            "CE1.e": false,
+            "CE1.f": false,
+            "CE1.g": false,
+            "CE1.h": false,
+            "CE2.a": false,
+            "CE2.b": false,
+            "CE2.c": false,
+            "CE2.d": false,
+            "CE2.e": false,
+            "CE2.f": false,
+            "CE2.g": false,
+            "CE2.h": false,
+            "CE3.a": false,
+            "CE3.b": false,
+            "CE3.c": false,
+            "CE3.d": false,
+            "CE3.e": false,
+            "CE3.f": false,
+            "CE3.g": false,
+            "CE3.h": false,
+            "CE4.a": false,
+            "CE4.b": false,
+            "CE4.c": false,
+            "CE4.d": false,
+            "CE4.e": false,
+            "CE4.f": false,
+            "CE5.a": false,
+            "CE5.b": false,
+            "CE5.c": false,
+            "CE5.d": false,
+            "CE5.e": false,
+            "CE5.f": false,
+            "CE6.a": false,
+            "CE6.b": false,
+            "CE6.c": false,
+            "CE6.d": false,
+            "CE6.e": false,
+            "CE6.f": false,
+            "CE6.g": false,
+            "CE7.a": false,
+            "CE7.b": false,
+            "CE7.c": false,
+            "CE7.d": false,
+            "CE7.e": false,
+            "CE7.f": false,
+            "CE7.g": false,
+            "CE7.h": false,
+            "CE7.i": false
+        },
+        {
+            "id_act": null,
+            "tri_act": "1T",
+            "Tipo": "Informes",
+            "desc_act": "1T Práctica 4",
+            "peso_act": NaN,
+            "is_active": null,
+            "crit_calif": "",
+            "CE1.a": false,
+            "CE1.b": false,
+            "CE1.c": false,
+            "CE1.d": false,
+            "CE1.e": false,
+            "CE1.f": false,
+            "CE1.g": false,
+            "CE1.h": false,
+            "CE2.a": false,
+            "CE2.b": false,
+            "CE2.c": false,
+            "CE2.d": false,
+            "CE2.e": false,
+            "CE2.f": false,
+            "CE2.g": false,
+            "CE2.h": false,
             "CE3.a": false,
             "CE3.b": false,
             "CE3.c": false,
@@ -1667,7 +1789,8 @@
             "RA_CE": "",
             "Contenidos": "Presentación y evaluación inicial del alumnado, que bien puede ser verbal.",
             "Aspectos_Clave": "Ilusionar y comprender su necesidad profesional para mejorar su empleabilidad.",
-            "Recursos": "Pizarra y proyector"
+            "Recursos": "Pizarra y proyector",
+            "id_ud": ""
         },
         {
             "ID": "SES02",
@@ -1676,7 +1799,8 @@
             "RA_CE": "1/a",
             "Contenidos": "Tª 1. Características y análisis de las necesidades informáticas de los sistemas de teleco.",
             "Aspectos_Clave": "Identificación de requerimientos, escalabilidad y adaptabilidad a necesidades específicas.",
-            "Recursos": "Pizarra y proyector"
+            "Recursos": "Pizarra y proyector",
+            "id_ud": ""
         },
         {
             "ID": "SES03",
@@ -1685,7 +1809,8 @@
             "RA_CE": "1/f",
             "Contenidos": "Pª 0. Preparación del taller.",
             "Aspectos_Clave": "Prevención de riesgos uso herramientas.",
-            "Recursos": "Aula CM3"
+            "Recursos": "Aula CM3",
+            "id_ud": ""
         },
         {
             "ID": "SES04",
@@ -1694,7 +1819,8 @@
             "RA_CE": "1/ab",
             "Contenidos": "Tª 2. Arquitectura hardware de un sistema informático.",
             "Aspectos_Clave": "Estructura del sistema, componentes principales (CPU, memoria, almacenamiento).",
-            "Recursos": "Pizarra y proyector"
+            "Recursos": "Pizarra y proyector",
+            "id_ud": ""
         },
         {
             "ID": "SES05",
@@ -1703,7 +1829,8 @@
             "RA_CE": "1/bc",
             "Contenidos": "Tª 2. Subsistemas de E/S. Controladores, sistemas de bus.",
             "Aspectos_Clave": "Gestión de entradas/salidas, tipos de buses (PCI, USB), controladores y su función.",
-            "Recursos": "Pizarra y proyector"
+            "Recursos": "Pizarra y proyector",
+            "id_ud": ""
         },
         {
             "ID": "SES06",
@@ -1712,7 +1839,8 @@
             "RA_CE": "1/abc",
             "Contenidos": "Tª 3. Elementos hardware de un sistema informático. Características y tipología.",
             "Aspectos_Clave": "Procesadores, placas base, tarjetas gráficas, memoria RAM, etc. Diferencias entre tipos y modelos.",
-            "Recursos": "Pizarra y proyector"
+            "Recursos": "Pizarra y proyector",
+            "id_ud": ""
         },
         {
             "ID": "SES07",
@@ -1721,7 +1849,8 @@
             "RA_CE": "1/abc",
             "Contenidos": "Pª 1. Informe de ampliación sobre elementos hardware.",
             "Aspectos_Clave": "Además, explicar en esta UD1 como hacer un informe tomando notas en papel y posteriormente GDocs.",
-            "Recursos": "Set atornilladores, tijeras y alicates"
+            "Recursos": "Set atornilladores, tijeras y alicates",
+            "id_ud": ""
         },
         {
             "ID": "SES08",
@@ -1730,7 +1859,8 @@
             "RA_CE": "1/c",
             "Contenidos": "Tª 4. Dispositivos de almacenamiento. Tipología, instalación y configuración. Alimentación.",
             "Aspectos_Clave": "HDD, SSD, NVMe. Métodos de instalación, configuraciones RAID. Tipos fuentes y selección.",
-            "Recursos": "Pizarra y proyector"
+            "Recursos": "Pizarra y proyector",
+            "id_ud": ""
         },
         {
             "ID": "SES09",
@@ -1739,7 +1869,8 @@
             "RA_CE": "1/abc",
             "Contenidos": "Pª 2. Montaje y desmontaje de un ordenador, incluido el procesador y su radiador.",
             "Aspectos_Clave": "Hacer el ciclo completo, especial atención a volver a colocar la pasta térmica.",
-            "Recursos": "Herramientas, Cámara, GDocs"
+            "Recursos": "Herramientas, Cámara, GDocs",
+            "id_ud": ""
         },
         {
             "ID": "SES10",
@@ -1748,7 +1879,8 @@
             "RA_CE": "1/cde",
             "Contenidos": "Tª 5. Software en un sistema informático.",
             "Aspectos_Clave": "Tipos de software: sistema, aplicación y utilidades. Compatibilidad con el hardware.",
-            "Recursos": "Pizarra y proyector"
+            "Recursos": "Pizarra y proyector",
+            "id_ud": ""
         },
         {
             "ID": "SES11",
@@ -1757,7 +1889,8 @@
             "RA_CE": "1/cde",
             "Contenidos": "Tª 6. Sistemas operativos: concepto. Aplicaciones informáticas.",
             "Aspectos_Clave": "Definición de SO, funciones principales. Windows, Linux, MacOS. Aplicaciones y gestión recursos.",
-            "Recursos": "Pizarra y proyector"
+            "Recursos": "Pizarra y proyector",
+            "id_ud": ""
         },
         {
             "ID": "SES12",
@@ -1766,7 +1899,8 @@
             "RA_CE": "1/abcd",
             "Contenidos": "Pª 3. Cont. Pª 2, Administrar dispositivos e incluir tarjetas nuevas, por ejemplo, red.",
             "Aspectos_Clave": "Manejo de herramientas de diagnóstico de ordenadores personales.",
-            "Recursos": "Herramientas, Cámara, GDocs"
+            "Recursos": "Herramientas, Cámara, GDocs",
+            "id_ud": ""
         },
         {
             "ID": "SES13",
@@ -1775,7 +1909,8 @@
             "RA_CE": "1/def",
             "Contenidos": "Tª 7. Periféricos: características y tipología.",
             "Aspectos_Clave": "Dispositivos de entrada (teclados, ratones), salida (monitores, impresoras) y mixtos.",
-            "Recursos": "Pizarra y proyector"
+            "Recursos": "Pizarra y proyector",
+            "id_ud": ""
         },
         {
             "ID": "SES14",
@@ -1784,7 +1919,8 @@
             "RA_CE": "1/def",
             "Contenidos": "Tª 8. Equipamientos y tecnologías aplicadas a sistemas informáticos de teleco.",
             "Aspectos_Clave": "Equipos específicos: routers, switches, servidores. Tecnologías actuales (fibra óptica, 5G).",
-            "Recursos": "Pizarra y proyector"
+            "Recursos": "Pizarra y proyector",
+            "id_ud": ""
         },
         {
             "ID": "SES15",
@@ -1793,7 +1929,8 @@
             "RA_CE": "1/ef",
             "Contenidos": "Pª 4. Intercambiar periféricos convencionales entre equipos.",
             "Aspectos_Clave": "Atender los equipos como si fuese un servicio técnico oficial.",
-            "Recursos": "Herramientas, Cámara, GDocs"
+            "Recursos": "Herramientas, Cámara, GDocs",
+            "id_ud": ""
         },
         {
             "ID": "SES16",
@@ -1802,7 +1939,8 @@
             "RA_CE": "1/abcdef",
             "Contenidos": "IE 1. Corrección del cuaderno del taller.",
             "Aspectos_Clave": "Corrección tanto en papel como en GDocs.",
-            "Recursos": "Cuaderno y GDocs"
+            "Recursos": "Cuaderno y GDocs",
+            "id_ud": ""
         },
         {
             "ID": "SES17",
@@ -1811,7 +1949,8 @@
             "RA_CE": "1/abcdef",
             "Contenidos": "IE 2. Preparación del examen teórico-práctico.",
             "Aspectos_Clave": "Ronda de preguntas cortas con debate en grupo.",
-            "Recursos": "Aula CM1"
+            "Recursos": "Aula CM1",
+            "id_ud": ""
         },
         {
             "ID": "SES18",
@@ -1820,7 +1959,8 @@
             "RA_CE": "1/abcdef",
             "Contenidos": "IE 3. Examen teórico-práctico.",
             "Aspectos_Clave": "Desarrollo dual: escrito y soporte práctico.",
-            "Recursos": "Aula CM1 y CM3"
+            "Recursos": "Aula CM1 y CM3",
+            "id_ud": ""
         }
     ],
     "config_aula": {

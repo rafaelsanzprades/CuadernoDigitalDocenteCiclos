@@ -1,4 +1,4 @@
-# 📓 Cuaderno Digital Docente — Ciclos FP
+# 📓 Cuaderno Digital Docente — Ciclos
 
 Aplicación web interactiva desarrollada en **Python + Streamlit** para la gestión integral del trabajo docente en Formación Profesional: programación didáctica, seguimiento de aula y evaluación del alumnado.
 
@@ -29,7 +29,7 @@ Esta separación permite **reutilizar la Programación Didáctica** en cursos fu
 
 ### 📅 Curso actual
 - **Seguimiento diario:** Verificador mensual de horas previstas vs. impartidas con indicador de `Sin docencia`
-- **Matrícula alumnado:** Listado editable con fijación de columnas, detección automática de menores de 18 años (fondo rosa) y ordenación por apellidos
+- **Matrícula alumnado:** Listado editable con fijación de columnas, detección automática de menores de 18 años y ordenación por apellidos
 - **Calificación académica:** Cuaderno de notas por instrumento y trimestre con cálculo automático de nota final y equivalencia SIGAD
 - **Calificación FEOE:** Integración de notas del tutor de empresa para módulos dualizados
 - **Evaluación continua:** Progreso porcentual por RA para cada alumno
@@ -58,7 +58,7 @@ Esta separación permite **reutilizar la Programación Didáctica** en cursos fu
 
 ```bash
 # 1. Clonar el repositorio
-git clone https://github.com/rafaelsanzprades/CuadernoDigitalDocenteFP.git
+git clone https://github.com/rafaelsanzprades/CuadernoDigitalDocenteCiclos.git
 
 # 2. Crear entorno virtual (recomendado)
 python -m venv .venv
@@ -113,3 +113,19 @@ Los ficheros son portables: comparte la PD con compañeros sin exponer datos de 
 | 5 | Exportación de calificaciones a Excel (.xlsx) | ⬜ |
 | 6 | Vista resumen por RA con barras de progreso | ⬜ |
 | 10 | Buscador de alumnado | ⬜ |
+
+---
+
+## 📝 Cambios recientes (2026-03-31)
+
+### Módulo didáctico — Resumen visual
+- **Nuevo bloque "Nº Instrumentos de evaluación"** (4 columnas): Exámenes teóricos, Exámenes prácticos, Informes de ejercicios, Cuaderno de tareas — contados automáticamente desde la tabla de Instrumentos.
+- **Distribución de UDs por trimestre mejorada:** una UD se asigna a un trimestre si su fecha de inicio **o** su fecha de fin cae en ese trimestre (permite duplicados en trimestres limítrofes). Las UDs sin días lectivos asignados (cuando se agotan horas lectivas) se añaden automáticamente al último trimestre disponible.
+- **Métrica "H. Clases UD"** en el resumen de horas de Matrices RA→CE→UD: muestra la suma de la columna Horas de todas las UDs definidas.
+
+### Validador de coherencia (sidebar)
+- **Lógica corregida:** UDs > horas lectivas → 🔴 crítico ("exceden Xh — no caben en el calendario"); UDs < horas lectivas → 🟡 aviso ("sobran Xh lectivas").
+- La misma lógica se aplica al badge junto al título "UD. Unidades Didácticas" mediante el nuevo parámetro `invert=True` de la función `badge()`.
+
+### Nombre de la aplicación
+- Renombrado a **"Cuaderno Digital Docente Ciclos"** (eliminado "FP") en README y sidebar.

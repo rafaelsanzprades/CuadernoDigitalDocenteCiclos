@@ -953,10 +953,16 @@ with st.sidebar:
                     _h_reales += st.session_state.horario.get(_dias_semana[_cur.weekday()], 0)
             _cur += timedelta(days=1)
     if _h_ud > 0 and _h_reales > 0 and _h_ud != _h_reales:
-        _diff_h = _h_reales - _h_ud
-        _icono = "🟡" if abs(_diff_h) <= 5 else "🔴"
-        _txt = "sobran" if _diff_h > 0 else "faltan"
-        _val_avisos.append(f"{_icono} Horas: UDs={_h_ud}h vs lectivas={_h_reales}h ({_txt} {abs(_diff_h)}h)")
+        _diff_h = _h_ud - _h_reales  # positivo = UDs exceden las horas lectivas
+        if _diff_h > 0:
+            # UDs > lectivas → problema grave: no caben todas las UDs
+            _icono = "🔴"
+            _txt = f"exceden {_diff_h}h — no caben en el calendario"
+        else:
+            # UDs < lectivas → aviso menor: sobra tiempo lectivo
+            _icono = "🟡"
+            _txt = f"sobran {abs(_diff_h)}h lectivas"
+        _val_avisos.append(f"{_icono} Horas: UDs={_h_ud}h vs lectivas={_h_reales}h ({_txt})")
     _trimestres = [("1t","1T"), ("2t","2T"), ("3t","3T")]
     _fechas_ok = True
     for _key, _label in _trimestres:
@@ -1106,15 +1112,21 @@ if ro_curso and _es_seccion_curso:
 # diff  = valor_real - valor_esperado
 # unidad= '%', 'h', etc.
 # ============================================================
-def badge(diff, valor_real, unidad=""):
+def badge(diff, valor_real, unidad="", invert=False):
     if diff == 0:
         col, bg, ico = "#000000", "#00ff00", "✓"
         txt = f"{ico} ¡Ok! {valor_real}{unidad}"
-    elif diff > 0:  # exceso → amarillo
-        col, bg, ico = "#000000", "#ffff00", "▲"
+    elif diff > 0:  # exceso
+        if invert:  # más horas UDs que lectivas → rojo (no caben)
+            col, bg, ico = "#ffffff", "#ff0000", "▲"
+        else:
+            col, bg, ico = "#000000", "#ffff00", "▲"
         txt = f"{ico} +{diff}{unidad}"
-    else:           # falta → rojo
-        col, bg, ico = "#ffffff", "#ff0000", "▼"
+    else:           # déficit
+        if invert:  # menos horas UDs que lectivas → amarillo (sobra tiempo, pero se puede dar)
+            col, bg, ico = "#000000", "#ffff00", "▼"
+        else:
+            col, bg, ico = "#ffffff", "#ff0000", "▼"
         txt = f"{ico} {diff}{unidad}"
     return (
         f'<div style="background:{bg};color:{col};border:1px solid {col}55;'
@@ -1207,28 +1219,69 @@ if menu == "Módulo didáctico":
 
     # ── Resumen ──────────────────────────────────────────────────
     st.divider()
-    st.subheader("📊 Módulo. Unidades Didácticas y Prácticas")
-    rd1, rd2 = st.columns(2)
+    st.subheader("📊 Nº Instrumentos de evaluación")
+    rd1, rd2, rd3, rd4 = st.columns(4)
     with rd1:
         with st.container(border=True):
-            st.metric("N. Unidades Didácticas", len(st.session_state.df_ud))
+            _n_exam_teo = len(st.session_state.df_act[st.session_state.df_act["Tipo"] == "Teoría"]) if not st.session_state.df_act.empty and "Tipo" in st.session_state.df_act.columns else 0
+            st.metric("Exámenes teóricos", _n_exam_teo)
     with rd2:
         with st.container(border=True):
-            st.metric("N. Prácticas", len(st.session_state.df_pr))
+            _n_exam_prac = len(st.session_state.df_act[st.session_state.df_act["Tipo"] == "Práctica"]) if not st.session_state.df_act.empty and "Tipo" in st.session_state.df_act.columns else 0
+            st.metric("Exámenes prácticos", _n_exam_prac)
+    with rd3:
+        with st.container(border=True):
+            _n_inf_ej = len(st.session_state.df_act[st.session_state.df_act["Tipo"] == "Informes"]) if not st.session_state.df_act.empty and "Tipo" in st.session_state.df_act.columns else 0
+            st.metric("Informes de ejercicios", _n_inf_ej)
+    with rd4:
+        with st.container(border=True):
+            _n_tareas = len(st.session_state.df_act[st.session_state.df_act["Tipo"] == "Tareas"]) if not st.session_state.df_act.empty and "Tipo" in st.session_state.df_act.columns else 0
+            st.metric("Cuaderno de tareas", _n_tareas)
 
     st.divider()
-    st.markdown("### 📊 Unidades didácticas por Trimestre")
+    st.markdown("### 📊 Nº Unidades didácticas por trimestres")
+
+    # Calcular fecha de inicio y fin de cada UD desde el planning_ledger
+    _ud_fechas = {}  # {ud_id: {"ini": date, "fin": date}}
+    for d_str, ud_list in st.session_state.planning_ledger.items():
+        try:
+            d_obj = datetime.strptime(d_str, "%d/%m/%Y").date()
+        except Exception:
+            continue
+        for ud in ud_list:
+            if ud not in _ud_fechas:
+                _ud_fechas[ud] = {"ini": d_obj, "fin": d_obj}
+            else:
+                if d_obj < _ud_fechas[ud]["ini"]:
+                    _ud_fechas[ud]["ini"] = d_obj
+                if d_obj > _ud_fechas[ud]["fin"]:
+                    _ud_fechas[ud]["fin"] = d_obj
+
+    # Asignar UD a trimestre si su inicio O su fin cae en ese trimestre
     uds_por_tri = {"1t": set(), "2t": set(), "3t": set()}
     for tri in ["1t", "2t", "3t"]:
         ini_t = st.session_state.info_fechas.get(f"ini_{tri}")
         fin_t = st.session_state.info_fechas.get(f"fin_{tri}")
-        if ini_t and fin_t:
-            curr = ini_t
-            while curr <= fin_t:
-                d_str = curr.strftime("%d/%m/%Y")
-                for ud in st.session_state.planning_ledger.get(d_str, []):
-                    uds_por_tri[tri].add(ud)
-                curr += timedelta(days=1)
+        if not ini_t or not fin_t:
+            continue
+        for ud_id, fechas in _ud_fechas.items():
+            ud_ini = fechas["ini"]
+            ud_fin = fechas["fin"]
+            if (ini_t <= ud_ini <= fin_t) or (ini_t <= ud_fin <= fin_t):
+                uds_por_tri[tri].add(ud_id)
+
+    # UDs sin días en planning_ledger (p.ej. la última UD si se agotaron días lectivos)
+    # → se añaden al último trimestre disponible
+    _all_ud_ids = st.session_state.df_ud["id_ud"].tolist() if not st.session_state.df_ud.empty else []
+    _uds_sin_ledger = [u for u in _all_ud_ids if u not in _ud_fechas]
+    if _uds_sin_ledger:
+        _ultimo_tri = next(
+            (t for t in ["3t", "2t", "1t"] if st.session_state.info_fechas.get(f"ini_{t}")),
+            "3t"
+        )
+        for u in _uds_sin_ledger:
+            uds_por_tri[_ultimo_tri].add(u)
+
     c_tri1, c_tri2, c_tri3 = st.columns(3)
     def render_caja_tri(caja, titulo, uds_set):
         with caja:
@@ -1324,7 +1377,7 @@ elif menu == "Matrices RA → CE → UD":
     dias_feoe_lv = sum(1 for i in range((fin_fo - ini_fo).days + 1) if (ini_fo + timedelta(days=i)).weekday() < 5)
     h_real_feoe = dias_feoe_lv * 8
     
-    st.markdown("##### Resumen de horas")
+    st.markdown("##### Horas: BOA → Clases real → Clases Unidades Didácticas")
     cf_a, cf_b, cf_c = st.columns(3)
     with cf_a:
         with st.container(border=True):
@@ -1334,7 +1387,8 @@ elif menu == "Matrices RA → CE → UD":
             st.metric("H. Clases real", f"{horas_reales} h")
     with cf_c:
         with st.container(border=True):
-            st.metric("H. FEOE real", f"{h_real_feoe} h")
+            _h_clases_ud = int(st.session_state.df_ud["horas_ud"].sum()) if not st.session_state.df_ud.empty and "horas_ud" in st.session_state.df_ud.columns else 0
+            st.metric("H. Clases UD", f"{_h_clases_ud} h")
 
     st.divider()
     c_ud1, c_ud2 = st.columns([3, 1])
@@ -1407,7 +1461,7 @@ elif menu == "Matrices RA → CE → UD":
     st.session_state.df_ud = ed_ud
     
     suma_ud = float(st.session_state.df_ud["horas_ud"].sum()) if not st.session_state.df_ud.empty else 0.0
-    badge_ud.markdown(badge(suma_ud - horas_reales, suma_ud, " h"), unsafe_allow_html=True)
+    badge_ud.markdown(badge(suma_ud - horas_reales, suma_ud, " h", invert=True), unsafe_allow_html=True)
     
     # ---- VALIDACIÓN DE PORCENTAJES DE LA MATRIZ UD-RA ----
     if not ed_ud.empty:
