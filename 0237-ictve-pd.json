@@ -23,12 +23,12 @@
         "p_ev": 15,
         "criterio_tareas": 30,
         "h_feoe": 140,
-        "curso": "1º"
+        "curso": "1Âº"
     },
     "horario": {
         "Lun": 1,
         "Mar": 2,
-        "Mié": 1,
+        "MiÃ©": 1,
         "Jue": 1,
         "Vie": 0
     },
@@ -43,37 +43,37 @@
             "id_ra": "RA2",
             "peso_ra": 15.0,
             "is_dual": false,
-            "desc_ra": "Configura pequeñas instalaciones de infraestructuras comunes de telecomunicaciones para viviendas y edificios, determinando los elementos que la conforman y seleccionando componentes y equipos."
+            "desc_ra": "Configura pequeÃ±as instalaciones de infraestructuras comunes de telecomunicaciones para viviendas y edificios, determinando los elementos que la conforman y seleccionando componentes y equipos."
         },
         {
             "id_ra": "RA3",
             "peso_ra": 5.0,
             "is_dual": false,
-            "desc_ra": "Monta instalaciones de infraestructuras comunes de telecomunicaciones para viviendas y edificios interpretando documentación técnica y aplicando técnicas de montaje."
+            "desc_ra": "Monta instalaciones de infraestructuras comunes de telecomunicaciones para viviendas y edificios interpretando documentaciÃ³n tÃ©cnica y aplicando tÃ©cnicas de montaje."
         },
         {
             "id_ra": "RA4",
             "peso_ra": 5.0,
             "is_dual": false,
-            "desc_ra": "Verifica y ajusta los elementos de las instalaciones de infraestructuras comunes de telecomunicaciones midiendo los parámetros significativos e interpretando sus resultados."
+            "desc_ra": "Verifica y ajusta los elementos de las instalaciones de infraestructuras comunes de telecomunicaciones midiendo los parÃ¡metros significativos e interpretando sus resultados."
         },
         {
             "id_ra": "RA5",
             "peso_ra": 5.0,
             "is_dual": false,
-            "desc_ra": "Localiza averías y disfunciones en equipos e instalaciones de infraestructuras comunes de telecomunicaciones, aplicando técnicas de detección y relacionando la disfunción con la causa que la produce."
+            "desc_ra": "Localiza averÃ­as y disfunciones en equipos e instalaciones de infraestructuras comunes de telecomunicaciones, aplicando tÃ©cnicas de detecciÃ³n y relacionando la disfunciÃ³n con la causa que la produce."
         },
         {
             "id_ra": "RA6",
             "peso_ra": 5.0,
             "is_dual": false,
-            "desc_ra": "Repara instalaciones de infraestructuras de telecomunicaciones aplicando técnicas  de corrección de disfunciones y en su caso de sustitución de componentes teniendo en cuenta las recomendaciones de los fabricantes."
+            "desc_ra": "Repara instalaciones de infraestructuras de telecomunicaciones aplicando tÃ©cnicas  de correcciÃ³n de disfunciones y en su caso de sustituciÃ³n de componentes teniendo en cuenta las recomendaciones de los fabricantes."
         },
         {
             "id_ra": "RA7",
             "peso_ra": 5.0,
             "is_dual": false,
-            "desc_ra": "Cumple las normas de prevención de riesgos laborales y de protección ambiental, identificando los riesgos asociados y las medidas y equipos para prevenirlos."
+            "desc_ra": "Cumple las normas de prevenciÃ³n de riesgos laborales y de protecciÃ³n ambiental, identificando los riesgos asociados y las medidas y equipos para prevenirlos."
         }
     ],
     "df_ud": [
@@ -183,7 +183,7 @@
             "RA7": 0.0,
             "id_ud": "UD09",
             "horas_ud": 15,
-            "desc_ud": "Instalaciones de telefonía en ICT"
+            "desc_ud": "Instalaciones de telefonÃa en ICT"
         },
         {
             "RA1": 5.0,
@@ -195,7 +195,7 @@
             "RA7": 0.0,
             "id_ud": "UD10",
             "horas_ud": 10,
-            "desc_ud": "Instalaciones de interfonía y control de acceso"
+            "desc_ud": "Instalaciones de interfonÃa y control de acceso"
         },
         {
             "RA1": 0.0,
@@ -206,14 +206,14 @@
             "RA6": 5.0,
             "RA7": 5.0,
             "id_ud": "UD11",
-            "horas_ud": 14,
+            "horas_ud": 15,
             "desc_ud": "Mantenimiento de instalaciones de ICT"
         }
     ],
     "df_pr": [
         {
             "ID": "Pr01",
-            "Práctica": "Práctica 01",
+            "PrÃ¡ctica": "PrÃ¡ctica 01",
             "RA01": true,
             "RA02": false,
             "RA03": false,
@@ -224,7 +224,7 @@
         },
         {
             "ID": "Pr02",
-            "Práctica": "Práctica 02",
+            "PrÃ¡ctica": "PrÃ¡ctica 02",
             "RA01": true,
             "RA02": false,
             "RA03": false,
@@ -235,7 +235,7 @@
         },
         {
             "ID": "Pr03",
-            "Práctica": "Práctica 03",
+            "PrÃ¡ctica": "PrÃ¡ctica 03",
             "RA01": true,
             "RA02": true,
             "RA03": true,
@@ -246,7 +246,7 @@
         },
         {
             "ID": "Pr04",
-            "Práctica": "Práctica 04",
+            "PrÃ¡ctica": "PrÃ¡ctica 04",
             "RA01": false,
             "RA02": true,
             "RA03": false,
@@ -257,7 +257,7 @@
         },
         {
             "ID": "Pr05",
-            "Práctica": "Práctica 05",
+            "PrÃ¡ctica": "PrÃ¡ctica 05",
             "RA01": false,
             "RA02": true,
             "RA03": true,
@@ -268,7 +268,7 @@
         },
         {
             "ID": "Pr06",
-            "Práctica": "Práctica 06",
+            "PrÃ¡ctica": "PrÃ¡ctica 06",
             "RA01": false,
             "RA02": false,
             "RA03": false,
@@ -279,7 +279,7 @@
         },
         {
             "ID": "Pr07",
-            "Práctica": "Práctica 07",
+            "PrÃ¡ctica": "PrÃ¡ctica 07",
             "RA01": false,
             "RA02": false,
             "RA03": false,
@@ -290,7 +290,7 @@
         },
         {
             "ID": "Pr08",
-            "Práctica": "Práctica 08",
+            "PrÃ¡ctica": "PrÃ¡ctica 08",
             "RA01": false,
             "RA02": false,
             "RA03": false,
@@ -301,7 +301,7 @@
         },
         {
             "ID": "Pr09",
-            "Práctica": "Práctica 09",
+            "PrÃ¡ctica": "PrÃ¡ctica 09",
             "RA01": false,
             "RA02": true,
             "RA03": true,
@@ -312,7 +312,7 @@
         },
         {
             "ID": "Pr10",
-            "Práctica": "Práctica 10",
+            "PrÃ¡ctica": "PrÃ¡ctica 10",
             "RA01": false,
             "RA02": true,
             "RA03": false,
@@ -323,7 +323,7 @@
         },
         {
             "ID": "Pr11",
-            "Práctica": "Práctica 11",
+            "PrÃ¡ctica": "PrÃ¡ctica 11",
             "RA01": false,
             "RA02": false,
             "RA03": false,
@@ -360,7 +360,7 @@
             "peso_ce": 12.5,
             "feoe": false,
             "id_ud": "UD01",
-            "desc_ce": "Se han descrito los tipos de instalaciones que componen una ICT (infraestructura común de telecomunicaciones).",
+            "desc_ce": "Se han descrito los tipos de instalaciones que componen una ICT (infraestructura comÃºn de telecomunicaciones).",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -370,7 +370,7 @@
             "peso_ce": 12.5,
             "feoe": false,
             "id_ud": "UD01",
-            "desc_ce": "Se han descrito los tipos y la función de recintos (superior, inferior) y registros (enlace, secundario, entre otros) de una ICT.",
+            "desc_ce": "Se han descrito los tipos y la funciÃ³n de recintos (superior, inferior) y registros (enlace, secundario, entre otros) de una ICT.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -390,7 +390,7 @@
             "peso_ce": 12.5,
             "feoe": false,
             "id_ud": "UD01",
-            "desc_ce": "Se han descrito los tipos de redes que componen la ICT (alimentación, distribución, dispersión    e interior).",
+            "desc_ce": "Se han descrito los tipos de redes que componen la ICT (alimentaciÃ³n, distribuciÃ³n, dispersiÃ³n    e interior).",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -400,7 +400,7 @@
             "peso_ce": 12.5,
             "feoe": false,
             "id_ud": "UD01",
-            "desc_ce": "Se han identificado los elementos de conexión.",
+            "desc_ce": "Se han identificado los elementos de conexiÃ³n.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -410,7 +410,7 @@
             "peso_ce": 12.5,
             "feoe": false,
             "id_ud": "UD01",
-            "desc_ce": "Se ha determinado la función y características de los elementos y equipos de cada sistema (televisión, telefonía, seguridad, entre otros).",
+            "desc_ce": "Se ha determinado la funciÃ³n y caracterÃ­sticas de los elementos y equipos de cada sistema (televisiÃ³n, telefonÃ­a, seguridad, entre otros).",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -420,7 +420,7 @@
             "peso_ce": 12.5,
             "feoe": false,
             "id_ud": "UD02",
-            "desc_ce": "Se han identificado las especificaciones técnicas de la instalación.",
+            "desc_ce": "Se han identificado las especificaciones tÃ©cnicas de la instalaciÃ³n.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -430,7 +430,7 @@
             "peso_ce": 12.5,
             "feoe": false,
             "id_ud": "UD02",
-            "desc_ce": "Se ha aplicado la normativa de ICT y el REBT en la configuración de la instalación.",
+            "desc_ce": "Se ha aplicado la normativa de ICT y el REBT en la configuraciÃ³n de la instalaciÃ³n.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -440,7 +440,7 @@
             "peso_ce": 12.5,
             "feoe": false,
             "id_ud": "UD02",
-            "desc_ce": "Se han utilizado herramientas informáticas de aplicación.",
+            "desc_ce": "Se han utilizado herramientas informÃ¡ticas de aplicaciÃ³n.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -450,7 +450,7 @@
             "peso_ce": 12.5,
             "feoe": false,
             "id_ud": "UD02",
-            "desc_ce": "Se han calculado los parámetros de los elementos y equipos de la instalación.",
+            "desc_ce": "Se han calculado los parÃ¡metros de los elementos y equipos de la instalaciÃ³n.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -460,7 +460,7 @@
             "peso_ce": 12.5,
             "feoe": false,
             "id_ud": "UD02",
-            "desc_ce": "Se han realizado los croquis y esquemas de la instalación con la calidad requerida.",
+            "desc_ce": "Se han realizado los croquis y esquemas de la instalaciÃ³n con la calidad requerida.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -470,7 +470,7 @@
             "peso_ce": 12.5,
             "feoe": false,
             "id_ud": "UD02",
-            "desc_ce": "Se ha utilizado la simbología normalizada.",
+            "desc_ce": "Se ha utilizado la simbologÃ­a normalizada.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -480,7 +480,7 @@
             "peso_ce": 12.5,
             "feoe": false,
             "id_ud": "UD02",
-            "desc_ce": "Se han seleccionado los equipos y materiales que cumplen las especificaciones funcionales, técnicas y normativas.",
+            "desc_ce": "Se han seleccionado los equipos y materiales que cumplen las especificaciones funcionales, tÃ©cnicas y normativas.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -490,7 +490,7 @@
             "peso_ce": 12.5,
             "feoe": false,
             "id_ud": "UD02",
-            "desc_ce": "Se ha elaborado el presupuesto correspondiente a la solución adoptada.",
+            "desc_ce": "Se ha elaborado el presupuesto correspondiente a la soluciÃ³n adoptada.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -500,7 +500,7 @@
             "peso_ce": 12.5,
             "feoe": false,
             "id_ud": "UD03",
-            "desc_ce": "Se ha interpretado la documentación técnica de la instalación (planos, esquemas, reglamentación, entre otros).",
+            "desc_ce": "Se ha interpretado la documentaciÃ³n tÃ©cnica de la instalaciÃ³n (planos, esquemas, reglamentaciÃ³n, entre otros).",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -510,7 +510,7 @@
             "peso_ce": 12.5,
             "feoe": false,
             "id_ud": "UD03",
-            "desc_ce": "Se ha realizado el replanteo de la instalación.",
+            "desc_ce": "Se ha realizado el replanteo de la instalaciÃ³n.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -530,7 +530,7 @@
             "peso_ce": 12.5,
             "feoe": false,
             "id_ud": "UD03",
-            "desc_ce": "Se han realizado operaciones de montaje de mástiles y torretas, entre otros.",
+            "desc_ce": "Se han realizado operaciones de montaje de mÃ¡stiles y torretas, entre otros.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -540,7 +540,7 @@
             "peso_ce": 12.5,
             "feoe": false,
             "id_ud": "UD03",
-            "desc_ce": "Se han ubicado y fijado los elementos de captación de señales y del equipo de cabecera.",
+            "desc_ce": "Se han ubicado y fijado los elementos de captaciÃ³n de seÃ±ales y del equipo de cabecera.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -550,7 +550,7 @@
             "peso_ce": 12.5,
             "feoe": false,
             "id_ud": "UD03",
-            "desc_ce": "Se ha tendido el cableado de los sistemas de la instalación (televisión, telefonía y comunicación interior, seguridad, entre otros).",
+            "desc_ce": "Se ha tendido el cableado de los sistemas de la instalaciÃ³n (televisiÃ³n, telefonÃ­a y comunicaciÃ³n interior, seguridad, entre otros).",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -560,7 +560,7 @@
             "peso_ce": 12.5,
             "feoe": false,
             "id_ud": "UD03",
-            "desc_ce": "Se han conexionado los equipos y elementos de la instalación.",
+            "desc_ce": "Se han conexionado los equipos y elementos de la instalaciÃ³n.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -580,7 +580,7 @@
             "peso_ce": 16.7,
             "feoe": false,
             "id_ud": "UD04",
-            "desc_ce": "Se han descrito las unidades y los parámetros de los sistemas de la instalación (ganancia de la antena, de amplificadores, directividad, anchos de banda, atenuaciones, interferencias, entre otros).",
+            "desc_ce": "Se han descrito las unidades y los parÃ¡metros de los sistemas de la instalaciÃ³n (ganancia de la antena, de amplificadores, directividad, anchos de banda, atenuaciones, interferencias, entre otros).",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -590,7 +590,7 @@
             "peso_ce": 16.7,
             "feoe": false,
             "id_ud": "UD04",
-            "desc_ce": "Se han utilizado herramientas informáticas para la obtención de información: situación de repetidores, posicionamiento de satélites, entre otros.",
+            "desc_ce": "Se han utilizado herramientas informÃ¡ticas para la obtenciÃ³n de informaciÃ³n: situaciÃ³n de repetidores, posicionamiento de satÃ©lites, entre otros.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -600,7 +600,7 @@
             "peso_ce": 16.7,
             "feoe": false,
             "id_ud": "UD04",
-            "desc_ce": "Se han orientado los elementos de captación de señales.",
+            "desc_ce": "Se han orientado los elementos de captaciÃ³n de seÃ±ales.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -610,7 +610,7 @@
             "peso_ce": 16.7,
             "feoe": false,
             "id_ud": "UD04",
-            "desc_ce": "Se han realizado las medidas de los parámetros significativos de las señales en los sistemas de la instalación.",
+            "desc_ce": "Se han realizado las medidas de los parÃ¡metros significativos de las seÃ±ales en los sistemas de la instalaciÃ³n.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -620,7 +620,7 @@
             "peso_ce": 16.7,
             "feoe": false,
             "id_ud": "UD04",
-            "desc_ce": "Se han relacionado los parámetros medidos con los característicos de la instalación.",
+            "desc_ce": "Se han relacionado los parÃ¡metros medidos con los caracterÃ­sticos de la instalaciÃ³n.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -640,7 +640,7 @@
             "peso_ce": 16.7,
             "feoe": false,
             "id_ud": "UD05",
-            "desc_ce": "Se han realizado las medidas de los parámetros de funcionamiento, utilizando los medios, equipos e instrumentos específicos.",
+            "desc_ce": "Se han realizado las medidas de los parÃ¡metros de funcionamiento, utilizando los medios, equipos e instrumentos especÃ­ficos.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -650,7 +650,7 @@
             "peso_ce": 16.7,
             "feoe": false,
             "id_ud": "UD05",
-            "desc_ce": "Se ha operado con las herramientas e instrumentos adecuados para la diagnosis de averías.",
+            "desc_ce": "Se ha operado con las herramientas e instrumentos adecuados para la diagnosis de averÃ­as.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -660,7 +660,7 @@
             "peso_ce": 16.7,
             "feoe": false,
             "id_ud": "UD05",
-            "desc_ce": "Se han identificado los síntomas de averías o disfunciones.",
+            "desc_ce": "Se han identificado los sÃ­ntomas de averÃ­as o disfunciones.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -670,7 +670,7 @@
             "peso_ce": 16.7,
             "feoe": false,
             "id_ud": "UD05",
-            "desc_ce": "Se han planteado hipótesis de las posibles causas de la avería y su repercusión en la instalación.",
+            "desc_ce": "Se han planteado hipÃ³tesis de las posibles causas de la averÃ­a y su repercusiÃ³n en la instalaciÃ³n.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -680,7 +680,7 @@
             "peso_ce": 16.7,
             "feoe": false,
             "id_ud": "UD05",
-            "desc_ce": "Se ha localizado el subsistema, equipo o elemento responsable de la disfunción.",
+            "desc_ce": "Se ha localizado el subsistema, equipo o elemento responsable de la disfunciÃ³n.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -690,7 +690,7 @@
             "peso_ce": 16.5,
             "feoe": false,
             "id_ud": "UD05",
-            "desc_ce": "Se ha operado con autonomía en las actividades propuestas",
+            "desc_ce": "Se ha operado con autonomÃ­a en las actividades propuestas",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -700,7 +700,7 @@
             "peso_ce": 14.3,
             "feoe": false,
             "id_ud": "UD06",
-            "desc_ce": "Se ha elaborado la secuencia de intervención para la reparación de la avería.",
+            "desc_ce": "Se ha elaborado la secuencia de intervenciÃ³n para la reparaciÃ³n de la averÃ­a.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -710,7 +710,7 @@
             "peso_ce": 14.3,
             "feoe": false,
             "id_ud": "UD06",
-            "desc_ce": "Se han reparado o en su caso sustituido los componentes causantes de la avería.",
+            "desc_ce": "Se han reparado o en su caso sustituido los componentes causantes de la averÃ­a.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -730,7 +730,7 @@
             "peso_ce": 14.3,
             "feoe": false,
             "id_ud": "UD06",
-            "desc_ce": "Se han restablecido las condiciones de normal funcionamiento del equipo o de la instalación.",
+            "desc_ce": "Se han restablecido las condiciones de normal funcionamiento del equipo o de la instalaciÃ³n.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -750,7 +750,7 @@
             "peso_ce": 14.3,
             "feoe": false,
             "id_ud": "UD06",
-            "desc_ce": "Se ha operado con autonomía en las actividades propuestas.",
+            "desc_ce": "Se ha operado con autonomÃ­a en las actividades propuestas.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -770,7 +770,7 @@
             "peso_ce": 11.1,
             "feoe": false,
             "id_ud": "UD07",
-            "desc_ce": "Se han identificado los riesgos y el nivel de peligrosidad que suponen la manipulación de los materiales, herramientas, útiles, máquinas y medios de transporte.",
+            "desc_ce": "Se han identificado los riesgos y el nivel de peligrosidad que suponen la manipulaciÃ³n de los materiales, herramientas, Ãºtiles, mÃ¡quinas y medios de transporte.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -780,7 +780,7 @@
             "peso_ce": 11.1,
             "feoe": false,
             "id_ud": "UD07",
-            "desc_ce": "Se han operado las máquinas respetando las normas de seguridad.",
+            "desc_ce": "Se han operado las mÃ¡quinas respetando las normas de seguridad.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -790,7 +790,7 @@
             "peso_ce": 11.1,
             "feoe": false,
             "id_ud": "UD07",
-            "desc_ce": "Se han identificado las causas más frecuentes de accidentes en la manipulación de materiales, herramientas, máquinas de corte y conformado, entre otras.",
+            "desc_ce": "Se han identificado las causas mÃ¡s frecuentes de accidentes en la manipulaciÃ³n de materiales, herramientas, mÃ¡quinas de corte y conformado, entre otras.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -800,7 +800,7 @@
             "peso_ce": 11.1,
             "feoe": false,
             "id_ud": "UD07",
-            "desc_ce": "Se han descrito los elementos de seguridad (protecciones, alarmas, pasos de emergencia,  entre otros) de las máquinas y de los equipos de protección individual (calzado, protección ocular, indumentaria, entre otros) que se deben emplear en las distintas operaciones de mecanizado y montaje.",
+            "desc_ce": "Se han descrito los elementos de seguridad (protecciones, alarmas, pasos de emergencia,  entre otros) de las mÃ¡quinas y de los equipos de protecciÃ³n individual (calzado, protecciÃ³n ocular, indumentaria, entre otros) que se deben emplear en las distintas operaciones de mecanizado y montaje.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -810,7 +810,7 @@
             "peso_ce": 11.1,
             "feoe": false,
             "id_ud": "UD07",
-            "desc_ce": "Se ha relacionado la manipulación de materiales, herramientas y máquinas con las medidas de seguridad y protección personal requeridos.",
+            "desc_ce": "Se ha relacionado la manipulaciÃ³n de materiales, herramientas y mÃ¡quinas con las medidas de seguridad y protecciÃ³n personal requeridos.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -820,7 +820,7 @@
             "peso_ce": 11.1,
             "feoe": false,
             "id_ud": "UD07",
-            "desc_ce": "Se han determinado las medidas de seguridad y de protección personal que se deben adoptar  en la preparación y ejecución de las operaciones de montaje y mantenimiento de las instalaciones de infraestructuras comunes de telecomunicaciones en viviendas y edificios",
+            "desc_ce": "Se han determinado las medidas de seguridad y de protecciÃ³n personal que se deben adoptar  en la preparaciÃ³n y ejecuciÃ³n de las operaciones de montaje y mantenimiento de las instalaciones de infraestructuras comunes de telecomunicaciones en viviendas y edificios",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -830,7 +830,7 @@
             "peso_ce": 11.1,
             "feoe": false,
             "id_ud": "UD07",
-            "desc_ce": "Se han identificado las posibles fuentes de contaminación acústica, visual, entre otras del entorno ambiental.",
+            "desc_ce": "Se han identificado las posibles fuentes de contaminaciÃ³n acÃºstica, visual, entre otras del entorno ambiental.",
             "cpe_vinc": "",
             "og_vinc": ""
         },
@@ -850,7 +850,7 @@
             "peso_ce": 11.2,
             "feoe": false,
             "id_ud": "UD07",
-            "desc_ce": "Se ha valorado el orden y la limpieza de instalaciones y equipos como primer factor de prevención de riesgos.",
+            "desc_ce": "Se ha valorado el orden y la limpieza de instalaciones y equipos como primer factor de prevenciÃ³n de riesgos.",
             "cpe_vinc": "",
             "og_vinc": ""
         }
@@ -859,8 +859,8 @@
         {
             "id_act": "ACT01",
             "tri_act": "1T",
-            "Tipo": "Teoría",
-            "desc_act": "1T Ex. Teórico",
+            "Tipo": "TeorÃ­a",
+            "desc_act": "1T Ex. TeÃ³rico",
             "peso_act": 0.0,
             "is_active": true,
             "crit_calif": "",
@@ -920,8 +920,8 @@
         {
             "id_act": "ACT02",
             "tri_act": "1T",
-            "Tipo": "Práctica",
-            "desc_act": "1T Ex. Práctico",
+            "Tipo": "PrÃ¡ctica",
+            "desc_act": "1T Ex. PrÃ¡ctico",
             "peso_act": 0.0,
             "is_active": true,
             "crit_calif": "",
@@ -982,7 +982,7 @@
             "id_act": "ACT03",
             "tri_act": "1T",
             "Tipo": "Informes",
-            "desc_act": "1T Práctica 1",
+            "desc_act": "1T PrÃ¡ctica 1",
             "peso_act": 0.0,
             "is_active": true,
             "crit_calif": "",
@@ -1043,7 +1043,7 @@
             "id_act": "ACT04",
             "tri_act": "1T",
             "Tipo": "Informes",
-            "desc_act": "1T Práctica 2",
+            "desc_act": "1T PrÃ¡ctica 2",
             "peso_act": 0.0,
             "is_active": true,
             "crit_calif": "",
@@ -1104,7 +1104,7 @@
             "id_act": null,
             "tri_act": "1T",
             "Tipo": "Informes",
-            "desc_act": "1T Práctica 3",
+            "desc_act": "1T PrÃ¡ctica 3",
             "peso_act": NaN,
             "is_active": true,
             "crit_calif": "",
@@ -1165,7 +1165,7 @@
             "id_act": null,
             "tri_act": "1T",
             "Tipo": "Informes",
-            "desc_act": "1T Práctica 4",
+            "desc_act": "1T PrÃ¡ctica 4",
             "peso_act": NaN,
             "is_active": null,
             "crit_calif": "",
@@ -1225,8 +1225,8 @@
         {
             "id_act": "ACT05",
             "tri_act": "2T",
-            "Tipo": "Teoría",
-            "desc_act": "2T Ex. Teórico",
+            "Tipo": "TeorÃ­a",
+            "desc_act": "2T Ex. TeÃ³rico",
             "peso_act": 0.0,
             "is_active": true,
             "crit_calif": "",
@@ -1286,8 +1286,8 @@
         {
             "id_act": "ACT06",
             "tri_act": "2T",
-            "Tipo": "Práctica",
-            "desc_act": "2T Ex. Práctico",
+            "Tipo": "PrÃ¡ctica",
+            "desc_act": "2T Ex. PrÃ¡ctico",
             "peso_act": 0.0,
             "is_active": true,
             "crit_calif": "",
@@ -1469,8 +1469,8 @@
         {
             "id_act": "ACT09",
             "tri_act": "3T",
-            "Tipo": "Teoría",
-            "desc_act": "3T Ex. Teórico",
+            "Tipo": "TeorÃ­a",
+            "desc_act": "3T Ex. TeÃ³rico",
             "peso_act": 0.0,
             "is_active": true,
             "crit_calif": "",
@@ -1530,8 +1530,8 @@
         {
             "id_act": "ACT10",
             "tri_act": "3T",
-            "Tipo": "Práctica",
-            "desc_act": "3T Ex. Práctico",
+            "Tipo": "PrÃ¡ctica",
+            "desc_act": "3T Ex. PrÃ¡ctico",
             "peso_act": 0.0,
             "is_active": true,
             "crit_calif": "",
@@ -1714,7 +1714,7 @@
     "df_dua": [
         {
             "ID": "DUA01",
-            "Barrera": "Dificultad comprensión de manuales técnicos",
+            "Barrera": "Dificultad comprensiÃ³n de manuales tÃ©cnicos",
             "Medida_Metodologica": "Apoyo visual en esquemas, fraccionamiento de tareas de montaje",
             "Medida_Acceso": "Textos resumidos con pictogramas de herramientas",
             "Medida_Evaluacion": "Tiempo adicional (+20%) en pruebas escritas",
@@ -1723,9 +1723,9 @@
         {
             "ID": "DUA02",
             "Barrera": "Diferentes ritmos de aprendizaje en taller",
-            "Medida_Metodologica": "Aprendizaje cooperativo, tutoría entre iguales",
+            "Medida_Metodologica": "Aprendizaje cooperativo, tutorÃ­a entre iguales",
             "Medida_Acceso": "Videotutoriales accesibles en plataforma escolar",
-            "Medida_Evaluacion": "Uso de rúbricas gráficas simplificadas",
+            "Medida_Evaluacion": "Uso de rÃºbricas grÃ¡ficas simplificadas",
             "Alumnado_Aula": "Grupal (Aula)"
         }
     ],
@@ -1734,15 +1734,15 @@
             "ID": "PC01",
             "Escenario": "Ausencia de Profesorado",
             "Organizacion": "Apertura de Moodle por profesor de guardia",
-            "Actividades": "Cuestionarios de repaso teóricos y simuladores de circuitos online",
-            "Seguimiento": "Evaluación automática en Moodle"
+            "Actividades": "Cuestionarios de repaso teÃ³ricos y simuladores de circuitos online",
+            "Seguimiento": "EvaluaciÃ³n automÃ¡tica en Moodle"
         },
         {
             "ID": "PC02",
             "Escenario": "Ausencia de Alumnado",
-            "Organizacion": "Tutorización telemática síncrona disponible",
-            "Actividades": "Prácticas sustitutivas mediante software de diseño CAD de telecomunicaciones",
-            "Seguimiento": "Revisión de informes técnicos en GDocs"
+            "Organizacion": "TutorizaciÃ³n telemÃ¡tica sÃ­ncrona disponible",
+            "Actividades": "PrÃ¡cticas sustitutivas mediante software de diseÃ±o CAD de telecomunicaciones",
+            "Seguimiento": "RevisiÃ³n de informes tÃ©cnicos en GDocs"
         }
     ],
     "df_ace": [
@@ -1750,231 +1750,268 @@
             "ID": "ACE01",
             "Tipo": "Complementaria",
             "RA_Vinculados": "RA1, RA2",
-            "Actividad": "Visita guiada a una instalación ICT real en edificio de nueva construcción.",
+            "Actividad": "Visita guiada a una instalaciÃ³n ICT real en edificio de nueva construcciÃ³n.",
             "Trimestre": "1T",
             "Entidad": "Empresa Promotora Local",
-            "Evaluacion": "Informe fotográfico de la topología de red instalada"
+            "Evaluacion": "Informe fotogrÃ¡fico de la topologÃ­a de red instalada"
         },
         {
             "ID": "ACE02",
             "Tipo": "Extraescolar",
             "RA_Vinculados": "RA4",
-            "Actividad": "Asistencia a charla técnica sobre despliegue 5G e IoT en viviendas",
+            "Actividad": "Asistencia a charla tÃ©cnica sobre despliegue 5G e IoT en viviendas",
             "Trimestre": "2T",
-            "Entidad": "Colegio Oficial de Ingenieros de Telecomunicación",
-            "Evaluacion": "Asistencia y resumen de las nuevas tecnologías"
+            "Entidad": "Colegio Oficial de Ingenieros de TelecomunicaciÃ³n",
+            "Evaluacion": "Asistencia y resumen de las nuevas tecnologÃ­as"
         }
     ],
     "df_tareas": [
         {
             "ID": "TC01",
-            "Nombre_Tarea": "Diseño global de red RTV y SAT",
-            "Reto": "El alumnado actúa como empresa instaladora homologada para presupuestar y dimensionar el equipamiento de captación terrestre y satélite de un bloque residencial de 12 PAUs.",
+            "Nombre_Tarea": "DiseÃ±o global de red RTV y SAT",
+            "Reto": "El alumnado actÃºa como empresa instaladora homologada para presupuestar y dimensionar el equipamiento de captaciÃ³n terrestre y satÃ©lite de un bloque residencial de 12 PAUs.",
             "RA_Asociados": "RA1, RA3, RA5",
-            "Instrumento": "Rúbrica de Proyecto y Dossier Documental"
+            "Instrumento": "RÃºbrica de Proyecto y Dossier Documental"
         },
         {
             "ID": "TC02",
-            "Nombre_Tarea": "Despliegue y certificación de FO (FTTH)",
-            "Reto": "En el taller, realizar las fusiones y el conexionado desde el RITI, pasando por registros secundarios hasta llegar a la toma del usuario final, verificando atenuación.",
+            "Nombre_Tarea": "Despliegue y certificaciÃ³n de FO (FTTH)",
+            "Reto": "En el taller, realizar las fusiones y el conexionado desde el RITI, pasando por registros secundarios hasta llegar a la toma del usuario final, verificando atenuaciÃ³n.",
             "RA_Asociados": "RA2, RA4",
-            "Instrumento": "Lista de cotejo de taller y certificación"
+            "Instrumento": "Lista de cotejo de taller y certificaciÃ³n"
         }
     ],
     "df_sesiones": [
         {
             "ID": "SES01",
-            "Num_Sesion": 1,
-            "Tipo_Actividad": "Tª (Teoría)",
+            "Num_Orden": 1,
+            "Horas": 1,
+            "Tipo_Actividad": "TÂª (TeorÃ­a)",
             "RA_CE": "",
             "Contenidos": "Presentación y evaluación inicial del alumnado, que bien puede ser verbal.",
             "Aspectos_Clave": "Ilusionar y comprender su necesidad profesional para mejorar su empleabilidad.",
             "Recursos": "Pizarra y proyector",
-            "id_ud": ""
+            "id_ud": "UD01"
         },
         {
             "ID": "SES02",
-            "Num_Sesion": 2,
-            "Tipo_Actividad": "Tª (Teoría)",
+            "Num_Orden": 2,
+            "Horas": 4,
+            "Tipo_Actividad": "TÂª (TeorÃ­a)",
             "RA_CE": "1/a",
-            "Contenidos": "Tª 1. Características y análisis de las necesidades informáticas de los sistemas de teleco.",
-            "Aspectos_Clave": "Identificación de requerimientos, escalabilidad y adaptabilidad a necesidades específicas.",
+            "Contenidos": "TÂª 1. CaracterÃ­sticas y anÃ¡lisis de las necesidades informÃ¡ticas de los sistemas de teleco.",
+            "Aspectos_Clave": "IdentificaciÃ³n de requerimientos, escalabilidad y adaptabilidad a necesidades especÃ­ficas.",
             "Recursos": "Pizarra y proyector",
-            "id_ud": ""
+            "id_ud": "UD01"
         },
         {
             "ID": "SES03",
-            "Num_Sesion": 3,
-            "Tipo_Actividad": "Pª (Práctica)",
+            "Num_Orden": 3,
+            "Horas": 1,
+            "Tipo_Actividad": "PÂª (PrÃ¡ctica)",
             "RA_CE": "1/f",
-            "Contenidos": "Pª 0. Preparación del taller.",
-            "Aspectos_Clave": "Prevención de riesgos uso herramientas.",
+            "Contenidos": "PÂª 0. PreparaciÃ³n del taller.",
+            "Aspectos_Clave": "PrevenciÃ³n de riesgos uso herramientas.",
             "Recursos": "Aula CM3",
-            "id_ud": ""
+            "id_ud": "UD01"
         },
         {
             "ID": "SES04",
-            "Num_Sesion": 4,
-            "Tipo_Actividad": "Tª (Teoría)",
+            "Num_Orden": 4,
+            "Horas": 1,
+            "Tipo_Actividad": "TÂª (TeorÃ­a)",
             "RA_CE": "1/ab",
-            "Contenidos": "Tª 2. Arquitectura hardware de un sistema informático.",
+            "Contenidos": "TÂª 2. Arquitectura hardware de un sistema informÃ¡tico.",
             "Aspectos_Clave": "Estructura del sistema, componentes principales (CPU, memoria, almacenamiento).",
             "Recursos": "Pizarra y proyector",
-            "id_ud": ""
+            "id_ud": "UD01"
         },
         {
             "ID": "SES05",
-            "Num_Sesion": 5,
-            "Tipo_Actividad": "Tª (Teoría)",
+            "Num_Orden": 5,
+            "Horas": 1,
+            "Tipo_Actividad": "TÂª (TeorÃ­a)",
             "RA_CE": "1/bc",
-            "Contenidos": "Tª 2. Subsistemas de E/S. Controladores, sistemas de bus.",
-            "Aspectos_Clave": "Gestión de entradas/salidas, tipos de buses (PCI, USB), controladores y su función.",
+            "Contenidos": "TÂª 2. Subsistemas de E/S. Controladores, sistemas de bus.",
+            "Aspectos_Clave": "GestiÃ³n de entradas/salidas, tipos de buses (PCI, USB), controladores y su funciÃ³n.",
             "Recursos": "Pizarra y proyector",
-            "id_ud": ""
+            "id_ud": "UD01"
         },
         {
             "ID": "SES06",
-            "Num_Sesion": 6,
-            "Tipo_Actividad": "Tª (Teoría)",
+            "Num_Orden": 6,
+            "Horas": 1,
+            "Tipo_Actividad": "TÂª (TeorÃ­a)",
             "RA_CE": "1/abc",
-            "Contenidos": "Tª 3. Elementos hardware de un sistema informático. Características y tipología.",
-            "Aspectos_Clave": "Procesadores, placas base, tarjetas gráficas, memoria RAM, etc. Diferencias entre tipos y modelos.",
+            "Contenidos": "TÂª 3. Elementos hardware de un sistema informÃ¡tico. CaracterÃ­sticas y tipologÃ­a.",
+            "Aspectos_Clave": "Procesadores, placas base, tarjetas grÃ¡ficas, memoria RAM, etc. Diferencias entre tipos y modelos.",
             "Recursos": "Pizarra y proyector",
-            "id_ud": ""
+            "id_ud": "UD01"
         },
         {
             "ID": "SES07",
-            "Num_Sesion": 7,
-            "Tipo_Actividad": "Pª (Práctica)",
+            "Num_Orden": 7,
+            "Horas": 1,
+            "Tipo_Actividad": "PÂª (PrÃ¡ctica)",
             "RA_CE": "1/abc",
-            "Contenidos": "Pª 1. Informe de ampliación sobre elementos hardware.",
-            "Aspectos_Clave": "Además, explicar en esta UD1 como hacer un informe tomando notas en papel y posteriormente GDocs.",
+            "Contenidos": "PÂª 1. Informe de ampliaciÃ³n sobre elementos hardware.",
+            "Aspectos_Clave": "AdemÃ¡s, explicar en esta UD1 como hacer un informe tomando notas en papel y posteriormente GDocs.",
             "Recursos": "Set atornilladores, tijeras y alicates",
-            "id_ud": ""
+            "id_ud": "UD01"
         },
         {
             "ID": "SES08",
-            "Num_Sesion": 8,
-            "Tipo_Actividad": "Tª (Teoría)",
+            "Num_Orden": 8,
+            "Horas": 1,
+            "Tipo_Actividad": "TÂª (TeorÃ­a)",
             "RA_CE": "1/c",
-            "Contenidos": "Tª 4. Dispositivos de almacenamiento. Tipología, instalación y configuración. Alimentación.",
-            "Aspectos_Clave": "HDD, SSD, NVMe. Métodos de instalación, configuraciones RAID. Tipos fuentes y selección.",
+            "Contenidos": "TÂª 4. Dispositivos de almacenamiento. TipologÃ­a, instalaciÃ³n y configuraciÃ³n. AlimentaciÃ³n.",
+            "Aspectos_Clave": "HDD, SSD, NVMe. MÃ©todos de instalaciÃ³n, configuraciones RAID. Tipos fuentes y selecciÃ³n.",
             "Recursos": "Pizarra y proyector",
-            "id_ud": ""
+            "id_ud": "UD01"
         },
         {
             "ID": "SES09",
-            "Num_Sesion": 9,
-            "Tipo_Actividad": "Pª (Práctica)",
+            "Num_Orden": 9,
+            "Horas": 1,
+            "Tipo_Actividad": "PÂª (PrÃ¡ctica)",
             "RA_CE": "1/abc",
-            "Contenidos": "Pª 2. Montaje y desmontaje de un ordenador, incluido el procesador y su radiador.",
-            "Aspectos_Clave": "Hacer el ciclo completo, especial atención a volver a colocar la pasta térmica.",
-            "Recursos": "Herramientas, Cámara, GDocs",
-            "id_ud": ""
+            "Contenidos": "PÂª 2. Montaje y desmontaje de un ordenador, incluido el procesador y su radiador.",
+            "Aspectos_Clave": "Hacer el ciclo completo, especial atenciÃ³n a volver a colocar la pasta tÃ©rmica.",
+            "Recursos": "Herramientas, CÃ¡mara, GDocs",
+            "id_ud": "UD01"
         },
         {
             "ID": "SES10",
-            "Num_Sesion": 10,
-            "Tipo_Actividad": "Tª (Teoría)",
+            "Num_Orden": 10,
+            "Horas": 1,
+            "Tipo_Actividad": "TÂª (TeorÃ­a)",
             "RA_CE": "1/cde",
-            "Contenidos": "Tª 5. Software en un sistema informático.",
-            "Aspectos_Clave": "Tipos de software: sistema, aplicación y utilidades. Compatibilidad con el hardware.",
+            "Contenidos": "TÂª 5. Software en un sistema informÃ¡tico.",
+            "Aspectos_Clave": "Tipos de software: sistema, aplicaciÃ³n y utilidades. Compatibilidad con el hardware.",
             "Recursos": "Pizarra y proyector",
-            "id_ud": ""
+            "id_ud": "UD01"
         },
         {
             "ID": "SES11",
-            "Num_Sesion": 11,
-            "Tipo_Actividad": "Tª (Teoría)",
+            "Num_Orden": 11,
+            "Horas": 1,
+            "Tipo_Actividad": "TÂª (TeorÃ­a)",
             "RA_CE": "1/cde",
-            "Contenidos": "Tª 6. Sistemas operativos: concepto. Aplicaciones informáticas.",
-            "Aspectos_Clave": "Definición de SO, funciones principales. Windows, Linux, MacOS. Aplicaciones y gestión recursos.",
+            "Contenidos": "TÂª 6. Sistemas operativos: concepto. Aplicaciones informÃ¡ticas.",
+            "Aspectos_Clave": "DefiniciÃ³n de SO, funciones principales. Windows, Linux, MacOS. Aplicaciones y gestiÃ³n recursos.",
             "Recursos": "Pizarra y proyector",
-            "id_ud": ""
+            "id_ud": "UD01"
         },
         {
             "ID": "SES12",
-            "Num_Sesion": 12,
-            "Tipo_Actividad": "Pª (Práctica)",
+            "Num_Orden": 12,
+            "Horas": 1,
+            "Tipo_Actividad": "PÂª (PrÃ¡ctica)",
             "RA_CE": "1/abcd",
-            "Contenidos": "Pª 3. Cont. Pª 2, Administrar dispositivos e incluir tarjetas nuevas, por ejemplo, red.",
-            "Aspectos_Clave": "Manejo de herramientas de diagnóstico de ordenadores personales.",
-            "Recursos": "Herramientas, Cámara, GDocs",
-            "id_ud": ""
+            "Contenidos": "PÂª 3. Cont. PÂª 2, Administrar dispositivos e incluir tarjetas nuevas, por ejemplo, red.",
+            "Aspectos_Clave": "Manejo de herramientas de diagnÃ³stico de ordenadores personales.",
+            "Recursos": "Herramientas, CÃ¡mara, GDocs",
+            "id_ud": "UD01"
         },
         {
             "ID": "SES13",
-            "Num_Sesion": 13,
-            "Tipo_Actividad": "Tª (Teoría)",
+            "Num_Orden": 13,
+            "Horas": 1,
+            "Tipo_Actividad": "TÂª (TeorÃ­a)",
             "RA_CE": "1/def",
-            "Contenidos": "Tª 7. Periféricos: características y tipología.",
+            "Contenidos": "TÂª 7. PerifÃ©ricos: caracterÃ­sticas y tipologÃ­a.",
             "Aspectos_Clave": "Dispositivos de entrada (teclados, ratones), salida (monitores, impresoras) y mixtos.",
             "Recursos": "Pizarra y proyector",
-            "id_ud": ""
+            "id_ud": "UD01"
         },
         {
             "ID": "SES14",
-            "Num_Sesion": 14,
-            "Tipo_Actividad": "Tª (Teoría)",
+            "Num_Orden": 14,
+            "Horas": 1,
+            "Tipo_Actividad": "TÂª (TeorÃ­a)",
             "RA_CE": "1/def",
-            "Contenidos": "Tª 8. Equipamientos y tecnologías aplicadas a sistemas informáticos de teleco.",
-            "Aspectos_Clave": "Equipos específicos: routers, switches, servidores. Tecnologías actuales (fibra óptica, 5G).",
+            "Contenidos": "TÂª 8. Equipamientos y tecnologÃ­as aplicadas a sistemas informÃ¡ticos de teleco.",
+            "Aspectos_Clave": "Equipos especÃ­ficos: routers, switches, servidores. TecnologÃ­as actuales (fibra Ã³ptica, 5G).",
             "Recursos": "Pizarra y proyector",
-            "id_ud": ""
+            "id_ud": "UD01"
         },
         {
             "ID": "SES15",
-            "Num_Sesion": 15,
-            "Tipo_Actividad": "Pª (Práctica)",
+            "Num_Orden": 15,
+            "Horas": 1,
+            "Tipo_Actividad": "PÂª (PrÃ¡ctica)",
             "RA_CE": "1/ef",
-            "Contenidos": "Pª 4. Intercambiar periféricos convencionales entre equipos.",
-            "Aspectos_Clave": "Atender los equipos como si fuese un servicio técnico oficial.",
-            "Recursos": "Herramientas, Cámara, GDocs",
-            "id_ud": ""
+            "Contenidos": "PÂª 4. Intercambiar perifÃ©ricos convencionales entre equipos.",
+            "Aspectos_Clave": "Atender los equipos como si fuese un servicio tÃ©cnico oficial.",
+            "Recursos": "Herramientas, CÃ¡mara, GDocs",
+            "id_ud": "UD01"
         },
         {
             "ID": "SES16",
-            "Num_Sesion": 16,
-            "Tipo_Actividad": "IE (Instrumento de Evaluación)",
+            "Num_Orden": 16,
+            "Horas": 1,
+            "Tipo_Actividad": "IE (Instrumento de EvaluaciÃ³n)",
             "RA_CE": "1/abcdef",
-            "Contenidos": "IE 1. Corrección del cuaderno del taller.",
-            "Aspectos_Clave": "Corrección tanto en papel como en GDocs.",
+            "Contenidos": "IE 1. CorrecciÃ³n del cuaderno del taller.",
+            "Aspectos_Clave": "CorrecciÃ³n tanto en papel como en GDocs.",
             "Recursos": "Cuaderno y GDocs",
-            "id_ud": ""
+            "id_ud": "UD01"
         },
         {
             "ID": "SES17",
-            "Num_Sesion": 17,
-            "Tipo_Actividad": "IE (Instrumento de Evaluación)",
+            "Num_Orden": 17,
+            "Horas": 1,
+            "Tipo_Actividad": "IE (Instrumento de EvaluaciÃ³n)",
             "RA_CE": "1/abcdef",
-            "Contenidos": "IE 2. Preparación del examen teórico-práctico.",
+            "Contenidos": "IE 2. PreparaciÃ³n del examen teÃ³rico-prÃ¡ctico.",
             "Aspectos_Clave": "Ronda de preguntas cortas con debate en grupo.",
             "Recursos": "Aula CM1",
-            "id_ud": ""
+            "id_ud": "UD01"
         },
         {
             "ID": "SES18",
-            "Num_Sesion": 18,
-            "Tipo_Actividad": "IE (Instrumento de Evaluación)",
+            "Num_Orden": 18,
+            "Horas": 1,
+            "Tipo_Actividad": "IE (Instrumento de EvaluaciÃ³n)",
             "RA_CE": "1/abcdef",
-            "Contenidos": "IE 3. Examen teórico-práctico.",
-            "Aspectos_Clave": "Desarrollo dual: escrito y soporte práctico.",
+            "Contenidos": "IE 3. Examen teÃ³rico-prÃ¡ctico.",
+            "Aspectos_Clave": "Desarrollo dual: escrito y soporte prÃ¡ctico.",
             "Recursos": "Aula CM1 y CM3",
-            "id_ud": ""
+            "id_ud": "UD01"
+        },
+        {
+            "ID": "SES19",
+            "Num_Orden": 1,
+            "Horas": 5,
+            "Tipo_Actividad": "Tª (Teoría)",
+            "RA_CE": "1,c",
+            "Contenidos": "Contenidos - ejemplo",
+            "Aspectos_Clave": "Clave - ejemplo",
+            "Recursos": "recursos - ejemplo",
+            "id_ud": "UD02"
+        },
+        {
+            "ID": "SES20",
+            "Num_Orden": 20,
+            "Horas": 7,
+            "Tipo_Actividad": "Tª (Teoría)",
+            "RA_CE": "3,h",
+            "Contenidos": "gzfgfgf",
+            "Aspectos_Clave": "fgdfgd",
+            "Recursos": "fgdfgdfg",
+            "id_ud": "UD03"
         }
     ],
     "config_aula": {
-        "Metodología": "",
-        "Atención a la diversidad": ""
+        "MetodologÃ­a": "",
+        "AtenciÃ³n a la diversidad": ""
     },
     "planning_ledger": {
         "15/09/2025": [
             "UD01"
         ],
         "16/09/2025": [
-            "UD01"
-        ],
-        "17/09/2025": [
             "UD01"
         ],
         "18/09/2025": [
@@ -1986,9 +2023,6 @@
         "23/09/2025": [
             "UD01"
         ],
-        "24/09/2025": [
-            "UD01"
-        ],
         "25/09/2025": [
             "UD01"
         ],
@@ -1996,9 +2030,6 @@
             "UD01"
         ],
         "30/09/2025": [
-            "UD01"
-        ],
-        "01/10/2025": [
             "UD01"
         ],
         "02/10/2025": [
@@ -2010,16 +2041,10 @@
         "07/10/2025": [
             "UD01"
         ],
-        "08/10/2025": [
-            "UD01"
-        ],
         "09/10/2025": [
             "UD01"
         ],
         "14/10/2025": [
-            "UD01"
-        ],
-        "15/10/2025": [
             "UD01"
         ],
         "16/10/2025": [
@@ -2029,30 +2054,22 @@
             "UD01"
         ],
         "21/10/2025": [
-            "UD02"
-        ],
-        "22/10/2025": [
-            "UD02"
+            "UD01"
         ],
         "23/10/2025": [
-            "UD02"
+            "UD01"
         ],
         "27/10/2025": [
-            "UD02"
+            "UD01"
         ],
         "28/10/2025": [
-            "UD02"
-        ],
-        "29/10/2025": [
+            "UD01",
             "UD02"
         ],
         "30/10/2025": [
             "UD02"
         ],
         "04/11/2025": [
-            "UD02"
-        ],
-        "05/11/2025": [
             "UD02"
         ],
         "06/11/2025": [
@@ -2064,9 +2081,6 @@
         "11/11/2025": [
             "UD02"
         ],
-        "12/11/2025": [
-            "UD02"
-        ],
         "13/11/2025": [
             "UD02"
         ],
@@ -2074,9 +2088,6 @@
             "UD02"
         ],
         "18/11/2025": [
-            "UD02"
-        ],
-        "19/11/2025": [
             "UD02"
         ],
         "20/11/2025": [
@@ -2088,9 +2099,6 @@
         "25/11/2025": [
             "UD02"
         ],
-        "26/11/2025": [
-            "UD02"
-        ],
         "27/11/2025": [
             "UD02"
         ],
@@ -2098,220 +2106,160 @@
             "UD02"
         ],
         "02/12/2025": [
-            "UD02",
-            "UD03"
-        ],
-        "03/12/2025": [
-            "UD03"
+            "UD02"
         ],
         "04/12/2025": [
-            "UD03"
+            "UD02"
         ],
         "09/12/2025": [
-            "UD03"
-        ],
-        "10/12/2025": [
-            "UD03"
+            "UD02"
         ],
         "11/12/2025": [
-            "UD03"
+            "UD02"
         ],
         "15/12/2025": [
-            "UD03"
+            "UD02"
         ],
         "16/12/2025": [
-            "UD03"
-        ],
-        "17/12/2025": [
-            "UD03"
+            "UD02"
         ],
         "18/12/2025": [
-            "UD03"
-        ],
-        "07/01/2026": [
-            "UD03"
+            "UD02"
         ],
         "08/01/2026": [
-            "UD03"
+            "UD02"
         ],
         "12/01/2026": [
-            "UD03"
+            "UD02"
         ],
         "13/01/2026": [
-            "UD04"
-        ],
-        "14/01/2026": [
-            "UD04"
+            "UD03"
         ],
         "15/01/2026": [
-            "UD04"
+            "UD03"
         ],
         "19/01/2026": [
-            "UD04"
+            "UD03"
         ],
         "20/01/2026": [
-            "UD04"
-        ],
-        "21/01/2026": [
-            "UD04"
+            "UD03"
         ],
         "22/01/2026": [
-            "UD04"
+            "UD03"
         ],
         "26/01/2026": [
-            "UD04"
+            "UD03"
         ],
         "27/01/2026": [
-            "UD05"
-        ],
-        "28/01/2026": [
-            "UD05"
+            "UD03"
         ],
         "02/03/2026": [
-            "UD05"
+            "UD03"
         ],
         "03/03/2026": [
-            "UD05"
-        ],
-        "04/03/2026": [
-            "UD05"
+            "UD03"
         ],
         "05/03/2026": [
-            "UD05"
+            "UD03"
         ],
         "09/03/2026": [
-            "UD05"
+            "UD03"
         ],
         "10/03/2026": [
-            "UD05"
-        ],
-        "11/03/2026": [
-            "UD05"
+            "UD04"
         ],
         "12/03/2026": [
-            "UD05"
+            "UD04"
         ],
         "16/03/2026": [
-            "UD05"
+            "UD04"
         ],
         "17/03/2026": [
-            "UD05",
-            "UD06"
-        ],
-        "18/03/2026": [
-            "UD06"
+            "UD04"
         ],
         "19/03/2026": [
-            "UD06"
+            "UD04"
         ],
         "23/03/2026": [
-            "UD06"
+            "UD04"
         ],
         "24/03/2026": [
-            "UD06"
-        ],
-        "25/03/2026": [
-            "UD06"
+            "UD04"
         ],
         "26/03/2026": [
-            "UD06"
+            "UD05"
         ],
         "30/03/2026": [
-            "UD06"
+            "UD05"
         ],
         "31/03/2026": [
-            "UD06",
-            "UD07"
+            "UD05"
         ],
         "07/04/2026": [
-            "UD07"
-        ],
-        "08/04/2026": [
-            "UD07"
+            "UD05"
         ],
         "09/04/2026": [
-            "UD07"
+            "UD05"
         ],
         "13/04/2026": [
-            "UD07"
+            "UD05"
         ],
         "14/04/2026": [
-            "UD07"
-        ],
-        "15/04/2026": [
-            "UD07"
+            "UD05"
         ],
         "16/04/2026": [
-            "UD07"
+            "UD05"
         ],
         "20/04/2026": [
-            "UD08"
+            "UD05"
         ],
         "21/04/2026": [
-            "UD08"
-        ],
-        "22/04/2026": [
-            "UD08"
+            "UD05"
         ],
         "27/04/2026": [
-            "UD08"
+            "UD05"
         ],
         "28/04/2026": [
-            "UD08"
-        ],
-        "29/04/2026": [
-            "UD08"
+            "UD06"
         ],
         "30/04/2026": [
-            "UD08"
+            "UD06"
         ],
         "04/05/2026": [
-            "UD08"
+            "UD06"
         ],
         "05/05/2026": [
-            "UD09"
-        ],
-        "06/05/2026": [
-            "UD09"
+            "UD06"
         ],
         "07/05/2026": [
-            "UD09"
+            "UD06"
         ],
         "11/05/2026": [
-            "UD09"
+            "UD06"
         ],
         "12/05/2026": [
-            "UD09"
-        ],
-        "13/05/2026": [
-            "UD09"
+            "UD06"
         ],
         "14/05/2026": [
-            "UD09"
+            "UD07"
         ],
         "18/05/2026": [
-            "UD09"
+            "UD07"
         ],
         "19/05/2026": [
-            "UD09"
-        ],
-        "20/05/2026": [
-            "UD09"
+            "UD07"
         ],
         "21/05/2026": [
-            "UD09"
+            "UD07"
         ],
         "25/05/2026": [
-            "UD09"
+            "UD07"
         ],
         "26/05/2026": [
-            "UD10"
-        ],
-        "27/05/2026": [
-            "UD10"
+            "UD07"
         ],
         "28/05/2026": [
-            "UD10"
+            "UD07"
         ]
     }
 }

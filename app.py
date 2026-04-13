@@ -14,9 +14,10 @@ import os
 # ==========================================
 from pdf_calendario_academico import generar_pdf_calendario
 from pdf_seguimiento_diario import generar_pdf_seguimiento
-from pdf_boletin_competencial import generar_pdf_boletin
-from pdf_programacion_aula import generar_pdf_programacion_aula
-from pdf_boletin_grupal import generar_pdf_boletin_grupal
+
+
+from pdf_boletin_grupal import generar_pdf_boletin_grupal, generar_pdf_boletin_grupal_final
+from pdf_boletin_individual import generar_pdf_boletin_individual
 def serialize_date(obj):
     if isinstance(obj, (date, datetime)): return obj.strftime("%d/%m/%Y")
     return obj
@@ -62,7 +63,7 @@ def guardar_global():
 
 def cargar_global():
     if os.path.exists("ciclos-fp.json"):
-        with open("ciclos-fp.json", "r", encoding="utf-8") as fg:
+        with open("ciclos-fp.json", "r", encoding="utf-8-sig") as fg:
             global_data = json.load(fg)
         st.session_state.info_fechas = {k: unserialize_date(v) for k, v in global_data.get("info_fechas", {}).items()}
         st.session_state.calendar_notes = global_data.get("calendar_notes", {})
@@ -107,7 +108,7 @@ def guardar_pd(nombre_base):
 
 def cargar_pd(nombre_archivo):
     """Carga datos de Programación Didáctica desde <nombre>-pd.json"""
-    with open(nombre_archivo, "r", encoding="utf-8") as f:
+    with open(nombre_archivo, "r", encoding="utf-8-sig") as f:
         data = json.load(f)
     st.session_state.info_modulo = data.get("info_modulo", {})
     cargar_global()
@@ -153,7 +154,7 @@ def guardar_curso(nombre_base):
 
 def cargar_curso(nombre_archivo):
     """Carga datos del Curso actual."""
-    with open(nombre_archivo, "r", encoding="utf-8") as f:
+    with open(nombre_archivo, "r", encoding="utf-8-sig") as f:
         data = json.load(f)
     st.session_state.df_al = pd.DataFrame(data.get("df_al", []))
     st.session_state.df_feoe = pd.DataFrame(data.get("df_feoe", []))
@@ -182,7 +183,7 @@ def guardar_datos(nombre_base):
 
 def cargar_datos(nombre_archivo):
     """Carga un JSON. Detecta si es formato antiguo (unificado) o nuevo (pd/curso)."""
-    with open(nombre_archivo, "r", encoding="utf-8") as f:
+    with open(nombre_archivo, "r", encoding="utf-8-sig") as f:
         data = json.load(f)
     tipo = data.get("tipo", "legacy")
 
@@ -487,7 +488,7 @@ if 'config_aula' not in st.session_state:
 
 if 'df_sesiones' not in st.session_state:
     st.session_state.df_sesiones = pd.DataFrame(columns=[
-        "ID", "Num_Sesion", "Tipo_Actividad", "RA_CE", "Contenidos", "Aspectos_Clave", "Recursos"
+        "ID", "Num_Orden", "Horas", "Tipo_Actividad", "RA_CE", "Contenidos", "Aspectos_Clave", "Recursos"
     ])
 
 if 'config_contexto' not in st.session_state:
@@ -745,6 +746,158 @@ st.markdown(
 with st.sidebar:
     st.title("Cuaderno Digital Docente Ciclos")
 
+
+
+
+
+    # 5.1 Menú de Navegación (3 bloques)
+    opciones_globales = ["Introducción y planes", "Calendario académico"]
+    opciones_pd = [
+        "Módulo didáctico", "Matrices RA → CE → UD",
+        "Instrumentos de evaluación",
+        "Programación de aula"
+    ]
+    opciones_curso = [
+        "Seguimiento diario", "Matrícula alumnado", "Calificación académica",
+        "Calificación FEOE", "Evaluación continua"
+    ]
+    opciones_totales = opciones_globales + opciones_pd + opciones_curso
+
+    # Redirecciones de nombres obsoletos
+    if st.session_state.menu in ["Contextualización", "Planes e inclusión"]: st.session_state.menu = "Introducción y planes"
+    if st.session_state.menu == "Perfil y Contexto": st.session_state.menu = "Resumen docente"
+    if st.session_state.menu == "Calendario lectivo": st.session_state.menu = "Calendario Escolar"
+    if st.session_state.menu == "Evaluación FEOE": st.session_state.menu = "Calificación FEOE"
+    if st.session_state.menu == "Calificación numérica": st.session_state.menu = "Calificación académica"
+    if st.session_state.menu == "Progreso porcentual": st.session_state.menu = "Evaluación continua"
+    if st.session_state.menu not in opciones_totales:
+        st.session_state.menu = "Módulo didáctico"
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    for opcion in opciones_globales:
+        if st.button(opcion, use_container_width=True,
+                     type="primary" if st.session_state.menu == opcion else "secondary",
+                     key=f"btn_glb_{opcion}"):
+            st.session_state.menu = opcion
+            st.rerun()
+
+    with st.expander("🗂️ Programación didáctica", expanded=(st.session_state.menu in opciones_pd)):
+        for opcion in opciones_pd:
+            if st.button(opcion, use_container_width=True,
+                         type="primary" if st.session_state.menu == opcion else "secondary",
+                         key=f"btn_pd_{opcion}"):
+                st.session_state.menu = opcion
+                st.rerun()
+
+    with st.expander("📅 Curso actual", expanded=(st.session_state.menu in opciones_curso)):
+        for opcion in opciones_curso:
+            if st.button(opcion, use_container_width=True,
+                         type="primary" if st.session_state.menu == opcion else "secondary",
+                         key=f"btn_cur_{opcion}"):
+                st.session_state.menu = opcion
+                st.rerun()
+    
+    # Variable de control para el resto de la app
+    menu = st.session_state.menu
+    ro_pd = st.session_state.lock_pd
+    ro_curso = st.session_state.lock_curso
+    ro_global = st.session_state.lock_global
+    
+    # --- AUTOMATIZACIÓN (v5.0) ---
+    # Recalcular reparto de horas automáticamente en cada interacción
+    repartir_horas_previstas()
+
+    
+    with st.expander("📥 Descargas .pdf"):
+        pdf_buffer_cal = generar_pdf_calendario(
+            st.session_state.info_modulo,
+            st.session_state.info_fechas,
+            st.session_state.planning_ledger,
+            st.session_state.calendar_notes
+        )
+        st.download_button(
+            label="Calendario académico",
+            data=pdf_buffer_cal,
+            file_name=f"Calendario_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
+            mime="application/pdf",
+            type="secondary",
+            use_container_width=True
+        )
+
+        pdf_buffer_seg = generar_pdf_seguimiento(
+            st.session_state.info_modulo,
+            st.session_state.info_fechas,
+            st.session_state.horario,
+            st.session_state.planning_ledger,
+            st.session_state.calendar_notes,
+            st.session_state.df_sesiones if "df_sesiones" in st.session_state else None
+        )
+        st.download_button(
+            label="Seguimiento diario",
+            data=pdf_buffer_seg,
+            file_name=f"Seguimiento_diario_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
+            mime="application/pdf",
+            type="secondary",
+            use_container_width=True
+        )
+
+
+        # ── Boletines ──────────────────────────────────────────
+        st.markdown("<b>Boletines grupales</b>", unsafe_allow_html=True)
+        _mod_name = st.session_state.info_modulo.get('modulo', 'Grupo')
+
+        pdf_buffer_grupal_1t = generar_pdf_boletin_grupal("1T", st.session_state.info_modulo, st.session_state.df_al, st.session_state.df_eval, st.session_state.df_act)
+        pdf_buffer_grupal_2t = generar_pdf_boletin_grupal("2T", st.session_state.info_modulo, st.session_state.df_al, st.session_state.df_eval, st.session_state.df_act)
+        pdf_buffer_grupal_3t = generar_pdf_boletin_grupal("3T", st.session_state.info_modulo, st.session_state.df_al, st.session_state.df_eval, st.session_state.df_act)
+        pdf_buffer_grupal_fin = generar_pdf_boletin_grupal_final(st.session_state.info_modulo, st.session_state.df_al, st.session_state.df_eval, st.session_state.df_act)
+        
+        st.download_button("Boletín Grupal 1T", pdf_buffer_grupal_1t, f"Boletin_Grupal_1T_{_mod_name}.pdf", "application/pdf", use_container_width=True)
+        st.download_button("Boletín Grupal 2T", pdf_buffer_grupal_2t, f"Boletin_Grupal_2T_{_mod_name}.pdf", "application/pdf", use_container_width=True)
+        st.download_button("Boletín Grupal 3T", pdf_buffer_grupal_3t, f"Boletin_Grupal_3T_{_mod_name}.pdf", "application/pdf", use_container_width=True)
+        st.download_button("Boletín Grupal Final", pdf_buffer_grupal_fin, f"Boletin_Grupal_FINAL_{_mod_name}.pdf", "application/pdf", type="primary", use_container_width=True)
+
+        st.markdown("<b>Boletines individuales</b>", unsafe_allow_html=True)
+        if "df_al" in st.session_state and not st.session_state.df_al.empty:
+            df_al_act = st.session_state.df_al[st.session_state.df_al.get("Estado", "") != "Baja"].copy() if "Estado" in st.session_state.df_al.columns else st.session_state.df_al.copy()
+            df_al_sorted = df_al_act.sort_values("Apellidos").reset_index(drop=True)
+            
+            alum_list = df_al_sorted.apply(lambda row: f"{row.get('Apellidos', '')}, {row.get('Nombre', '')} ({row.get('ID', '')})", axis=1).tolist()
+            
+            alum_sel = st.selectbox("Seleccionar Alumnado", alum_list, label_visibility="collapsed")
+            if alum_sel:
+                # Extract ID safely
+                # Formato: "Apellidos, Nombre (ID_XXX)" -> cogemos lo que hay entre ()
+                import re
+                match = re.search(r'\(([^)]+)\)$', alum_sel)
+                if match:
+                    al_id = match.group(1)
+                    
+                    pdf_buffer_indiv = generar_pdf_boletin_individual(
+                        info_modulo=st.session_state.info_modulo,
+                        al_id=al_id,
+                        df_al=st.session_state.df_al,
+                        df_eval=st.session_state.df_eval,
+                        df_act=st.session_state.df_act,
+                        df_ce=st.session_state.df_ce,
+                        df_ra=st.session_state.df_ra,
+                        df_feoe=st.session_state.get("df_feoe", pd.DataFrame()),
+                        info_fechas=st.session_state.get("info_fechas", {}),
+                        planning_ledger=st.session_state.get("planning_ledger", {}),
+                        df_ud=st.session_state.get("df_ud", pd.DataFrame()),
+                        df_pr=st.session_state.get("df_pr", pd.DataFrame())
+                    )
+                    st.download_button(
+                        label="Informe individual",
+                        data=pdf_buffer_indiv,
+                        file_name=f"Informe_Individual_{al_id}_{_mod_name}.pdf",
+                        mime="application/pdf",
+                        type="primary",
+                        use_container_width=True
+                    )
+        else:
+            st.info("Sin estudiantes activos para generar informes individuales.")
+            
+
     # --- MEJORA #8 + MEJORA #1: Indicador visual de módulo activo + autoguardado ---
     _modulo_nombre = st.session_state.info_modulo.get("modulo", "") or "—"
     _modulo_archivo = st.session_state.get("active_module", "—")
@@ -768,6 +921,7 @@ with st.sidebar:
             border-radius: 8px;
             padding: 8px 12px;
             margin-bottom: 12px;
+            margin-top: 10px;
             border: 1px solid #14a085;
         ">
             <div style="font-size:0.68rem; color:#9ee8e0; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:2px;">
@@ -785,226 +939,6 @@ with st.sidebar:
         unsafe_allow_html=True
     )
     # --- FIN MEJORAS #8 / #1 ---
-
-
-
-    # 5.1 Menú de Navegación (3 bloques)
-    opciones_globales = ["Contextualización", "Planes e inclusión", "Calendario académico"]
-    opciones_pd = [
-        "Módulo didáctico", "Matrices RA → CE → UD",
-        "Instrumentos de evaluación",
-        "Programación de aula"
-    ]
-    opciones_curso = [
-        "Seguimiento diario", "Matrícula alumnado", "Calificación académica",
-        "Calificación FEOE", "Evaluación continua"
-    ]
-    opciones_totales = opciones_globales + opciones_pd + opciones_curso
-
-    # Redirecciones de nombres obsoletos
-    if st.session_state.menu == "Perfil y Contexto": st.session_state.menu = "Resumen docente"
-    if st.session_state.menu == "Calendario lectivo": st.session_state.menu = "Calendario Escolar"
-    if st.session_state.menu == "Evaluación FEOE": st.session_state.menu = "Calificación FEOE"
-    if st.session_state.menu == "Calificación numérica": st.session_state.menu = "Calificación académica"
-    if st.session_state.menu == "Progreso porcentual": st.session_state.menu = "Evaluación continua"
-    if st.session_state.menu not in opciones_totales:
-        st.session_state.menu = "Módulo didáctico"
-    st.markdown("<br>", unsafe_allow_html=True)
-    with st.expander("🌍 Configuración global", expanded=False):
-        _lock_label_glb = "🔒 Solo lectura" if st.session_state.lock_global else "🔓 Edición activa"
-        if st.button(_lock_label_glb, use_container_width=True, key="btn_lock_glb",
-                     type="primary" if st.session_state.lock_global else "secondary"):
-            st.session_state.lock_global = not st.session_state.lock_global
-            st.rerun()
-        st.markdown("<hr style='margin:4px 0 8px 0;border:none;border-top:1px solid #444'>", unsafe_allow_html=True)
-        for opcion in opciones_globales:
-            if st.button(opcion, use_container_width=True,
-                         type="primary" if st.session_state.menu == opcion else "secondary",
-                         key=f"btn_glb_{opcion}"):
-                st.session_state.menu = opcion
-                st.rerun()
-
-    with st.expander("🗂️ Programación didáctica", expanded=(st.session_state.menu in opciones_pd)):
-        _lock_label_pd = "🔒 Solo lectura" if st.session_state.lock_pd else "🔓 Edición activa"
-        if st.button(_lock_label_pd, use_container_width=True, key="btn_lock_pd",
-                     type="primary" if st.session_state.lock_pd else "secondary"):
-            st.session_state.lock_pd = not st.session_state.lock_pd
-            st.rerun()
-        st.markdown("<hr style='margin:4px 0 8px 0;border:none;border-top:1px solid #444'>", unsafe_allow_html=True)
-        for opcion in opciones_pd:
-            if st.button(opcion, use_container_width=True,
-                         type="primary" if st.session_state.menu == opcion else "secondary",
-                         key=f"btn_pd_{opcion}"):
-                st.session_state.menu = opcion
-                st.rerun()
-
-    with st.expander("📅 Curso actual", expanded=(st.session_state.menu in opciones_curso)):
-        _lock_label_cur = "🔒 Solo lectura" if st.session_state.lock_curso else "🔓 Edición activa"
-        if st.button(_lock_label_cur, use_container_width=True, key="btn_lock_cur",
-                     type="primary" if st.session_state.lock_curso else "secondary"):
-            st.session_state.lock_curso = not st.session_state.lock_curso
-            st.rerun()
-        st.markdown("<hr style='margin:4px 0 8px 0;border:none;border-top:1px solid #444'>", unsafe_allow_html=True)
-        for opcion in opciones_curso:
-            if st.button(opcion, use_container_width=True,
-                         type="primary" if st.session_state.menu == opcion else "secondary",
-                         key=f"btn_cur_{opcion}"):
-                st.session_state.menu = opcion
-                st.rerun()
-    
-    # Variable de control para el resto de la app
-    menu = st.session_state.menu
-    ro_pd = st.session_state.lock_pd
-    ro_curso = st.session_state.lock_curso
-    ro_global = st.session_state.lock_global
-    
-    # --- AUTOMATIZACIÓN (v5.0) ---
-    # Recalcular reparto de horas automáticamente en cada interacción
-    repartir_horas_previstas()
-
-    st.markdown("<br>", unsafe_allow_html=True)
-    
-    with st.expander("📥 Descargas .pdf"):
-        pdf_buffer_cal = generar_pdf_calendario(
-            st.session_state.info_modulo,
-            st.session_state.info_fechas,
-            st.session_state.planning_ledger,
-            st.session_state.calendar_notes
-        )
-        st.download_button(
-            label="Calendario académico",
-            data=pdf_buffer_cal,
-            file_name=f"Calendario_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
-            mime="application/pdf",
-            type="secondary",
-            use_container_width=True
-        )
-
-        pdf_buffer_seg = generar_pdf_seguimiento(
-            st.session_state.info_modulo,
-            st.session_state.info_fechas,
-            st.session_state.horario,
-            st.session_state.planning_ledger,
-            st.session_state.calendar_notes
-        )
-        st.download_button(
-            label="Seguimiento diario",
-            data=pdf_buffer_seg,
-            file_name=f"Seguimiento_diario_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
-            mime="application/pdf",
-            type="secondary",
-            use_container_width=True
-        )
-
-        pdf_buffer_bol = generar_pdf_boletin(
-            st.session_state.info_modulo,
-            st.session_state.info_fechas,
-            st.session_state.df_al,
-            st.session_state.df_eval,
-            st.session_state.df_ra,
-            st.session_state.df_ud,
-            st.session_state.df_pr,
-            st.session_state.planning_ledger,
-            st.session_state.df_ce,
-            st.session_state.df_act,
-            st.session_state.df_feoe
-        )
-        st.download_button(
-            label="Boletín competencial",
-            data=pdf_buffer_bol,
-            file_name=f"Boletin_Competencial_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
-            mime="application/pdf",
-            type="secondary",
-            use_container_width=True
-        )
-
-        pdf_buffer_prog = generar_pdf_programacion_aula(
-            st.session_state.info_modulo,
-            st.session_state.config_aula,
-            st.session_state.df_sesiones
-        )
-        st.download_button(
-            label="Programación de aula",
-            data=pdf_buffer_prog,
-            file_name=f"Programacion_Aula_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
-            mime="application/pdf",
-            type="secondary",
-            use_container_width=True
-        )
-
-        # ── Boletín grupal 1T ────────────────────────────────────────────────
-        pdf_buffer_grupal_1t = generar_pdf_boletin_grupal(
-            trimestre="1T",
-            info_modulo=st.session_state.info_modulo,
-            df_al=st.session_state.df_al,
-            df_eval=st.session_state.df_eval,
-            df_act=st.session_state.df_act,
-        )
-        _mod_name = st.session_state.info_modulo.get('modulo', 'Grupo')
-        st.download_button(
-            label="Boletín grupal 1T",
-            data=pdf_buffer_grupal_1t,
-            file_name=f"Boletin_Grupal_1T_{_mod_name}.pdf",
-            mime="application/pdf",
-            type="secondary",
-            use_container_width=True
-        )
-    st.markdown("<br><hr>", unsafe_allow_html=True)
-
-    # --- MEJORA #7: Validador de coherencia ---
-    _val_avisos = []
-    _h_ud = int(st.session_state.df_ud["horas_ud"].sum()) if (
-        "df_ud" in st.session_state and not st.session_state.df_ud.empty
-        and "horas_ud" in st.session_state.df_ud.columns
-    ) else 0
-    _dias_semana = ["Lun", "Mar", "Mié", "Jue", "Vie"]
-    _h_reales = 0
-    for _tri in ["1t", "2t", "3t"]:
-        _ini_tri = st.session_state.info_fechas.get(f"ini_{_tri}")
-        _fin_tri = st.session_state.info_fechas.get(f"fin_{_tri}")
-        if not _ini_tri or not _fin_tri:
-            continue
-        _cur = _ini_tri
-        while _cur <= _fin_tri:
-            if _cur.weekday() < 5:
-                _f_str = _cur.strftime("%d/%m/%Y")
-                if not st.session_state.calendar_notes.get(f"f_{_f_str}"):
-                    _h_reales += st.session_state.horario.get(_dias_semana[_cur.weekday()], 0)
-            _cur += timedelta(days=1)
-    if _h_ud > 0 and _h_reales > 0 and _h_ud != _h_reales:
-        _diff_h = _h_ud - _h_reales  # positivo = UDs exceden las horas lectivas
-        if _diff_h > 0:
-            # UDs > lectivas → problema grave: no caben todas las UDs
-            _icono = "🔴"
-            _txt = f"exceden {_diff_h}h — no caben en el calendario"
-        else:
-            # UDs < lectivas → aviso menor: sobra tiempo lectivo
-            _icono = "🟡"
-            _txt = f"sobran {abs(_diff_h)}h lectivas"
-        _val_avisos.append(f"{_icono} Horas: UDs={_h_ud}h vs lectivas={_h_reales}h ({_txt})")
-    _trimestres = [("1t","1T"), ("2t","2T"), ("3t","3T")]
-    _fechas_ok = True
-    for _key, _label in _trimestres:
-        _ini = st.session_state.info_fechas.get(f"ini_{_key}")
-        _fin = st.session_state.info_fechas.get(f"fin_{_key}")
-        if not _ini or not _fin:
-            _val_avisos.append(f"🔴 {_label}: fechas vacías"); _fechas_ok = False
-        elif _fin < _ini:
-            _val_avisos.append(f"🔴 {_label}: fin anterior al inicio"); _fechas_ok = False
-    if _fechas_ok:
-        for (_k1, _l1), (_k2, _l2) in [(("1t","1T"),("2t","2T")), (("2t","2T"),("3t","3T"))]:
-            _fin1 = st.session_state.info_fechas.get(f"fin_{_k1}")
-            _ini2 = st.session_state.info_fechas.get(f"ini_{_k2}")
-            if _fin1 and _ini2 and _ini2 <= _fin1:
-                _val_avisos.append(f"🟡 {_l1} y {_l2} se solapan")
-    if _val_avisos:
-        _val_icon = "🔴" if any(a.startswith("🔴") for a in _val_avisos) else "🟡"
-        with st.expander(f"{_val_icon} Validador · {len(_val_avisos)} aviso(s)"):
-            for _av in _val_avisos:
-                st.markdown(f"<small>{_av}</small>", unsafe_allow_html=True)
-    else:
-        st.markdown('<div style="font-size:0.75rem;color:#6ee06e;margin-bottom:4px;">🟢 Programación coherente</div>',
-                    unsafe_allow_html=True)
 
     # 5.2 Gestión de Archivos
     with st.expander("📚 Gestión de módulos"):
@@ -1062,6 +996,59 @@ with st.sidebar:
             guardar_curso(_n_cur); st.session_state.active_curso = _n_cur
             st.success(f"✅ Curso guardado: {_n_cur}.json")
 
+    # --- MEJORA #7: Validador de coherencia ---
+    _val_avisos = []
+    _h_ud = int(st.session_state.df_ud["horas_ud"].sum()) if (
+        "df_ud" in st.session_state and not st.session_state.df_ud.empty
+        and "horas_ud" in st.session_state.df_ud.columns
+    ) else 0
+    _dias_semana = ["Lun", "Mar", "Mié", "Jue", "Vie"]
+    _h_reales = 0
+    for _tri in ["1t", "2t", "3t"]:
+        _ini_tri = st.session_state.info_fechas.get(f"ini_{_tri}")
+        _fin_tri = st.session_state.info_fechas.get(f"fin_{_tri}")
+        if not _ini_tri or not _fin_tri:
+            continue
+        _cur = _ini_tri
+        while _cur <= _fin_tri:
+            if _cur.weekday() < 5:
+                _f_str = _cur.strftime("%d/%m/%Y")
+                if not st.session_state.calendar_notes.get(f"f_{_f_str}"):
+                    _h_reales += st.session_state.horario.get(_dias_semana[_cur.weekday()], 0)
+            _cur += timedelta(days=1)
+    if _h_ud > 0 and _h_reales > 0 and _h_ud != _h_reales:
+        _diff_h = _h_ud - _h_reales
+        if _diff_h > 0:
+            _icono = "🔴"
+            _txt = f"exceden {_diff_h}h — no caben en el calendario"
+        else:
+            _icono = "🟡"
+            _txt = f"sobran {abs(_diff_h)}h lectivas"
+        _val_avisos.append(f"{_icono} Horas: UDs={_h_ud}h vs lectivas={_h_reales}h ({_txt})")
+    _trimestres = [("1t","1T"), ("2t","2T"), ("3t","3T")]
+    _fechas_ok = True
+    for _key, _label in _trimestres:
+        _ini = st.session_state.info_fechas.get(f"ini_{_key}")
+        _fin = st.session_state.info_fechas.get(f"fin_{_key}")
+        if not _ini or not _fin:
+            _val_avisos.append(f"🔴 {_label}: fechas vacías"); _fechas_ok = False
+        elif _fin < _ini:
+            _val_avisos.append(f"🔴 {_label}: fin anterior al inicio"); _fechas_ok = False
+    if _fechas_ok:
+        for (_k1, _l1), (_k2, _l2) in [(("1t","1T"),("2t","2T")), (("2t","2T"),("3t","3T"))]:
+            _fin1 = st.session_state.info_fechas.get(f"fin_{_k1}")
+            _ini2 = st.session_state.info_fechas.get(f"ini_{_k2}")
+            if _fin1 and _ini2 and _ini2 <= _fin1:
+                _val_avisos.append(f"🟡 {_l1} y {_l2} se solapan")
+    if _val_avisos:
+        _val_icon = "🔴" if any(a.startswith("🔴") for a in _val_avisos) else "🟡"
+        with st.expander(f"{_val_icon} Validador · {len(_val_avisos)} aviso(s)"):
+            for _av in _val_avisos:
+                st.markdown(f"<small>{_av}</small>", unsafe_allow_html=True)
+    else:
+        st.markdown('<div style="font-size:0.75rem;color:#6ee06e;margin-bottom:4px;">🟢 Programación coherente</div>',
+                    unsafe_allow_html=True)
+
     st.markdown('<p class="user-subtitle">(c) Rafael Sanz Prades</p>', unsafe_allow_html=True)
 
     
@@ -1070,19 +1057,36 @@ with st.sidebar:
 st.markdown(f'<div class="pestaña-header"><h2>{menu}</h2></div>', unsafe_allow_html=True)
 
 # --- MEJORA #9: Banner + CSS overlay de solo lectura ---
-_es_seccion_global = menu in ["Contextualización", "Planes e inclusión", "Calendario académico"]
+_es_seccion_global = menu in ["Introducción y planes", "Calendario académico"]
 _es_seccion_pd = menu in ["Módulo didáctico", "Matrices RA → CE → UD",
                            "Instrumentos de evaluación",
                            "Resumen docente", "Programación de aula"]
 _es_seccion_curso = menu in ["Seguimiento diario", "Matrícula alumnado",
                               "Calificación académica", "Calificación FEOE", "Evaluación continua"]
 
+_, col_tit_der = st.columns([4, 1])
+with col_tit_der:
+    if _es_seccion_global:
+        _lock_label_glb = "🔒 Bloqueado" if st.session_state.lock_global else "🔓 Activado"
+        if st.button(_lock_label_glb, use_container_width=True, key="btn_lock_glb_main", type="primary" if st.session_state.lock_global else "secondary"):
+            st.session_state.lock_global = not st.session_state.lock_global
+            st.rerun()
+    elif _es_seccion_pd:
+        _lock_label_pd = "🔒 Bloqueado" if st.session_state.lock_pd else "🔓 Activado"
+        if st.button(_lock_label_pd, use_container_width=True, key="btn_lock_pd_main", type="primary" if st.session_state.lock_pd else "secondary"):
+            st.session_state.lock_pd = not st.session_state.lock_pd
+            st.rerun()
+    elif _es_seccion_curso:
+        _lock_label_cur = "🔒 Bloqueado" if st.session_state.lock_curso else "🔓 Activado"
+        if st.button(_lock_label_cur, use_container_width=True, key="btn_lock_cur_main", type="primary" if st.session_state.lock_curso else "secondary"):
+            st.session_state.lock_curso = not st.session_state.lock_curso
+            st.rerun()
+
 if ro_global and _es_seccion_global:
     st.markdown(
         """<div style="background:#2e004f;border-left:4px solid #cc88ff;border-radius:6px;
         padding:8px 14px;margin-bottom:16px;font-size:0.9rem;color:#ddb8ff;">
-        🔒 <strong>Configuración global en modo solo lectura.</strong>
-        Activa "🔓 Edición activa" en el menú lateral para editar.</div>""",
+        <strong>En modo solo lectura. </strong> Conmuta de "🔒 Bloqueado" a "🔓 Activado" en la parte superior derecha para editar</div>""",
         unsafe_allow_html=True
     )
     st.markdown("""<style>
@@ -1095,10 +1099,9 @@ if ro_global and _es_seccion_global:
 
 if ro_pd and _es_seccion_pd:
     st.markdown(
-        """<div style="background:#7c4a00;border-left:4px solid #ffaa00;border-radius:6px;
-        padding:8px 14px;margin-bottom:16px;font-size:0.9rem;color:#ffe0a0;">
-        🔒 <strong>Programación Didáctica en modo solo lectura.</strong>
-        Activa "🔓 Edición activa" en el menú lateral para editar.</div>""",
+        """<div style="background:#2e004f;border-left:4px solid #cc88ff;border-radius:6px;
+        padding:8px 14px;margin-bottom:16px;font-size:0.9rem;color:#ddb8ff;">
+        <strong>En modo solo lectura. </strong> Conmuta de "🔒 Bloqueado" a "🔓 Activado" en la parte superior derecha para editar</div>""",
         unsafe_allow_html=True
     )
     st.markdown("""<style>
@@ -1111,10 +1114,9 @@ if ro_pd and _es_seccion_pd:
 
 if ro_curso and _es_seccion_curso:
     st.markdown(
-        """<div style="background:#00407c;border-left:4px solid #00aaff;border-radius:6px;
-        padding:8px 14px;margin-bottom:16px;font-size:0.9rem;color:#a0d8ff;">
-        🔒 <strong>Curso en modo solo lectura.</strong>
-        Activa "🔓 Edición activa" en el menú lateral para editar.</div>""",
+        """<div style="background:#2e004f;border-left:4px solid #cc88ff;border-radius:6px;
+        padding:8px 14px;margin-bottom:16px;font-size:0.9rem;color:#ddb8ff;">
+        <strong>En modo solo lectura. </strong> Conmuta de "🔒 Bloqueado" a "🔓 Activado" en la parte superior derecha para editar</div>""",
         unsafe_allow_html=True
     )
     st.markdown("""<style>
@@ -1938,7 +1940,7 @@ elif menu == "Matrícula alumnado":
 
 # --- PESTAÑA: SEGUIMIENTO ---
 elif menu == "Seguimiento diario":
-    st.subheader("📍 Seguimiento de las planificación")
+    st.subheader("📍 Planificación. Horas previstas frente a impartidas")
     
     meses_display = ["Sep", "Oct", "Nov", "Dic", "Ene", "Feb", "Mar", "Abr", "May", "Jun"]
     mapping_meses_full = {"Sep": "Septiembre", "Oct": "Octubre", "Nov": "Noviembre", "Dic": "Diciembre", "Ene": "Enero", "Feb": "Febrero", "Mar": "Marzo", "Abr": "Abril", "May": "Mayo", "Jun": "Junio"}
@@ -2149,7 +2151,7 @@ elif menu == "Seguimiento diario":
 
 # --- PESTAÑA: INSTRUMENTOS ---
 elif menu == "Instrumentos de evaluación":
-    st.subheader("🛠️ Instrumentos y/o Actividades de evaluación")
+    st.subheader("🛠️ Instrumentos de evaluación y/o Actividades")
     st.markdown("Define las tareas, exámenes y registros de observación, y vincula qué Criterios de Evaluación califican.")
 
     if st.session_state.df_ce.empty:
@@ -2647,6 +2649,12 @@ elif menu == "Programación de aula":
     # ── Asegurar columna id_ud en df_sesiones ─────────────────
     if "id_ud" not in st.session_state.df_sesiones.columns:
         st.session_state.df_sesiones["id_ud"] = ""
+    # ── Migrar Num_Sesion → Num_Orden (compatibilidad) ─────────
+    if "Num_Sesion" in st.session_state.df_sesiones.columns and "Num_Orden" not in st.session_state.df_sesiones.columns:
+        st.session_state.df_sesiones = st.session_state.df_sesiones.rename(columns={"Num_Sesion": "Num_Orden"})
+    if "Horas" not in st.session_state.df_sesiones.columns:
+        st.session_state.df_sesiones["Horas"] = 1
+
 
     _uds_prog = st.session_state.df_ud[["id_ud", "desc_ud"]].copy() if not st.session_state.df_ud.empty else pd.DataFrame(columns=["id_ud","desc_ud"])
     _lista_uds_prog = _uds_prog["id_ud"].tolist()
@@ -2654,13 +2662,15 @@ elif menu == "Programación de aula":
     # ── Formulario añadir sesión (ahora con selector de UD) ───
     with st.expander("➕ Añadir Nueva Sesión", expanded=False):
         with st.form("registro_sesion"):
-            fc1, fc2, fc3 = st.columns([2, 2, 1])
+            fc1, fc2, fc3, fc4 = st.columns([2, 2, 1, 1])
             with fc1:
                 ud_sel = st.selectbox("Unidad Didáctica", options=_lista_uds_prog if _lista_uds_prog else ["Sin UD"])
             with fc2:
                 tipo_act = st.selectbox("Tipo de Actividad", options=["Tª (Teoría)", "Pª (Práctica)", "IE (Instrumento de Evaluación)", "Pª+ (Ampliación/Refuerzo)"])
             with fc3:
-                num_ses = st.number_input("Nº Sesión", min_value=1, step=1, value=len(st.session_state.df_sesiones)+1)
+                num_orden = st.number_input("Νº Orden", min_value=1, step=1, value=len(st.session_state.df_sesiones)+1)
+            with fc4:
+                horas_ses = st.number_input("Horas", min_value=1, step=1, value=1)
             ra_ce_input = st.text_input("RA / CE vinculados", placeholder="Ej: RA1, CE1.a")
             c4, c5 = st.columns(2)
             with c4:
@@ -2672,7 +2682,7 @@ elif menu == "Programación de aula":
                 new_ses_id = generar_siguiente_id(st.session_state.df_sesiones, "SES")
                 new_session = {
                     "ID": new_ses_id, "id_ud": ud_sel,
-                    "Num_Sesion": num_ses, "Tipo_Actividad": tipo_act,
+                    "Num_Orden": num_orden, "Horas": horas_ses, "Tipo_Actividad": tipo_act,
                     "RA_CE": ra_ce_input, "Contenidos": contenidos_input,
                     "Aspectos_Clave": aspectos_input, "Recursos": recursos_input
                 }
@@ -2682,14 +2692,15 @@ elif menu == "Programación de aula":
     # ── Config columnas sesiones ───────────────────────────────
     _col_cfg_ses = {
         "ID":             st.column_config.TextColumn("ID", disabled=True, width="small"),
-        "Num_Sesion":     st.column_config.NumberColumn("Nº", min_value=1, step=1, width="small"),
+        "Num_Orden":      st.column_config.NumberColumn("Nº Orden", min_value=1, step=1, width="small"),
+        "Horas":          st.column_config.NumberColumn("Horas", min_value=1, step=1, width="small"),
         "Tipo_Actividad": st.column_config.SelectboxColumn("Tipo", options=["Tª (Teoría)", "Pª (Práctica)", "IE (Instrumento de Evaluación)", "Pª+ (Ampliación/Refuerzo)"], width="medium"),
         "RA_CE":          st.column_config.TextColumn("RA/CE", width="small"),
         "Contenidos":     st.column_config.TextColumn("Contenidos", width="large"),
         "Aspectos_Clave": st.column_config.TextColumn("Aspectos Clave", width="medium"),
         "Recursos":       st.column_config.TextColumn("Recursos", width="medium"),
     }
-    _cols_ses_disp = ["ID", "Num_Sesion", "Tipo_Actividad", "RA_CE", "Contenidos", "Aspectos_Clave", "Recursos"]
+    _cols_ses_disp = ["ID", "Num_Orden", "Horas", "Tipo_Actividad", "RA_CE", "Contenidos", "Aspectos_Clave", "Recursos"]
 
     # ── Expanders por UD ───────────────────────────────────────
     st.markdown("### 📋 Secuenciación de Unidades didácticas")
@@ -2704,9 +2715,10 @@ elif menu == "Programación de aula":
         _ud_info = _uds_prog[_uds_prog["id_ud"] == _ud_id]
         _ud_desc = _ud_info["desc_ud"].values[0] if not _ud_info.empty else ""
         _mask_ud = st.session_state.df_sesiones["id_ud"].astype(str) == str(_ud_id)
-        _df_ud_ses = st.session_state.df_sesiones[_mask_ud].sort_values("Num_Sesion").reset_index(drop=True)
+        _df_ud_ses = st.session_state.df_sesiones[_mask_ud].sort_values("Num_Orden").reset_index(drop=True)
         _n_ses = len(_df_ud_ses)
-        _label_ud = f"📋 {_ud_id}  ·  {_n_ses} sesiones" + (f"  —  {_ud_desc}" if _ud_desc else "")
+        _h_ses = int(pd.to_numeric(_df_ud_ses["Horas"], errors="coerce").fillna(0).sum()) if not _df_ud_ses.empty and "Horas" in _df_ud_ses.columns else 0
+        _label_ud = f"📋 {_ud_id} ({_n_ses} ses | {_h_ses}h)" + (f" {_ud_desc}" if _ud_desc else "")
 
         with st.expander(_label_ud, expanded=False):
             if _df_ud_ses.empty:
@@ -2733,13 +2745,21 @@ elif menu == "Programación de aula":
         ~st.session_state.df_sesiones["id_ud"].astype(str).isin([str(u) for u in _uds_en_orden])
     ].copy()
     if not _sin_ud.empty:
-        with st.expander(f"📋 Sin UD asignada  ·  {len(_sin_ud)} sesiones", expanded=False):
+        _h_sin = int(pd.to_numeric(_sin_ud["Horas"], errors="coerce").fillna(0).sum()) if "Horas" in _sin_ud.columns else 0
+        with st.expander(f"📋 Sin UD asignada ({len(_sin_ud)} ses | {_h_sin}h)", expanded=False):
             _ed_sin = st.data_editor(_sin_ud[[c for c in _cols_ses_disp if c in _sin_ud.columns]], column_config=_col_cfg_ses, num_rows="dynamic", hide_index=True, use_container_width=True, key="tabla_ses_sin_ud", disabled=ro_pd)
+            if not _ed_sin.reset_index(drop=True).equals(_sin_ud[[c for c in _cols_ses_disp if c in _sin_ud.columns]].reset_index(drop=True)):
+                _df_ses_changed = True
             _ed_sin["id_ud"] = ""
             _df_ses_nuevo.append(_ed_sin)
 
     if _df_ses_changed and _df_ses_nuevo:
         st.session_state.df_sesiones = pd.concat(_df_ses_nuevo, ignore_index=True)
+        # Limpiar el estado de los widgets para que se reordenen según el nuevo orden
+        for k in list(st.session_state.keys()):
+            if k.startswith("tabla_ses_"):
+                del st.session_state[k]
+        st.rerun()
 
 
     st.divider()
@@ -2780,7 +2800,7 @@ elif menu == "Programación de aula":
                 st.success("Añadida correctamente.")
                 st.rerun()
 
-elif menu == "Contextualización":
+elif menu == "Introducción y planes":
     st.subheader("🏫 Centro Educativo. Equipo docente. Entorno socioeconómico")
     st.session_state.config_contexto["instalaciones"] = st.text_area("Instalaciones", st.session_state.config_contexto.get("instalaciones", ""), height=120)
     st.session_state.config_contexto["horario_lectivo"] = st.text_area("Horario lectivo", st.session_state.config_contexto.get("horario_lectivo", ""), height=120)
@@ -2814,8 +2834,7 @@ elif menu == "Contextualización":
 
 
 
-# --- PESTAÑA: PLANES E INCLUSIÓN ---
-elif menu == "Planes e inclusión":
+# --- PLANES E INCLUSIÓN ---
     st.subheader("🧩 Plan de Atención a la diversidad")
     st.markdown("Adaptación curricular no significativas o medidas aplicadas en el aula")
     
@@ -2924,7 +2943,7 @@ elif menu == "Planes e inclusión":
             
             c4, c5 = st.columns(2)
             with c4:
-                ace_ent = st.text_input("Entidad Colaboradora")
+                ace_ent = st.text_input("Entidad colaboradora")
             with c5:
                 ace_eva = st.text_input("Actividad de Evaluación")
             

@@ -24,23 +24,24 @@ def _draw_page_decorations(canv, doc):
     canv.drawRightString(W - 1 * cm, 1 * cm, doc.cal_pie)
     canv.restoreState()
 
-def generar_pdf_seguimiento(info_modulo, info_fechas, horario, planning_ledger, calendar_notes):
+def generar_pdf_seguimiento(info_modulo, info_fechas, horario, planning_ledger, calendar_notes, df_sesiones=None):
     buffer = io.BytesIO()
     W, H = portrait(A4)
-    margin = 1.0 * cm
-    top_margin = 1.8 * cm
+    left_margin = 2.0 * cm
+    right_margin = 1.0 * cm
+    top_margin = 2.0 * cm
     bottom_margin = 1.5 * cm
 
     doc = BaseDocTemplate(
         buffer, pagesize=portrait(A4),
-        rightMargin=margin, leftMargin=margin,
+        rightMargin=right_margin, leftMargin=left_margin,
         topMargin=top_margin, bottomMargin=bottom_margin,
     )
 
     doc.cal_titulo = f"Seguimiento diario. {info_modulo.get('modulo', 'Módulo')}"
     doc.cal_pie = f"{info_modulo.get('centro', 'IES Andalán')} ({info_modulo.get('profesorado', 'Rafael Sanz Prades')})"
 
-    frame = Frame(margin, bottom_margin, W - 2*margin, H - top_margin - bottom_margin, id='main')
+    frame = Frame(left_margin, bottom_margin, W - left_margin - right_margin, H - top_margin - bottom_margin, id='main')
     template = PageTemplate(id='seg', frames=[frame], onPage=_draw_page_decorations)
     doc.addPageTemplates([template])
 
@@ -66,6 +67,25 @@ def generar_pdf_seguimiento(info_modulo, info_fechas, horario, planning_ledger, 
                 
     dias_validos = sorted(list(set(dias_validos)))
     
+    import pandas as pd
+    ud_session_tracker = {}
+    if df_sesiones is not None and not df_sesiones.empty:
+        if "Num_Orden" not in df_sesiones.columns and "Num_Sesion" in df_sesiones.columns:
+            df_sesiones = df_sesiones.rename(columns={"Num_Sesion": "Num_Orden"})
+        for ud_id, g in df_sesiones.groupby("id_ud"):
+            ses_list = []
+            if "Num_Orden" in df_sesiones.columns:
+                g = g.sort_values("Num_Orden")
+            for _, r in g.iterrows():
+                h = int(pd.to_numeric(r.get("Horas", 1), errors="coerce")) if pd.notna(r.get("Horas", 1)) else 1
+                if h < 1: h = 1
+                ses_list.append({
+                    "h_rem": h,
+                    "cont": str(r.get("Contenidos", "")).strip(),
+                    "rec": str(r.get("Recursos", "")).strip()
+                })
+            ud_session_tracker[str(ud_id)] = ses_list
+    
     for d in dias_validos:
         m_key = (d.year, d.month)
         if m_key not in lectivos_por_mes:
@@ -78,9 +98,10 @@ def generar_pdf_seguimiento(info_modulo, info_fechas, horario, planning_ledger, 
     style_normal_bold = ParagraphStyle('Normal_Bold', alignment=1, fontName='Helvetica-Bold', fontSize=10)
     # Festivo: alineación izquierda (0) con margen
     style_festivo = ParagraphStyle('Festivo', alignment=0, fontName='Helvetica-Oblique', fontSize=10, textColor=colors.HexColor("#7a3535"))
+    style_header_left = ParagraphStyle('Header_Left', alignment=0, fontName='Helvetica-Bold', fontSize=10)
 
-    # Ancho 19 cm: Sem(1.0), Fecha(1.5), Día(1.0), H(0.8), UD/FEOE(2.5), Seguimiento(10.0), Relevantes(2.2)
-    colWidths = [1.0*cm, 1.5*cm, 1.0*cm, 0.8*cm, 2.5*cm, 10.0*cm, 2.2*cm]
+    # Ancho 18 cm
+    colWidths = [1.0*cm, 1.5*cm, 1.0*cm, 1.0*cm, 2.0*cm, 9.0*cm, 2.5*cm]
     meses_keys = sorted(lectivos_por_mes.keys())
     
     for idx, (year, month) in enumerate(meses_keys):
@@ -89,7 +110,7 @@ def generar_pdf_seguimiento(info_modulo, info_fechas, horario, planning_ledger, 
         # Row 0: Mes
         t_data = [[f"{NOMBRE_MESES[month-1]} {year}", "", "", "", "", "", ""]]
         # Row 1: Cabeceras
-        t_data.append(["Sem.", "Fecha", "Día", "H", "UD/FEOE", "Seguimiento", "Relevantes"])
+        t_data.append(["Sem.", "Fecha", "Día", "H.", "UD/FEOE", Paragraph("Programación (y seguimiento). <i>Recursos</i>", style_header_left), "Relevantes"])
         row_heights = [1.2*cm, 0.8*cm]
         
         festivos_count = sum(1 for d in dias_mes if calendar_notes.get(f"f_{d.strftime('%d/%m/%Y')}", "").strip())
@@ -139,7 +160,7 @@ def generar_pdf_seguimiento(info_modulo, info_fechas, horario, planning_ledger, 
             ud_feoe_texto = " / ".join(ud_feoe_hitos)
             
             if festivo:
-                seg_widget = Paragraph(f"<b>FESTIVO: {festivo.upper()}</b>", style_festivo)
+                seg_widget = Paragraph(f"<b>Festivo: {festivo.upper()}</b>", style_festivo)
                 ud_feoe_texto = "-" 
                 horas = "-"
                 relevante = "-"
@@ -147,7 +168,31 @@ def generar_pdf_seguimiento(info_modulo, info_fechas, horario, planning_ledger, 
                 bg_styles.append(('BACKGROUND', (0, row_idx), (-1, row_idx), colors.HexColor("#fceaea")))
                 bg_styles.append(('VALIGN', (5, row_idx), (5, row_idx), 'MIDDLE')) # Centrado en altura para el festivo
             else:
+                horas_dia = int(horario.get(dia_texto, 0))
                 seg_widget = ""
+                if uds and uds[0] in ud_session_tracker and ud_session_tracker[uds[0]] and horas_dia > 0:
+                    ud_act = uds[0]
+                    ses = ud_session_tracker[ud_act][0]
+                    cont = ses["cont"]
+                    rec = ses["rec"]
+                    
+                    h_a_consumir = horas_dia
+                    while h_a_consumir > 0 and ud_session_tracker[ud_act]:
+                        s = ud_session_tracker[ud_act][0]
+                        if s["h_rem"] > h_a_consumir:
+                            s["h_rem"] -= h_a_consumir
+                            h_a_consumir = 0
+                        else:
+                            h_a_consumir -= s["h_rem"]
+                            ud_session_tracker[ud_act].pop(0)
+
+                    p_cont = Paragraph(cont, style_normal_left) if cont else Paragraph("-", style_normal_left)
+                    if rec:
+                        style_rec = ParagraphStyle('Recurso', alignment=2, fontName='Helvetica-Oblique', fontSize=8, textColor=colors.HexColor("#444444"), leading=10)
+                        seg_widget = [p_cont, Paragraph(rec, style_rec)]
+                    else:
+                        seg_widget = p_cont
+
                 row_heights.append(row_h)
                 
             sem_texto = str(week_num) if row_idx == week_start_row else ""
@@ -203,6 +248,7 @@ def generar_pdf_seguimiento(info_modulo, info_fechas, horario, planning_ledger, 
             ('VALIGN', (5,2), (5,-1), 'TOP'), # Contenido arriba por defecto para escritura manual
             ('LEFTPADDING', (5,1), (5,-1), 5),
             ('TOPPADDING', (5,2), (5,-1), 5),
+            ('BOTTOMPADDING', (5,2), (5,-1), 5),
         ]
         
         t.setStyle(TableStyle(base_style + span_styles + line_styles + bg_styles))
