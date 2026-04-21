@@ -118,7 +118,8 @@ def cargar_pd(nombre_archivo):
 
     st.session_state.info_modulo = data.get("info_modulo", {})
     cargar_global()
-    st.session_state.horario = data.get("horario", {})
+    st.session_state.horario = {"Lun": 0, "Mar": 0, "Mié": 0, "Jue": 0, "Vie": 0}
+    st.session_state.horario.update(data.get("horario", {}))
     st.session_state.df_ra = pd.DataFrame(data.get("df_ra", [])) if data.get("df_ra") else df_ra_empty()
     st.session_state.df_ud = pd.DataFrame(data.get("df_ud", [])) if data.get("df_ud") else df_ud_empty()
     st.session_state.df_pr = pd.DataFrame(data.get("df_pr", []))
@@ -212,7 +213,8 @@ def cargar_datos(nombre_archivo):
             st.session_state.info_fechas = {k: unserialize_date(v) for k, v in data.get("info_fechas", {}).items()}
             st.session_state.calendar_notes = data.get("calendar_notes", {})
             st.session_state.config_contexto = data.get("config_contexto", {"entorno": "", "perfil": "", "metodologia": ""})
-        st.session_state.horario = data.get("horario", {})
+        st.session_state.horario = {"Lun": 0, "Mar": 0, "Mié": 0, "Jue": 0, "Vie": 0}
+        st.session_state.horario.update(data.get("horario", {}))
         st.session_state.df_ra = pd.DataFrame(data.get("df_ra", [])) if data.get("df_ra") else df_ra_empty()
         st.session_state.df_ud = pd.DataFrame(data.get("df_ud", [])) if data.get("df_ud") else df_ud_empty()
         st.session_state.df_pr = pd.DataFrame(data.get("df_pr", []))

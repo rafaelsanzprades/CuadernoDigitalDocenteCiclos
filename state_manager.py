@@ -38,6 +38,11 @@ def inicializar_estado():
 
     if 'horario' not in st.session_state:
         st.session_state.horario = {"Lun": 0, "Mar": 0, "Mié": 0, "Jue": 0, "Vie": 0}
+    else:
+        # Asegurar que todas las claves existen (por si se cargó un archivo incompleto)
+        for d in ["Lun", "Mar", "Mié", "Jue", "Vie"]:
+            if d not in st.session_state.horario:
+                st.session_state.horario[d] = 0
     if 'calendar_notes' not in st.session_state:
         st.session_state.calendar_notes = {}
     if 'df_ra' not in st.session_state:
