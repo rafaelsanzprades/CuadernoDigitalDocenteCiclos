@@ -6,6 +6,7 @@ Estilo unificado con el resto de informes (Calendario académico).
 Columnas: Apellidos | Nombre | Edad | Rep. | [bloques por tipo] | Nota Media
 """
 import io
+import streamlit as st
 import math
 import pandas as pd
 from reportlab.lib import colors

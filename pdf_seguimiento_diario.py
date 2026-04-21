@@ -1,4 +1,5 @@
 import io
+import streamlit as st
 from datetime import timedelta
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4, portrait
