@@ -42,10 +42,10 @@ def render_matricula_alumnado(ro_pd, ro_curso, ro_global):
         "Edad":        st.column_config.NumberColumn("Edad", min_value=0, max_value=99, step=1),
         "Nacimiento":  st.column_config.TextColumn("Fecha nacimiento"),
         "Repite":      st.column_config.CheckboxColumn("Repite"),
-        "Matrícula":   st.column_config.TextColumn("Matrícula"),
+        "Matricula":   st.column_config.TextColumn("Matrícula"),
         "Comentarios": st.column_config.TextColumn("Comentarios"),
         "email":       st.column_config.TextColumn("email"),
-        "Móvil":       st.column_config.TextColumn("Móvil"),
+        "Movil":       st.column_config.TextColumn("Móvil"),
     }
     
     ed_al = st.data_editor(

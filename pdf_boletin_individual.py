@@ -258,12 +258,12 @@ def generar_pdf_boletin_individual(
     p_cuaderno = info_modulo.get("criterio_tareas",                   30)
 
     TIPO_MAP = {
-        "Teoría":   ("Exámenes teóricos",   p_teoria),
-        "Práctica": ("Exámenes prácticos", p_practica),
+        "Teoria":   ("Exámenes teóricos",   p_teoria),
+        "Practica": ("Exámenes prácticos", p_practica),
         "Informes": ("Informes de ejercicios",     p_informes),
         "Tareas":   ("Cuaderno de tareas",     p_cuaderno),
     }
-    TIPOS_ORDEN = ["Teoría", "Práctica", "Informes", "Tareas"]
+    TIPOS_ORDEN = ["Teoria", "Practica", "Informes", "Tareas"]
     
     pond_1t = info_modulo.get("pond_1t", 30)
     pond_2t = info_modulo.get("pond_2t", 30)

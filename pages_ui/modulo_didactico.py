@@ -92,11 +92,11 @@ def render_modulo_didactico(ro_pd, ro_curso, ro_global):
     rd1, rd2, rd3, rd4 = st.columns(4)
     with rd1:
         with st.container(border=True):
-            _n_exam_teo = len(st.session_state.df_act[st.session_state.df_act["Tipo"] == "Teoría"]) if not st.session_state.df_act.empty and "Tipo" in st.session_state.df_act.columns else 0
+            _n_exam_teo = len(st.session_state.df_act[st.session_state.df_act["Tipo"] == "Teoria"]) if not st.session_state.df_act.empty and "Tipo" in st.session_state.df_act.columns else 0
             st.metric("Exámenes teóricos", _n_exam_teo)
     with rd2:
         with st.container(border=True):
-            _n_exam_prac = len(st.session_state.df_act[st.session_state.df_act["Tipo"] == "Práctica"]) if not st.session_state.df_act.empty and "Tipo" in st.session_state.df_act.columns else 0
+            _n_exam_prac = len(st.session_state.df_act[st.session_state.df_act["Tipo"] == "Practica"]) if not st.session_state.df_act.empty and "Tipo" in st.session_state.df_act.columns else 0
             st.metric("Exámenes prácticos", _n_exam_prac)
     with rd3:
         with st.container(border=True):

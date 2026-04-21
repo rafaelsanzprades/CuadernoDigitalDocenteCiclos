@@ -33,7 +33,7 @@ def render_programacion_aula(ro_pd, ro_curso, ro_global):
             with fc1:
                 ud_sel = st.selectbox("Unidad Didáctica", options=_lista_uds_prog if _lista_uds_prog else ["Sin UD"])
             with fc2:
-                tipo_act = st.selectbox("Tipo de Actividad", options=["Tª (Teoría)", "Pª (Práctica)", "IE (Instrumento de Evaluación)", "Pª+ (Ampliación/Refuerzo)"])
+                tipo_act = st.selectbox("Tipo de Actividad", options=["Tª (Teoria)", "Pª (Practica)", "IE (Instrumento de Evaluacion)", "Pª+ (Ampliacion/Refuerzo)"])
             with fc3:
                 num_orden = st.number_input("Νº Orden", min_value=1, step=1, value=len(st.session_state.df_sesiones)+1)
             with fc4:
@@ -61,7 +61,7 @@ def render_programacion_aula(ro_pd, ro_curso, ro_global):
         "ID":             st.column_config.TextColumn("ID", disabled=True, width="small"),
         "Num_Orden":      st.column_config.NumberColumn("Nº Orden", min_value=1, step=1, width="small"),
         "Horas":          st.column_config.NumberColumn("Horas", min_value=1, step=1, width="small"),
-        "Tipo_Actividad": st.column_config.SelectboxColumn("Tipo", options=["Tª (Teoría)", "Pª (Práctica)", "IE (Instrumento de Evaluación)", "Pª+ (Ampliación/Refuerzo)"], width="medium"),
+        "Tipo_Actividad": st.column_config.SelectboxColumn("Tipo", options=["Tª (Teoria)", "Pª (Practica)", "IE (Instrumento de Evaluacion)", "Pª+ (Ampliacion/Refuerzo)"], width="medium"),
         "RA_CE":          st.column_config.TextColumn("RA/CE", width="small"),
         "Contenidos":     st.column_config.TextColumn("Contenidos", width="large"),
         "Aspectos_Clave": st.column_config.TextColumn("Aspectos Clave", width="medium"),

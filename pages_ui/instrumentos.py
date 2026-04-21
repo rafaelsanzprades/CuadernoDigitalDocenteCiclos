@@ -27,7 +27,7 @@ def render_instrumentos(ro_pd, ro_curso, ro_global):
                 with c_a1:
                     f_tri = st.selectbox("Trimestre", options=["1T", "2T", "3T"])
                 with c_a2:
-                    f_tipo = st.selectbox("Tipo", options=["Teoría", "Práctica", "Informes", "Tareas"])
+                    f_tipo = st.selectbox("Tipo", options=["Teoria", "Practica", "Informes", "Tareas"])
                 with c_a3:
                     f_id_act = st.text_input("ID-IA", value=f"ACT{(len(st.session_state.df_act)+1):02d}" if not st.session_state.df_act.empty else "ACT01")
                     
@@ -53,7 +53,7 @@ def render_instrumentos(ro_pd, ro_curso, ro_global):
     
         columnas_config_act_base = {
             "id_act":    st.column_config.TextColumn("ID-IA", disabled=True, width="small", pinned=True),
-            "Tipo":      st.column_config.SelectboxColumn("Tipo", options=["Teoría", "Práctica", "Informes", "Tareas"], width="medium"),
+            "Tipo":      st.column_config.SelectboxColumn("Tipo", options=["Teoria", "Practica", "Informes", "Tareas"], width="medium"),
             "desc_act":  st.column_config.TextColumn("Instrumento / Actividad"),
             "peso_act":  st.column_config.NumberColumn("% Pond.", min_value=0, max_value=100, step=1, width="small"),
             "is_active": st.column_config.CheckboxColumn("✓", width="small"),

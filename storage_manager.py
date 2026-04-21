@@ -123,14 +123,15 @@ def cargar_pd(nombre_archivo):
     st.session_state.df_ud = pd.DataFrame(data.get("df_ud", [])) if data.get("df_ud") else df_ud_empty()
     st.session_state.df_pr = pd.DataFrame(data.get("df_pr", []))
     if not st.session_state.df_pr.empty:
-        if "Nombre" in st.session_state.df_pr.columns and "Práctica" not in st.session_state.df_pr.columns:
-            st.session_state.df_pr = st.session_state.df_pr.rename(columns={"Nombre": "Práctica"})
+        st.session_state.df_pr.rename(columns={"Nombre": "Practica", "Práctica": "Practica"}, inplace=True)
         cols = st.session_state.df_pr.columns.tolist()
-        desired_order = ["ID", "UD", "H", "Práctica"]
+        desired_order = ["ID", "UD", "H", "Practica"]
         new_order = [c for c in desired_order if c in cols] + [c for c in cols if c not in desired_order]
         st.session_state.df_pr = st.session_state.df_pr[new_order]
     st.session_state.df_ce = pd.DataFrame(data.get("df_ce", [])) if data.get("df_ce") else df_ce_empty()
     st.session_state.df_act = pd.DataFrame(data.get("df_act", [])) if data.get("df_act") else df_act_empty()
+    if not st.session_state.df_act.empty and "Tipo" in st.session_state.df_act.columns:
+        st.session_state.df_act["Tipo"] = st.session_state.df_act["Tipo"].replace({"Teoría": "Teoria", "Práctica": "Practica"})
     st.session_state.df_dua = pd.DataFrame(data.get("df_dua", []))
     st.session_state.df_contingencia = pd.DataFrame(data.get("df_contingencia", []))
     st.session_state.df_ace = pd.DataFrame(data.get("df_ace", []))
@@ -168,6 +169,8 @@ def cargar_curso(nombre_archivo):
         return
 
     st.session_state.df_al = pd.DataFrame(data.get("df_al", []))
+    if not st.session_state.df_al.empty:
+        st.session_state.df_al.rename(columns={"Matrícula": "Matricula", "Móvil": "Movil"}, inplace=True)
     st.session_state.df_feoe = pd.DataFrame(data.get("df_feoe", []))
     loaded_eval = data.get("df_eval", [])
     if not loaded_eval:
@@ -217,15 +220,18 @@ def cargar_datos(nombre_archivo):
         st.session_state.df_ud = pd.DataFrame(data.get("df_ud", [])) if data.get("df_ud") else df_ud_empty()
         st.session_state.df_pr = pd.DataFrame(data.get("df_pr", []))
         if not st.session_state.df_pr.empty:
-            if "Nombre" in st.session_state.df_pr.columns and "Práctica" not in st.session_state.df_pr.columns:
-                st.session_state.df_pr = st.session_state.df_pr.rename(columns={"Nombre": "Práctica"})
+            st.session_state.df_pr.rename(columns={"Nombre": "Practica", "Práctica": "Practica"}, inplace=True)
             cols = st.session_state.df_pr.columns.tolist()
-            desired_order = ["ID", "UD", "H", "Práctica"]
+            desired_order = ["ID", "UD", "H", "Practica"]
             new_order = [c for c in desired_order if c in cols] + [c for c in cols if c not in desired_order]
             st.session_state.df_pr = st.session_state.df_pr[new_order]
         st.session_state.df_al = pd.DataFrame(data.get("df_al", []))
+        if not st.session_state.df_al.empty:
+            st.session_state.df_al.rename(columns={"Matrícula": "Matricula", "Móvil": "Movil"}, inplace=True)
         st.session_state.df_ce = pd.DataFrame(data.get("df_ce", [])) if data.get("df_ce") else df_ce_empty()
         st.session_state.df_act = pd.DataFrame(data.get("df_act", [])) if data.get("df_act") else df_act_empty()
+        if not st.session_state.df_act.empty and "Tipo" in st.session_state.df_act.columns:
+            st.session_state.df_act["Tipo"] = st.session_state.df_act["Tipo"].replace({"Teoría": "Teoria", "Práctica": "Practica"})
         st.session_state.df_feoe = pd.DataFrame(data.get("df_feoe", []))
         loaded_eval = data.get("df_eval", [])
         if not loaded_eval:
