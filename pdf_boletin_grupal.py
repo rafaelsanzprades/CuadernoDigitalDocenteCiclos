@@ -248,6 +248,7 @@ def generar_pdf_boletin_grupal(
     buffer.seek(0)
     return buffer
 
+@st.cache_data
 def generar_pdf_boletin_grupal_final(
     info_modulo: dict,
     df_al: pd.DataFrame,

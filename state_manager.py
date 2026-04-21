@@ -7,6 +7,15 @@ def inicializar_estado():
     if 'menu' not in st.session_state:
         st.session_state.menu = "Módulo didáctico"
 
+    # --- Autenticación ---
+    if 'auth' not in st.session_state:
+        st.session_state.auth = {
+            "logged_in": False,
+            "role": None, # 'docente' o 'alumno'
+            "user_id": None,
+            "user_email": None
+        }
+
     if 'info_modulo' not in st.session_state:
         st.session_state.info_modulo = {
             "modulo": "", 

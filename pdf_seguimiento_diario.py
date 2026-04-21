@@ -24,6 +24,7 @@ def _draw_page_decorations(canv, doc):
     canv.drawRightString(W - 1 * cm, 1 * cm, doc.cal_pie)
     canv.restoreState()
 
+@st.cache_data
 def generar_pdf_seguimiento(info_modulo, info_fechas, horario, planning_ledger, calendar_notes, df_sesiones=None):
     buffer = io.BytesIO()
     W, H = portrait(A4)
