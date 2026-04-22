@@ -18,6 +18,7 @@ from pdf_seguimiento_diario import generar_pdf_seguimiento
 
 from pdf_boletin_grupal import generar_pdf_boletin_grupal, generar_pdf_boletin_grupal_final
 from pdf_boletin_individual import generar_pdf_boletin_individual
+from pdf_planificacion import generar_pdf_planificacion
 from storage_manager import serialize_date, unserialize_date, guardar_global, cargar_global, guardar_pd, cargar_pd, guardar_curso, cargar_curso, guardar_datos, cargar_datos
 
 
@@ -174,6 +175,24 @@ with st.sidebar:
             label="Seguimiento diario",
             data=pdf_buffer_seg,
             file_name=f"Seguimiento_diario_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
+            mime="application/pdf",
+            type="secondary",
+            use_container_width=True
+        )
+
+        pdf_buffer_plan = generar_pdf_planificacion(
+            st.session_state.info_modulo,
+            st.session_state.df_ud,
+            st.session_state.df_sgmt,
+            st.session_state.daily_ledger,
+            st.session_state.horario,
+            st.session_state.info_fechas,
+            st.session_state.calendar_notes
+        )
+        st.download_button(
+            label="Planificación mensual",
+            data=pdf_buffer_plan,
+            file_name=f"Planificacion_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
             mime="application/pdf",
             type="secondary",
             use_container_width=True
