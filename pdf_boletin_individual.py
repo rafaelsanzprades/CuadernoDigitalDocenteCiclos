@@ -1,4 +1,5 @@
 import io
+import streamlit as st
 from datetime import datetime
 import pandas as pd
 from reportlab.lib.pagesizes import A4, portrait
@@ -19,6 +20,7 @@ def _draw_page_decorations(canv, doc):
     canv.drawRightString(W - 1 * cm, 1 * cm, doc.cal_pie)
     canv.restoreState()
 
+@st.cache_data
 def generar_pdf_boletin_individual(
     info_modulo: dict,
     al_id: str,

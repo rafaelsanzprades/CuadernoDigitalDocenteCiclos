@@ -1,4 +1,5 @@
 import io
+import streamlit as st
 import calendar
 from datetime import date
 from reportlab.lib import colors
@@ -33,6 +34,7 @@ def _draw_page_decorations(canv, doc):
 # ------------------------------------------------------------------ #
 #  Función principal                                                  #
 # ------------------------------------------------------------------ #
+@st.cache_data
 def generar_pdf_calendario(info_modulo, info_fechas, planning_ledger, calendar_notes):
     buffer = io.BytesIO()
 

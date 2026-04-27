@@ -35,11 +35,11 @@ def render_calendario_academico(ro_pd, ro_curso, ro_global):
     # Usamos exactamente 5 columnas para asegurar que aparezcan los botones + y -
     c_h1, c_h2, c_h3, c_h4, c_h5 = st.columns(5)
     
-    with c_h1: st.session_state.horario["Lun"] = st.number_input("Lunes", 0, 8, st.session_state.horario["Lun"], key="h_in_Lun", step=1)
-    with c_h2: st.session_state.horario["Mar"] = st.number_input("Martes", 0, 8, st.session_state.horario["Mar"], key="h_in_Mar", step=1)
-    with c_h3: st.session_state.horario["Mié"] = st.number_input("Miércoles", 0, 8, st.session_state.horario["Mié"], key="h_in_Mié", step=1)
-    with c_h4: st.session_state.horario["Jue"] = st.number_input("Jueves", 0, 8, st.session_state.horario["Jue"], key="h_in_Jue", step=1)
-    with c_h5: st.session_state.horario["Vie"] = st.number_input("Viernes", 0, 8, st.session_state.horario["Vie"], key="h_in_Vie", step=1)
+    with c_h1: st.session_state.horario["Lun"] = st.number_input("Lunes", 0, 8, st.session_state.horario.get("Lun", 0), key="h_in_Lun", step=1)
+    with c_h2: st.session_state.horario["Mar"] = st.number_input("Martes", 0, 8, st.session_state.horario.get("Mar", 0), key="h_in_Mar", step=1)
+    with c_h3: st.session_state.horario["Mié"] = st.number_input("Miércoles", 0, 8, st.session_state.horario.get("Mié", 0), key="h_in_Mié", step=1)
+    with c_h4: st.session_state.horario["Jue"] = st.number_input("Jueves", 0, 8, st.session_state.horario.get("Jue", 0), key="h_in_Jue", step=1)
+    with c_h5: st.session_state.horario["Vie"] = st.number_input("Viernes", 0, 8, st.session_state.horario.get("Vie", 0), key="h_in_Vie", step=1)
     
     st.divider()
     h1_f = calcular_horas_reales(st.session_state.info_fechas["ini_1t"], st.session_state.info_fechas["fin_1t"], st.session_state.horario, st.session_state.calendar_notes)

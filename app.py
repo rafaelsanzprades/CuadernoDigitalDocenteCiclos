@@ -74,6 +74,56 @@ if 'active_pd' not in st.session_state:
 if 'active_curso' not in st.session_state:
     st.session_state.active_curso = st.session_state.get("active_module", "nuevo-modulo") + "-curso-2025-26"
 
+
+# ==========================================
+# 4.5 LÓGICA DE AUTENTICACIÓN
+# ==========================================
+def render_login():
+    st.markdown("""
+        <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="color: #0d7377;">Cuaderno Digital Docente</h1>
+            <p style="color: #666;">Acceso al sistema</p>
+        </div>
+    """, unsafe_allow_html=True)
+    
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        with st.container(border=True):
+            role = st.selectbox("Perfil de acceso", ["Docente", "Alumnado"], key="login_role")
+            
+            if role == "Docente":
+                pwd = st.text_input("Contraseña", type="password", key="login_pwd")
+                if st.button("Entrar como Docente", use_container_width=True, type="primary"):
+                    if pwd == "docente2025": # Contraseña base configurada
+                        st.session_state.auth["logged_in"] = True
+                        st.session_state.auth["role"] = "docente"
+                        st.success("Acceso concedido")
+                        st.rerun()
+                    else:
+                        st.error("Contraseña incorrecta")
+            else:
+                email = st.text_input("Correo electrónico institucional", key="login_email")
+                if st.button("Entrar como Alumno/a", use_container_width=True, type="primary"):
+                    if not st.session_state.df_al.empty and "email" in st.session_state.df_al.columns:
+                        # Buscar por email
+                        match = st.session_state.df_al[st.session_state.df_al["email"].str.lower() == email.lower()]
+                        if not match.empty:
+                            user_data = match.iloc[0]
+                            st.session_state.auth["logged_in"] = True
+                            st.session_state.auth["role"] = "alumno"
+                            st.session_state.auth["user_id"] = user_data["ID"]
+                            st.session_state.auth["user_email"] = user_data["email"]
+                            st.success(f"Bienvenido/a, {user_data['Nombre']}")
+                            st.rerun()
+                        else:
+                            st.error("Correo no encontrado en la lista de matriculados")
+                    else:
+                        st.error("No hay lista de alumnado cargada. Contacte con el docente.")
+
+if not st.session_state.auth["logged_in"]:
+    render_login()
+    st.stop()
+
 # ==========================================
 # 5. INTERFAZ: MENÚ LATERAL Y ESTILOS
 # ==========================================
@@ -100,7 +150,12 @@ with st.sidebar:
         "Seguimiento diario", "Matrícula alumnado", "Calificación académica",
         "Calificación FEOE", "Evaluación continua"
     ]
-    opciones_totales = opciones_globales + opciones_pd + opciones_curso
+    
+    if st.session_state.auth["role"] == "alumno":
+        opciones_totales = ["Mi Progreso", "Simulador de Notas"]
+        st.session_state.menu = st.session_state.menu if st.session_state.menu in opciones_totales else "Mi Progreso"
+    else:
+        opciones_totales = opciones_globales + opciones_pd + opciones_curso
 
     # Redirecciones de nombres obsoletos
     if st.session_state.menu in ["Contextualización", "Planes e inclusión"]: st.session_state.menu = "Introducción y planes"
@@ -113,72 +168,100 @@ with st.sidebar:
         st.session_state.menu = "Módulo didáctico"
     st.markdown("<br>", unsafe_allow_html=True)
     
-    for opcion in opciones_globales:
-        if st.button(opcion, use_container_width=True,
-                     type="primary" if st.session_state.menu == opcion else "secondary",
-                     key=f"btn_glb_{opcion}"):
-            st.session_state.menu = opcion
+    if st.session_state.auth["role"] == "alumno":
+        st.markdown("<br>", unsafe_allow_html=True)
+        for opcion in ["Mi Progreso", "Simulador de Notas"]:
+            if st.button(opcion, use_container_width=True,
+                         type="primary" if st.session_state.menu == opcion else "secondary",
+                         key=f"btn_alu_{opcion}"):
+                st.session_state.menu = opcion
+                st.rerun()
+        
+        st.divider()
+        if st.button("🚪 Cerrar sesión", use_container_width=True, type="secondary"):
+            st.session_state.auth = {"logged_in": False, "role": None, "user_id": None, "user_email": None}
+            st.session_state.menu = "Módulo didáctico"
             st.rerun()
-
-    with st.expander("🗂️ Programación didáctica", expanded=(st.session_state.menu in opciones_pd)):
-        for opcion in opciones_pd:
+            
+        # Saltarse el resto del renderizado del sidebar para alumnos
+        menu = st.session_state.menu
+    else:
+        for opcion in opciones_globales:
             if st.button(opcion, use_container_width=True,
                          type="primary" if st.session_state.menu == opcion else "secondary",
-                         key=f"btn_pd_{opcion}"):
+                         key=f"btn_glb_{opcion}"):
                 st.session_state.menu = opcion
                 st.rerun()
 
-    with st.expander("📅 Curso actual", expanded=(st.session_state.menu in opciones_curso)):
-        for opcion in opciones_curso:
-            if st.button(opcion, use_container_width=True,
-                         type="primary" if st.session_state.menu == opcion else "secondary",
-                         key=f"btn_cur_{opcion}"):
-                st.session_state.menu = opcion
-                st.rerun()
+        with st.expander("🗂️ Programación didáctica", expanded=(st.session_state.menu in opciones_pd)):
+            for opcion in opciones_pd:
+                if st.button(opcion, use_container_width=True,
+                             type="primary" if st.session_state.menu == opcion else "secondary",
+                             key=f"btn_pd_{opcion}"):
+                    st.session_state.menu = opcion
+                    st.rerun()
+
+        with st.expander("📅 Curso actual", expanded=(st.session_state.menu in opciones_curso)):
+            for opcion in opciones_curso:
+                if st.button(opcion, use_container_width=True,
+                             type="primary" if st.session_state.menu == opcion else "secondary",
+                             key=f"btn_cur_{opcion}"):
+                    st.session_state.menu = opcion
+                    st.rerun()
+        
+        if st.button("🚪 Cerrar sesión", use_container_width=True, type="secondary", key="btn_logout_doc"):
+            st.session_state.auth = {"logged_in": False, "role": None, "user_id": None, "user_email": None}
+            st.session_state.menu = "Módulo didáctico"
+            st.rerun()
+        
+        # Variable de control para el resto de la app
+        menu = st.session_state.menu
+        
+    if st.session_state.auth["role"] != "alumno":
+        # --- AUTOMATIZACIÓN (v5.0) ---
+        # Recalcular reparto de horas automáticamente en cada interacción
+        # Solo para docentes y una sola vez
+        repartir_horas_previstas()
     
-    # Variable de control para el resto de la app
-    menu = st.session_state.menu
     ro_pd = st.session_state.lock_pd
     ro_curso = st.session_state.lock_curso
     ro_global = st.session_state.lock_global
-    
-    # --- AUTOMATIZACIÓN (v5.0) ---
-    # Recalcular reparto de horas automáticamente en cada interacción
-    repartir_horas_previstas()
 
     
     with st.expander("📥 Descargas .pdf"):
-        pdf_buffer_cal = generar_pdf_calendario(
-            st.session_state.info_modulo,
-            st.session_state.info_fechas,
-            st.session_state.planning_ledger,
-            st.session_state.calendar_notes
-        )
-        st.download_button(
-            label="Calendario académico",
-            data=pdf_buffer_cal,
-            file_name=f"Calendario_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
-            mime="application/pdf",
-            type="secondary",
-            use_container_width=True
-        )
+        if st.button("Generar PDF Calendario", use_container_width=True):
+            pdf_buffer_cal = generar_pdf_calendario(
+                st.session_state.info_modulo,
+                st.session_state.info_fechas,
+                st.session_state.planning_ledger,
+                st.session_state.calendar_notes
+            )
+            st.download_button(
+                label="Confirmar descarga Calendario",
+                data=pdf_buffer_cal,
+                file_name=f"Calendario_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
+                mime="application/pdf",
+                type="primary",
+                use_container_width=True
+            )
 
-        pdf_buffer_seg = generar_pdf_seguimiento(
-            st.session_state.info_modulo,
-            st.session_state.info_fechas,
-            st.session_state.horario,
-            st.session_state.planning_ledger,
-            st.session_state.calendar_notes,
-            st.session_state.df_sesiones if "df_sesiones" in st.session_state else None
-        )
-        st.download_button(
-            label="Seguimiento diario",
-            data=pdf_buffer_seg,
-            file_name=f"Seguimiento_diario_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
-            mime="application/pdf",
-            type="secondary",
-            use_container_width=True
-        )
+        if st.button("Generar Seguimiento Diario", use_container_width=True):
+            pdf_buffer_seg = generar_pdf_seguimiento(
+                st.session_state.info_modulo,
+                st.session_state.info_fechas,
+                st.session_state.horario,
+                st.session_state.planning_ledger,
+                st.session_state.calendar_notes,
+                st.session_state.df_sesiones if "df_sesiones" in st.session_state else None
+            )
+            st.download_button(
+                label="Confirmar descarga Seguimiento",
+                data=pdf_buffer_seg,
+                file_name=f"Seguimiento_diario_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
+                mime="application/pdf",
+                type="primary",
+                use_container_width=True
+            )
 
         pdf_buffer_plan = generar_pdf_planificacion(
             st.session_state.info_modulo,
@@ -203,15 +286,16 @@ with st.sidebar:
         st.markdown("<b>Boletines grupales</b>", unsafe_allow_html=True)
         _mod_name = st.session_state.info_modulo.get('modulo', 'Grupo')
 
-        pdf_buffer_grupal_1t = generar_pdf_boletin_grupal("1T", st.session_state.info_modulo, st.session_state.df_al, st.session_state.df_eval, st.session_state.df_act)
-        pdf_buffer_grupal_2t = generar_pdf_boletin_grupal("2T", st.session_state.info_modulo, st.session_state.df_al, st.session_state.df_eval, st.session_state.df_act)
-        pdf_buffer_grupal_3t = generar_pdf_boletin_grupal("3T", st.session_state.info_modulo, st.session_state.df_al, st.session_state.df_eval, st.session_state.df_act)
-        pdf_buffer_grupal_fin = generar_pdf_boletin_grupal_final(st.session_state.info_modulo, st.session_state.df_al, st.session_state.df_eval, st.session_state.df_act)
-        
-        st.download_button("Boletín Grupal 1T", pdf_buffer_grupal_1t, f"Boletin_Grupal_1T_{_mod_name}.pdf", "application/pdf", use_container_width=True)
-        st.download_button("Boletín Grupal 2T", pdf_buffer_grupal_2t, f"Boletin_Grupal_2T_{_mod_name}.pdf", "application/pdf", use_container_width=True)
-        st.download_button("Boletín Grupal 3T", pdf_buffer_grupal_3t, f"Boletin_Grupal_3T_{_mod_name}.pdf", "application/pdf", use_container_width=True)
-        st.download_button("Boletín Grupal Final", pdf_buffer_grupal_fin, f"Boletin_Grupal_FINAL_{_mod_name}.pdf", "application/pdf", type="primary", use_container_width=True)
+        if st.button("Generar Boletines Grupales", use_container_width=True):
+            pdf_buffer_grupal_1t = generar_pdf_boletin_grupal("1T", st.session_state.info_modulo, st.session_state.df_al, st.session_state.df_eval, st.session_state.df_act)
+            pdf_buffer_grupal_2t = generar_pdf_boletin_grupal("2T", st.session_state.info_modulo, st.session_state.df_al, st.session_state.df_eval, st.session_state.df_act)
+            pdf_buffer_grupal_3t = generar_pdf_boletin_grupal("3T", st.session_state.info_modulo, st.session_state.df_al, st.session_state.df_eval, st.session_state.df_act)
+            pdf_buffer_grupal_fin = generar_pdf_boletin_grupal_final(st.session_state.info_modulo, st.session_state.df_al, st.session_state.df_eval, st.session_state.df_act)
+            
+            st.download_button("Descargar 1T", pdf_buffer_grupal_1t, f"Boletin_Grupal_1T_{_mod_name}.pdf", "application/pdf", use_container_width=True)
+            st.download_button("Descargar 2T", pdf_buffer_grupal_2t, f"Boletin_Grupal_2T_{_mod_name}.pdf", "application/pdf", use_container_width=True)
+            st.download_button("Descargar 3T", pdf_buffer_grupal_3t, f"Boletin_Grubit_3T_{_mod_name}.pdf", "application/pdf", use_container_width=True)
+            st.download_button("Descargar FINAL", pdf_buffer_grupal_fin, f"Boletin_Grupal_FINAL_{_mod_name}.pdf", "application/pdf", type="primary", use_container_width=True)
 
         st.markdown("<b>Boletines individuales</b>", unsafe_allow_html=True)
         if "df_al" in st.session_state and not st.session_state.df_al.empty:
@@ -223,34 +307,33 @@ with st.sidebar:
             alum_sel = st.selectbox("Seleccionar Alumnado", alum_list, label_visibility="collapsed")
             if alum_sel:
                 # Extract ID safely
-                # Formato: "Apellidos, Nombre (ID_XXX)" -> cogemos lo que hay entre ()
                 import re
                 match = re.search(r'\(([^)]+)\)$', alum_sel)
                 if match:
                     al_id = match.group(1)
-                    
-                    pdf_buffer_indiv = generar_pdf_boletin_individual(
-                        info_modulo=st.session_state.info_modulo,
-                        al_id=al_id,
-                        df_al=st.session_state.df_al,
-                        df_eval=st.session_state.df_eval,
-                        df_act=st.session_state.df_act,
-                        df_ce=st.session_state.df_ce,
-                        df_ra=st.session_state.df_ra,
-                        df_feoe=st.session_state.get("df_feoe", pd.DataFrame()),
-                        info_fechas=st.session_state.get("info_fechas", {}),
-                        planning_ledger=st.session_state.get("planning_ledger", {}),
-                        df_ud=st.session_state.get("df_ud", pd.DataFrame()),
-                        df_pr=st.session_state.get("df_pr", pd.DataFrame())
-                    )
-                    st.download_button(
-                        label="Informe individual",
-                        data=pdf_buffer_indiv,
-                        file_name=f"Informe_Individual_{al_id}_{_mod_name}.pdf",
-                        mime="application/pdf",
-                        type="primary",
-                        use_container_width=True
-                    )
+                    if st.button("Generar Informe Individual", use_container_width=True):
+                        pdf_buffer_indiv = generar_pdf_boletin_individual(
+                            info_modulo=st.session_state.info_modulo,
+                            al_id=al_id,
+                            df_al=st.session_state.df_al,
+                            df_eval=st.session_state.df_eval,
+                            df_act=st.session_state.df_act,
+                            df_ce=st.session_state.df_ce,
+                            df_ra=st.session_state.df_ra,
+                            df_feoe=st.session_state.get("df_feoe", pd.DataFrame()),
+                            info_fechas=st.session_state.get("info_fechas", {}),
+                            planning_ledger=st.session_state.get("planning_ledger", {}),
+                            df_ud=st.session_state.get("df_ud", pd.DataFrame()),
+                            df_pr=st.session_state.get("df_pr", pd.DataFrame())
+                        )
+                        st.download_button(
+                            label="Confirmar descarga Informe",
+                            data=pdf_buffer_indiv,
+                            file_name=f"Informe_Individual_{al_id}_{_mod_name}.pdf",
+                            mime="application/pdf",
+                            type="primary",
+                            use_container_width=True
+                        )
         else:
             st.info("Sin estudiantes activos para generar informes individuales.")
             
@@ -495,7 +578,14 @@ from utils_ui import badge
 # ==========================================
 # DISPATCHER DE PÁGINAS
 # ==========================================
-from pages_ui import modulo_didactico, matrices, calendario_academico, matricula_alumnado, seguimiento_diario, instrumentos, calificacion_feoe, calificacion_academica, evaluacion_continua, programacion_aula, introduccion_planes
+from pages_ui import modulo_didactico, matrices, calendario_academico, matricula_alumnado, seguimiento_diario, instrumentos, calificacion_feoe, calificacion_academica, evaluacion_continua, programacion_aula, introduccion_planes, portal_alumnado
+
+if st.session_state.auth["role"] == "alumno":
+    if menu == "Mi Progreso":
+        portal_alumnado.render_portal_alumnado(st.session_state.auth["user_id"])
+    elif menu == "Simulador de Notas":
+        portal_alumnado.render_simulador_notas(st.session_state.auth["user_id"])
+    st.stop()
 
 if menu == 'Módulo didáctico':
     modulo_didactico.render_modulo_didactico(ro_pd, ro_curso, ro_global)
