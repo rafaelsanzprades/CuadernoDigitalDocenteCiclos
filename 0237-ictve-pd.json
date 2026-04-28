@@ -28,9 +28,10 @@
     "horario": {
         "Lun": 1,
         "Mar": 2,
-        "MiÃ©": 1,
+        "Mié": 0,
         "Jue": 1,
-        "Vie": 0
+        "Vie": 0,
+        "MiÃ©": 1
     },
     "df_ra": [
         {
@@ -859,7 +860,7 @@
         {
             "id_act": "ACT01",
             "tri_act": "1T",
-            "Tipo": "Teoría",
+            "Tipo": "Teoria",
             "desc_act": "1T Ex. Teórico",
             "peso_act": 0.0,
             "is_active": true,
@@ -920,7 +921,7 @@
         {
             "id_act": "ACT02",
             "tri_act": "1T",
-            "Tipo": "Práctica",
+            "Tipo": "Practica",
             "desc_act": "1T Ex. Práctico",
             "peso_act": 0.0,
             "is_active": true,
@@ -1225,7 +1226,7 @@
         {
             "id_act": "ACT05",
             "tri_act": "2T",
-            "Tipo": "Teoría",
+            "Tipo": "Teoria",
             "desc_act": "2T Ex. Teórico",
             "peso_act": 0.0,
             "is_active": true,
@@ -1286,7 +1287,7 @@
         {
             "id_act": "ACT06",
             "tri_act": "2T",
-            "Tipo": "Práctica",
+            "Tipo": "Practica",
             "desc_act": "2T Ex. Práctico",
             "peso_act": 0.0,
             "is_active": true,
@@ -1469,7 +1470,7 @@
         {
             "id_act": "ACT09",
             "tri_act": "3T",
-            "Tipo": "Teoría",
+            "Tipo": "Teoria",
             "desc_act": "3T Ex. Teórico",
             "peso_act": 0.0,
             "is_active": true,
@@ -1530,7 +1531,7 @@
         {
             "id_act": "ACT10",
             "tri_act": "3T",
-            "Tipo": "Práctica",
+            "Tipo": "Practica",
             "desc_act": "3T Ex. Práctico",
             "peso_act": 0.0,
             "is_active": true,
