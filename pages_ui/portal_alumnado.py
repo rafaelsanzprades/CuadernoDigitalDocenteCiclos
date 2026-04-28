@@ -53,19 +53,8 @@ def render_portal_alumnado(al_id):
     st.divider()
 
     # 3. Diario de Seguimiento y Feedback
-    st.subheader("📝 Feedback Reciente")
-    feedbacks = []
-    for fecha, entry in st.session_state.daily_ledger.items():
-        if entry.get("observaciones"):
-            # En un sistema real, filtraríamos observaciones específicas para este alumno
-            # Por ahora mostramos las generales del grupo que le afectan
-            feedbacks.append({"Fecha": fecha, "Comentario": entry["observaciones"]})
-    
-    if feedbacks:
-        df_feed = pd.DataFrame(feedbacks).sort_values("Fecha", ascending=False)
-        st.table(df_feed.head(5))
-    else:
-        st.info("No hay comentarios recientes del docente.")
+    # Feedback block removed temporarily to avoid exposing private teacher notes.
+    # Future enhancement: show only student-specific public feedback.
 
 @st.fragment
 def render_simulador_notas(al_id):
