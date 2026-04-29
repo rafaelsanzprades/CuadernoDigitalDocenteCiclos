@@ -10,6 +10,16 @@ from utils_ui import badge
 from schemas import *
 
 def render_modulo_didactico(ro_pd, ro_curso, ro_global):
+    c_m1, c_m2 = st.columns([4, 1])
+    with c_m1:
+        st.subheader("📋 Configuración del Módulo")
+    with c_m2:
+        if st.button("💾 Guardar PD", use_container_width=True, type="primary"):
+            from storage_manager import guardar_pd
+            guardar_pd(st.session_state.active_pd)
+            st.toast("✅ PD guardada", icon="💾")
+    st.write("")
+    
     st.subheader("📝 Datos")
     
     # Fila 1: Módulo didáctico y Curso

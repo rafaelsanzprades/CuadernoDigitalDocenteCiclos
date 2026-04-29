@@ -18,6 +18,14 @@ def render_calificacion_academica(ro_pd, ro_curso, ro_global):
     elif st.session_state.df_al.empty:
         st.info("No hay alumnos activos registrados. Por favor, a\u00f1ade alumnos con estado 'Alta' en la pesta\u00f1a 'Alumnado'.")
     else:
+        # Botón de guardado manual rápido
+        c_sav1, c_sav2 = st.columns([4, 1])
+        with c_sav2:
+            if st.button("💾 Guardar Cambios", use_container_width=True, type="primary"):
+                from storage_manager import guardar_curso
+                guardar_curso(st.session_state.active_curso)
+                st.toast("✅ Cambios guardados correctamente", icon="💾")
+        st.write("")
         # 1. Sincronizar df_eval con df_al
         ids_alumnado = st.session_state.df_al["ID"].tolist()
         st.session_state.df_eval = st.session_state.df_eval[st.session_state.df_eval["ID"].isin(ids_alumnado)]
@@ -36,16 +44,6 @@ def render_calificacion_academica(ro_pd, ro_curso, ro_global):
             if act not in st.session_state.df_eval.columns:
                 st.session_state.df_eval[act] = 0.0
     
-        def get_sigad_info(nota):
-            import math
-            if nota < 5: n = math.floor(nota)
-            else: n = math.floor(nota + 0.5)
-            n = max(1, min(10, int(n)))
-            if nota < 5:   return n, "IN", "Insuficiente",  "#e74c3c"
-            elif nota < 6: return n, "SU", "Suficiente",    "#e67e22"
-            elif nota < 7: return n, "BI", "Bien",          "#3498db"
-            elif nota < 9: return n, "NT", "Notable",       "#2ecc71"
-            else:          return n, "SB", "Sobresaliente", "#1abc9c"
     
         # Organizar Actividades por Trimestre
         acts_by_tri = {"1T": [], "2T": [], "3T": []}
@@ -117,50 +115,32 @@ def render_calificacion_academica(ro_pd, ro_curso, ro_global):
     
                 with co_right:
                     st.markdown("**Cálculo Jerárquico**")
-                    notas_ce = {}
-                    for ce_id in peso_ce.keys():
-                        act_vals = []
-                        for _, act in st.session_state.df_act.iterrows():
-                            if ce_id in act.index and act[ce_id] == True:
-                                act_id = act["id_act"]
-                                if act_id in new_vals:
-                                    act_vals.append(new_vals[act_id])
-                        if act_vals:
-                            notas_ce[ce_id] = sum(act_vals) / len(act_vals)
-                        else:
-                            notas_ce[ce_id] = 0.0
                     
-                    notas_ra = {}
-                    for ce_id, n_ce in notas_ce.items():
-                        r = ra_of_ce.get(ce_id)
-                        if r:
-                            if r not in notas_ra: notas_ra[r] = 0.0
-                            notas_ra[r] += n_ce * (peso_ce[ce_id] / 100.0)
-                            
-                    # === FEOE SCORE INTEGRATION ===
-                    if not st.session_state.df_ra.empty and "Dualizado" in st.session_state.df_ra.columns:
-                        for r_id in notas_ra.keys():
-                            ra_row = st.session_state.df_ra[st.session_state.df_ra["id_ra"] == r_id]
-                            if not ra_row.empty and ra_row.iloc[0].get("Dualizado", False):
-                                emp_grade = 0.0
-                                if not st.session_state.df_feoe.empty and r_id in st.session_state.df_feoe.columns:
-                                    fe_row = st.session_state.df_feoe[st.session_state.df_feoe["ID"] == al_id]
-                                    if not fe_row.empty:
-                                        emp_grade = float(fe_row.iloc[0][r_id])
-                                        
-                                if emp_grade >= 1:
-                                    conv = {1: 3.0, 2: 5.0, 3: 7.5, 4: 10.0}
-                                    nota_empresa = conv.get(int(emp_grade), 0.0)
-                                    notas_ra[r_id] = (notas_ra[r_id] + nota_empresa) / 2.0
-    
-                    nota_final_calc = 0.0
-                    for r_id, n_ra in notas_ra.items():
-                        nota_final_calc += n_ra * (peso_ra.get(r_id, 0.0) / 100.0)
+                    # Usar la función centralizada de cálculo con los valores actuales del formulario
+                    res_cal = calcular_notas_alumno(
+                        al_id, 
+                        st.session_state.df_eval, 
+                        st.session_state.df_act, 
+                        st.session_state.df_ce, 
+                        st.session_state.df_ra,
+                        st.session_state.get("df_feoe", pd.DataFrame()),
+                        overrides=new_vals
+                    )
+                    
+                    nota_final_calc = res_cal["nota_final"]
+                    
+                    # --- MEJORA REACTIVIDAD: Sincronizar estado de sesión ---
+                    final_key = f"ev_{al_id}_notaf"
+                    last_calc_key = f"last_calc_{al_id}"
+                    
+                    # Si el cálculo ha cambiado, forzamos la actualización del widget
+                    if st.session_state.get(last_calc_key) != nota_final_calc:
+                        st.session_state[final_key] = float(max(1.0, round(nota_final_calc, 2)))
+                        st.session_state[last_calc_key] = nota_final_calc
     
                     nota_final = st.number_input(
                         "\U0001f31f Nota Final", min_value=1.0, max_value=10.0,
-                        value=float(max(1.0, round(nota_final_calc, 2))),
-                        step=0.1, format="%.2f", key=f"ev_{al_id}_notaf"
+                        step=0.1, format="%.2f", key=final_key
                     )
                     
                     new_vals["Nota_Final"] = nota_final

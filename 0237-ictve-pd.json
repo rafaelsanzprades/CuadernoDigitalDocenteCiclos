@@ -28,9 +28,10 @@
     "horario": {
         "Lun": 1,
         "Mar": 2,
-        "MiÃ©": 1,
+        "Mié": 0,
         "Jue": 1,
-        "Vie": 0
+        "Vie": 0,
+        "MiÃ©": 1
     },
     "df_ra": [
         {
@@ -1101,7 +1102,7 @@
             "CE7.i": false
         },
         {
-            "id_act": null,
+            "id_act": NaN,
             "tri_act": "1T",
             "Tipo": "Informes",
             "desc_act": "1T Práctica 3",
@@ -1162,7 +1163,7 @@
             "CE7.i": false
         },
         {
-            "id_act": null,
+            "id_act": NaN,
             "tri_act": "1T",
             "Tipo": "Informes",
             "desc_act": "1T Práctica 4",

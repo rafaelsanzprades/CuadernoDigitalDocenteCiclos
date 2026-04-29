@@ -1,177 +1,202 @@
-/* Centrar TODAS las métricas de la app (st.metric) */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+
+:root {
+    --primary-gradient: linear-gradient(135deg, #0d7377 0%, #14a085 100%);
+    --secondary-gradient: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --text-main: #f3f4f6;
+    --text-muted: #9ca3af;
+    --accent-color: #14a085;
+}
+
+/* Global Styles */
+html, body, [data-testid="stAppViewContainer"] {
+    font-family: 'Outfit', sans-serif !important;
+    background-color: #0f172a !important;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6, p {
+    font-family: 'Outfit', sans-serif !important;
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.glass-card:hover {
+    border-color: rgba(20, 160, 133, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Metrics Styling */
+[data-testid="stMetric"] {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 15px !important;
+    text-align: center !important;
+}
+
+[data-testid="stMetricValue"] {
+    color: var(--accent-color) !important;
+    font-weight: 700 !important;
+    font-size: 2.2rem !important;
+}
+
+[data-testid="stMetricLabel"] {
+    color: var(--text-muted) !important;
+    font-weight: 500 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Sidebar Customization */
+section[data-testid="stSidebar"] {
+    background-color: #0b1120 !important;
+    border-right: 1px solid var(--glass-border);
+}
+
+section[data-testid="stSidebar"] .stButton button {
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    color: var(--text-muted) !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
+    padding: 10px 15px !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+}
+
+section[data-testid="stSidebar"] .stButton button:hover {
+    background: rgba(20, 160, 133, 0.1) !important;
+    color: #fff !important;
+    border-color: rgba(20, 160, 133, 0.3) !important;
+}
+
+/* Active Button in Sidebar */
+section[data-testid="stSidebar"] [data-testid="baseButton-primary"] {
+    background: var(--primary-gradient) !important;
+    color: white !important;
+    font-weight: 600 !important;
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(20, 160, 133, 0.3) !important;
+}
+
+/* Main Buttons */
+.stButton button[kind="primary"] {
+    background: var(--primary-gradient) !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 0.5rem 1.5rem !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+}
+
+.stButton button[kind="primary"]:hover {
+    box-shadow: 0 0 20px rgba(20, 160, 133, 0.4) !important;
+    transform: scale(1.02);
+}
+
+/* Custom Page Header */
+.pestaña-header {
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 10px;
+}
+
+.pestaña-header h2 {
+    font-size: 2.8rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em;
+}
+
+/* Timeline Styles */
+.timeline-item {
+    position: relative;
+    padding-left: 30px;
+    border-left: 2px solid var(--accent-color);
+    margin-bottom: 25px;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -7px;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent-color);
+}
+
+.timeline-date {
+    font-size: 0.85rem;
+    color: var(--accent-color);
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.timeline-content {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid var(--glass-border);
+}
+
+/* Table Enhancements */
+.sgmt-table {
+    border: none !important;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.sgmt-table th {
+    background-color: rgba(20, 160, 133, 0.2) !important;
+    color: #fff !important;
+    border: 1px solid var(--glass-border) !important;
+}
+
+.sgmt-table td {
+    background-color: rgba(15, 23, 42, 0.6) !important;
+    border: 1px solid var(--glass-border) !important;
+}
+
+/* Hide Streamlit elements for cleaner look */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header { background: transparent !important; } /* Hacer cabecera transparente pero funcional */
+
+/* Centrar métricas */
 [data-testid="stMetricValue"], [data-testid="stMetricLabel"] {
     text-align: center !important;
     display: flex !important;
     justify-content: center !important;
 }
 
-/* Centrar el texto dentro de los inputs de fecha */
-[data-testid="stDateInput"] label {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-[data-testid="stDateInput"] input {
-    text-align: center !important;
+/* Input Styles */
+.stTextInput input, .stSelectbox div[data-baseweb="select"] {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 8px !important;
+    color: white !important;
 }
 
-/* Ajustes de texto header */
-.user-subtitle {
-    font-size: 1.1rem;
-    font-weight: 500;
-    color: #ddd;
-    margin-top: -20px;
-    margin-bottom: 25px;
-    text-align: left !important;
-}
-
-/* Alineación IZQUIERDA botones menú lateral — selectores amplios para todas las versiones */
-section[data-testid="stSidebar"] button,
-div[data-testid="stSidebar"] button {
-    justify-content: flex-start !important;
-    text-align: left !important;
-    padding-left: 14px !important;
-    width: 100% !important;
-    display: flex !important;
-    align-items: center !important;
-}
-
-/* Texto interno del botón alineado izquierda */
-section[data-testid="stSidebar"] button p,
-section[data-testid="stSidebar"] button span,
-div[data-testid="stSidebar"] button p,
-div[data-testid="stSidebar"] button span {
-    text-align: left !important;
-    width: 100% !important;
-    margin: 0 !important;
-    display: block !important;
-}
-
-/* Asegurar que el texto dentro del botón también esté a la izquierda */
-div[data-testid="stSidebar"] button div[data-testid="stMarkdownContainer"] p {
-    text-align: left !important;
-    width: 100% !important;
-    margin: 0 !important;
-}
-
-
-/* Estilo para el botón ACTIVO (AZUL TEAL sólido) */
-section[data-testid="stSidebar"] [data-testid="baseButton-primary"],
-div[data-testid="stSidebar"] [data-testid="baseButton-primary"] {
-    background-color: #0d7377 !important;
-    color: #ffffff !important;
-    border: 1px solid #0a5c60 !important;
-    font-weight: bold !important;
-}
-
-section[data-testid="stSidebar"] [data-testid="baseButton-primary"]:hover,
-div[data-testid="stSidebar"] [data-testid="baseButton-primary"]:hover {
-    background-color: #14a085 !important;
-    color: #ffffff !important;
-}
-
-/* Estilo para botones inactivos */
-section[data-testid="stSidebar"] [data-testid="baseButton-secondary"],
-div[data-testid="stSidebar"] [data-testid="baseButton-secondary"] {
-    color: #cce8ea !important;
-    background-color: rgba(13, 115, 119, 0.1) !important;
-    border: 1px solid rgba(13, 115, 119, 0.35) !important;
-}
-section[data-testid="stSidebar"] [data-testid="baseButton-secondary"]:hover,
-div[data-testid="stSidebar"] [data-testid="baseButton-secondary"]:hover {
-    border-color: #14a085 !important;
-    color: #ffffff !important;
-    background-color: rgba(20, 160, 133, 0.25) !important;
-}
-
-
-
-/* FORZAR SALTO DE LÍNEA EN CABECERAS DE TABLA */
-div[data-testid="stDataFrame"] div[role="columnheader"] div,
-div[data-testid="stDataFrame"] thead tr th {
-    white-space: pre-wrap !important;
-    line-height: 1.1 !important;
-    height: auto !important;
-    min-height: 50px !important;
-    display: flex !important;
-    align-items: center !important;
-}
-
-/* ESTILOS TABLA HTML PERSONALIZADA */
-.table-container {
-    overflow-x: auto;
-    width: 100%;
-    max-width: 100%;
-    border: 1px solid #444;
-    border-radius: 8px;
-    margin-top: 10px;
-}
-.sgmt-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: inherit;
-    font-size: 1rem; /* Tamaño reducido */
-}
-.sgmt-table th, .sgmt-table td {
-    border: 1px solid #444;
-    padding: 2px 4px; /* Padding reducido */
-    text-align: center;
-    min-width: 30px; /* Ancho mínimo reducido */
-}
-.sgmt-table th {
-    background-color: #262730;
-    color: #fff;
-    font-weight: 600;
-    line-height: 1.1;
-}
-.sgmt-table td {
-    background-color: #0e1117;
-    color: #eee;
-}
-.row-sin-docencia {
-    background-color: #3e3e23 !important;
-    font-style: italic;
-}
-.row-sin-docencia td {
-    background-color: #3e3e23 !important;
-}
-.col-highlight {
-    background-color: #3e3e23 !important;
-}
-/* Sticky columnas iniciales compactas */
-.sticky-cell {
-    position: sticky;
-    left: 0;
-    z-index: 5;
-    background-color: #262730 !important;
-    border-right: 1px solid #444 !important;
-}
-.sticky-cell-2 {
-    position: sticky;
-    left: 42px; /* Reducido de 60px */
-    z-index: 5;
-    background-color: #262730 !important;
-    border-right: 1px solid #444 !important;
-}
-.sticky-cell-3 {
-    position: sticky;
-    left: 92px; /* Reducido de 115px */
-    z-index: 5;
-    background-color: #3e3e23 !important;
-    border-right: 2px solid #555 !important;
-}
-
-/* ESTILO PARA CABECERA DE PÁGINA (Pestaña) */
-.pestaña-header {
-    border: 2px solid #ffffff;
-    border-radius: 10px;
-    padding: 5px;
-    text-align: center;
-    margin-bottom: 50px;
-}
-.pestaña-header h2 {
-    color: #ffffff;
-    margin: 0;
-    font-size: 2rem;
-    font-weight: 700;
+/* Fix for dark mode plots */
+.js-plotly-plot .plotly .modebar {
+    background-color: transparent !important;
 }

@@ -78,46 +78,46 @@ if 'active_curso' not in st.session_state:
 # 4.5 LÓGICA DE AUTENTICACIÓN
 # ==========================================
 def render_login():
-    st.markdown("""
-        <div style="text-align: center; margin-bottom: 30px;">
-            <h1 style="color: #0d7377;">Cuaderno Digital Docente</h1>
-            <p style="color: #666;">Acceso al sistema</p>
+    st.markdown(f"""
+        <div style="text-align: center; margin-bottom: 40px; margin-top: 50px;">
+            <h1 style="color: white; font-weight: 800; font-size: 3.5rem; letter-spacing: -1px;">CDD <span style="color: #14a085;">PRO</span></h1>
+            <p style="color: #9ca3af; font-size: 1.2rem;">Cuaderno Digital Docente para Ciclos Formativos</p>
         </div>
     """, unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        with st.container(border=True):
-            role = st.selectbox("Perfil de acceso", ["Docente", "Alumnado"], key="login_role")
-            
-            if role == "Docente":
-                pwd = st.text_input("Contraseña", type="password", key="login_pwd")
-                if st.button("Entrar como Docente", use_container_width=True, type="primary"):
-                    if pwd == "docente2025": # Contraseña base configurada
+        st.markdown('<div class="glass-card">', unsafe_allow_html=True)
+        role = st.selectbox("Perfil de acceso", ["Docente", "Alumnado"], key="login_role")
+        
+        if role == "Docente":
+            pwd = st.text_input("Contraseña de acceso", type="password", key="login_pwd")
+            if st.button("Entrar al Sistema", use_container_width=True, type="primary"):
+                if pwd == "docente2025":
+                    st.session_state.auth["logged_in"] = True
+                    st.session_state.auth["role"] = "docente"
+                    st.success("Acceso concedido")
+                    st.rerun()
+                else:
+                    st.error("Contraseña incorrecta")
+        else:
+            email = st.text_input("Correo Institucional", key="login_email", placeholder="ejemplo@educa.jcyl.es")
+            if st.button("Acceder como Alumno/a", use_container_width=True, type="primary"):
+                if not st.session_state.df_al.empty and "email" in st.session_state.df_al.columns:
+                    match = st.session_state.df_al[st.session_state.df_al["email"].str.lower() == email.lower()]
+                    if not match.empty:
+                        user_data = match.iloc[0]
                         st.session_state.auth["logged_in"] = True
-                        st.session_state.auth["role"] = "docente"
-                        st.success("Acceso concedido")
+                        st.session_state.auth["role"] = "alumno"
+                        st.session_state.auth["user_id"] = user_data["ID"]
+                        st.session_state.auth["user_email"] = user_data["email"]
+                        st.success(f"Bienvenido/a, {user_data['Nombre']}")
                         st.rerun()
                     else:
-                        st.error("Contraseña incorrecta")
-            else:
-                email = st.text_input("Correo electrónico institucional", key="login_email")
-                if st.button("Entrar como Alumno/a", use_container_width=True, type="primary"):
-                    if not st.session_state.df_al.empty and "email" in st.session_state.df_al.columns:
-                        # Buscar por email
-                        match = st.session_state.df_al[st.session_state.df_al["email"].str.lower() == email.lower()]
-                        if not match.empty:
-                            user_data = match.iloc[0]
-                            st.session_state.auth["logged_in"] = True
-                            st.session_state.auth["role"] = "alumno"
-                            st.session_state.auth["user_id"] = user_data["ID"]
-                            st.session_state.auth["user_email"] = user_data["email"]
-                            st.success(f"Bienvenido/a, {user_data['Nombre']}")
-                            st.rerun()
-                        else:
-                            st.error("Correo no encontrado en la lista de matriculados")
-                    else:
-                        st.error("No hay lista de alumnado cargada. Contacte con el docente.")
+                        st.error("Correo no encontrado en la lista oficial.")
+                else:
+                    st.error("Lista de alumnado no disponible.")
+        st.markdown('</div>', unsafe_allow_html=True)
 
 if not st.session_state.auth["logged_in"]:
     render_login()
@@ -139,7 +139,7 @@ with st.sidebar:
 
 
     # 5.1 Menú de Navegación (3 bloques)
-    opciones_globales = ["Introducción y planes", "Calendario académico", "Descargas PDF"]
+    opciones_globales = ["Gestión de archivos", "Introducción y planes", "Calendario académico", "Descargas PDF"]
     opciones_pd = [
         "Módulo didáctico", "Matrices RA → CE → UD",
         "Instrumentos de evaluación",
@@ -147,7 +147,7 @@ with st.sidebar:
     ]
     opciones_curso = [
         "Seguimiento diario", "Matrícula alumnado", "Calificación académica",
-        "Calificación FEOE", "Evaluación continua"
+        "Calificación FEOE", "Evaluación continua", "Análisis de grupo"
     ]
     
     if st.session_state.auth["role"] == "alumno":
@@ -247,137 +247,29 @@ with st.sidebar:
         st.markdown(
             f"""
             <div style="
-                background: linear-gradient(135deg, #0d7377 0%, #0a5c60 100%);
-                border-radius: 8px;
-                padding: 8px 12px;
-                margin-bottom: 12px;
+                background: rgba(20, 160, 133, 0.1);
+                backdrop-filter: blur(5px);
+                border-radius: 12px;
+                padding: 12px;
+                margin-bottom: 15px;
                 margin-top: 10px;
-                border: 1px solid #14a085;
+                border: 1px solid rgba(20, 160, 133, 0.3);
             ">
-                <div style="font-size:0.68rem; color:#9ee8e0; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:2px;">
-                    💾 Módulo activo
+                <div style="font-size:0.65rem; color:#14a085; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:4px;">
+                    💎 Módulo Activo
                 </div>
-                <div style="font-size:0.92rem; color:#ffffff; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="{_modulo_nombre}">
+                <div style="font-size:0.9rem; color:#ffffff; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="{_modulo_nombre}">
                     {_modulo_nombre}
                 </div>
-                <div style="font-size:0.72rem; color:#9ee8e0; margin-top:2px;">
-                    📄 {_modulo_archivo}.json
+                <div style="font-size:0.75rem; color:#9ca3af; margin-top:2px; font-family: monospace;">
+                    {_modulo_archivo}.json
                 </div>
-                {f'<div style="font-size:0.7rem; color:#b2f0e8; margin-top:4px;">{_autosave_label}</div>' if _autosave_label else ''}
+                {f'<div style="font-size:0.7rem; color:#14a085; margin-top:8px; font-weight:500;">{_autosave_label}</div>' if _autosave_label else ''}
             </div>
             """,
             unsafe_allow_html=True
         )
         # --- FIN MEJORAS #8 / #1 ---
-
-        # 5.2 Gestión de Archivos
-        with st.expander("📚 Gestión de módulos"):
-            _pd_files = sorted([f for f in os.listdir(".") if f.endswith("-pd.json")])
-            _cur_files = sorted([f for f in os.listdir(".") if f.endswith(".json")
-                                 and not f.endswith("-pd.json") and f != "ciclos-fp.json"])
-            st.markdown("**🗒️ Programación Didáctica**")
-            _pd_disp = _pd_files or [f for f in os.listdir(".") if f.endswith(".json") and f != "ciclos-fp.json"]
-            _pd_def = next((i for i, f in enumerate(_pd_disp) if st.session_state.get("active_pd", "") + ".json" == f), 0)
-            sel_pd = st.selectbox("PD archivo", _pd_disp, index=min(_pd_def, max(0, len(_pd_disp)-1)),
-                                  label_visibility="collapsed", key="load_sel_pd") if _pd_disp else None
-            if sel_pd and st.button("📂 Cargar PD", use_container_width=True):
-                st.session_state.confirm_load_pd = sel_pd
-            if st.session_state.get("confirm_load_pd"):
-                st.warning(f"⚠️ Cargar `{st.session_state.confirm_load_pd}` (se perderán cambios PD). ¿Seguro?")
-                cp1, cp2 = st.columns(2)
-                if cp1.button("✅ Sí", type="primary", use_container_width=True, key="conf_load_pd_btn"):
-                    _f = st.session_state.confirm_load_pd
-                    if _f.endswith("-pd.json"):
-                        cargar_pd(_f); st.session_state.active_pd = _f.replace(".json", "")
-                    else:
-                        cargar_datos(_f); st.session_state.active_pd = _f.replace(".json", "") + "-pd"
-                    st.session_state.active_module = st.session_state.active_pd.replace("-pd", "")
-                    st.session_state.confirm_load_pd = None; st.rerun()
-                if cp2.button("❌ No", use_container_width=True, key="canc_load_pd"):
-                    st.session_state.confirm_load_pd = None; st.rerun()
-            _n_pd = st.text_input("Nombre PD", value=st.session_state.get("active_pd", "0237-ictve-pd"),
-                                  label_visibility="collapsed", key="save_name_pd")
-            if st.button("💾 Guardar PD", use_container_width=True):
-                _n_pd_clean = _n_pd.replace(".json", "")
-                while _n_pd_clean.endswith("-pd"): _n_pd_clean = _n_pd_clean[:-3]
-                guardar_pd(_n_pd_clean)
-                st.session_state.active_pd = _n_pd_clean + "-pd"
-                st.session_state.active_module = _n_pd_clean
-                st.success(f"✅ PD guardada: {_n_pd_clean}-pd.json")
-            st.markdown('<hr style="border:none;border-top:1px solid #444;margin:10px 0">', unsafe_allow_html=True)
-            st.markdown("**📅 Curso actual**")
-            _cur_def = next((i for i, f in enumerate(_cur_files) if st.session_state.get("active_curso", "") + ".json" == f), 0)
-            sel_cur = st.selectbox("Curso archivo", _cur_files, index=min(_cur_def, max(0, len(_cur_files)-1)),
-                                   label_visibility="collapsed", key="load_sel_cur") if _cur_files else None
-            if sel_cur and st.button("📂 Cargar Curso", use_container_width=True):
-                st.session_state.confirm_load_cur = sel_cur
-            if st.session_state.get("confirm_load_cur"):
-                st.warning(f"⚠️ Cargar `{st.session_state.confirm_load_cur}`. ¿Seguro?")
-                cc1, cc2 = st.columns(2)
-                if cc1.button("✅ Sí", type="primary", use_container_width=True, key="conf_load_cur_btn"):
-                    _fc = st.session_state.confirm_load_cur
-                    cargar_curso(_fc); st.session_state.active_curso = _fc.replace(".json", "")
-                    st.session_state.confirm_load_cur = None; st.rerun()
-                if cc2.button("❌ No", use_container_width=True, key="canc_load_cur"):
-                    st.session_state.confirm_load_cur = None; st.rerun()
-            _n_cur = st.text_input("Nombre Curso", value=st.session_state.get("active_curso", "0237-ictve-curso-2025-26"),
-                                   label_visibility="collapsed", key="save_name_cur")
-            if st.button("💾 Guardar Curso", use_container_width=True):
-                guardar_curso(_n_cur); st.session_state.active_curso = _n_cur
-                st.success(f"✅ Curso guardado: {_n_cur}.json")
-
-        # --- MEJORA #7: Validador de coherencia ---
-        _val_avisos = []
-        _h_ud = int(st.session_state.df_ud["horas_ud"].sum()) if (
-            "df_ud" in st.session_state and not st.session_state.df_ud.empty
-            and "horas_ud" in st.session_state.df_ud.columns
-        ) else 0
-        _dias_semana = ["Lun", "Mar", "Mié", "Jue", "Vie"]
-        _h_reales = 0
-        for _tri in ["1t", "2t", "3t"]:
-            _ini_tri = st.session_state.info_fechas.get(f"ini_{_tri}")
-            _fin_tri = st.session_state.info_fechas.get(f"fin_{_tri}")
-            if not _ini_tri or not _fin_tri:
-                continue
-            _cur = _ini_tri
-            while _cur <= _fin_tri:
-                if _cur.weekday() < 5:
-                    _f_str = _cur.strftime("%d/%m/%Y")
-                    if not st.session_state.calendar_notes.get(f"f_{_f_str}"):
-                        _h_reales += st.session_state.horario.get(_dias_semana[_cur.weekday()], 0)
-                _cur += timedelta(days=1)
-        if _h_ud > 0 and _h_reales > 0 and _h_ud != _h_reales:
-            _diff_h = _h_ud - _h_reales
-            if _diff_h > 0:
-                _icono = "🔴"
-                _txt = f"exceden {_diff_h}h — no caben en el calendario"
-            else:
-                _icono = "🟡"
-                _txt = f"sobran {abs(_diff_h)}h lectivas"
-            _val_avisos.append(f"{_icono} Horas: UDs={_h_ud}h vs lectivas={_h_reales}h ({_txt})")
-        _trimestres = [("1t","1T"), ("2t","2T"), ("3t","3T")]
-        _fechas_ok = True
-        for _key, _label in _trimestres:
-            _ini = st.session_state.info_fechas.get(f"ini_{_key}")
-            _fin = st.session_state.info_fechas.get(f"fin_{_key}")
-            if not _ini or not _fin:
-                _val_avisos.append(f"🔴 {_label}: fechas vacías"); _fechas_ok = False
-            elif _fin < _ini:
-                _val_avisos.append(f"🔴 {_label}: fin anterior al inicio"); _fechas_ok = False
-        if _fechas_ok:
-            for (_k1, _l1), (_k2, _l2) in [(("1t","1T"),("2t","2T")), (("2t","2T"),("3t","3T"))]:
-                _fin1 = st.session_state.info_fechas.get(f"fin_{_k1}")
-                _ini2 = st.session_state.info_fechas.get(f"ini_{_k2}")
-                if _fin1 and _ini2 and _ini2 <= _fin1:
-                    _val_avisos.append(f"🟡 {_l1} y {_l2} se solapan")
-        if _val_avisos:
-            _val_icon = "🔴" if any(a.startswith("🔴") for a in _val_avisos) else "🟡"
-            with st.expander(f"{_val_icon} Validador · {len(_val_avisos)} aviso(s)"):
-                for _av in _val_avisos:
-                    st.markdown(f"<small>{_av}</small>", unsafe_allow_html=True)
-        else:
-            st.markdown('<div style="font-size:0.75rem;color:#6ee06e;margin-bottom:4px;">🟢 Programación coherente</div>',
-                        unsafe_allow_html=True)
 
         st.markdown('<p class="user-subtitle">(c) Rafael Sanz Prades</p>', unsafe_allow_html=True)
 
@@ -467,9 +359,15 @@ from utils_ui import badge
 
 # --- PESTAÑA: DATOS ---
 # ==========================================
-# DISPATCHER DE PÁGINAS
+# DISPATCHER DE PÁGINAS (ACTUALIZADO)
 # ==========================================
-from pages_ui import modulo_didactico, matrices, calendario_academico, matricula_alumnado, seguimiento_diario, instrumentos, calificacion_feoe, calificacion_academica, evaluacion_continua, programacion_aula, introduccion_planes, portal_alumnado, descargas_pdf
+from pages_ui import (
+    modulo_didactico, matrices, calendario_academico, 
+    matricula_alumnado, seguimiento_diario, instrumentos, 
+    calificacion_feoe, calificacion_academica, evaluacion_continua, 
+    programacion_aula, introduccion_planes, portal_alumnado, 
+    descargas_pdf, gestion_modulos, analisis_grupal
+)
 
 if st.session_state.auth["role"] == "alumno":
     if menu == "Mi Progreso":
@@ -478,7 +376,9 @@ if st.session_state.auth["role"] == "alumno":
         portal_alumnado.render_simulador_notas(st.session_state.auth["user_id"])
     st.stop()
 
-if menu == 'Módulo didáctico':
+if menu == 'Gestión de archivos':
+    gestion_modulos.render_gestion_modulos()
+elif menu == 'Módulo didáctico':
     modulo_didactico.render_modulo_didactico(ro_pd, ro_curso, ro_global)
 elif menu == 'Matrices RA → CE → UD':
     matrices.render_matrices(ro_pd, ro_curso, ro_global)
@@ -496,6 +396,8 @@ elif menu == 'Calificación académica':
     calificacion_academica.render_calificacion_academica(ro_pd, ro_curso, ro_global)
 elif menu == 'Evaluación continua':
     evaluacion_continua.render_evaluacion_continua(ro_pd, ro_curso, ro_global)
+elif menu == 'Análisis de grupo':
+    analisis_grupal.render_analiticas(ro_pd, ro_curso, ro_global)
 elif menu == 'Programación de aula':
     programacion_aula.render_programacion_aula(ro_pd, ro_curso, ro_global)
 elif menu == 'Introducción y planes':

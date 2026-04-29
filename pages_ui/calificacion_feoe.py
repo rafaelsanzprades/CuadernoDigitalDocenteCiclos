@@ -10,7 +10,15 @@ from utils_ui import badge
 from schemas import *
 
 def render_calificacion_feoe(ro_pd, ro_curso, ro_global):
-    st.subheader("🏢 Evaluación en Empresa (FEOE)")
+    c_f1, c_f2 = st.columns([4, 1])
+    with c_f1:
+        st.subheader("🏢 Evaluación en Empresa (FEOE)")
+    with c_f2:
+        if st.button("💾 Guardar Cambios", use_container_width=True, type="primary"):
+            from storage_manager import guardar_curso
+            guardar_curso(st.session_state.active_curso)
+            st.toast("✅ Calificaciones FEOE guardadas", icon="💾")
+    st.write("")
     st.caption("Introduce la calificación del tutor de empresa (1-4) para cada Resultado de Aprendizaje Dualizado.")
     
     ras_dualizados = []
