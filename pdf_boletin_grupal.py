@@ -84,12 +84,12 @@ def generar_pdf_boletin_grupal(
     p_cuaderno = info_modulo.get("criterio_tareas",                   30)
 
     TIPO_MAP = {
-        "Teoría":   ("Ex. Teoría",   p_teoria),
-        "Práctica": ("Ex. Práctica", p_practica),
+        "Teoria":   ("Ex. Teoría",   p_teoria),
+        "Practica": ("Ex. Práctica", p_practica),
         "Informes": ("Informes",     p_informes),
         "Tareas":   ("Cuaderno",     p_cuaderno),
     }
-    TIPOS_ORDEN = ["Teoría", "Práctica", "Informes", "Tareas"]
+    TIPOS_ORDEN = ["Teoria", "Practica", "Informes", "Tareas"]
 
     # ── Actividades del trimestre ─────────────────────────────────────────────
     acts_tri = pd.DataFrame()
@@ -292,12 +292,12 @@ def generar_pdf_boletin_grupal_final(
     p_cuaderno = info_modulo.get("criterio_tareas",                   30)
 
     TIPO_MAP = {
-        "Teoría":   ("Ex. Teoría",   p_teoria),
-        "Práctica": ("Ex. Práctica", p_practica),
+        "Teoria":   ("Ex. Teoría",   p_teoria),
+        "Practica": ("Ex. Práctica", p_practica),
         "Informes": ("Informes",     p_informes),
         "Tareas":   ("Cuaderno",     p_cuaderno),
     }
-    TIPOS_ORDEN = ["Teoría", "Práctica", "Informes", "Tareas"]
+    TIPOS_ORDEN = ["Teoria", "Practica", "Informes", "Tareas"]
     
     # ── Ponderación Trimestral
     pond_1t = info_modulo.get("pond_1t", 30)

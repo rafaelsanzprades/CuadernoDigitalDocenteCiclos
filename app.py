@@ -18,6 +18,7 @@ from pdf_seguimiento_diario import generar_pdf_seguimiento
 
 from pdf_boletin_grupal import generar_pdf_boletin_grupal, generar_pdf_boletin_grupal_final
 from pdf_boletin_individual import generar_pdf_boletin_individual
+from pdf_planificacion import generar_pdf_planificacion
 from storage_manager import serialize_date, unserialize_date, guardar_global, cargar_global, guardar_pd, cargar_pd, guardar_curso, cargar_curso, guardar_datos, cargar_datos
 
 
@@ -227,44 +228,150 @@ with st.sidebar:
     ro_global = st.session_state.lock_global
 
     
-    if st.session_state.auth["role"] != "alumno":
-        # --- MEJORA #8 + MEJORA #1: Indicador visual de módulo activo + autoguardado ---
-        _modulo_nombre = st.session_state.info_modulo.get("modulo", "") or "—"
-        _modulo_archivo = st.session_state.get("active_module", "—")
+    with st.expander("📥 Descargas .pdf"):
+        if st.button("Generar PDF Calendario", use_container_width=True):
+            pdf_buffer_cal = generar_pdf_calendario(
+                st.session_state.info_modulo,
+                st.session_state.info_fechas,
+                st.session_state.planning_ledger,
+                st.session_state.calendar_notes
+            )
+            st.download_button(
+                label="Confirmar descarga Calendario",
+                data=pdf_buffer_cal,
+                file_name=f"Calendario_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
+                mime="application/pdf",
+                type="primary",
+                use_container_width=True
+            )
 
-        # Lógica autoguardado
-        _autosave_label = ""
-        _now = datetime.now()
-        _elapsed = (_now - st.session_state.autosave_last).total_seconds() / 60
-        _can_autosave = (_modulo_archivo not in ("", "nuevo-modulo", "—"))
-        if _can_autosave and _elapsed >= st.session_state.autosave_interval_min:
-            guardar_datos(_modulo_archivo)
-            st.session_state.autosave_last = _now
-            st.session_state.autosave_msg = f"✅ Autoguardado a las {_now.strftime('%H:%M')}"
-        if st.session_state.autosave_msg:
-            _autosave_label = st.session_state.autosave_msg
+        if st.button("Generar Seguimiento Diario", use_container_width=True):
+            pdf_buffer_seg = generar_pdf_seguimiento(
+                st.session_state.info_modulo,
+                st.session_state.info_fechas,
+                st.session_state.horario,
+                st.session_state.planning_ledger,
+                st.session_state.calendar_notes,
+                st.session_state.df_sesiones if "df_sesiones" in st.session_state else None
+            )
+            st.download_button(
+                label="Confirmar descarga Seguimiento",
+                data=pdf_buffer_seg,
+                file_name=f"Seguimiento_diario_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
+                mime="application/pdf",
+                type="primary",
+                use_container_width=True
+            )
 
-        st.markdown(
-            f"""
-            <div style="
-                background: rgba(20, 160, 133, 0.1);
-                backdrop-filter: blur(5px);
-                border-radius: 12px;
-                padding: 12px;
-                margin-bottom: 15px;
-                margin-top: 10px;
-                border: 1px solid rgba(20, 160, 133, 0.3);
-            ">
-                <div style="font-size:0.65rem; color:#14a085; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:4px;">
-                    💎 Módulo Activo
-                </div>
-                <div style="font-size:0.9rem; color:#ffffff; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="{_modulo_nombre}">
-                    {_modulo_nombre}
-                </div>
-                <div style="font-size:0.75rem; color:#9ca3af; margin-top:2px; font-family: monospace;">
-                    {_modulo_archivo}.json
-                </div>
-                {f'<div style="font-size:0.7rem; color:#14a085; margin-top:8px; font-weight:500;">{_autosave_label}</div>' if _autosave_label else ''}
+        pdf_buffer_plan = generar_pdf_planificacion(
+            st.session_state.info_modulo,
+            st.session_state.df_ud,
+            st.session_state.df_sgmt,
+            st.session_state.daily_ledger,
+            st.session_state.horario,
+            st.session_state.info_fechas,
+            st.session_state.calendar_notes
+        )
+        st.download_button(
+            label="Planificación mensual",
+            data=pdf_buffer_plan,
+            file_name=f"Planificacion_{st.session_state.info_modulo.get('modulo', 'Gestor')}.pdf",
+            mime="application/pdf",
+            type="secondary",
+            use_container_width=True
+        )
+
+
+        # ── Boletines ──────────────────────────────────────────
+        st.markdown("<b>Boletines grupales</b>", unsafe_allow_html=True)
+        _mod_name = st.session_state.info_modulo.get('modulo', 'Grupo')
+
+        if st.button("Generar Boletines Grupales", use_container_width=True):
+            pdf_buffer_grupal_1t = generar_pdf_boletin_grupal("1T", st.session_state.info_modulo, st.session_state.df_al, st.session_state.df_eval, st.session_state.df_act)
+            pdf_buffer_grupal_2t = generar_pdf_boletin_grupal("2T", st.session_state.info_modulo, st.session_state.df_al, st.session_state.df_eval, st.session_state.df_act)
+            pdf_buffer_grupal_3t = generar_pdf_boletin_grupal("3T", st.session_state.info_modulo, st.session_state.df_al, st.session_state.df_eval, st.session_state.df_act)
+            pdf_buffer_grupal_fin = generar_pdf_boletin_grupal_final(st.session_state.info_modulo, st.session_state.df_al, st.session_state.df_eval, st.session_state.df_act)
+            
+            st.download_button("Descargar 1T", pdf_buffer_grupal_1t, f"Boletin_Grupal_1T_{_mod_name}.pdf", "application/pdf", use_container_width=True)
+            st.download_button("Descargar 2T", pdf_buffer_grupal_2t, f"Boletin_Grupal_2T_{_mod_name}.pdf", "application/pdf", use_container_width=True)
+            st.download_button("Descargar 3T", pdf_buffer_grupal_3t, f"Boletin_Grubit_3T_{_mod_name}.pdf", "application/pdf", use_container_width=True)
+            st.download_button("Descargar FINAL", pdf_buffer_grupal_fin, f"Boletin_Grupal_FINAL_{_mod_name}.pdf", "application/pdf", type="primary", use_container_width=True)
+
+        st.markdown("<b>Boletines individuales</b>", unsafe_allow_html=True)
+        if "df_al" in st.session_state and not st.session_state.df_al.empty:
+            df_al_act = st.session_state.df_al[st.session_state.df_al.get("Estado", "") != "Baja"].copy() if "Estado" in st.session_state.df_al.columns else st.session_state.df_al.copy()
+            df_al_sorted = df_al_act.sort_values("Apellidos").reset_index(drop=True)
+            
+            alum_list = df_al_sorted.apply(lambda row: f"{row.get('Apellidos', '')}, {row.get('Nombre', '')} ({row.get('ID', '')})", axis=1).tolist()
+            
+            alum_sel = st.selectbox("Seleccionar Alumnado", alum_list, label_visibility="collapsed")
+            if alum_sel:
+                # Extract ID safely
+                import re
+                match = re.search(r'\(([^)]+)\)$', alum_sel)
+                if match:
+                    al_id = match.group(1)
+                    if st.button("Generar Informe Individual", use_container_width=True):
+                        pdf_buffer_indiv = generar_pdf_boletin_individual(
+                            info_modulo=st.session_state.info_modulo,
+                            al_id=al_id,
+                            df_al=st.session_state.df_al,
+                            df_eval=st.session_state.df_eval,
+                            df_act=st.session_state.df_act,
+                            df_ce=st.session_state.df_ce,
+                            df_ra=st.session_state.df_ra,
+                            df_feoe=st.session_state.get("df_feoe", pd.DataFrame()),
+                            info_fechas=st.session_state.get("info_fechas", {}),
+                            planning_ledger=st.session_state.get("planning_ledger", {}),
+                            df_ud=st.session_state.get("df_ud", pd.DataFrame()),
+                            df_pr=st.session_state.get("df_pr", pd.DataFrame())
+                        )
+                        st.download_button(
+                            label="Confirmar descarga Informe",
+                            data=pdf_buffer_indiv,
+                            file_name=f"Informe_Individual_{al_id}_{_mod_name}.pdf",
+                            mime="application/pdf",
+                            type="primary",
+                            use_container_width=True
+                        )
+        else:
+            st.info("Sin estudiantes activos para generar informes individuales.")
+            
+
+    # --- MEJORA #8 + MEJORA #1: Indicador visual de módulo activo + autoguardado ---
+    _modulo_nombre = st.session_state.info_modulo.get("modulo", "") or "—"
+    _modulo_archivo = st.session_state.get("active_module", "—")
+
+    # Lógica autoguardado
+    _autosave_label = ""
+    _now = datetime.now()
+    _elapsed = (_now - st.session_state.autosave_last).total_seconds() / 60
+    _can_autosave = (_modulo_archivo not in ("", "nuevo-modulo", "—"))
+    if _can_autosave and _elapsed >= st.session_state.autosave_interval_min:
+        guardar_datos(_modulo_archivo)
+        st.session_state.autosave_last = _now
+        st.session_state.autosave_msg = f"✅ Autoguardado a las {_now.strftime('%H:%M')}"
+    if st.session_state.autosave_msg:
+        _autosave_label = st.session_state.autosave_msg
+
+    st.markdown(
+        f"""
+        <div style="
+            background: linear-gradient(135deg, #0d7377 0%, #0a5c60 100%);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-bottom: 12px;
+            margin-top: 10px;
+            border: 1px solid #14a085;
+        ">
+            <div style="font-size:0.68rem; color:#9ee8e0; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:2px;">
+                💾 Módulo activo
+            </div>
+            <div style="font-size:0.92rem; color:#ffffff; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="{_modulo_nombre}">
+                {_modulo_nombre}
+            </div>
+            <div style="font-size:0.72rem; color:#9ee8e0; margin-top:2px;">
+                📄 {_modulo_archivo}.json
             </div>
             """,
             unsafe_allow_html=True

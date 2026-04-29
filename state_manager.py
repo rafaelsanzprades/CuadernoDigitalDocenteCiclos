@@ -62,9 +62,9 @@ def inicializar_estado():
     if 'df_ud' not in st.session_state:
         st.session_state.df_ud = df_ud_empty()
     if 'df_pr' not in st.session_state:
-        st.session_state.df_pr = pd.DataFrame(columns=["ID", "Práctica"])
+        st.session_state.df_pr = pd.DataFrame(columns=["ID", "Practica"])
     if 'df_al' not in st.session_state:
-        st.session_state.df_al = pd.DataFrame(columns=["ID", "Estado", "Apellidos", "Nombre", "Nacimiento", "Repite", "Matrícula", "Edad", "Comentarios", "email", "Móvil"])
+        st.session_state.df_al = pd.DataFrame(columns=["ID", "Estado", "Apellidos", "Nombre", "Nacimiento", "Repite", "Matricula", "Edad", "Comentarios", "email", "Movil"])
 
     if 'df_ce' not in st.session_state:
         st.session_state.df_ce = df_ce_empty()
