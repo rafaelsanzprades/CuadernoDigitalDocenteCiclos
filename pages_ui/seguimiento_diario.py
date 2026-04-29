@@ -10,7 +10,14 @@ from utils_ui import badge
 from schemas import *
 
 def render_seguimiento_diario(ro_pd, ro_curso, ro_global):
-    st.subheader("📍 Planificación. Horas previstas frente a impartidas")
+    c_s1, c_s2 = st.columns([4, 1])
+    with c_s1:
+        st.subheader("📍 Planificación. Horas previstas frente a impartidas")
+    with c_s2:
+        if st.button("💾 Guardar Cambios", use_container_width=True, type="primary"):
+            from storage_manager import guardar_curso
+            guardar_curso(st.session_state.active_curso)
+            st.toast("✅ Seguimiento guardado", icon="💾")
     
     meses_display = ["Sep", "Oct", "Nov", "Dic", "Ene", "Feb", "Mar", "Abr", "May", "Jun"]
     mapping_meses_full = {"Sep": "Septiembre", "Oct": "Octubre", "Nov": "Noviembre", "Dic": "Diciembre", "Ene": "Enero", "Feb": "Febrero", "Mar": "Marzo", "Abr": "Abril", "May": "Mayo", "Jun": "Junio"}
@@ -187,7 +194,8 @@ def render_seguimiento_diario(ro_pd, ro_curso, ro_global):
                     "Día": dias_semana[d.weekday()],
                     "UD Prev.": ud_prev_str,
                     "Sin docencia": ledger_entry.get("sin_docencia", False),
-                    "Seguimiento": ledger_entry.get("seguimiento", "")
+                    "Seguimiento": ledger_entry.get("seguimiento", ""),
+                    "Público": ledger_entry.get("publico", False)
                 })
             
             df_mes = pd.DataFrame(data_mes)
@@ -200,7 +208,8 @@ def render_seguimiento_diario(ro_pd, ro_curso, ro_global):
                     "Día": st.column_config.TextColumn("Día", disabled=True),
                     "UD Prev.": st.column_config.TextColumn("UD Prev.", disabled=True),
                     "Sin docencia": st.column_config.CheckboxColumn("Sin docencia"),
-                    "Seguimiento": st.column_config.TextColumn("Seguimiento", width="large")
+                    "Seguimiento": st.column_config.TextColumn("Seguimiento", width="large"),
+                    "Público": st.column_config.CheckboxColumn("👁️")
                 },
                 hide_index=True,
                 width="stretch",
@@ -213,7 +222,8 @@ def render_seguimiento_diario(ro_pd, ro_curso, ro_global):
                     d_key = row["Fecha"]
                     st.session_state.daily_ledger[d_key] = {
                         "sin_docencia": row["Sin docencia"],
-                        "seguimiento": row["Seguimiento"]
+                        "seguimiento": row["Seguimiento"],
+                        "publico": row["Público"]
                     }
                 # Recalcular inmediatamente para actualizar la fila "Sin Doc." y las columnas mes.Imp
                 repartir_horas_previstas()

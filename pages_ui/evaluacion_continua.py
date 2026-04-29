@@ -10,7 +10,15 @@ from utils_ui import badge
 from schemas import *
 
 def render_evaluacion_continua(ro_pd, ro_curso, ro_global):
-    st.subheader("🎓 Evaluación continua por Alumnado")
+    c_e1, c_e2 = st.columns([4, 1])
+    with c_e1:
+        st.subheader("🎓 Evaluación continua por Alumnado")
+    with c_e2:
+        if st.button("💾 Guardar Cambios", use_container_width=True, type="primary"):
+            from storage_manager import guardar_curso
+            guardar_curso(st.session_state.active_curso)
+            st.toast("✅ Evaluación continua guardada", icon="💾")
+    st.write("")
     
     if not st.session_state.df_al.empty and not st.session_state.df_ra.empty:
         # Calcular proyección de Trimestres para cada RA

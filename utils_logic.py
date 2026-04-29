@@ -163,3 +163,100 @@ def repartir_horas_previstas():
                         temp_day_rem = remaining_lectivos[temp_day_idx]["horas"]
     
     st.session_state.planning_ledger = planning_ledger
+
+def calcular_notas_alumno(al_id, df_eval, df_act, df_ce, df_ra, df_feoe=None, overrides=None):
+    """
+    Calcula las notas de RA y la nota final para un alumno específico siguiendo la jerarquía oficial.
+    Permite pasar un diccionario 'overrides' con valores temporales (útil en la vista docente).
+    """
+    if df_eval.empty or df_act.empty or df_ce.empty:
+        return {"notas_ra": {}, "nota_final": 0.0, "notas_ce": {}}
+
+    mask = df_eval["ID"] == al_id
+    if not mask.any():
+        return {"notas_ra": {}, "nota_final": 0.0, "notas_ce": {}}
+    
+    idx_eval = df_eval[mask].index[0]
+    overrides = overrides or {}
+    
+    # 1. Preparar pesos
+    peso_ra = {}
+    for _, ra_row in df_ra.iterrows():
+        if pd.notna(ra_row["id_ra"]):
+            peso_ra[ra_row["id_ra"]] = pd.to_numeric(ra_row["peso_ra"], errors="coerce") if pd.notna(ra_row["peso_ra"]) else 0.0
+
+    peso_ce = {}
+    ra_of_ce = {}
+    df_ce_clean = df_ce.dropna(subset=["id_ce"])
+    for _, ce_row in df_ce_clean.iterrows():
+        ce_id = ce_row["id_ce"]
+        ra_id = ce_row.get("id_ra", "")
+        if pd.notna(ce_id) and pd.notna(ra_id):
+            peso_ce[ce_id] = pd.to_numeric(ce_row["peso_ce"], errors="coerce") if pd.notna(ce_row["peso_ce"]) else 0.0
+            ra_of_ce[ce_id] = ra_id
+
+    # 2. Calcular notas de CE (media aritmética de actividades)
+    notas_ce = {}
+    for ce_id in peso_ce.keys():
+        act_vals = []
+        for _, act in df_act.iterrows():
+            if ce_id in act.index and act[ce_id] == True:
+                act_id = act["id_act"]
+                # Usar valor del override si existe, si no del dataframe
+                if act_id in overrides:
+                    val = float(overrides[act_id])
+                    act_vals.append(val)
+                elif act_id in df_eval.columns:
+                    val = pd.to_numeric(df_eval.at[idx_eval, act_id], errors="coerce")
+                    if pd.notna(val):
+                        act_vals.append(val)
+        
+        if act_vals:
+            notas_ce[ce_id] = sum(act_vals) / len(act_vals)
+        else:
+            notas_ce[ce_id] = 0.0
+
+    # 3. Calcular notas de RA (suma ponderada de CE)
+    notas_ra = {}
+    for ce_id, n_ce in notas_ce.items():
+        r_id = ra_of_ce.get(ce_id)
+        if r_id:
+            if r_id not in notas_ra: notas_ra[r_id] = 0.0
+            notas_ra[r_id] += n_ce * (peso_ce[ce_id] / 100.0)
+
+    # 4. Integrar Dualización (FEOE) si existe
+    if df_feoe is not None and not df_ra.empty and "Dualizado" in df_ra.columns:
+        for r_id in notas_ra.keys():
+            ra_row = df_ra[df_ra["id_ra"] == r_id]
+            if not ra_row.empty and ra_row.iloc[0].get("Dualizado", False):
+                emp_grade = 0.0
+                if r_id in df_feoe.columns:
+                    fe_row = df_feoe[df_feoe["ID"] == al_id]
+                    if not fe_row.empty:
+                        val_feoe = pd.to_numeric(fe_row.iloc[0][r_id], errors="coerce")
+                        if pd.notna(val_feoe) and val_feoe >= 1:
+                            conv = {1: 3.0, 2: 5.0, 3: 7.5, 4: 10.0}
+                            nota_empresa = conv.get(int(val_feoe), 0.0)
+                            notas_ra[r_id] = (notas_ra[r_id] + nota_empresa) / 2.0
+
+    # 5. Calcular Nota Final (suma ponderada de RA)
+    nota_final = 0.0
+    for r_id, n_ra in notas_ra.items():
+        nota_final += n_ra * (peso_ra.get(r_id, 0.0) / 100.0)
+
+    return {
+        "notas_ra": notas_ra,
+        "nota_final": round(nota_final, 2),
+        "notas_ce": notas_ce
+    }
+
+def get_sigad_info(nota):
+    import math
+    if nota < 5: n = math.floor(nota)
+    else: n = math.floor(nota + 0.5)
+    n = max(1, min(10, int(n)))
+    if nota < 5:   return n, "IN", "Insuficiente",  "#e74c3c"
+    elif nota < 6: return n, "SU", "Suficiente",    "#e67e22"
+    elif nota < 7: return n, "BI", "Bien",          "#3498db"
+    elif nota < 9: return n, "NT", "Notable",       "#2ecc71"
+    else:          return n, "SB", "Sobresaliente", "#1abc9c"

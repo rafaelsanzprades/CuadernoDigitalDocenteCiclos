@@ -10,7 +10,15 @@ from utils_ui import badge
 from schemas import *
 
 def render_matricula_alumnado(ro_pd, ro_curso, ro_global):
-    st.subheader("👥 Listado de Alumnado")
+    c_m1, c_m2 = st.columns([4, 1])
+    with c_m1:
+        st.subheader("👥 Gestión de Matrícula del Alumnado")
+    with c_m2:
+        if st.button("💾 Guardar Cambios", use_container_width=True, type="primary"):
+            from storage_manager import guardar_curso
+            guardar_curso(st.session_state.active_curso)
+            st.toast("✅ Matrícula guardada", icon="💾")
+    st.write("")
     
     df_al_work = st.session_state.df_al.copy()
     
