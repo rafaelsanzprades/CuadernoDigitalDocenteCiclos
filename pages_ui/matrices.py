@@ -10,6 +10,15 @@ from utils_ui import badge
 from schemas import *
 
 def render_matrices(ro_pd, ro_curso, ro_global):
+    c_m1, c_m2 = st.columns([4, 1])
+    with c_m1:
+        st.subheader("🔗 Matrices de Relación (RA → CE → UD)")
+    with c_m2:
+        if st.button("💾 Guardar PD", use_container_width=True, type="primary"):
+            from storage_manager import guardar_pd
+            guardar_pd(st.session_state.active_pd)
+            st.toast("✅ Matrices guardadas", icon="💾")
+    st.write("")
     c_ra1, c_ra2 = st.columns([3, 1])
     with c_ra1:
         st.markdown("### 🎓 RA. Resultados de Aprendizaje")

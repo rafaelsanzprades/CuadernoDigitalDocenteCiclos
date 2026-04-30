@@ -1102,7 +1102,7 @@
             "CE7.i": false
         },
         {
-            "id_act": null,
+            "id_act": NaN,
             "tri_act": "1T",
             "Tipo": "Informes",
             "desc_act": "1T Práctica 3",
@@ -1163,7 +1163,7 @@
             "CE7.i": false
         },
         {
-            "id_act": null,
+            "id_act": NaN,
             "tri_act": "1T",
             "Tipo": "Informes",
             "desc_act": "1T Práctica 4",

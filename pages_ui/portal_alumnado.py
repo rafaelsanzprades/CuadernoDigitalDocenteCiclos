@@ -2,21 +2,28 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from datetime import datetime, date, timedelta
+from utils_logic import calcular_notas_alumno, get_sigad_info
 
 def render_portal_alumnado(al_id):
-    st.title("🎓 Mi Portal de Aprendizaje")
+    st.markdown('<div class="pestaña-header"><h2>Mi Portal de Aprendizaje</h2></div>', unsafe_allow_html=True)
     
     al_data = st.session_state.df_al[st.session_state.df_al["ID"] == al_id].iloc[0]
-    st.subheader(f"Hola, {al_data['Nombre']} {al_data['Apellidos']}")
+    st.markdown(f"### Hola, {al_data['Nombre']} {al_data['Apellidos']}")
     
     # 1. Indicadores principales
     col1, col2, col3 = st.columns(3)
     
-    # Encontrar notas en df_eval
-    eval_row = st.session_state.df_eval[st.session_state.df_eval["ID"] == al_id]
-    nota_final = 0.0
-    if not eval_row.empty:
-        nota_final = eval_row.iloc[0].get("Nota_Final", 0.0)
+    # Encontrar notas en df_eval mediante el cálculo real
+    res_cal = calcular_notas_alumno(
+        al_id, 
+        st.session_state.df_eval, 
+        st.session_state.df_act, 
+        st.session_state.df_ce, 
+        st.session_state.df_ra,
+        st.session_state.get("df_feoe", pd.DataFrame())
+    )
+    nota_final = res_cal["nota_final"]
+    notas_ra_real = res_cal["notas_ra"]
     
     with col1:
         st.metric("Nota Media Actual", f"{nota_final:.2f}")
@@ -30,103 +37,180 @@ def render_portal_alumnado(al_id):
         progreso = max(0, min(100, int((dias_pasados / total_dias) * 100))) if total_dias > 0 else 0
         st.metric("Progreso del Curso", f"{progreso}%")
     with col3:
-        # Contar RAs superados (asumiendo nota >= 5)
-        # Esto es una simplificación para el dashboard
-        st.metric("Estado", "En Proceso" if nota_final < 5 else "Apto")
+        estado_txt = "En Proceso" if nota_final < 5 else "Apto"
+        st.metric("Estado", estado_txt)
 
     st.divider()
 
     # 2. Desglose por Resultados de Aprendizaje (RA)
-    st.subheader("🎯 Progreso por Resultados de Aprendizaje")
+    st.subheader("🎯 Adquisición de Competencias (RA)")
     if not st.session_state.df_ra.empty:
-        for _, ra in st.session_state.df_ra.iterrows():
+        # Usar columnas para mostrar RAs en grid
+        ra_cols = st.columns(2)
+        for idx, (_, ra) in enumerate(st.session_state.df_ra.iterrows()):
             ra_id = ra["id_ra"]
             desc = ra["desc_ra"]
-            # Aquí podríamos calcular la nota específica por RA si tuviéramos la matriz completa
-            # Por ahora mostramos el peso y un indicador visual
-            with st.expander(f"{ra_id}: {desc[:100]}..."):
-                st.write(f"**Peso en el módulo:** {ra['peso_ra']}%")
-                # Simulamos un progreso basado en la nota final por ahora
-                ra_progress = min(100, int((nota_final / 10) * 100))
-                st.progress(ra_progress / 100, text=f"Adquisición: {ra_progress}%")
+            n_ra = notas_ra_real.get(ra_id, 0.0)
+            ra_progress = min(100, int((n_ra / 10) * 100))
+            
+            with ra_cols[idx % 2]:
+                with st.container(border=True):
+                    st.markdown(f"**{ra_id}**")
+                    st.caption(f"{desc[:80]}...")
+                    st.progress(ra_progress / 100, text=f"{n_ra:.2f} / 10")
 
     st.divider()
 
-    # 3. Diario de Seguimiento y Feedback
-    st.subheader("📝 Feedback Reciente")
-    feedbacks = []
-    for fecha, entry in st.session_state.daily_ledger.items():
-        if entry.get("observaciones"):
-            # En un sistema real, filtraríamos observaciones específicas para este alumno
-            # Por ahora mostramos las generales del grupo que le afectan
-            feedbacks.append({"Fecha": fecha, "Comentario": entry["observaciones"]})
+    # 3. Análisis Visual
+    st.subheader("📊 Análisis de Rendimiento")
     
-    if feedbacks:
-        df_feed = pd.DataFrame(feedbacks).sort_values("Fecha", ascending=False)
-        st.table(df_feed.head(5))
+    col_chart1, col_chart2 = st.columns(2)
+    
+    with col_chart1:
+        st.markdown('<div class="glass-card">', unsafe_allow_html=True)
+        st.markdown("**Perfil Competencial (RA)**")
+        if notas_ra_real:
+            df_ra_chart = pd.DataFrame({
+                "RA": list(notas_ra_real.keys()),
+                "Nota": list(notas_ra_real.values())
+            })
+            df_ra_chart["Nota"] = df_ra_chart["Nota"].astype(float)
+            st.bar_chart(df_ra_chart.set_index("RA"), horizontal=True, color="#14a085")
+        else:
+            st.info("Aún no hay datos de RA.")
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    with col_chart2:
+        st.markdown('<div class="glass-card">', unsafe_allow_html=True)
+        st.markdown("**Evolución de Notas**")
+        notas_hist = []
+        if not st.session_state.df_act.empty:
+            eval_row = st.session_state.df_eval[st.session_state.df_eval["ID"] == al_id]
+            if not eval_row.empty:
+                for _, act in st.session_state.df_act.iterrows():
+                    a_id = act["id_act"]
+                    if a_id in eval_row.columns:
+                        nota = eval_row.iloc[0][a_id]
+                        if pd.notna(nota) and nota > 0:
+                            fecha = act.get("Fecha", date.today())
+                            notas_hist.append({"Fecha": fecha, "Nota": float(nota)})
+        
+        if notas_hist:
+            df_hist = pd.DataFrame(notas_hist).sort_values("Fecha")
+            st.line_chart(df_hist.set_index("Fecha")["Nota"], color="#0d7377")
+        else:
+            st.info("Sin histórico disponible.")
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    # 4. Diario de Seguimiento y Feedback (Timeline)
+    st.divider()
+    st.subheader("📢 Feedback y Novedades")
+    
+    public_notes = []
+    for d_str, entry in st.session_state.daily_ledger.items():
+        if entry.get("publico", False) and entry.get("seguimiento"):
+            try:
+                d_obj = datetime.strptime(d_str, "%d/%m/%Y")
+                public_notes.append({"Fecha": d_obj, "FechaStr": d_str, "Nota": entry["seguimiento"]})
+            except: continue
+    
+    if public_notes:
+        public_notes.sort(key=lambda x: x["Fecha"], reverse=True)
+        for item in public_notes:
+            st.markdown(f"""
+                <div class="timeline-item">
+                    <div class="timeline-date">{item['FechaStr']}</div>
+                    <div class="timeline-content">
+                        {item['Nota']}
+                    </div>
+                </div>
+            """, unsafe_allow_html=True)
     else:
-        st.info("No hay comentarios recientes del docente.")
+        st.info("No hay feedback público por el momento.")
 
 @st.fragment
 def render_simulador_notas(al_id):
-    st.title("📊 Simulador de Calificaciones")
-    st.info("Usa este simulador para ver cómo afectarían diferentes notas a tu promedio final.")
+    st.markdown('<div class="pestaña-header"><h2>Simulador de Calificaciones</h2></div>', unsafe_allow_html=True)
+    st.markdown("Experimenta con tus notas para proyectar tu resultado final.")
 
-    # Obtener pesos del módulo
-    info = st.session_state.info_modulo
-    p_teoria = info.get("criterio_conocimiento", 30)
-    p_practica = info.get("criterio_procedimiento_practicas", 20)
-    p_informes = info.get("criterio_procedimiento_ejercicios", 20)
-    p_tareas = info.get("criterio_tareas", 30)
+    if st.session_state.df_act.empty:
+        st.warning("No hay actividades para simular.")
+        return
 
-    # Obtener notas actuales
     eval_row = st.session_state.df_eval[st.session_state.df_eval["ID"] == al_id]
-    
-    c1, c2 = st.columns([2, 1])
-    
-    with c1:
-        st.subheader("Configura tus notas estimadas")
-        
-        # Simulamos los 4 bloques principales
-        val_teoria = st.slider("Exámenes Teóricos (%)", 0.0, 10.0, float(eval_row.iloc[0].get("1T_Teoria", 0.0)) if not eval_row.empty else 5.0)
-        val_practica = st.slider("Exámenes Prácticos (%)", 0.0, 10.0, float(eval_row.iloc[0].get("1T_Practica", 0.0)) if not eval_row.empty else 5.0)
-        val_informes = st.slider("Informes y Proyectos (%)", 0.0, 10.0, float(eval_row.iloc[0].get("1T_Informes", 0.0)) if not eval_row.empty else 5.0)
-        val_tareas = st.slider("Tareas y Actitud (%)", 0.0, 10.0, float(eval_row.iloc[0].get("1T_Cuaderno", 0.0)) if not eval_row.empty else 5.0)
+    if eval_row.empty:
+        st.error("Datos no encontrados.")
+        return
 
-    with c2:
-        st.subheader("Resultado proyectado")
-        
-        # Cálculo de la nota
-        nota_proyectada = (
-            (val_teoria * p_teoria / 100) +
-            (val_practica * p_practica / 100) +
-            (val_informes * p_informes / 100) +
-            (val_tareas * p_tareas / 100)
-        )
-        
-        # Mostrar resultado con un diseño llamativo
-        color = "green" if nota_proyectada >= 5 else "red"
+    sim_vals = {}
+    
+    # Tabs para trimestres con diseño limpio
+    t1, t2, t3 = st.tabs(["📌 1º Trimestre", "📌 2º Trimestre", "📌 3º Trimestre"])
+    
+    with t1: render_sim_tab(al_id, eval_row, "1T", sim_vals)
+    with t2: render_sim_tab(al_id, eval_row, "2T", sim_vals)
+    with t3: render_sim_tab(al_id, eval_row, "3T", sim_vals)
+
+    # Calcular resultado proyectado
+    res_sim = calcular_notas_alumno(
+        al_id, 
+        st.session_state.df_eval, 
+        st.session_state.df_act, 
+        st.session_state.df_ce, 
+        st.session_state.df_ra,
+        st.session_state.df_feoe,
+        overrides=sim_vals
+    )
+    nota_f = res_sim["nota_final"]
+    n_int, sigad_cod, sigad_txt, sigad_col = get_sigad_info(nota_f)
+
+    st.divider()
+    
+    # Resultado con estilo premium
+    res_col1, res_col2 = st.columns([1, 2])
+    
+    with res_col1:
         st.markdown(f"""
-            <div style="
-                background-color: #f0f2f6;
-                padding: 20px;
-                border-radius: 10px;
-                text-align: center;
-                border: 2px solid {color};
-            ">
-                <h1 style="color: {color}; margin: 0;">{nota_proyectada:.2f}</h1>
-                <p style="color: #666;">Nota Final Estimada</p>
+            <div style="background: var(--primary-gradient); padding: 40px; border-radius: 20px; text-align: center; color: white; box-shadow: 0 10px 30px rgba(20,160,133,0.3);">
+                <div style="font-size: 0.9rem; opacity: 0.9; text-transform: uppercase; letter-spacing: 2px;">Nota Proyectada</div>
+                <div style="font-size: 5rem; font-weight: 800; margin: 10px 0;">{nota_f:.2f}</div>
+                <div style="font-size: 1.6rem; font-weight: 600;">{sigad_txt}</div>
+                <div style="font-size: 1rem; opacity: 0.7;">({sigad_cod})</div>
             </div>
         """, unsafe_allow_html=True)
+
+    with res_col2:
+        st.markdown('<div class="glass-card" style="height: 100%;">', unsafe_allow_html=True)
+        st.markdown("#### Impacto en Competencias")
+        if res_sim["notas_ra"]:
+            df_ra_sim = pd.DataFrame({
+                "RA": list(res_sim["notas_ra"].keys()),
+                "Nota": [float(v) for v in res_sim["notas_ra"].values()]
+            })
+            st.bar_chart(df_ra_sim.set_index("RA"), horizontal=True, color="#14a085")
+        st.markdown('</div>', unsafe_allow_html=True)
+
+def render_sim_tab(al_id, eval_row, tri_key, sim_vals):
+    col_tri = "tri_act" if "tri_act" in st.session_state.df_act.columns else "Trimestre"
+    df_act_tri = st.session_state.df_act[st.session_state.df_act[col_tri] == tri_key]
+    
+    if df_act_tri.empty:
+        st.write("No hay actividades registradas.")
+        return
+
+    cols = st.columns(2)
+    for i, (_, act) in enumerate(df_act_tri.iterrows()):
+        a_id = act["id_act"]
+        a_nombre = act.get("desc_act", act.get("Actividad", a_id))
+        val_actual = float(eval_row.iloc[0].get(a_id, 0.0))
         
-        st.markdown("<br>", unsafe_allow_html=True)
-        
-        # Comparativa con pesos
-        st.write("**Pesos aplicados:**")
-        st.write(f"- Teoría: {p_teoria}%")
-        st.write(f"- Práctica: {p_practica}%")
-        st.write(f"- Informes: {p_informes}%")
-        st.write(f"- Tareas: {p_tareas}%")
+        with cols[i % 2]:
+            clean_id = str(a_id) if pd.notna(a_id) else f"nan_{i}"
+            sim_vals[a_id] = st.slider(
+                f"{a_nombre}", 0.0, 10.0, val_actual, 0.1, 
+                key=f"sim_{tri_key}_{clean_id}_{i}"
+            )
+
 
     st.divider()
     st.subheader("Preguntas frecuentes")
