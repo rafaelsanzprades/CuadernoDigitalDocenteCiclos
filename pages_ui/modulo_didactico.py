@@ -182,7 +182,7 @@ def render_modulo_didactico(ro_pd, ro_curso, ro_global):
                 info = ra_info_res.get(ra_id, {"desc": "", "pct": 0.0})
                 pct  = info.get("pct", 0.0)
                 sp   = f"{int(pct)}%" if pct == int(pct) else f"{pct:.1f}%"
-                st.markdown(f"<div style='color:#fff;font-size:1.05rem;margin-top:5px;'><strong>{ra_id} ({sp}).</strong> <span style='color:#ccc;font-size:0.95rem;'>{info.get('desc','')}</span></div>", unsafe_allow_html=True)
+                st.markdown(f"<div style='color:#fff;font-size:1.05rem;margin-top:25px;'><strong>{ra_id} ({sp}).</strong> <span style='color:#ccc;font-size:0.95rem;'>{info.get('desc','')}</span></div>", unsafe_allow_html=True)
                 uds_list_res = []
                 if not st.session_state.df_ud.empty and ra_id in st.session_state.df_ud.columns:
                     for _, ud_row in st.session_state.df_ud.iterrows():
@@ -194,7 +194,7 @@ def render_modulo_didactico(ro_pd, ro_curso, ro_global):
                         if val_ra > 0.0:
                             s = f"{int(val_ra)}%" if val_ra == int(val_ra) else f"{val_ra:.1f}%"
                             uds_list_res.append(f"{str(ud_row['id_ud'])} ({val_h}h) - {s}")
-                html_h = f"<div style='margin-left:25px;color:#ffe599;border-left:2px solid #d4af37;padding-left:10px;'>{', '.join(uds_list_res)}</div>" if uds_list_res else "<div style='margin-left:25px;color:#666;font-style:italic;border-left:2px solid #444;padding-left:10px;'>Sin UDs asignadas</div>"
+                html_h = f"<div style='margin-left:25px;color:#ffe599;border-left:2px solid #d4af37;padding-left:10px;'>{'<br>'.join(uds_list_res)}</div>" if uds_list_res else "<div style='margin-left:25px;color:#666;font-style:italic;border-left:2px solid #444;padding-left:10px;'>Sin UDs asignadas</div>"
                 st.markdown(html_h, unsafe_allow_html=True)
     else:
         st.info("No hay Resultados de Aprendizaje definidos.")
