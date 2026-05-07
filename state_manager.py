@@ -57,7 +57,7 @@ def inicializar_estado():
     if 'df_ra' not in st.session_state:
         st.session_state.df_ra = df_ra_empty()
     else:
-        if "Dualizado" not in st.session_state.df_ra.columns:
+        if "is_dual" not in st.session_state.df_ra.columns:
             st.session_state.df_ra["is_dual"] = False
     if 'df_ud' not in st.session_state:
         st.session_state.df_ud = df_ud_empty()

@@ -11,6 +11,13 @@ import os
 # 1. CONFIGURACIÓN DE PÁGINA
 # ==========================================
 
+st.set_page_config(
+    page_title="CDD PRO — Cuaderno Digital Docente",
+    page_icon="📚",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
+
 # ==========================================
 from pdf_calendario_academico import generar_pdf_calendario
 from pdf_seguimiento_diario import generar_pdf_seguimiento
@@ -127,7 +134,6 @@ if not st.session_state.auth["logged_in"]:
 # ==========================================
 # 5. INTERFAZ: MENÚ LATERAL Y ESTILOS
 # ==========================================
-import os
 if os.path.exists("assets/style.css"):
     with open("assets/style.css", "r", encoding="utf-8") as f:
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)

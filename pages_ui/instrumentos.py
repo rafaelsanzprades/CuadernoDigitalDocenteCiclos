@@ -116,7 +116,9 @@ def render_instrumentos(ro_pd, ro_curso, ro_global):
                         _ed_save.at[idx, "id_act"] = _new_id
                         _ids_existentes.append(_new_id)
     
-                _ed_save["crit_calif"] = _df_tri["crit_calif"].values[:len(_ed_save)] if len(_ed_save) <= len(_df_tri) else ""
+                # Preservar crit_calif de filas existentes, vacío para nuevas
+                _crit_vals = _df_tri["crit_calif"].tolist() if "crit_calif" in _df_tri.columns else []
+                _ed_save["crit_calif"] = (_crit_vals + [""] * len(_ed_save))[:len(_ed_save)]
                 _ed_save = _ed_save.reindex(columns=cols_finales, fill_value=False)
                 df_act_nuevo.append(_ed_save)
     

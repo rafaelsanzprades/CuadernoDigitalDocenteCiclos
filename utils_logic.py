@@ -225,10 +225,10 @@ def calcular_notas_alumno(al_id, df_eval, df_act, df_ce, df_ra, df_feoe=None, ov
             notas_ra[r_id] += n_ce * (peso_ce[ce_id] / 100.0)
 
     # 4. Integrar Dualización (FEOE) si existe
-    if df_feoe is not None and not df_ra.empty and "Dualizado" in df_ra.columns:
+    if df_feoe is not None and not df_ra.empty and "is_dual" in df_ra.columns:
         for r_id in notas_ra.keys():
             ra_row = df_ra[df_ra["id_ra"] == r_id]
-            if not ra_row.empty and ra_row.iloc[0].get("Dualizado", False):
+            if not ra_row.empty and ra_row.iloc[0].get("is_dual", False):
                 emp_grade = 0.0
                 if r_id in df_feoe.columns:
                     fe_row = df_feoe[df_feoe["ID"] == al_id]

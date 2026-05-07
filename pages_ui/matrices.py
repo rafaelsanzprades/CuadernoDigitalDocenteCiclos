@@ -167,6 +167,22 @@ def render_matrices(ro_pd, ro_curso, ro_global):
     
     st.subheader("🧩 CE. Criterios de Evaluación")
     
+    # ── Asegurar que feoe exista en df_ce ────────────────────
+    if "feoe" not in st.session_state.df_ce.columns:
+        st.session_state.df_ce["feoe"] = False
+    
+    # ── Calcular UD por RA desde df_ud (columnas dinámicas) ────
+    # df_ud tiene columnas: id_ud, horas_ud, desc_ud, RA1, RA2...
+    _ra_ids = st.session_state.df_ra["id_ra"].tolist() if not st.session_state.df_ra.empty else []
+    _ud_por_ra = {}  # {"RA1": "UD01, UD03", ...}
+    for _ra in _ra_ids:
+        if _ra in st.session_state.df_ud.columns:
+            _uds = st.session_state.df_ud.loc[
+                pd.to_numeric(st.session_state.df_ud[_ra], errors="coerce").fillna(0) > 0,
+                "id_ud"
+            ].tolist()
+            _ud_por_ra[_ra] = ", ".join(str(u) for u in _uds) if _uds else ""
+    
     with st.expander("➕ Añadir nuevo Criterio de evaluación", expanded=False):
         st.caption("Las UDs vinculadas se calculan automáticamente desde la matriz RA→UD.")
         with st.form("form_nuevo_ce"):
@@ -208,23 +224,6 @@ def render_matrices(ro_pd, ro_curso, ro_global):
                     }
                     st.session_state.df_ce = pd.concat([st.session_state.df_ce, pd.DataFrame([nuevo_ce])], ignore_index=True)
                     st.rerun()
-    
-    
-    # ── Asegurar que feoe exista en df_ce ────────────────────
-    if "feoe" not in st.session_state.df_ce.columns:
-        st.session_state.df_ce["feoe"] = False
-    
-    # ── Calcular UD por RA desde df_ud (columnas dinámicas) ────
-    # df_ud tiene columnas: id_ud, horas_ud, desc_ud, RA1, RA2...
-    _ra_ids = st.session_state.df_ra["id_ra"].tolist() if not st.session_state.df_ra.empty else []
-    _ud_por_ra = {}  # {"RA1": "UD01, UD03", ...}
-    for _ra in _ra_ids:
-        if _ra in st.session_state.df_ud.columns:
-            _uds = st.session_state.df_ud.loc[
-                pd.to_numeric(st.session_state.df_ud[_ra], errors="coerce").fillna(0) > 0,
-                "id_ud"
-            ].tolist()
-            _ud_por_ra[_ra] = ", ".join(str(u) for u in _uds) if _uds else ""
     
     columnas_config_ce = {
         "id_ra":   st.column_config.SelectboxColumn("RA", options=st.session_state.df_ra["id_ra"].tolist()),

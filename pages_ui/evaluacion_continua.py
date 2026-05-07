@@ -40,7 +40,7 @@ def render_evaluacion_continua(ro_pd, ro_curso, ro_global):
             ra_id = str(ra_row["id_ra"])
             ra_info[ra_id] = {
                 "pond": float(pd.to_numeric(ra_row["peso_ra"], errors="coerce")) if not pd.isna(ra_row["peso_ra"]) else 0.0,
-                "desc": str(ra_row.get("Descripción", ""))
+                "desc": str(ra_row.get("desc_ra", ""))
             }
             tris_found = []
             uds_found = []
