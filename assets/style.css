@@ -114,11 +114,11 @@ section[data-testid="stSidebar"] [data-testid="baseButton-primary"] {
 }
 
 /* Sidebar top padding reduction */
-[data-testid="stSidebarUserContent"],
-[data-testid="stSidebar"] > div:first-child,
+section[data-testid="stSidebar"] > div {
+    padding-top: 1rem !important;
+}
 [data-testid="stSidebarHeader"] {
-    padding-top: 0rem !important;
-    height: auto !important;
+    display: none !important;
 }
 
 .pestaña-header {
@@ -135,8 +135,8 @@ section[data-testid="stSidebar"] [data-testid="baseButton-primary"] {
     box-shadow: 0 4px 15px rgba(20, 160, 133, 0.1);
 }
 
-.pestaña-header h2 {
-    font-size: 1.8rem !important;
+div[data-testid="stMainBlockContainer"] .pestaña-header h2 {
+    font-size: 2.2rem !important;
     font-weight: 800 !important;
     letter-spacing: -0.01em;
     margin: 0 !important;
@@ -268,9 +268,12 @@ header { background: transparent !important; } /* Hacer cabecera transparente pe
     padding-top: 1rem !important;
 }
 
-[data-testid="stSidebar"] h1 {
-    font-size: 1.8rem !important;
+[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] .stHeadingContainer h1 {
+    font-size: 2.2rem !important;
     font-weight: 800 !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
     margin-bottom: 0.2rem !important;
     line-height: 1.2 !important;
 }
