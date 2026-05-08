@@ -57,7 +57,6 @@ h1, h2, h3, h4, h5, h6, p {
 [data-testid="stMetricLabel"] {
     color: var(--text-muted) !important;
     font-weight: 500 !important;
-    text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
@@ -115,26 +114,33 @@ section[data-testid="stSidebar"] [data-testid="baseButton-primary"] {
 }
 
 /* Sidebar top padding reduction */
-[data-testid="stSidebarUserContent"] {
-    padding-top: 2rem !important;
+[data-testid="stSidebarUserContent"],
+[data-testid="stSidebar"] > div:first-child,
+[data-testid="stSidebarHeader"] {
+    padding-top: 0rem !important;
+    height: auto !important;
 }
 
 .pestaña-header {
     background: var(--primary-gradient);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     text-align: center;
     margin-bottom: 25px; /* Reducido para evitar exceso de espacio */
     margin-top: 0px !important;
-    padding-top: 0px !important;
+    padding: 15px !important;
+    border: 2px solid #14a085;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(20, 160, 133, 0.1);
 }
 
 .pestaña-header h2 {
-    font-size: 2.0rem !important; /* Doble */
-    font-weight: 700 !important;
+    font-size: 2.8rem !important; /* Más grande que los h1 (2.0rem) */
+    font-weight: 800 !important;
     letter-spacing: -0.01em;
-    margin-top: 0 !important;
-    padding-top: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 /* Standardizing native Streamlit headers in the main container */
