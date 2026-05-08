@@ -132,7 +132,7 @@ def render_introduccion_planes(ro_pd, ro_curso, ro_global):
     
     st.divider()
     
-    st.subheader("🚌 Plan de Actividadesy Extraescolares")
+    st.subheader("🚌 Plan de Actividades y Extraescolares")
     st.markdown("Programación de actividades complementarias y salidas extraescolares")
     
     lista_ra_ids = st.session_state.df_ra["id_ra"].tolist() if not st.session_state.df_ra.empty else []

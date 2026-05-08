@@ -51,7 +51,7 @@ def render_calificacion_academica(ro_pd, ro_curso, ro_global):
             # Saltar filas sin id_act válido (filas vacías del editor)
             if not row.get("id_act") or pd.isna(row.get("id_act")):
                 continue
-            tri = row.get("Trimestre", "1T")
+            tri = row.get("tri_act", "1T")
             if tri not in acts_by_tri: tri = "1T"
             acts_by_tri[tri].append(row)
     
@@ -107,7 +107,7 @@ def render_calificacion_academica(ro_pd, ro_curso, ro_global):
                                     continue
                                 val_prev = float(st.session_state.df_eval.at[idx, act_id]) if pd.notna(st.session_state.df_eval.at[idx, act_id]) else 0.0
                                 val_new = st.number_input(
-                                    f"[{act['Tipo']}] {act.get('Actividad', act_id)}", 
+                                    f"[{act.get('Tipo', '')}] {act.get('desc_act', act_id)}", 
                                     0.0, 10.0, val_prev, 0.1, 
                                     key=f"ev_{al_id}_{act_id}", format="%.1f"
                                 )

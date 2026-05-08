@@ -345,7 +345,7 @@
             "3T_Informes": 0,
             "3T_Cuaderno": 0,
             "3T_Nota": 1.5,
-            "Nota_Final": 5.06,
+            "Nota_Final": 10.0,
             "ACT01": 10.0,
             "ACT02": 10.0,
             "ACT03": 10.0,
@@ -1129,7 +1129,7 @@
             "May_Imp": 0,
             "Jun_Prv": 0,
             "Jun_Imp": 0,
-            "Total_Imp": 24
+            "Total_Imp": 0
         },
         {
             "id_ud": "UD02",
@@ -1154,7 +1154,7 @@
             "May_Imp": 0,
             "Jun_Prv": 0,
             "Jun_Imp": 0,
-            "Total_Imp": 30
+            "Total_Imp": 0
         },
         {
             "id_ud": "UD03",
@@ -1179,7 +1179,7 @@
             "May_Imp": 0,
             "Jun_Prv": 0,
             "Jun_Imp": 0,
-            "Total_Imp": 15
+            "Total_Imp": 0
         },
         {
             "id_ud": "UD04",
@@ -1204,7 +1204,7 @@
             "May_Imp": 0,
             "Jun_Prv": 0,
             "Jun_Imp": 0,
-            "Total_Imp": 10
+            "Total_Imp": 0
         },
         {
             "id_ud": "UD05",
@@ -1229,7 +1229,7 @@
             "May_Imp": 0,
             "Jun_Prv": 0,
             "Jun_Imp": 0,
-            "Total_Imp": 15
+            "Total_Imp": 0
         },
         {
             "id_ud": "UD06",
@@ -1249,12 +1249,12 @@
             "Mar_Prv": 0,
             "Mar_Imp": 0,
             "Abr_Prv": 3,
-            "Abr_Imp": 2,
+            "Abr_Imp": 3,
             "May_Prv": 7,
-            "May_Imp": 0,
+            "May_Imp": 4,
             "Jun_Prv": 0,
             "Jun_Imp": 0,
-            "Total_Imp": 2
+            "Total_Imp": 0
         },
         {
             "id_ud": "UD07",
