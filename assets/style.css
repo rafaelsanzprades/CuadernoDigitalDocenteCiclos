@@ -109,20 +109,56 @@ section[data-testid="stSidebar"] [data-testid="baseButton-primary"] {
     transform: scale(1.02);
 }
 
-/* Custom Page Header */
+/* Custom Page Header and Main Container adjustments */
+.block-container {
+    padding-top: 4.5rem !important; /* Fixed: increase so header isn't cut off by top bar */
+}
+
+/* Sidebar top padding reduction */
+[data-testid="stSidebarUserContent"] {
+    padding-top: 2rem !important;
+}
+
 .pestaña-header {
     background: var(--primary-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-align: center;
-    margin-bottom: 40px;
-    padding: 10px;
+    margin-bottom: 25px; /* Reducido para evitar exceso de espacio */
+    margin-top: 0px !important;
+    padding-top: 0px !important;
 }
 
 .pestaña-header h2 {
-    font-size: 2.8rem !important;
-    font-weight: 800 !important;
-    letter-spacing: -0.02em;
+    font-size: 2.0rem !important; /* Doble */
+    font-weight: 700 !important;
+    letter-spacing: -0.01em;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+/* Standardizing native Streamlit headers in the main container */
+div[data-testid="stMainBlockContainer"] h1,
+.stHeadingContainer h1, 
+div[data-testid="stMarkdownContainer"] h1 {
+    font-size: 2.0rem !important; /* Doble */
+    padding-bottom: 0.2rem !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+div[data-testid="stMainBlockContainer"] h2,
+div[data-testid="stMainBlockContainer"] h3,
+div[data-testid="stMainBlockContainer"] h4,
+.stHeadingContainer h2,
+.stHeadingContainer h3,
+.stHeadingContainer h4,
+div[data-testid="stMarkdownContainer"] h2,
+div[data-testid="stMarkdownContainer"] h3,
+div[data-testid="stMarkdownContainer"] h4 {
+    font-size: 1.5rem !important; /* 1.5 veces */
+    padding-bottom: 0.2rem !important;
+    margin-top: 0.5rem !important;
 }
 
 /* Timeline Styles */
@@ -207,6 +243,17 @@ header { background: transparent !important; } /* Hacer cabecera transparente pe
 [data-testid="stSidebar"] button[kind="primary"] {
     text-align: left !important;
     justify-content: flex-start !important;
+    width: 100% !important;
+}
+
+[data-testid="stSidebar"] button[kind="secondary"] div,
+[data-testid="stSidebar"] button[kind="primary"] div,
+[data-testid="stSidebar"] button[kind="secondary"] p,
+[data-testid="stSidebar"] button[kind="primary"] p {
+    text-align: left !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    display: flex !important;
 }
 
 /* Compact Sidebar Layout */
