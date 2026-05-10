@@ -171,7 +171,7 @@ with st.sidebar:
             border: 1px solid #14a085;
             text-align: left;
         ">
-            <div style="font-size:0.68rem; color:#9ee8e0; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; margin-bottom:2px;">
+            <div style="font-size:0.68rem; color:#9ee8e0; font-weight:600; letter-spacing:0.05em; margin-bottom:2px;">
                 💾 Módulo activo
             </div>
             <div style="font-size:0.92rem; color:#ffffff; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="{_modulo_nombre}">

@@ -172,7 +172,7 @@ def render_simulador_notas(al_id):
     with res_col1:
         st.markdown(f"""
             <div style="background: var(--primary-gradient); padding: 40px; border-radius: 20px; text-align: center; color: white; box-shadow: 0 10px 30px rgba(20,160,133,0.3);">
-                <div style="font-size: 0.9rem; opacity: 0.9; text-transform: uppercase; letter-spacing: 2px;">Nota Proyectada</div>
+                <div style="font-size: 0.9rem; opacity: 0.9; letter-spacing: 2px;">Nota Proyectada</div>
                 <div style="font-size: 5rem; font-weight: 800; margin: 10px 0;">{nota_f:.2f}</div>
                 <div style="font-size: 1.6rem; font-weight: 600;">{sigad_txt}</div>
                 <div style="font-size: 1rem; opacity: 0.7;">({sigad_cod})</div>
