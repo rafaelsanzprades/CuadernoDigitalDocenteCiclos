@@ -35,39 +35,28 @@ export default function Sidebar() {
         </div>
       </div>
 
-      <nav className="flex-1 overflow-y-auto mt-4 px-4 space-y-1">
-        <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2 px-2">Menú principal</div>
-        <Link href="/" className={`block px-4 py-3 text-sm rounded-lg transition-colors ${pathname === '/' ? 'bg-white/10 text-white font-semibold border-l-4 border-l-white' : 'text-gray-300 hover:bg-white/5'}`}>
-          Gestión de archivos
-        </Link>
-        <Link href="/modulo" className={`block px-4 py-3 text-sm rounded-lg transition-colors ${pathname === '/modulo' ? 'bg-[#14a085]/20 text-[#14a085] font-semibold border-l-4 border-l-[#14a085]' : 'text-gray-300 hover:bg-white/5'}`}>
-          Módulo didáctico
-        </Link>
-        <Link href="/matrices" className={`block px-4 py-3 text-sm rounded-lg transition-colors ${pathname === '/matrices' ? 'bg-white/10 text-white font-semibold border-l-4 border-l-white' : 'text-gray-300 hover:bg-white/5'}`}>
-          Matrices
-        </Link>
-        <Link href="/seguimiento" className={`block px-4 py-3 text-sm rounded-lg transition-colors ${pathname === '/seguimiento' ? 'bg-white/10 text-white font-semibold border-l-4 border-l-white' : 'text-gray-300 hover:bg-white/5'}`}>
-          Seguimiento diario
-        </Link>
-        <Link href="/evaluacion" className={`block px-4 py-3 text-sm rounded-lg transition-colors ${pathname === '/evaluacion' ? 'bg-white/10 text-white font-semibold border-l-4 border-l-white' : 'text-gray-300 hover:bg-white/5'}`}>
-          Evaluación continua
-        </Link>
-        <Link href="/instrumentos" className={`block px-4 py-3 text-sm rounded-lg transition-colors ${pathname === '/instrumentos' ? 'bg-[#14a085]/20 text-[#14a085] font-semibold border-l-4 border-l-[#14a085]' : 'text-gray-300 hover:bg-white/5'}`}>
-          Instrumentos de evaluación
-        </Link>
-        <Link href="/programacion" className={`block px-4 py-3 text-sm rounded-lg transition-colors ${pathname === '/programacion' ? 'bg-[#14a085]/20 text-[#14a085] font-semibold border-l-4 border-l-[#14a085]' : 'text-gray-300 hover:bg-white/5'}`}>
-          Programación de aula
-        </Link>
-        <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mt-6 mb-2 px-2">Gestión del Curso</div>
-        <Link href="/matricula" className={`block px-4 py-3 text-sm rounded-lg transition-colors ${pathname === '/matricula' ? 'bg-blue-500/20 text-blue-400 font-semibold border-l-4 border-l-blue-400' : 'text-gray-300 hover:bg-white/5'}`}>
-          Matrícula alumnado
-        </Link>
-        <Link href="/calificacion" className={`block px-4 py-3 text-sm rounded-lg transition-colors ${pathname === '/calificacion' ? 'bg-blue-500/20 text-blue-400 font-semibold border-l-4 border-l-blue-400' : 'text-gray-300 hover:bg-white/5'}`}>
-          Calificación académica
-        </Link>
-        <Link href="/calificacion-feoe" className={`block px-4 py-3 text-sm rounded-lg transition-colors ${pathname === '/calificacion-feoe' ? 'bg-blue-500/20 text-blue-400 font-semibold border-l-4 border-l-blue-400' : 'text-gray-300 hover:bg-white/5'}`}>
-          Calificación FEOE
-        </Link>
+      <nav className="flex-1 overflow-y-auto px-4 py-4 space-y-2 custom-scrollbar">
+        {navItems.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group
+              ${pathname === item.href 
+                ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/30 text-white shadow-lg shadow-blue-500/10' 
+                : 'text-gray-400 hover:text-white hover:bg-white/5 border border-transparent'
+              }`}
+          >
+            <span className={`text-xl transition-transform duration-200 ${pathname === item.href ? 'scale-110' : 'group-hover:scale-110'}`}>
+              {item.icon}
+            </span>
+            <span className={`font-medium ${pathname === item.href ? 'text-white font-semibold' : ''}`}>
+              {item.label}
+            </span>
+            {pathname === item.href && (
+              <div className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.8)]" />
+            )}
+          </Link>
+        ))}
       </nav>
 
       <div className="p-6 border-t border-[var(--glass-border)] mt-auto">
