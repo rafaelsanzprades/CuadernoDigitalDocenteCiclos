@@ -130,28 +130,13 @@ export default function MatriculaPage() {
         <Header />
         
         <main className="flex-1 overflow-y-auto p-8 content-area space-y-8">
-          <div className="flex justify-between items-center mb-8">
-            <div>
-              <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3">
-                👥 Gestión de Matrícula
-              </h1>
-              <p className="text-gray-400 mt-2">Gestiona el alumnado matriculado en el curso activo.</p>
-            </div>
-            <div className="flex items-center gap-4">
-              {saveMessage && (
-                <span className={`text-sm ${saveMessage.includes('Error') ? 'text-red-400' : 'text-green-400'}`}>
-                  {saveMessage}
-                </span>
-              )}
-              <button 
-                onClick={handleSave}
-                disabled={saving}
-                className="glass-button text-white px-6 py-2 rounded-lg font-semibold flex items-center gap-2"
-              >
-                {saving ? "Guardando..." : "💾 Guardar Cambios"}
-              </button>
-            </div>
+          <div className="mb-8">
+            <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3">
+              👥 Matrícula alumnado
+            </h1>
+            <p className="text-gray-400 mt-2">Gestiona el alumnado matriculado en el curso activo.</p>
           </div>
+
 
           <section className="glass-card p-6 border-t-4 border-t-blue-500">
             <div className="flex justify-between items-end mb-6">

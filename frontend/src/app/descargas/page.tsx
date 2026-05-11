@@ -90,7 +90,7 @@ export default function DescargasPage() {
         <main className="flex-1 overflow-y-auto p-8 content-area space-y-8">
           <div>
             <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3">
-              📥 Centro de Descargas PDF
+              📥 Descargas PDF
             </h1>
             <p className="text-gray-400 mt-2">Genera y descarga los documentos oficiales de tu cuaderno digital.</p>
           </div>

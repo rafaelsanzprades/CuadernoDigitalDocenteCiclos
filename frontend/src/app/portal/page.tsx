@@ -163,7 +163,7 @@ export default function PortalPage() {
           <div className="flex justify-between items-center bg-black/30 p-4 rounded-xl border border-teal-500/30">
             <div>
               <h1 className="text-3xl font-extrabold text-white flex items-center gap-3">
-                🎓 Portal de Aprendizaje
+                🎓 Portal alumnado
               </h1>
             </div>
             <div className="flex items-center gap-4">

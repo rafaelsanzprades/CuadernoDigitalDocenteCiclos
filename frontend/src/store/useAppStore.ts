@@ -7,6 +7,7 @@ interface AppState {
   setModuleData: (data: any) => void;
   updateInfoModulo: (key: string, value: any) => void;
   updateDataFrame: (key: string, data: any[]) => void;
+  updateModuleData: (key: string, data: any) => void;
   activeCursoId: string;
   setActiveCursoId: (id: string) => void;
   cursoData: any;
@@ -31,6 +32,12 @@ export const useAppStore = create<AppState>((set) => ({
     } : null
   })),
   updateDataFrame: (key, data) => set((state) => ({
+    moduleData: state.moduleData ? {
+      ...state.moduleData,
+      [key]: data
+    } : null
+  })),
+  updateModuleData: (key, data) => set((state) => ({
     moduleData: state.moduleData ? {
       ...state.moduleData,
       [key]: data

@@ -21,7 +21,7 @@ export default function FileManagement() {
 
   const fetchModules = () => {
     setLoading(true);
-    fetch("http://localhost:8000/api/modules")
+    fetch("/api/modules")
       .then(res => res.json())
       .then(json => {
         if (json.status === "success") {
@@ -81,7 +81,7 @@ export default function FileManagement() {
       return;
     }
 
-    fetch(`http://localhost:8000/api/module/${saveName}`, {
+    fetch(`/api/module/${saveName}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(moduleData)
@@ -107,7 +107,7 @@ export default function FileManagement() {
 
   if (loading && modules.pd_modules.length === 0) {
     return (
-      <div className="flex min-h-screen bg-[var(--background)]">
+      <div className="flex h-screen overflow-hidden">
         <Sidebar />
         <main className="flex-1 flex flex-col h-screen items-center justify-center text-white">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#14a085] mb-4"></div>
@@ -118,10 +118,10 @@ export default function FileManagement() {
   }
 
   return (
-    <div className="flex min-h-screen bg-[var(--background)]">
+    <div className="flex h-screen overflow-hidden">
       <Sidebar />
-      <main className="flex-1 flex flex-col h-screen overflow-hidden">
-        <Header title="Gestión de Módulos" />
+      <main className="flex-1 flex flex-col relative z-10">
+        <Header />
         
         {notification && (
           <div className={`absolute top-20 right-8 px-6 py-3 rounded-lg shadow-xl text-white font-medium z-50 transform transition-all duration-300 translate-y-0 opacity-100 ${
@@ -134,19 +134,19 @@ export default function FileManagement() {
         )}
 
         <div className="flex-1 overflow-y-auto p-8 pt-4">
-          <div className="max-w-6xl mx-auto space-y-8 pb-12">
+          <div className="space-y-8 pb-12">
             <div>
-              <h3 className="text-2xl font-bold text-white mb-2">📚 Gestión de Módulos y Archivos</h3>
+              <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3 mb-2">📁 Gestión de archivos</h1>
               <p className="text-gray-400">Carga, guarda y administra los archivos de programación y curso.</p>
             </div>
             
-            <div className="grid grid-cols-2 gap-8">
+            <div className="flex flex-col gap-8">
               
               {/* Tarjeta de PD */}
               <div className="glass-card p-8 border-t-4 border-t-[#14a085] flex flex-col gap-6 transform transition-all duration-300 hover:shadow-2xl hover:shadow-[#14a085]/10">
                 <div>
                   <h4 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                    <span>🗒️</span> Programación Didáctica (PD)
+                    <span>🗒️</span> Programación didáctica
                   </h4>
                   <p className="text-sm text-gray-400">
                     La PD contiene la estructura del módulo: RAs, CEs, UDs e instrumentos.
@@ -206,7 +206,7 @@ export default function FileManagement() {
               <div className="glass-card p-8 border-t-4 border-t-blue-500 flex flex-col gap-6 transform transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10">
                 <div>
                   <h4 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                    <span>📅</span> Datos del Curso
+                    <span>📅</span> Curso y alumnado
                   </h4>
                   <p className="text-sm text-gray-400">
                     El archivo de curso contiene el alumnado, notas, seguimiento diario y faltas.

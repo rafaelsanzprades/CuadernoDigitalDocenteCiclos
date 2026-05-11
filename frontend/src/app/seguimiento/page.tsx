@@ -193,25 +193,12 @@ export default function SeguimientoPage() {
         <Header />
         
         <main className="flex-1 overflow-y-auto p-8 content-area space-y-8">
-          <div className="flex justify-between items-center mb-8">
+          <div className="mb-8">
             <h1 className="text-4xl font-extrabold text-white tracking-tight">
-              📍 Seguimiento Diario <span className="text-blue-400">(Planificación vs Impartidas)</span>
+              📍 Seguimiento diario
             </h1>
-            <div className="flex items-center gap-4">
-              {saveMessage && (
-                <span className={`text-sm ${saveMessage.includes('Error') ? 'text-red-400' : 'text-green-400'}`}>
-                  {saveMessage}
-                </span>
-              )}
-              <button 
-                onClick={handleSave}
-                disabled={saving}
-                className="glass-button text-white px-6 py-2 rounded-lg font-semibold flex items-center gap-2"
-              >
-                {saving ? "Guardando..." : "💾 Guardar Cambios"}
-              </button>
-            </div>
           </div>
+
 
           {/* Metrics */}
           <div className="grid grid-cols-4 gap-6">

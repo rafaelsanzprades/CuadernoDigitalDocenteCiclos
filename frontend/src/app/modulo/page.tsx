@@ -10,7 +10,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/api/module/${activeModuleId}`)
+    fetch(`/api/module/${activeModuleId}`)
       .then((res) => res.json())
       .then((json) => {
         if (json.status === "success") {
@@ -52,15 +52,15 @@ export default function Home() {
   const numTareas = moduleData.df_act?.filter((a: any) => a.Tipo === "Tareas")?.length || 0;
 
   return (
-    <div className="flex min-h-screen bg-[var(--background)]">
+    <div className="flex h-screen overflow-hidden">
       <Sidebar />
-      <main className="flex-1 flex flex-col h-screen overflow-hidden">
-        <Header title="Módulo didáctico" />
+      <div className="flex-1 flex flex-col relative z-10">
+        <Header />
         
         <div className="flex-1 overflow-y-auto p-8 pt-4">
-          <div className="max-w-6xl mx-auto space-y-8 pb-12">
+          <div className="space-y-8 pb-12">
             <div>
-              <h3 className="text-xl font-bold text-white mb-6">📋 Configuración del Módulo</h3>
+              <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3 mb-6">⚙️ Módulo didáctico</h1>
             </div>
             
             {/* Tarjeta de Datos */}
@@ -289,7 +289,7 @@ export default function Home() {
 
           </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

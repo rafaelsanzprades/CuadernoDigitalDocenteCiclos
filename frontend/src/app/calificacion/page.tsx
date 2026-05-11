@@ -218,27 +218,11 @@ export default function CalificacionPage() {
         <Header />
         
         <main className="flex-1 overflow-y-auto p-8 content-area space-y-6">
-          <div className="flex justify-between items-center mb-4">
-            <div>
-              <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3">
-                📊 Evaluación Competencial
-              </h1>
-              <p className="text-gray-400 mt-2">Introduce las notas de las actividades; el sistema calculará la nota final automáticamente.</p>
-            </div>
-            <div className="flex items-center gap-4">
-              {saveMessage && (
-                <span className={`text-sm ${saveMessage.includes('Error') ? 'text-red-400' : 'text-green-400'}`}>
-                  {saveMessage}
-                </span>
-              )}
-              <button 
-                onClick={handleSave}
-                disabled={saving}
-                className="glass-button text-white px-6 py-2 rounded-lg font-semibold flex items-center gap-2"
-              >
-                {saving ? "Guardando..." : "💾 Guardar Cambios"}
-              </button>
-            </div>
+          <div className="mb-6">
+            <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3">
+              📊 Calificación académica
+            </h1>
+            <p className="text-gray-400 mt-2">Introduce las notas de las actividades; el sistema calculará la nota final automáticamente.</p>
           </div>
 
           <div className="space-y-4">

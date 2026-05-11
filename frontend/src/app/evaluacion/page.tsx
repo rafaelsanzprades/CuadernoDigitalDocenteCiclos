@@ -165,9 +165,9 @@ export default function EvaluacionPage() {
         <Header />
         
         <main className="flex-1 overflow-y-auto p-8 content-area space-y-6">
-          <div className="flex justify-between items-center mb-4">
+          <div className="mb-4">
             <h1 className="text-4xl font-extrabold text-white tracking-tight">
-              🎓 Evaluación Continua <span className="text-blue-400">por Alumnado</span>
+              📈 Evaluación continua
             </h1>
           </div>
 

@@ -111,28 +111,13 @@ export default function IntroduccionPage() {
         <Header />
         
         <main className="flex-1 overflow-y-auto p-8 content-area space-y-8">
-          <div className="flex justify-between items-center mb-8">
-            <div>
-              <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3">
-                📝 Introducción y Planes
-              </h1>
-              <p className="text-gray-400 mt-2">Configuración del contexto escolar, planes de inclusión y actividades complementarias.</p>
-            </div>
-            <div className="flex items-center gap-4">
-              {saveMessage && (
-                <span className={`text-sm ${saveMessage.includes('Error') ? 'text-red-400' : 'text-green-400'}`}>
-                  {saveMessage}
-                </span>
-              )}
-              <button 
-                onClick={handleSave}
-                disabled={saving}
-                className="glass-button text-white px-6 py-2 rounded-lg font-semibold flex items-center gap-2"
-              >
-                {saving ? "Guardando..." : "💾 Guardar Cambios"}
-              </button>
-            </div>
+          <div className="mb-8">
+            <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3">
+              📝 Introducción y planes
+            </h1>
+            <p className="text-gray-400 mt-2">Configuración del contexto escolar, planes de inclusión y actividades complementarias.</p>
           </div>
+
 
           <section className="grid grid-cols-2 gap-6">
             <div className="glass-card p-6 border-t-4 border-t-indigo-500">
