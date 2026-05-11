@@ -89,7 +89,7 @@ export default function FileManagement() {
       .then(data => {
         if (data.status === "success") {
           setActiveModuleId(saveName);
-          showNotification('success', `✅ PD guardada como: ${saveName}.json`);
+          showNotification('success', `✅ PD guardada como: ${saveName}`);
           fetchModules();
         } else {
           showNotification('error', `Error al guardar: ${data.detail || 'Desconocido'}`);
@@ -162,7 +162,7 @@ export default function FileManagement() {
                     >
                       {modules.pd_modules.length === 0 && <option value="">No hay archivos PD disponibles</option>}
                       {modules.pd_modules.map((m) => (
-                        <option key={m} value={m} className="bg-[#111827] text-white">{m}.json</option>
+                        <option key={m} value={m} className="bg-[#111827] text-white">{m}</option>
                       ))}
                     </select>
                   </div>
@@ -188,7 +188,7 @@ export default function FileManagement() {
                         placeholder="Nombre del archivo PD"
                         className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#14a085] transition-colors" 
                       />
-                      <span className="absolute right-4 top-3 text-gray-500 font-mono text-sm">-pd.json</span>
+                      <span className="absolute right-4 top-3 text-gray-500 font-mono text-sm">-pd</span>
                     </div>
                   </div>
                   <button 
@@ -222,7 +222,7 @@ export default function FileManagement() {
                     >
                       {modules.curso_modules.length === 0 && <option value="">No hay archivos de Curso disponibles</option>}
                       {modules.curso_modules.map((m) => (
-                        <option key={m} value={m} className="bg-[#111827] text-white">{m}.json</option>
+                        <option key={m} value={m} className="bg-[#111827] text-white">{m}</option>
                       ))}
                     </select>
                   </div>
@@ -248,7 +248,7 @@ export default function FileManagement() {
                         placeholder="Nombre del archivo de Curso"
                         className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors" 
                       />
-                      <span className="absolute right-4 top-3 text-gray-500 font-mono text-sm">.json</span>
+                      <span className="absolute right-4 top-3 text-gray-500 font-mono text-sm"></span>
                     </div>
                   </div>
                   <button 

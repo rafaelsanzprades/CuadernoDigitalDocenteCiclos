@@ -3,6 +3,24 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAppStore } from '@/store/useAppStore';
 
+const navItems = [
+  { href: "/", label: "Gestión de Archivos", icon: "📁" },
+  { href: "/introduccion", label: "Introducción y Planes", icon: "📝" },
+  { href: "/calendario", label: "Calendario Académico", icon: "🗓️" },
+  { href: "/modulo", label: "Módulo Didáctico", icon: "⚙️" },
+  { href: "/matrices", label: "Matrices RA → CE → UD", icon: "🧮" },
+  { href: "/instrumentos", label: "Instrumentos de Evaluación", icon: "🛠️" },
+  { href: "/programacion", label: "Programación de Aula", icon: "📚" },
+  { href: "/seguimiento", label: "Seguimiento Diario", icon: "📍" },
+  { href: "/matricula", label: "Matrícula Alumnado", icon: "👥" },
+  { href: "/calificacion", label: "Calificación Académica", icon: "📊" },
+  { href: "/calificacion-feoe", label: "Calificación FEOE", icon: "🏢" },
+  { href: "/evaluacion", label: "Evaluación Continua", icon: "📈" },
+  { href: "/analisis", label: "Análisis de Grupo", icon: "📉" },
+  { href: "/descargas", label: "Descargas PDF", icon: "📥" },
+  { href: "/portal", label: "Portal Alumnado", icon: "🎓" }
+];
+
 export default function Sidebar() {
   const pathname = usePathname();
   const { activeModuleId, activeCursoId } = useAppStore();

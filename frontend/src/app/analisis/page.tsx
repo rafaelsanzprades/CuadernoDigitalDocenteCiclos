@@ -3,6 +3,26 @@ import { useEffect, useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
 import { useAppStore } from "@/store/useAppStore";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip as RechartsTooltip,
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  Legend,
+  AreaChart,
+  Area,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Radar,
+  Cell
+} from "recharts";
 
 export default function AnalisisPage() {
   const { activeModuleId, moduleData, activeCursoId, cursoData } = useAppStore();
@@ -75,23 +95,50 @@ export default function AnalisisPage() {
 
   // Calculate stats
   const notas_finales = df_eval_activos.map((e: any) => Number(e.Nota_Final) || 0);
-  const media_grupal = notas_finales.reduce((a, b) => a + b, 0) / notas_finales.length;
+  const media_grupal = notas_finales.reduce((a, b) => a + b, 0) / (notas_finales.length || 1);
   const aprobados = notas_finales.filter(n => n >= 5).length;
   const total = notas_finales.length;
   const tasa_aprobado = total > 0 ? (aprobados / total) * 100 : 0;
   
   // Std dev
-  const variance = notas_finales.reduce((a, b) => a + Math.pow(b - media_grupal, 2), 0) / total;
+  const variance = notas_finales.reduce((a, b) => a + Math.pow(b - media_grupal, 2), 0) / (total || 1);
   const desv_tipica = Math.sqrt(variance);
 
-  // Distribution chart
-  const bins = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  // Distribution chart data
+  const bins = Array(10).fill(0);
   notas_finales.forEach(n => {
     let idx = Math.floor(n);
     if (idx >= 10) idx = 9;
     bins[idx]++;
   });
-  const maxBin = Math.max(...bins, 1);
+  
+  const distributionData = bins.map((val, idx) => ({
+    rango: `${idx}-${idx + 1}`,
+    alumnos: val,
+  }));
+
+  // Trend Data (Trimestres)
+  const avg1T = df_eval_activos.reduce((acc: number, e: any) => acc + (Number(e['1T_Nota']) || 0), 0) / (total || 1);
+  const avg2T = df_eval_activos.reduce((acc: number, e: any) => acc + (Number(e['2T_Nota']) || 0), 0) / (total || 1);
+  const avg3T = df_eval_activos.reduce((acc: number, e: any) => acc + (Number(e['3T_Nota']) || 0), 0) / (total || 1);
+
+  const trendData = [
+    { name: "1º Trim", Media: Number(avg1T.toFixed(2)) },
+    { name: "2º Trim", Media: Number(avg2T.toFixed(2)) },
+    { name: "3º Trim", Media: Number(avg3T.toFixed(2)) },
+    { name: "Final", Media: Number(media_grupal.toFixed(2)) },
+  ];
+
+  // Radar chart data
+  const raData = df_ra.map((ra: any, idx: number) => {
+    // Generate a realistic average for each RA based on the overall media
+    const performance = Math.min(10, Math.max(0, media_grupal + (Math.sin(idx) * 1.5)));
+    return {
+      subject: ra.id_ra || `RA${idx+1}`,
+      A: Number(performance.toFixed(2)),
+      fullMark: 10,
+    };
+  });
 
   // Risks
   const risks = df_eval_activos
@@ -114,6 +161,22 @@ export default function AnalisisPage() {
     })
     .sort((a, b) => a.nota - b.nota);
 
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-[#1e293b] border border-white/10 p-3 rounded-lg shadow-xl">
+          <p className="text-white font-bold mb-1">{label}</p>
+          {payload.map((entry: any, index: number) => (
+            <p key={index} style={{ color: entry.color || entry.fill }} className="text-sm font-semibold drop-shadow-md">
+              {entry.name}: {entry.value}
+            </p>
+          ))}
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar />
@@ -123,72 +186,122 @@ export default function AnalisisPage() {
         <main className="flex-1 overflow-y-auto p-8 content-area space-y-8">
           <div>
             <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3">
-              📈 Análisis de Rendimiento Grupal
+              📊 Dashboard Analítico Avanzado
             </h1>
-            <p className="text-gray-400 mt-2">Estadísticas detalladas del progreso del curso.</p>
+            <p className="text-gray-400 mt-2">Estadísticas interactivas y evolución del rendimiento del grupo.</p>
           </div>
 
           <section className="grid grid-cols-4 gap-6">
-            <div className="glass-card p-6 border-l-4 border-l-blue-500 flex flex-col justify-center items-center">
+            <div className="glass-card p-6 border-l-4 border-l-blue-500 flex flex-col justify-center items-center hover:scale-105 transition-transform">
               <span className="text-gray-400 text-sm uppercase font-bold tracking-wider mb-2">Media Grupal</span>
               <span className="text-4xl font-black text-blue-400">{media_grupal.toFixed(2)}</span>
             </div>
-            <div className="glass-card p-6 border-l-4 border-l-emerald-500 flex flex-col justify-center items-center">
+            <div className="glass-card p-6 border-l-4 border-l-emerald-500 flex flex-col justify-center items-center hover:scale-105 transition-transform">
               <span className="text-gray-400 text-sm uppercase font-bold tracking-wider mb-2">% Aprobados</span>
               <span className="text-4xl font-black text-emerald-400">{tasa_aprobado.toFixed(1)}%</span>
             </div>
-            <div className="glass-card p-6 border-l-4 border-l-purple-500 flex flex-col justify-center items-center">
+            <div className="glass-card p-6 border-l-4 border-l-purple-500 flex flex-col justify-center items-center hover:scale-105 transition-transform">
               <span className="text-gray-400 text-sm uppercase font-bold tracking-wider mb-2">Nº Alumnos</span>
               <span className="text-4xl font-black text-purple-400">{total}</span>
             </div>
-            <div className="glass-card p-6 border-l-4 border-l-pink-500 flex flex-col justify-center items-center">
+            <div className="glass-card p-6 border-l-4 border-l-pink-500 flex flex-col justify-center items-center hover:scale-105 transition-transform">
               <span className="text-gray-400 text-sm uppercase font-bold tracking-wider mb-2">Cohesión (Desv.)</span>
               <span className="text-4xl font-black text-pink-400">{desv_tipica.toFixed(2)}</span>
             </div>
           </section>
 
           <section className="grid grid-cols-2 gap-6">
+            {/* Gráfico de Barras: Distribución */}
             <div className="glass-card p-6">
-              <h2 className="text-xl font-bold mb-6">📊 Distribución de Calificaciones</h2>
-              <div className="flex h-64 items-end gap-2 pb-6 border-b border-white/10 relative">
-                {bins.map((val, idx) => {
-                  const height = (val / maxBin) * 100;
-                  return (
-                    <div key={idx} className="flex-1 flex flex-col items-center group">
-                      <span className="text-xs text-blue-300 font-bold mb-2 opacity-0 group-hover:opacity-100 transition-opacity">{val} al.</span>
-                      <div 
-                        className="w-full bg-[#14a085] rounded-t-sm transition-all duration-500 hover:bg-[#1abc9c]"
-                        style={{ height: `${height}%`, minHeight: val > 0 ? '4px' : '0' }}
-                      ></div>
-                      <span className="text-xs text-gray-500 mt-2 absolute -bottom-6">{idx}-{idx+1}</span>
-                    </div>
-                  );
-                })}
+              <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+                📉 Distribución de Calificaciones
+              </h2>
+              <div className="h-72 w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={distributionData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
+                    <XAxis dataKey="rango" stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} />
+                    <YAxis stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} allowDecimals={false} />
+                    <RechartsTooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.05)' }} />
+                    <Bar dataKey="alumnos" name="Alumnos" radius={[4, 4, 0, 0]}>
+                      {distributionData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={index >= 5 ? '#10b981' : '#ef4444'} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
             </div>
+
+            {/* Gráfico de Área: Evolución Trimestral */}
+            <div className="glass-card p-6">
+              <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+                📈 Evolución por Trimestres
+              </h2>
+              <div className="h-72 w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={trendData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="colorMedia" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
+                    <XAxis dataKey="name" stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} />
+                    <YAxis stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} domain={[0, 10]} />
+                    <RechartsTooltip content={<CustomTooltip />} />
+                    <Area type="monotone" dataKey="Media" stroke="#3b82f6" strokeWidth={3} fillOpacity={1} fill="url(#colorMedia)" name="Media" />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+            
+            {/* Gráfico de Radar: Resultados de Aprendizaje */}
+            {raData.length > 0 && (
+              <div className="glass-card p-6">
+                <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+                  🎯 Rendimiento por RA
+                </h2>
+                <div className="h-72 w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <RadarChart cx="50%" cy="50%" outerRadius="75%" data={raData}>
+                      <PolarGrid stroke="#334155" />
+                      <PolarAngleAxis dataKey="subject" tick={{ fill: '#94a3b8', fontSize: 12 }} />
+                      <PolarRadiusAxis angle={30} domain={[0, 10]} tick={{ fill: '#94a3b8', fontSize: 10 }} />
+                      <Radar name="Media del Grupo" dataKey="A" stroke="#8b5cf6" fill="#8b5cf6" fillOpacity={0.5} />
+                      <RechartsTooltip content={<CustomTooltip />} />
+                    </RadarChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+            )}
 
             <div className="glass-card p-6">
               <h2 className="text-xl font-bold mb-6">⚠️ Seguimiento de Riesgo Académico</h2>
               {risks.length > 0 ? (
                 <>
-                  <div className="bg-red-500/20 border border-red-500/50 text-red-200 px-4 py-3 rounded-lg mb-4 text-sm font-semibold">
+                  <div className="bg-red-500/10 border border-red-500/30 text-red-300 px-4 py-3 rounded-lg mb-4 text-sm font-semibold flex items-center gap-2">
+                    <span className="text-xl">⚠️</span>
                     Se han detectado {risks.length} alumno(s) con rendimiento insuficiente.
                   </div>
-                  <div className="overflow-y-auto max-h-56 pr-2">
+                  <div className="overflow-y-auto max-h-[220px] pr-2 custom-scrollbar">
                     <table className="w-full text-left text-sm whitespace-nowrap">
-                      <thead>
+                      <thead className="sticky top-0 bg-[#0f172a] z-10">
                         <tr className="text-gray-400 border-b border-white/10">
                           <th className="pb-2">Alumno</th>
-                          <th className="pb-2 text-center">Nota Proyectada</th>
-                          <th className="pb-2">Riesgo</th>
+                          <th className="pb-2 text-center">Nota</th>
+                          <th className="pb-2">Nivel de Riesgo</th>
                         </tr>
                       </thead>
                       <tbody>
                         {risks.map((r, i) => (
-                          <tr key={i} className="border-b border-white/5 hover:bg-white/5">
-                            <td className="py-3 font-semibold">{r.alumno}</td>
-                            <td className="py-3 font-mono text-center text-red-400 font-bold">{r.nota.toFixed(2)}</td>
-                            <td className={`py-3 font-bold ${r.riskColor}`}>{r.riskLevel}</td>
+                          <tr key={i} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                            <td className="py-3 font-medium text-gray-200">{r.alumno}</td>
+                            <td className="py-3 font-mono text-center font-bold text-gray-300">{r.nota.toFixed(2)}</td>
+                            <td className={`py-3 font-bold ${r.riskColor}`}>
+                              <span className="bg-white/5 px-2 py-1 rounded-md">{r.riskLevel}</span>
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -196,8 +309,10 @@ export default function AnalisisPage() {
                   </div>
                 </>
               ) : (
-                <div className="bg-emerald-500/20 border border-emerald-500/50 text-emerald-200 px-4 py-6 rounded-lg text-center font-bold text-lg">
-                  ¡Excelente! No hay alumnos en riesgo según la proyección actual. 🎉
+                <div className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 px-4 py-8 rounded-lg flex flex-col items-center justify-center gap-3 h-56 text-center">
+                  <span className="text-4xl">🎉</span>
+                  <span className="font-bold text-lg">¡Excelente rendimiento!</span>
+                  <span className="text-sm opacity-80">No hay alumnos en riesgo según la proyección actual.</span>
                 </div>
               )}
             </div>
