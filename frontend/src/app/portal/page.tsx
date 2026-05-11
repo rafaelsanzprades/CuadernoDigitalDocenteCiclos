@@ -159,25 +159,25 @@ export default function PortalPage() {
       <div className="flex-1 flex flex-col relative z-10">
         <Header />
         
-        <main className="flex-1 overflow-y-auto p-8 content-area space-y-8">
-          <div className="flex justify-between items-center bg-black/30 p-4 rounded-xl border border-teal-500/30">
-            <div>
-              <h1 className="text-3xl font-extrabold text-white flex items-center gap-3">
-                🎓 Portal alumnado
-              </h1>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="text-gray-400 text-sm">Viendo como:</span>
+        <main className="flex-1 overflow-y-auto p-8 pt-4 space-y-8">
+          <div>
+            <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3 mb-4">🎓 Portal alumnado</h1>
+            
+            <div className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3 w-fit">
+              <span className="text-gray-400 text-sm font-semibold">Viendo como:</span>
               <select 
                 value={selectedAlId} 
                 onChange={e => {
                   setSelectedAlId(e.target.value);
                   setSimVals({}); // Reset sim on student change
                 }}
-                className="bg-black/50 border border-teal-500/50 rounded-lg p-2 text-white focus:outline-none focus:border-teal-400 font-bold"
+                className="bg-transparent border-none p-0 text-white focus:outline-none font-bold text-lg cursor-pointer hover:text-teal-400 transition-colors pr-8"
+                style={{ appearance: 'auto' }}
               >
                 {activeAlumnos.map((al: any) => (
-                  <option key={al.ID} value={al.ID}>{al.Nombre} {al.Apellidos}</option>
+                  <option key={al.ID} value={al.ID} className="bg-[#0d1726]">
+                    {al.Nombre} {al.Apellidos}
+                  </option>
                 ))}
               </select>
             </div>
