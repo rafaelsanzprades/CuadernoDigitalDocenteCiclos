@@ -55,21 +55,6 @@ export default function Sidebar() {
         </button>
       </div>
 
-      {isSidebarOpen && (
-        <div className="px-4 pb-2">
-          {/* Badges apilados verticalmente */}
-          <div className="flex flex-col gap-1.5 mb-1">
-            <div className="bg-white/5 border border-[#14a085]/30 rounded-lg px-2 py-1.5">
-              <div className="text-[0.6rem] text-[#14a085] font-bold tracking-wide mb-0.5">Programación didáctica</div>
-              <div className="text-xs text-white font-semibold truncate">{activeModuleId || "—"}</div>
-            </div>
-            <div className="bg-white/5 border border-blue-500/30 rounded-lg px-2 py-1.5">
-              <div className="text-[0.6rem] text-blue-400 font-bold tracking-wide mb-0.5">Curso y alumnado</div>
-              <div className="text-xs text-white font-semibold truncate">{activeCursoId || "—"}</div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Nav sin overflow */}
       <nav className={`flex-1 ${isSidebarOpen ? 'px-3' : 'px-2'} py-2 space-y-4 overflow-x-hidden overflow-y-auto scrollbar-hide`}>

@@ -39,7 +39,7 @@ const navGroups = [
 ];
 
 export default function Header({ title }: { title?: string }) {
-  const { activeModuleId, moduleData } = useAppStore();
+  const { activeModuleId, activeCursoId, moduleData } = useAppStore();
   const [isSaving, setIsSaving] = useState(false);
   const [savedStatus, setSavedStatus] = useState<"idle" | "saved" | "error">("idle");
   const pathname = usePathname();
@@ -73,10 +73,27 @@ export default function Header({ title }: { title?: string }) {
     <div className="w-full flex flex-col z-40 relative">
       {/* Menú superior (Dropdowns) */}
       <nav className="w-full bg-[#0b1120]/80 backdrop-blur-md border-b border-[var(--glass-border)] px-6 py-2 flex justify-center items-center gap-4">
-        {navGroups.map(group => (
+        {navGroups.map(group => {
+          let badgeText = "";
+          let badgeColor = "";
+          if (group.title === "Centro") {
+            badgeText = "Global";
+            badgeColor = "text-purple-300 bg-purple-500/10 border-purple-500/30";
+          } else if (group.title === "Módulo") {
+            badgeText = activeModuleId || "—";
+            badgeColor = "text-[#14a085] bg-[#14a085]/10 border-[#14a085]/30";
+          } else if (group.title === "Curso") {
+            badgeText = activeCursoId || "—";
+            badgeColor = "text-blue-300 bg-blue-500/10 border-blue-500/30";
+          }
+
+          return (
           <div key={group.title} className="relative group">
-            <button className="text-[0.8rem] font-bold tracking-wide text-gray-400 hover:text-white px-5 py-2.5 rounded-lg hover:bg-white/5 transition-all flex items-center gap-2">
+            <button className="text-[1rem] font-bold tracking-wide text-gray-400 hover:text-white px-5 py-2.5 rounded-lg hover:bg-white/5 transition-all flex items-center gap-3">
               {group.title}
+              <div className={`px-2 py-0.5 rounded text-[0.65rem] border font-semibold tracking-wider uppercase ${badgeColor}`}>
+                {badgeText}
+              </div>
               <span className="text-[0.55rem] text-gray-500 group-hover:text-white transition-colors">▼</span>
             </button>
 
@@ -97,7 +114,8 @@ export default function Header({ title }: { title?: string }) {
               })}
             </div>
           </div>
-        ))}
+          );
+        })}
       </nav>
 
       <header className="w-full flex items-center justify-between p-8 pb-4 gap-4">
