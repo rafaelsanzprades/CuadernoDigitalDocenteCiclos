@@ -1,8 +1,0 @@
-streamlit
-pandas
-reportlab
-openpyxl
-pytest
-fastapi
-uvicorn
-sqlalchemy
