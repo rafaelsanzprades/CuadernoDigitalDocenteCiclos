@@ -7,14 +7,14 @@ import { useAppStore } from "@/store/useAppStore";
 
 export default function FileManagement() {
   const { activeModuleId, setActiveModuleId, activeCursoId, setActiveCursoId, moduleData } = useAppStore();
-  
+
   const [modules, setModules] = useState<{ centro_modules: string[], pd_modules: string[], curso_modules: string[] }>({ centro_modules: [], pd_modules: [], curso_modules: [] });
   const [loading, setLoading] = useState(true);
 
   const [selectedCentro, setSelectedCentro] = useState("ciclos-fp");
   const [selectedPd, setSelectedPd] = useState("");
   const [selectedCurso, setSelectedCurso] = useState("");
-  
+
   const [newCentroName, setNewCentroName] = useState("ciclos-fp");
   const [newPdName, setNewPdName] = useState(activeModuleId ? activeModuleId.replace("-pd", "") : "nuevo-modulo");
   const [newCursoName, setNewCursoName] = useState(activeCursoId || "nuevo-modulo-curso");
@@ -28,24 +28,24 @@ export default function FileManagement() {
       .then(json => {
         if (json.status === "success") {
           const data = {
-             centro_modules: json.data.centro_modules || ["ciclos-fp"],
-             pd_modules: json.data.pd_modules || [],
-             curso_modules: json.data.curso_modules || []
+            centro_modules: json.data.centro_modules || ["ciclos-fp"],
+            pd_modules: json.data.pd_modules || [],
+            curso_modules: json.data.curso_modules || []
           };
           setModules(data);
-          
+
           if (!selectedCentro && data.centro_modules.length > 0) setSelectedCentro(data.centro_modules[0]);
-          
+
           if (!selectedPd && data.pd_modules.length > 0) {
             setSelectedPd(activeModuleId || data.pd_modules[0]);
           } else if (selectedPd && !data.pd_modules.includes(selectedPd)) {
-             setSelectedPd(data.pd_modules[0] || "");
+            setSelectedPd(data.pd_modules[0] || "");
           }
 
           if (!selectedCurso && data.curso_modules.length > 0) {
             setSelectedCurso(activeCursoId || data.curso_modules[0]);
           } else if (selectedCurso && !data.curso_modules.includes(selectedCurso)) {
-             setSelectedCurso(data.curso_modules[0] || "");
+            setSelectedCurso(data.curso_modules[0] || "");
           }
         }
         setLoading(false);
@@ -89,13 +89,13 @@ export default function FileManagement() {
   };
 
   const handleSaveCentro = () => {
-    showNotification('warning', 'Guardar Centro global no implementado todavía en esta vista.');
+    showNotification('warning', 'Guardar Centro educativo no implementado todavía en esta vista.');
   };
 
   const handleSavePd = () => {
     if (!newPdName) return;
     const saveName = newPdName.endsWith("-pd") ? newPdName : `${newPdName}-pd`;
-    
+
     if (!moduleData) {
       showNotification('error', 'No hay datos de Módulo en memoria para guardar.');
       return;
@@ -122,7 +122,7 @@ export default function FileManagement() {
   };
 
   const handleSaveCurso = () => {
-    showNotification('warning', 'Guardar Curso no implementado todavía en esta vista.');
+    showNotification('warning', 'Guardar Curso y alumnado no implementado todavía en esta vista.');
   };
 
   if (loading && modules.pd_modules.length === 0) {
@@ -142,13 +142,12 @@ export default function FileManagement() {
       <Sidebar />
       <main className="flex-1 flex flex-col relative z-10 min-w-0">
         <Header />
-        
+
         {notification && (
-          <div className={`absolute top-20 right-8 px-6 py-3 rounded-lg shadow-xl text-white font-medium z-50 transform transition-all duration-300 translate-y-0 opacity-100 ${
-            notification.type === 'success' ? 'bg-emerald-500/90 border border-emerald-400' :
+          <div className={`absolute top-20 right-8 px-6 py-3 rounded-lg shadow-xl text-white font-medium z-50 transform transition-all duration-300 translate-y-0 opacity-100 ${notification.type === 'success' ? 'bg-emerald-500/90 border border-emerald-400' :
             notification.type === 'warning' ? 'bg-amber-500/90 border border-amber-400' :
-            'bg-red-500/90 border border-red-400'
-          }`}>
+              'bg-red-500/90 border border-red-400'
+            }`}>
             {notification.message}
           </div>
         )}
@@ -157,27 +156,27 @@ export default function FileManagement() {
           <div className="space-y-8 pb-12">
             <div>
               <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3 mb-2">📁 Gestión de archivos</h1>
-              <p className="text-gray-400">Carga, guarda y administra los archivos de configuración Global, Módulos y Cursos.</p>
+              <p className="text-gray-400">Carga y guarda los datos de Centro educativo; módulo didáctico; y curso y alumnado.</p>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              
-              {/* Tarjeta de Centro */}
+
+              {/* Tarjeta de Centro educativo*/}
               <div className="glass-card p-6 border-t-4 border-t-purple-500 flex flex-col gap-6 transform transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10">
                 <div>
                   <h4 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
                     <span>🏢</span> Centro educativo
                   </h4>
                   <p className="text-sm text-gray-400">
-                    Contiene la información global del centro, profesorado y calendario general.
+                    Información del Centro educativo, presentación, planes, calendario académico y descargar PDF.
                   </p>
                 </div>
 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-300 mb-2">Seleccionar Centro</label>
-                    <select 
-                      value={selectedCentro} 
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">Seleccionar Centro educativo</label>
+                    <select
+                      value={selectedCentro}
                       onChange={(e) => setSelectedCentro(e.target.value)}
                       className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-purple-500 transition-colors appearance-none cursor-pointer"
                     >
@@ -187,12 +186,12 @@ export default function FileManagement() {
                       ))}
                     </select>
                   </div>
-                  <button 
+                  <button
                     onClick={handleLoadCentro}
                     disabled={!selectedCentro}
                     className="w-full bg-gradient-to-r from-purple-600 to-purple-400 hover:from-purple-500 hover:to-purple-300 text-white font-bold py-3 px-4 rounded-lg shadow-lg transform transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center gap-2"
                   >
-                    <span>📂</span> Cargar Centro
+                    <span>📂</span> Cargar Centro educativo
                   </button>
                 </div>
 
@@ -200,23 +199,23 @@ export default function FileManagement() {
 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-300 mb-2">Guardar Centro</label>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">Guardar Centro educativo</label>
                     <div className="relative">
-                      <input 
-                        type="text" 
-                        value={newCentroName} 
+                      <input
+                        type="text"
+                        value={newCentroName}
                         onChange={(e) => setNewCentroName(e.target.value)}
                         placeholder="Nombre del archivo de Centro"
-                        className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-purple-500 transition-colors" 
+                        className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-purple-500 transition-colors"
                       />
                     </div>
                   </div>
-                  <button 
+                  <button
                     onClick={handleSaveCentro}
                     disabled={!newCentroName}
                     className="w-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold py-3 px-4 rounded-lg transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
-                    <span>💾</span> Guardar Centro
+                    <span>💾</span> Guardar Centro educativo
                   </button>
                 </div>
               </div>
@@ -228,15 +227,15 @@ export default function FileManagement() {
                     <span>⚙️</span> Módulo didáctico
                   </h4>
                   <p className="text-sm text-gray-400">
-                    Contiene la estructura del módulo: RAs, CEs, UDs e instrumentos de evaluación.
+                    Programación del módulo didáctico, matrices RA→CE→UD, instrumentos de evaluación, programación de aula y seguimiento diario.
                   </p>
                 </div>
 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-300 mb-2">Seleccionar Módulo</label>
-                    <select 
-                      value={selectedPd} 
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">Seleccionar Módulo didáctico</label>
+                    <select
+                      value={selectedPd}
                       onChange={(e) => setSelectedPd(e.target.value)}
                       className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#14a085] transition-colors appearance-none cursor-pointer"
                     >
@@ -246,12 +245,12 @@ export default function FileManagement() {
                       ))}
                     </select>
                   </div>
-                  <button 
+                  <button
                     onClick={handleLoadPd}
                     disabled={!selectedPd}
                     className="w-full bg-gradient-to-r from-[#14a085] to-[#1abc9c] hover:from-[#1abc9c] hover:to-[#14a085] text-white font-bold py-3 px-4 rounded-lg shadow-lg transform transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center gap-2"
                   >
-                    <span>📂</span> Cargar Módulo
+                    <span>📂</span> Cargar Módulo didáctico
                   </button>
                 </div>
 
@@ -259,24 +258,24 @@ export default function FileManagement() {
 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-300 mb-2">Guardar Módulo</label>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">Guardar Módulo didáctico</label>
                     <div className="relative">
-                      <input 
-                        type="text" 
-                        value={newPdName} 
+                      <input
+                        type="text"
+                        value={newPdName}
                         onChange={(e) => setNewPdName(e.target.value)}
                         placeholder="Nombre del archivo de Módulo"
-                        className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#14a085] transition-colors" 
+                        className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#14a085] transition-colors"
                       />
                       <span className="absolute right-4 top-3 text-gray-500 font-mono text-sm">-pd</span>
                     </div>
                   </div>
-                  <button 
+                  <button
                     onClick={handleSavePd}
                     disabled={!newPdName || !moduleData}
                     className="w-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold py-3 px-4 rounded-lg transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
-                    <span>💾</span> Guardar Módulo
+                    <span>💾</span> Guardar Módulo didáctico
                   </button>
                 </div>
               </div>
@@ -288,15 +287,15 @@ export default function FileManagement() {
                     <span>📅</span> Curso y alumnado
                   </h4>
                   <p className="text-sm text-gray-400">
-                    Contiene la matrícula del alumnado, calificaciones, y faltas de asistencia.
+                    Curso actual: Matrícula alumnado, calificación académica, calificación FEOE, evaluación continua, análisis grupal y portal alumnado.
                   </p>
                 </div>
 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-300 mb-2">Seleccionar Curso</label>
-                    <select 
-                      value={selectedCurso} 
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">Seleccionar Curso y alumnado</label>
+                    <select
+                      value={selectedCurso}
                       onChange={(e) => setSelectedCurso(e.target.value)}
                       className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors appearance-none cursor-pointer"
                     >
@@ -306,12 +305,12 @@ export default function FileManagement() {
                       ))}
                     </select>
                   </div>
-                  <button 
+                  <button
                     onClick={handleLoadCurso}
                     disabled={!selectedCurso}
                     className="w-full bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-500 hover:to-blue-300 text-white font-bold py-3 px-4 rounded-lg shadow-lg transform transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center gap-2"
                   >
-                    <span>📂</span> Cargar Curso
+                    <span>📂</span> Cargar Curso y alumnado
                   </button>
                 </div>
 
@@ -319,23 +318,23 @@ export default function FileManagement() {
 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-300 mb-2">Guardar Curso</label>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">Guardar Curso y alumnado</label>
                     <div className="relative">
-                      <input 
-                        type="text" 
-                        value={newCursoName} 
+                      <input
+                        type="text"
+                        value={newCursoName}
                         onChange={(e) => setNewCursoName(e.target.value)}
                         placeholder="Nombre del archivo de Curso"
-                        className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors" 
+                        className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors"
                       />
                     </div>
                   </div>
-                  <button 
+                  <button
                     onClick={handleSaveCurso}
                     disabled={!newCursoName}
                     className="w-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold py-3 px-4 rounded-lg transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
-                    <span>💾</span> Guardar Curso
+                    <span>💾</span> Guardar Curso y alumnado
                   </button>
                 </div>
               </div>

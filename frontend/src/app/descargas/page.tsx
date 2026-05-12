@@ -9,6 +9,8 @@ export default function DescargasPage() {
   const { activeModuleId, moduleData, activeCursoId, cursoData } = useAppStore();
   const [loading, setLoading] = useState(true);
 
+  const [downloadingStr, setDownloadingStr] = useState<string | null>(null);
+
   useEffect(() => {
     if ((activeModuleId && !moduleData) || (activeCursoId && !cursoData)) {
       setLoading(true);
@@ -18,9 +20,8 @@ export default function DescargasPage() {
   }, [activeModuleId, moduleData, activeCursoId, cursoData]);
 
   const handleDownload = async (type: string, al_id?: string) => {
-    // This calls the FastAPI backend endpoint to generate the PDF
-    // Since the API might take a few seconds, we could show a toast or loading state here
     try {
+      setDownloadingStr(type);
       let url = `/api/pdf?type=${type}&pd_id=${activeModuleId}&curso_id=${activeCursoId}`;
       if (al_id) url += `&al_id=${al_id}`;
       
@@ -43,6 +44,8 @@ export default function DescargasPage() {
     } catch (err) {
       console.error(err);
       alert("Error al generar el PDF. Asegúrate de que el backend está configurado.");
+    } finally {
+      setDownloadingStr(null);
     }
   };
 
@@ -70,7 +73,9 @@ export default function DescargasPage() {
         <div className="flex-1 flex flex-col relative z-10 min-w-0">
           <Header />
           <main className="flex-1 flex items-center justify-center content-area">
-            <div className="text-xl text-red-400 animate-pulse">Preparando descargas...</div>
+            <div className="text-xl text-gray-400 animate-pulse flex items-center gap-3">
+               <span className="text-2xl">⏳</span> Cargando datos del módulo y curso...
+            </div>
           </main>
         </div>
       </div>
@@ -103,8 +108,12 @@ export default function DescargasPage() {
                   <h3 className="text-lg font-bold mb-2">📆 Calendario Académico</h3>
                   <p className="text-sm text-gray-400 mb-6">Vista global del curso con fechas, sesiones y eventos.</p>
                 </div>
-                <button onClick={() => handleDownload('calendario')} className="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg font-bold transition-colors">
-                  Generar PDF Calendario
+                <button 
+                  onClick={() => handleDownload('calendario')} 
+                  disabled={downloadingStr === 'calendario'}
+                  className="w-full bg-red-500 hover:bg-red-600 disabled:bg-red-500/50 text-white py-2 rounded-lg font-bold transition-colors flex justify-center gap-2"
+                >
+                  {downloadingStr === 'calendario' ? '⏳ Generando PDF...' : 'Generar PDF Calendario'}
                 </button>
               </div>
 
@@ -113,8 +122,12 @@ export default function DescargasPage() {
                   <h3 className="text-lg font-bold mb-2">📝 Seguimiento Diario</h3>
                   <p className="text-sm text-gray-400 mb-6">Registro detallado de la planificación del día a día.</p>
                 </div>
-                <button onClick={() => handleDownload('seguimiento')} className="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded-lg font-bold transition-colors">
-                  Generar Seguimiento Diario
+                <button 
+                  onClick={() => handleDownload('seguimiento')} 
+                  disabled={downloadingStr === 'seguimiento'}
+                  className="w-full bg-red-500 hover:bg-red-600 disabled:bg-red-500/50 text-white py-2 rounded-lg font-bold transition-colors flex justify-center gap-2"
+                >
+                  {downloadingStr === 'seguimiento' ? '⏳ Generando PDF...' : 'Generar Seguimiento Diario'}
                 </button>
               </div>
             </div>
@@ -128,8 +141,12 @@ export default function DescargasPage() {
                   <h3 className="text-lg font-bold mb-2">👥 1er Trimestre</h3>
                   <p className="text-xs text-gray-400 mb-6">Boletín grupal 1T.</p>
                 </div>
-                <button onClick={() => handleDownload('grupal_1t')} className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg font-bold transition-colors">
-                  Generar 1T
+                <button 
+                  onClick={() => handleDownload('grupal_1t')} 
+                  disabled={downloadingStr === 'grupal_1t'}
+                  className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-500/50 text-white py-2 rounded-lg font-bold transition-colors flex justify-center gap-2"
+                >
+                  {downloadingStr === 'grupal_1t' ? '⏳' : 'Generar 1T'}
                 </button>
               </div>
 
@@ -138,8 +155,12 @@ export default function DescargasPage() {
                   <h3 className="text-lg font-bold mb-2">👥 2º Trimestre</h3>
                   <p className="text-xs text-gray-400 mb-6">Boletín grupal 2T.</p>
                 </div>
-                <button onClick={() => handleDownload('grupal_2t')} className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg font-bold transition-colors">
-                  Generar 2T
+                <button 
+                  onClick={() => handleDownload('grupal_2t')} 
+                  disabled={downloadingStr === 'grupal_2t'}
+                  className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-500/50 text-white py-2 rounded-lg font-bold transition-colors flex justify-center gap-2"
+                >
+                  {downloadingStr === 'grupal_2t' ? '⏳' : 'Generar 2T'}
                 </button>
               </div>
 
@@ -148,8 +169,12 @@ export default function DescargasPage() {
                   <h3 className="text-lg font-bold mb-2">👥 3er Trimestre</h3>
                   <p className="text-xs text-gray-400 mb-6">Boletín grupal 3T.</p>
                 </div>
-                <button onClick={() => handleDownload('grupal_3t')} className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded-lg font-bold transition-colors">
-                  Generar 3T
+                <button 
+                  onClick={() => handleDownload('grupal_3t')} 
+                  disabled={downloadingStr === 'grupal_3t'}
+                  className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-500/50 text-white py-2 rounded-lg font-bold transition-colors flex justify-center gap-2"
+                >
+                  {downloadingStr === 'grupal_3t' ? '⏳' : 'Generar 3T'}
                 </button>
               </div>
 
@@ -158,8 +183,12 @@ export default function DescargasPage() {
                   <h3 className="text-lg font-bold mb-2">🎓 Eval. Final</h3>
                   <p className="text-xs text-gray-400 mb-6">Boletín grupal final.</p>
                 </div>
-                <button onClick={() => handleDownload('grupal_final')} className="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-2 rounded-lg font-bold transition-colors">
-                  Generar Final
+                <button 
+                  onClick={() => handleDownload('grupal_final')} 
+                  disabled={downloadingStr === 'grupal_final'}
+                  className="w-full bg-yellow-500 hover:bg-yellow-600 disabled:bg-yellow-500/50 text-white py-2 rounded-lg font-bold transition-colors flex justify-center gap-2"
+                >
+                  {downloadingStr === 'grupal_final' ? '⏳' : 'Generar Final'}
                 </button>
               </div>
             </div>
@@ -183,9 +212,10 @@ export default function DescargasPage() {
                     const sel = document.getElementById('alumno_select') as HTMLSelectElement;
                     if (sel && sel.value) handleDownload('individual', sel.value);
                   }} 
-                  className="bg-purple-500 hover:bg-purple-600 text-white px-8 py-3 rounded-lg font-bold transition-colors h-[50px]"
+                  disabled={downloadingStr === 'individual'}
+                  className="bg-purple-500 hover:bg-purple-600 disabled:bg-purple-500/50 text-white px-8 py-3 rounded-lg font-bold transition-colors h-[50px] flex justify-center items-center gap-2"
                 >
-                  Generar Informe Individual
+                  {downloadingStr === 'individual' ? '⏳ Generando Informe...' : 'Generar Informe Individual'}
                 </button>
               </div>
             ) : (
