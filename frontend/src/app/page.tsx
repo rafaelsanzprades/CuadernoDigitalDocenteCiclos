@@ -8,12 +8,14 @@ import { useAppStore } from "@/store/useAppStore";
 export default function FileManagement() {
   const { activeModuleId, setActiveModuleId, activeCursoId, setActiveCursoId, moduleData } = useAppStore();
   
-  const [modules, setModules] = useState<{ pd_modules: string[], curso_modules: string[] }>({ pd_modules: [], curso_modules: [] });
+  const [modules, setModules] = useState<{ centro_modules: string[], pd_modules: string[], curso_modules: string[] }>({ centro_modules: [], pd_modules: [], curso_modules: [] });
   const [loading, setLoading] = useState(true);
 
+  const [selectedCentro, setSelectedCentro] = useState("ciclos-fp");
   const [selectedPd, setSelectedPd] = useState("");
   const [selectedCurso, setSelectedCurso] = useState("");
   
+  const [newCentroName, setNewCentroName] = useState("ciclos-fp");
   const [newPdName, setNewPdName] = useState(activeModuleId ? activeModuleId.replace("-pd", "") : "nuevo-modulo");
   const [newCursoName, setNewCursoName] = useState(activeCursoId || "nuevo-modulo-curso");
 
@@ -25,18 +27,25 @@ export default function FileManagement() {
       .then(res => res.json())
       .then(json => {
         if (json.status === "success") {
-          setModules(json.data);
+          const data = {
+             centro_modules: json.data.centro_modules || ["ciclos-fp"],
+             pd_modules: json.data.pd_modules || [],
+             curso_modules: json.data.curso_modules || []
+          };
+          setModules(data);
           
-          if (!selectedPd && json.data.pd_modules.length > 0) {
-            setSelectedPd(activeModuleId || json.data.pd_modules[0]);
-          } else if (selectedPd && !json.data.pd_modules.includes(selectedPd)) {
-             setSelectedPd(json.data.pd_modules[0] || "");
+          if (!selectedCentro && data.centro_modules.length > 0) setSelectedCentro(data.centro_modules[0]);
+          
+          if (!selectedPd && data.pd_modules.length > 0) {
+            setSelectedPd(activeModuleId || data.pd_modules[0]);
+          } else if (selectedPd && !data.pd_modules.includes(selectedPd)) {
+             setSelectedPd(data.pd_modules[0] || "");
           }
 
-          if (!selectedCurso && json.data.curso_modules.length > 0) {
-            setSelectedCurso(activeCursoId || json.data.curso_modules[0]);
-          } else if (selectedCurso && !json.data.curso_modules.includes(selectedCurso)) {
-             setSelectedCurso(json.data.curso_modules[0] || "");
+          if (!selectedCurso && data.curso_modules.length > 0) {
+            setSelectedCurso(activeCursoId || data.curso_modules[0]);
+          } else if (selectedCurso && !data.curso_modules.includes(selectedCurso)) {
+             setSelectedCurso(data.curso_modules[0] || "");
           }
         }
         setLoading(false);
@@ -56,11 +65,18 @@ export default function FileManagement() {
     setTimeout(() => setNotification(null), 3000);
   };
 
+  const handleLoadCentro = () => {
+    if (selectedCentro) {
+      setNewCentroName(selectedCentro);
+      showNotification('success', `Centro ${selectedCentro} cargado correctamente`);
+    }
+  };
+
   const handleLoadPd = () => {
     if (selectedPd) {
       setActiveModuleId(selectedPd);
       setNewPdName(selectedPd.replace("-pd", ""));
-      showNotification('success', `PD ${selectedPd} cargada correctamente`);
+      showNotification('success', `Módulo ${selectedPd} cargado correctamente`);
     }
   };
 
@@ -72,12 +88,16 @@ export default function FileManagement() {
     }
   };
 
+  const handleSaveCentro = () => {
+    showNotification('warning', 'Guardar Centro global no implementado todavía en esta vista.');
+  };
+
   const handleSavePd = () => {
     if (!newPdName) return;
     const saveName = newPdName.endsWith("-pd") ? newPdName : `${newPdName}-pd`;
     
     if (!moduleData) {
-      showNotification('error', 'No hay datos de PD en memoria para guardar.');
+      showNotification('error', 'No hay datos de Módulo en memoria para guardar.');
       return;
     }
 
@@ -90,7 +110,7 @@ export default function FileManagement() {
       .then(data => {
         if (data.status === "success") {
           setActiveModuleId(saveName);
-          showNotification('success', `✅ PD guardada como: ${saveName}`);
+          showNotification('success', `✅ Módulo guardado como: ${saveName}`);
           fetchModules();
         } else {
           showNotification('error', `Error al guardar: ${data.detail || 'Desconocido'}`);
@@ -102,7 +122,7 @@ export default function FileManagement() {
   };
 
   const handleSaveCurso = () => {
-    showNotification('warning', 'Guardar curso no implementado todavía.');
+    showNotification('warning', 'Guardar Curso no implementado todavía en esta vista.');
   };
 
   if (loading && modules.pd_modules.length === 0) {
@@ -137,31 +157,90 @@ export default function FileManagement() {
           <div className="space-y-8 pb-12">
             <div>
               <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3 mb-2">📁 Gestión de archivos</h1>
-              <p className="text-gray-400">Carga, guarda y administra los archivos de programación y curso.</p>
+              <p className="text-gray-400">Carga, guarda y administra los archivos de configuración Global, Módulos y Cursos.</p>
             </div>
             
-            <div className="grid grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               
-              {/* Tarjeta de PD */}
-              <div className="glass-card p-8 border-t-4 border-t-[#14a085] flex flex-col gap-6 transform transition-all duration-300 hover:shadow-2xl hover:shadow-[#14a085]/10">
+              {/* Tarjeta de Centro */}
+              <div className="glass-card p-6 border-t-4 border-t-purple-500 flex flex-col gap-6 transform transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10">
                 <div>
                   <h4 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                    <span>🗒️</span> Programación didáctica
+                    <span>🏢</span> Configuración Centro
                   </h4>
                   <p className="text-sm text-gray-400">
-                    La PD contiene la estructura del módulo: RAs, CEs, UDs e instrumentos.
+                    Contiene la información global del centro, profesorado y calendario general.
                   </p>
                 </div>
 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-300 mb-2">Seleccionar archivo PD</label>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">Seleccionar Centro</label>
+                    <select 
+                      value={selectedCentro} 
+                      onChange={(e) => setSelectedCentro(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-purple-500 transition-colors appearance-none cursor-pointer"
+                    >
+                      {modules.centro_modules.length === 0 && <option value="">No hay archivos de Centro</option>}
+                      {modules.centro_modules.map((m) => (
+                        <option key={m} value={m} className="bg-[#111827] text-white">{m}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <button 
+                    onClick={handleLoadCentro}
+                    disabled={!selectedCentro}
+                    className="w-full bg-gradient-to-r from-purple-600 to-purple-400 hover:from-purple-500 hover:to-purple-300 text-white font-bold py-3 px-4 rounded-lg shadow-lg transform transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center gap-2"
+                  >
+                    <span>📂</span> Cargar Centro
+                  </button>
+                </div>
+
+                <div className="h-px bg-white/10 w-full my-2"></div>
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">Guardar Centro</label>
+                    <div className="relative">
+                      <input 
+                        type="text" 
+                        value={newCentroName} 
+                        onChange={(e) => setNewCentroName(e.target.value)}
+                        placeholder="Nombre del archivo de Centro"
+                        className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-purple-500 transition-colors" 
+                      />
+                    </div>
+                  </div>
+                  <button 
+                    onClick={handleSaveCentro}
+                    disabled={!newCentroName}
+                    className="w-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold py-3 px-4 rounded-lg transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  >
+                    <span>💾</span> Guardar Centro
+                  </button>
+                </div>
+              </div>
+
+              {/* Tarjeta de Módulo (PD) */}
+              <div className="glass-card p-6 border-t-4 border-t-[#14a085] flex flex-col gap-6 transform transition-all duration-300 hover:shadow-2xl hover:shadow-[#14a085]/10">
+                <div>
+                  <h4 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                    <span>⚙️</span> Módulo Didáctico
+                  </h4>
+                  <p className="text-sm text-gray-400">
+                    Contiene la estructura del módulo: RAs, CEs, UDs e instrumentos de evaluación.
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">Seleccionar Módulo</label>
                     <select 
                       value={selectedPd} 
                       onChange={(e) => setSelectedPd(e.target.value)}
                       className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#14a085] transition-colors appearance-none cursor-pointer"
                     >
-                      {modules.pd_modules.length === 0 && <option value="">No hay archivos PD disponibles</option>}
+                      {modules.pd_modules.length === 0 && <option value="">No hay archivos de Módulo disponibles</option>}
                       {modules.pd_modules.map((m) => (
                         <option key={m} value={m} className="bg-[#111827] text-white">{m}</option>
                       ))}
@@ -170,9 +249,9 @@ export default function FileManagement() {
                   <button 
                     onClick={handleLoadPd}
                     disabled={!selectedPd}
-                    className="w-full bg-gradient-to-r from-[#14a085] to-[#1abc9c] hover:from-[#1abc9c] hover:to-[#14a085] text-white font-bold py-3 px-4 rounded-lg shadow-lg transform transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-gradient-to-r from-[#14a085] to-[#1abc9c] hover:from-[#1abc9c] hover:to-[#14a085] text-white font-bold py-3 px-4 rounded-lg shadow-lg transform transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center gap-2"
                   >
-                    📂 Cargar PD
+                    <span>📂</span> Cargar Módulo
                   </button>
                 </div>
 
@@ -180,13 +259,13 @@ export default function FileManagement() {
 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-300 mb-2">Guardar PD actual</label>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">Guardar Módulo</label>
                     <div className="relative">
                       <input 
                         type="text" 
                         value={newPdName} 
                         onChange={(e) => setNewPdName(e.target.value)}
-                        placeholder="Nombre del archivo PD"
+                        placeholder="Nombre del archivo de Módulo"
                         className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-[#14a085] transition-colors" 
                       />
                       <span className="absolute right-4 top-3 text-gray-500 font-mono text-sm">-pd</span>
@@ -197,25 +276,25 @@ export default function FileManagement() {
                     disabled={!newPdName || !moduleData}
                     className="w-full bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold py-3 px-4 rounded-lg transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
-                    <span>💾</span> Guardar PD
+                    <span>💾</span> Guardar Módulo
                   </button>
                 </div>
               </div>
 
               {/* Tarjeta de Curso */}
-              <div className="glass-card p-8 border-t-4 border-t-blue-500 flex flex-col gap-6 transform transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10">
+              <div className="glass-card p-6 border-t-4 border-t-blue-500 flex flex-col gap-6 transform transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10">
                 <div>
                   <h4 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                    <span>📅</span> Curso y alumnado
+                    <span>📅</span> Curso y Alumnado
                   </h4>
                   <p className="text-sm text-gray-400">
-                    El archivo de curso contiene el alumnado, notas, seguimiento diario y faltas.
+                    Contiene la matrícula del alumnado, calificaciones, y faltas de asistencia.
                   </p>
                 </div>
 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-300 mb-2">Seleccionar archivo de Curso</label>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">Seleccionar Curso</label>
                     <select 
                       value={selectedCurso} 
                       onChange={(e) => setSelectedCurso(e.target.value)}
@@ -230,9 +309,9 @@ export default function FileManagement() {
                   <button 
                     onClick={handleLoadCurso}
                     disabled={!selectedCurso}
-                    className="w-full bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-500 hover:to-blue-300 text-white font-bold py-3 px-4 rounded-lg shadow-lg transform transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-500 hover:to-blue-300 text-white font-bold py-3 px-4 rounded-lg shadow-lg transform transition-all duration-200 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center gap-2"
                   >
-                    📂 Cargar Curso
+                    <span>📂</span> Cargar Curso
                   </button>
                 </div>
 
@@ -240,7 +319,7 @@ export default function FileManagement() {
 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-300 mb-2">Guardar Curso actual</label>
+                    <label className="block text-sm font-semibold text-gray-300 mb-2">Guardar Curso</label>
                     <div className="relative">
                       <input 
                         type="text" 
@@ -249,7 +328,6 @@ export default function FileManagement() {
                         placeholder="Nombre del archivo de Curso"
                         className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors" 
                       />
-                      <span className="absolute right-4 top-3 text-gray-500 font-mono text-sm"></span>
                     </div>
                   </div>
                   <button 
@@ -263,26 +341,6 @@ export default function FileManagement() {
               </div>
 
             </div>
-
-            {/* Validador de Coherencia */}
-            <div className="mt-8">
-              <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                <span>🛡️</span> Validador de Coherencia
-              </h3>
-              
-              <div className="glass-card p-6 flex items-center gap-4 border-l-4 border-l-emerald-500">
-                <div className="bg-emerald-500/20 p-3 rounded-full text-emerald-400">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <div>
-                  <h5 className="text-white font-semibold text-lg">Estado óptimo</h5>
-                  <p className="text-gray-400 text-sm">La programación es coherente con el calendario actual (Función de validación en desarrollo).</p>
-                </div>
-              </div>
-            </div>
-
           </div>
         </div>
       </main>

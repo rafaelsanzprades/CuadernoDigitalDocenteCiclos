@@ -83,10 +83,12 @@ def list_modules(db: Session = Depends(get_db)):
         
         pd_modules = [i for i in ids if i.endswith("-pd") or ("curso" not in i and i != "ciclos-fp")]
         curso_modules = [i for i in ids if "curso" in i]
+        centro_modules = [i for i in ids if i == "ciclos-fp" or i.endswith("-centro")]
         
         return {
             "status": "success",
             "data": {
+                "centro_modules": sorted(list(set(centro_modules))),
                 "pd_modules": sorted(list(set(pd_modules))),
                 "curso_modules": sorted(list(set(curso_modules)))
             }
