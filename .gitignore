@@ -32,3 +32,12 @@ env/
 *.bak
 *.bak.json
 *.tmp
+
+# Base de datos local (usar PostgreSQL en producción)
+*.db
+*.sqlite
+
+# Variables de entorno (no subir credenciales)
+.env
+.env.local
+.env.production

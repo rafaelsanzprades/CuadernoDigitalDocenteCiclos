@@ -96,10 +96,7 @@ def list_modules(db: Session = Depends(get_db)):
 
 @app.get("/api/pdf")
 def generate_pdf(type: str, pd_id: str, curso_id: str, al_id: str = None, db: Session = Depends(get_db)):
-    # Add ROOT dir to sys.path so we can import pdf modules
-    if DATA_DIR not in sys.path:
-        sys.path.insert(0, DATA_DIR)
-        
+
     try:
         # Import PDF modules
         from pdf_calendario_academico import generar_pdf_calendario
@@ -121,7 +118,18 @@ def generate_pdf(type: str, pd_id: str, curso_id: str, al_id: str = None, db: Se
             return pd.DataFrame(d) if isinstance(d, list) else pd.DataFrame()
             
         info_modulo = module_data.get("info_modulo", {})
-        info_fechas = module_data.get("info_fechas", {})
+        from datetime import datetime
+        info_fechas_raw = module_data.get("info_fechas", {})
+        info_fechas = {}
+        for k, v in info_fechas_raw.items():
+            if isinstance(v, str) and v.strip():
+                try:
+                    # Strip time parts if needed, fromisoformat handles standard ISO strings
+                    info_fechas[k] = datetime.fromisoformat(v.replace("Z", "+00:00")[:10]).date()
+                except Exception:
+                    info_fechas[k] = v
+            else:
+                info_fechas[k] = v
         horario = module_data.get("horario", {})
         planning_ledger = module_data.get("planning_ledger", {})
         calendar_notes = module_data.get("calendar_notes", {})
