@@ -7,17 +7,12 @@ import { usePathname } from "next/navigation";
 
 const navGroups = [
   {
-    title: "GENERAL",
-    items: [
-      { href: "/", label: "Gestión de archivos", icon: "📁" },
-      { href: "/descargas", label: "Descargas PDF", icon: "📥" }
-    ]
-  },
-  {
     title: "CENTRO",
     items: [
+      { href: "/", label: "Gestión de archivos", icon: "📁" },
       { href: "/introduccion", label: "Introducción y planes", icon: "📝" },
-      { href: "/calendario", label: "Calendario académico", icon: "🗓️" }
+      { href: "/calendario", label: "Calendario académico", icon: "🗓️" },
+      { href: "/descargas", label: "Descargas PDF", icon: "📥" }
     ]
   },
   {
