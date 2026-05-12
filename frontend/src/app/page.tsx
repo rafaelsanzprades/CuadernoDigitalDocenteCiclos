@@ -166,7 +166,7 @@ export default function FileManagement() {
               <div className="glass-card p-6 border-t-4 border-t-purple-500 flex flex-col gap-6 transform transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/10">
                 <div>
                   <h4 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                    <span>🏢</span> Configuración Centro
+                    <span>🏢</span> Centro educativo
                   </h4>
                   <p className="text-sm text-gray-400">
                     Contiene la información global del centro, profesorado y calendario general.
@@ -225,7 +225,7 @@ export default function FileManagement() {
               <div className="glass-card p-6 border-t-4 border-t-[#14a085] flex flex-col gap-6 transform transition-all duration-300 hover:shadow-2xl hover:shadow-[#14a085]/10">
                 <div>
                   <h4 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                    <span>⚙️</span> Módulo Didáctico
+                    <span>⚙️</span> Módulo didáctico
                   </h4>
                   <p className="text-sm text-gray-400">
                     Contiene la estructura del módulo: RAs, CEs, UDs e instrumentos de evaluación.
@@ -285,7 +285,7 @@ export default function FileManagement() {
               <div className="glass-card p-6 border-t-4 border-t-blue-500 flex flex-col gap-6 transform transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10">
                 <div>
                   <h4 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                    <span>📅</span> Curso y Alumnado
+                    <span>📅</span> Curso y alumnado
                   </h4>
                   <p className="text-sm text-gray-400">
                     Contiene la matrícula del alumnado, calificaciones, y faltas de asistencia.

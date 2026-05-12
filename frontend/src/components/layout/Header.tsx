@@ -77,7 +77,7 @@ export default function Header({ title }: { title?: string }) {
           let badgeText = "";
           let badgeColor = "";
           if (group.title === "Centro educativo" || group.title === "Centro") {
-            badgeText = "Global";
+            badgeText = "ciclos-fp";
             badgeColor = "text-purple-300 bg-purple-500/10 border-purple-500/30";
           } else if (group.title === "Módulo didáctico" || group.title === "Módulo") {
             badgeText = activeModuleId || "—";
