@@ -3,22 +3,37 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAppStore } from '@/store/useAppStore';
 
-const navItems = [
-  { href: "/", label: "Gestión de archivos", icon: "📁" },
-  { href: "/introduccion", label: "Introducción y planes", icon: "📝" },
-  { href: "/calendario", label: "Calendario académico", icon: "🗓️" },
-  { href: "/modulo", label: "Módulo didáctico", icon: "⚙️" },
-  { href: "/matrices", label: "Matrices RA → CE → UD", icon: "🧮" },
-  { href: "/instrumentos", label: "Instrumentos de evaluación", icon: "🛠️" },
-  { href: "/programacion", label: "Programación de aula", icon: "📚" },
-  { href: "/seguimiento", label: "Seguimiento diario", icon: "📍" },
-  { href: "/matricula", label: "Matrícula alumnado", icon: "👥" },
-  { href: "/calificacion", label: "Calificación académica", icon: "📊" },
-  { href: "/calificacion-feoe", label: "Calificación FEOE", icon: "🏢" },
-  { href: "/evaluacion", label: "Evaluación continua", icon: "📈" },
-  { href: "/analisis", label: "Análisis de grupo", icon: "📉" },
-  { href: "/descargas", label: "Descargas PDF", icon: "📥" },
-  { href: "/portal", label: "Portal alumnado", icon: "🎓" }
+const navGroups = [
+  {
+    title: "Centro",
+    items: [
+      { href: "/", label: "Gestión de archivos", icon: "📁" },
+      { href: "/introduccion", label: "Introducción y planes", icon: "📝" },
+      { href: "/calendario", label: "Calendario académico", icon: "🗓️" },
+      { href: "/descargas", label: "Descargas PDF", icon: "📥" }
+    ]
+  },
+  {
+    title: "Módulo",
+    items: [
+      { href: "/modulo", label: "Módulo didáctico", icon: "⚙️" },
+      { href: "/matrices", label: "Matrices RA→CE→UD", icon: "🧮" },
+      { href: "/instrumentos", label: "Instrumentos de evaluación", icon: "🛠️" },
+      { href: "/programacion", label: "Programación de aula", icon: "📚" },
+      { href: "/seguimiento", label: "Seguimiento diario", icon: "📍" }
+    ]
+  },
+  {
+    title: "Curso",
+    items: [
+      { href: "/matricula", label: "Matrícula alumnado", icon: "👥" },
+      { href: "/calificacion", label: "Calificación académica", icon: "📊" },
+      { href: "/calificacion-feoe", label: "Calificación FEOE", icon: "🏢" },
+      { href: "/evaluacion", label: "Evaluación continua", icon: "📈" },
+      { href: "/analisis", label: "Análisis de grupo", icon: "📉" },
+      { href: "/portal", label: "Portal alumnado", icon: "🎓" }
+    ]
+  }
 ];
 
 export default function Sidebar() {
@@ -57,32 +72,44 @@ export default function Sidebar() {
       )}
 
       {/* Nav sin overflow */}
-      <nav className={`flex-1 ${isSidebarOpen ? 'px-3' : 'px-2'} py-2 space-y-0.5 overflow-x-hidden overflow-y-auto scrollbar-hide`}>
-        {navItems.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            title={!isSidebarOpen ? item.label : undefined}
-            className={`flex items-center ${isSidebarOpen ? 'gap-2.5 px-3' : 'justify-center px-0'} py-2 rounded-lg transition-all duration-150 group
-              ${pathname === item.href
-                ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/30 text-white shadow-sm shadow-blue-500/10'
-                : 'text-gray-400 hover:text-white hover:bg-white/5 border border-transparent'
-              }`}
-          >
-            <span className={`text-base leading-none transition-transform duration-150 ${pathname === item.href ? 'scale-110' : 'group-hover:scale-110'}`}>
-              {item.icon}
-            </span>
+      <nav className={`flex-1 ${isSidebarOpen ? 'px-3' : 'px-2'} py-2 space-y-4 overflow-x-hidden overflow-y-auto scrollbar-hide`}>
+        {navGroups.map((group, idx) => (
+          <div key={group.title} className="flex flex-col gap-0.5">
             {isSidebarOpen && (
-              <>
-                <span className={`text-[0.8rem] leading-tight font-medium whitespace-nowrap ${pathname === item.href ? 'text-white font-semibold' : ''}`}>
-                  {item.label}
-                </span>
-                {pathname === item.href && (
-                  <div className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_6px_rgba(96,165,250,0.8)] flex-shrink-0" />
-                )}
-              </>
+              <div className="text-[0.65rem] font-bold text-gray-500 uppercase tracking-widest px-3 mb-1 mt-1">
+                {group.title}
+              </div>
             )}
-          </Link>
+            {!isSidebarOpen && idx > 0 && (
+              <div className="w-8 h-px bg-white/10 mx-auto my-2" />
+            )}
+            {group.items.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                title={!isSidebarOpen ? item.label : undefined}
+                className={`flex items-center ${isSidebarOpen ? 'gap-2.5 px-3' : 'justify-center px-0'} py-2 rounded-lg transition-all duration-150 group
+                  ${pathname === item.href
+                    ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/30 text-white shadow-sm shadow-blue-500/10'
+                    : 'text-gray-400 hover:text-white hover:bg-white/5 border border-transparent'
+                  }`}
+              >
+                <span className={`text-base leading-none transition-transform duration-150 ${pathname === item.href ? 'scale-110' : 'group-hover:scale-110'}`}>
+                  {item.icon}
+                </span>
+                {isSidebarOpen && (
+                  <>
+                    <span className={`text-[0.8rem] leading-tight font-medium whitespace-nowrap ${pathname === item.href ? 'text-white font-semibold' : ''}`}>
+                      {item.label}
+                    </span>
+                    {pathname === item.href && (
+                      <div className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_6px_rgba(96,165,250,0.8)] flex-shrink-0" />
+                    )}
+                  </>
+                )}
+              </Link>
+            ))}
+          </div>
         ))}
       </nav>
 

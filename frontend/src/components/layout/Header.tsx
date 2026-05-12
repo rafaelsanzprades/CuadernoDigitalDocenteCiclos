@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 
 const navGroups = [
   {
-    title: "CENTRO",
+    title: "Centro",
     items: [
       { href: "/", label: "Gestión de archivos", icon: "📁" },
       { href: "/introduccion", label: "Introducción y planes", icon: "📝" },
@@ -16,24 +16,19 @@ const navGroups = [
     ]
   },
   {
-    title: "APRENDIZAJE",
+    title: "Módulo",
     items: [
       { href: "/modulo", label: "Módulo didáctico", icon: "⚙️" },
-      { href: "/matrices", label: "Matrices RA → CE → UD", icon: "🧮" },
-      { href: "/matricula", label: "Matrícula alumnado", icon: "👥" },
-      { href: "/instrumentos", label: "Instrumentos de evaluación", icon: "🛠️" }
-    ]
-  },
-  {
-    title: "CLASES",
-    items: [
+      { href: "/matrices", label: "Matrices RA→CE→UD", icon: "🧮" },
+      { href: "/instrumentos", label: "Instrumentos de evaluación", icon: "🛠️" },
       { href: "/programacion", label: "Programación de aula", icon: "📚" },
       { href: "/seguimiento", label: "Seguimiento diario", icon: "📍" }
     ]
   },
   {
-    title: "EVALUACIÓN",
+    title: "Curso",
     items: [
+      { href: "/matricula", label: "Matrícula alumnado", icon: "👥" },
       { href: "/calificacion", label: "Calificación académica", icon: "📊" },
       { href: "/calificacion-feoe", label: "Calificación FEOE", icon: "🏢" },
       { href: "/evaluacion", label: "Evaluación continua", icon: "📈" },
@@ -84,15 +79,15 @@ export default function Header({ title }: { title?: string }) {
               {group.title}
               <span className="text-[0.55rem] text-gray-500 group-hover:text-white transition-colors">▼</span>
             </button>
-            
+
             {/* Dropdown menu */}
             <div className="absolute top-full left-1/2 -translate-x-1/2 mt-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible w-64 bg-[#0b1120] border border-[var(--glass-border)] rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.6)] py-2 z-50 transition-all duration-200 transform translate-y-1 group-hover:translate-y-0 before:absolute before:top-[-10px] before:left-0 before:w-full before:h-[10px] before:content-['']">
               {group.items.map(item => {
                 const isActive = pathname === item.href;
                 return (
-                  <Link 
-                    key={item.href} 
-                    href={item.href} 
+                  <Link
+                    key={item.href}
+                    href={item.href}
                     className={`flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors ${isActive ? 'bg-gradient-to-r from-blue-500/10 to-transparent border-l-2 border-blue-400' : 'border-l-2 border-transparent'}`}
                   >
                     <span className="text-xl">{item.icon}</span>
@@ -107,7 +102,7 @@ export default function Header({ title }: { title?: string }) {
 
       <header className="w-full flex items-center justify-between p-8 pb-4 gap-4">
         <div className="hidden lg:block flex-1"></div>
-        
+
         {title && (
           <div className="flex-shrink-0 flex justify-center">
             <div className="border-2 border-[#14a085] rounded-xl px-8 py-3 shadow-[0_4px_15px_rgba(20,160,133,0.1)] bg-[#0b1120]/50 backdrop-blur-sm">
@@ -120,11 +115,11 @@ export default function Header({ title }: { title?: string }) {
 
         <div className="flex-1 flex justify-end items-center gap-3">
           {savedStatus === "error" && <span className="text-red-400 text-sm font-bold">❌ Error</span>}
-          <button 
+          <button
             onClick={handleSave}
             disabled={isSaving}
             className={`glass-button ${savedStatus === "saved" ? "bg-green-500/20 text-green-400 border-green-500/30" : "bg-[#14a085]/10 text-[#14a085] border-[#14a085]/30 hover:bg-[#14a085]/20"} font-semibold py-2.5 px-6 rounded-lg flex items-center gap-2 transition-all`}>
-            <span>{isSaving ? "⏳" : (savedStatus === "saved" ? "✅" : "💾")}</span> 
+            <span>{isSaving ? "⏳" : (savedStatus === "saved" ? "✅" : "💾")}</span>
             {isSaving ? "Guardando..." : (savedStatus === "saved" ? "¡Guardado!" : "Guardar")}
           </button>
           <button className="glass-button text-gray-300 font-semibold py-2.5 px-6 rounded-lg flex items-center gap-2">
