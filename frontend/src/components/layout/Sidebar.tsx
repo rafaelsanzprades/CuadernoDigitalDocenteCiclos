@@ -76,7 +76,7 @@ export default function Sidebar() {
         {navGroups.map((group, idx) => (
           <div key={group.title} className="flex flex-col gap-0.5">
             {isSidebarOpen && (
-              <div className="text-[0.65rem] font-bold text-gray-500 uppercase tracking-widest px-3 mb-1 mt-1">
+              <div className="text-xs font-bold text-gray-400 tracking-wide px-3 mb-1 mt-1">
                 {group.title}
               </div>
             )}

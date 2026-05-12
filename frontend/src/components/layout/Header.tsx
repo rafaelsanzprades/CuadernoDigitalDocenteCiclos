@@ -75,7 +75,7 @@ export default function Header({ title }: { title?: string }) {
       <nav className="w-full bg-[#0b1120]/80 backdrop-blur-md border-b border-[var(--glass-border)] px-6 py-2 flex justify-center items-center gap-4">
         {navGroups.map(group => (
           <div key={group.title} className="relative group">
-            <button className="text-[0.7rem] font-bold tracking-widest text-gray-400 hover:text-white px-5 py-2.5 rounded-lg hover:bg-white/5 transition-all flex items-center gap-2 uppercase">
+            <button className="text-[0.8rem] font-bold tracking-wide text-gray-400 hover:text-white px-5 py-2.5 rounded-lg hover:bg-white/5 transition-all flex items-center gap-2">
               {group.title}
               <span className="text-[0.55rem] text-gray-500 group-hover:text-white transition-colors">▼</span>
             </button>
