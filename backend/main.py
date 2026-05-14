@@ -9,6 +9,7 @@ if _backend_dir not in sys.path:
     sys.path.insert(0, _backend_dir)
 
 from fastapi import FastAPI, HTTPException, Request, Response, Depends
+from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 import json
@@ -16,7 +17,7 @@ import shutil
 import pandas as pd
 
 from database import SessionLocal, engine, Base, get_db
-from models import ModuleDocument
+from models import ModuleDocument, Center, User, CenterStaff, HeadOfStudies, DepartmentHead, DualCoordinator, DualGeneralTutor, GroupTutor, ProfessionalFamily, Degree
 
 Base.metadata.create_all(bind=engine)
 
@@ -72,6 +73,124 @@ async def update_module(module_id: str, request: Request, db: Session = Depends(
         db.rollback()
         raise HTTPException(status_code=500, detail=str(e))
 
+class UserCreate(BaseModel):
+    name: str
+    surname: str
+    email: str
+    centers: list[int]
+    roles: list[str]
+
+@app.get("/api/users")
+def list_users(db: Session = Depends(get_db)):
+    try:
+        users = db.query(User).all()
+        result = []
+        for u in users:
+            c_staff = db.query(CenterStaff).filter(CenterStaff.user_id == u.id).all()
+            centers = []
+            roles = []
+            
+            for cs in c_staff:
+                center_db = db.query(Center).filter(Center.id == cs.center_id).first()
+                if center_db:
+                    centers.append(center_db.name)
+                    if cs.is_center_admin:
+                        roles.append({
+                            "type": "COFOTAP", 
+                            "context": center_db.name, 
+                            "colorClass": "bg-blue-500/20 text-blue-400 border-blue-500/30"
+                        })
+            
+            # Check other roles
+            if db.query(HeadOfStudies).filter_by(user_id=u.id).first():
+                roles.append({"type": "Jefe/a de Estudios", "context": "Centro", "colorClass": "bg-emerald-500/20 text-emerald-400 border-emerald-500/30"})
+            if db.query(DepartmentHead).filter_by(user_id=u.id).first():
+                roles.append({"type": "Jefe/a de Dpto. Didáctico", "context": "Familia", "colorClass": "bg-emerald-500/20 text-emerald-400 border-emerald-500/30"})
+            if db.query(DualCoordinator).filter_by(user_id=u.id).first():
+                roles.append({"type": "Tutor/a Dual Coordinador", "context": "Centro", "colorClass": "bg-amber-500/20 text-amber-400 border-amber-500/30"})
+            if db.query(DualGeneralTutor).filter_by(user_id=u.id).first():
+                roles.append({"type": "Tutor/a Dual General", "context": "Prospector", "colorClass": "bg-yellow-500/20 text-yellow-400 border-yellow-500/30"})
+            
+            tutor = db.query(GroupTutor).filter_by(user_id=u.id).first()
+            if tutor:
+                if tutor.is_dual_tutor:
+                    roles.append({"type": "Tutor/a Dual", "context": "Seguimiento", "colorClass": "bg-orange-500/20 text-orange-400 border-orange-500/30"})
+                else:
+                    roles.append({"type": "Tutor/a de Curso/Grupo", "context": "Grupo", "colorClass": "bg-pink-500/20 text-pink-400 border-pink-500/30"})
+
+            if getattr(u, 'is_superadmin', False):
+                roles.append({"type": "Superadmin", "context": "Global", "colorClass": "bg-purple-500/20 text-purple-400 border-purple-500/30"})
+            
+            if not roles or any(r == "Profesorado" for r in u.roles if hasattr(u, "roles")):
+                roles.append({"type": "Profesorado", "context": "General", "colorClass": "bg-indigo-500/20 text-indigo-400 border-indigo-500/30"})
+
+            result.append({
+                "id": u.id,
+                "name": f"{u.name} {u.surname}",
+                "email": u.email,
+                "centers": centers,
+                "status": "active",
+                "roles": roles
+            })
+        return {"status": "success", "data": result}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/users")
+def create_user(user: UserCreate, db: Session = Depends(get_db)):
+    try:
+        new_user = User(name=user.name, surname=user.surname, email=user.email)
+        if "Superadmin" in user.roles:
+            new_user.is_superadmin = True
+        
+        db.add(new_user)
+        db.commit()
+        db.refresh(new_user)
+
+        for center_id in user.centers:
+            is_cofotap = "COFOTAP" in user.roles
+            staff = CenterStaff(user_id=new_user.id, center_id=center_id, is_center_admin=is_cofotap)
+            db.add(staff)
+            
+            # Map other roles
+            if "Jefe Estudios" in user.roles:
+                db.add(HeadOfStudies(user_id=new_user.id, center_id=center_id))
+            if "Jefe Departamento" in user.roles:
+                db.add(DepartmentHead(user_id=new_user.id, center_id=center_id))
+            if "Tutor Dual Coordinador" in user.roles:
+                db.add(DualCoordinator(user_id=new_user.id, center_id=center_id))
+            if "Tutor Dual General" in user.roles:
+                db.add(DualGeneralTutor(user_id=new_user.id, center_id=center_id))
+            if "Tutor Grupo" in user.roles:
+                db.add(GroupTutor(user_id=new_user.id, is_dual_tutor=False))
+            if "Tutor Dual Seguimiento" in user.roles:
+                db.add(GroupTutor(user_id=new_user.id, is_dual_tutor=True))
+
+        db.commit()
+        return {"status": "success", "message": "User created successfully", "id": new_user.id}
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/families")
+def list_families(db: Session = Depends(get_db)):
+    try:
+        families = db.query(ProfessionalFamily).all()
+        result = []
+        for f in families:
+            degrees = db.query(Degree).filter(Degree.family_id == f.id).all()
+            result.append({
+                "id": f.id,
+                "code": f.code,
+                "name": f.name,
+                "icon_url": f.icon_url,
+                "color_hex": f.color_hex,
+                "degrees": [{"id": d.id, "name": d.name, "level": d.level.value if hasattr(d.level, 'value') else d.level} for d in degrees]
+            })
+        return {"status": "success", "data": result}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @app.get("/api/modules")
 def list_modules(db: Session = Depends(get_db)):
     """
@@ -92,6 +211,20 @@ def list_modules(db: Session = Depends(get_db)):
                 "pd_modules": sorted(list(set(pd_modules))),
                 "curso_modules": sorted(list(set(curso_modules)))
             }
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/centers")
+def list_centers(db: Session = Depends(get_db)):
+    """
+    Lists all real Aragon centers from the relational DB.
+    """
+    try:
+        centers = db.query(Center).order_by(Center.name).all()
+        return {
+            "status": "success",
+            "data": [{"id": c.id, "name": c.name, "titularity": c.titularity.value if hasattr(c.titularity, 'value') else c.titularity, "code": c.code} for c in centers]
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

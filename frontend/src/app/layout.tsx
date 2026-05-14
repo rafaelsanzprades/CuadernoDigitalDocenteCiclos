@@ -20,6 +20,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={`${outfit.variable} font-sans`}>
+      <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+      </head>
       <body suppressHydrationWarning className="antialiased bg-[var(--background)] text-[var(--foreground)] min-h-screen flex flex-col">
         {children}
       </body>

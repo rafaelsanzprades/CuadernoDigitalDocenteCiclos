@@ -33,6 +33,15 @@ const navGroups = [
       { href: "/analisis", label: "Análisis grupal", icon: "📉" },
       { href: "/portal", label: "Portal alumnado", icon: "🎓" }
     ]
+  },
+  {
+    title: "Gestión de usuarios",
+    items: [
+      { href: "/perfiles", label: "Roles y permisos", icon: "🛡️" },
+      { href: "/usuarios", label: "Gestión de usuarios", icon: "👥" },
+      { href: "/asignaciones", label: "Asignación de módulos", icon: "📋" },
+      { href: "/familias", label: "Familias profesionales", icon: "🗂️" }
+    ]
   }
 ];
 
