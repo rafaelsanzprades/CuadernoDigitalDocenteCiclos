@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
+import { useSearchParams } from "next/navigation";
 import { Search, Save, Filter, BookOpen, Clock, Users, ShieldAlert, CheckCircle2, Plus, X } from "lucide-react";
 
 type Teacher = {
@@ -28,6 +29,18 @@ type CourseGroup = {
 };
 
 export default function AsignacionesPage() {
+  return (
+    <React.Suspense fallback={<div className="min-h-screen bg-[#0b1120] flex items-center justify-center"><div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin"></div></div>}>
+      <AsignacionesContent />
+    </React.Suspense>
+  );
+}
+
+function AsignacionesContent() {
+  const searchParams = useSearchParams();
+  const initialFamilyId = searchParams.get("familyId");
+  const initialDegreeId = searchParams.get("degreeId");
+
   const [searchTerm, setSearchTerm] = useState("");
   const [hasChanges, setHasChanges] = useState(false);
   const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved">("idle");
@@ -43,14 +56,11 @@ export default function AsignacionesPage() {
   const [viewDegreeId, setViewDegreeId] = useState("");
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const searchParams = new URLSearchParams(window.location.search);
-      const initialFamilyId = searchParams.get("familyId");
-      const initialDegreeId = searchParams.get("degreeId");
-      if (initialFamilyId) setViewFamilyId(initialFamilyId);
-      if (initialDegreeId) setViewDegreeId(initialDegreeId);
-    }
+    if (initialFamilyId) setViewFamilyId(initialFamilyId);
+    if (initialDegreeId) setViewDegreeId(initialDegreeId);
+  }, [initialFamilyId, initialDegreeId]);
 
+  useEffect(() => {
     fetch("/api/users")
       .then(res => res.json())
       .then(json => {
@@ -77,7 +87,7 @@ export default function AsignacionesPage() {
     {
       id: 1,
       name: "1º Instalaciones de Telecomunicaciones",
-      degreeName: "Instalaciones de Telecomunicaciones",
+      degreeName: "Técnico en Instalaciones de Telecomunicaciones",
       level: "Grado Medio",
       modules: [
         { id: 101, code: "0237", name: "Infra. comunes de teleco en viviendas y edificios", hours: 167, isDual: false, assignedTeacherId: 2 },
@@ -94,7 +104,7 @@ export default function AsignacionesPage() {
     {
       id: 2,
       name: "2º Instalaciones de Telecomunicaciones",
-      degreeName: "Instalaciones de Telecomunicaciones",
+      degreeName: "Técnico en Instalaciones de Telecomunicaciones",
       level: "Grado Medio",
       modules: [
         { id: 201, code: "0238", name: "Instalaciones domóticas", hours: 133, isDual: true, assignedTeacherId: 2 },
@@ -111,7 +121,7 @@ export default function AsignacionesPage() {
     {
       id: 3,
       name: "1º Sistemas de Telecomunicaciones e Informáticos",
-      degreeName: "Sistemas de Telecomunicaciones e Informáticos",
+      degreeName: "Técnico Superior en Sistemas de Telecomunicaciones e Informáticos",
       level: "Grado Superior",
       modules: [
         { id: 301, code: "0525", name: "Configuración de infraestructuras de sistemas de tele", hours: 133, isDual: false, assignedTeacherId: 9 },
@@ -128,7 +138,7 @@ export default function AsignacionesPage() {
     {
       id: 4,
       name: "2º Sistemas de Telecomunicaciones e Informáticos",
-      degreeName: "Sistemas de Telecomunicaciones e Informáticos",
+      degreeName: "Técnico Superior en Sistemas de Telecomunicaciones e Informáticos",
       level: "Grado Superior",
       modules: [
         { id: 401, code: "0553", name: "Técnicas y procesos en infraestructuras de teleco", hours: 133, isDual: true, assignedTeacherId: 4 },
