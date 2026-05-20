@@ -18,6 +18,7 @@ type Module = {
   hours: number;
   isDual: boolean;
   assignedTeacherId: number | null;
+  ras?: { raNumber: number; description: string }[];
 };
 
 type CourseGroup = {
@@ -80,6 +81,21 @@ function AsignacionesContent() {
           setFamilies(json.data);
         }
       });
+
+    fetch("/api/learning_outcomes")
+      .then(res => res.json())
+      .then(json => {
+        if(json.status === "success") {
+          const rasMap = json.data;
+          setGroups(prevGroups => prevGroups.map(g => ({
+            ...g,
+            modules: g.modules.map(m => ({
+              ...m,
+              ras: rasMap[m.code] || m.ras || []
+            }))
+          })));
+        }
+      });
   }, []);
 
   // Grupos y Módulos mockeados
@@ -90,8 +106,15 @@ function AsignacionesContent() {
       degreeName: "Técnico en Instalaciones de Telecomunicaciones",
       level: "Grado Medio",
       modules: [
-        { id: 101, code: "0237", name: "Infra. comunes de teleco en viviendas y edificios", hours: 167, isDual: false, assignedTeacherId: 2 },
-        { id: 102, code: "0359", name: "Electrónica aplicada", hours: 167, isDual: false, assignedTeacherId: 3 },
+        { id: 101, code: "0237", name: "Infra. comunes de teleco en viviendas y edificios", hours: 167, isDual: false, assignedTeacherId: 2, ras: [
+          { raNumber: 1, description: "Identifica los elementos de las infraestructuras..." },
+          { raNumber: 2, description: "Configura pequeñas instalaciones de infraestructuras..." },
+          { raNumber: 3, description: "Monta instalaciones de infraestructuras comunes..." }
+        ]},
+        { id: 102, code: "0359", name: "Electrónica aplicada", hours: 167, isDual: false, assignedTeacherId: 3, ras: [
+          { raNumber: 1, description: "Reconoce los principios básicos de la electrónica..." },
+          { raNumber: 2, description: "Monta circuitos electrónicos básicos..." }
+        ]},
         { id: 103, code: "0360", name: "Equipos microinformáticos", hours: 100, isDual: false, assignedTeacherId: 4 },
         { id: 104, code: "0361", name: "Infra. de redes de datos y sistemas de telefonía", hours: 133, isDual: true, assignedTeacherId: 5 },
         { id: 105, code: "0362", name: "Instalaciones eléctricas básicas", hours: 200, isDual: true, assignedTeacherId: 6 },
@@ -147,6 +170,68 @@ function AsignacionesContent() {
         { id: 404, code: "0557", name: "Sistemas integrados y hogar digital", hours: 167, isDual: true, assignedTeacherId: 9 },
         { id: 405, code: "1708", name: "Sostenibilidad aplicada al sistema productivo", hours: 33, isDual: false, assignedTeacherId: 3 },
         { id: 406, code: "1713", name: "Proyecto intermodular", hours: 67, isDual: false, assignedTeacherId: 2 }
+      ]
+    },
+    {
+      id: 5,
+      name: "1º Gestión Administrativa",
+      degreeName: "ADG201 - Técnico en Gestión Administrativa",
+      level: "Grado Medio",
+      modules: [
+        { id: 501, code: "0437", name: "Comunicación empresarial y atención al cliente", hours: 160, isDual: false, assignedTeacherId: null },
+        { id: 502, code: "0438", name: "Operaciones administrativas de compra-venta", hours: 160, isDual: false, assignedTeacherId: null },
+        { id: 503, code: "0439", name: "Empresa y administración", hours: 96, isDual: false, assignedTeacherId: null },
+        { id: 504, code: "0440", name: "Tratamiento informático de la información", hours: 224, isDual: false, assignedTeacherId: null },
+        { id: 505, code: "0441", name: "Técnica contable", hours: 96, isDual: false, assignedTeacherId: null },
+        { id: 506, code: "0156", name: "Inglés Profesional (GM)", hours: 64, isDual: false, assignedTeacherId: null },
+        { id: 507, code: "1664", name: "Digitalización aplicada a los sectores productivos (GM)", hours: 32, isDual: false, assignedTeacherId: null },
+        { id: 508, code: "1709", name: "Itinerario personal para la empleabilidad I", hours: 96, isDual: false, assignedTeacherId: null }
+      ]
+    },
+    {
+      id: 6,
+      name: "2º Gestión Administrativa",
+      degreeName: "ADG201 - Técnico en Gestión Administrativa",
+      level: "Grado Medio",
+      modules: [
+        { id: 601, code: "0446", name: "Empresa en el aula", hours: 147, isDual: true, assignedTeacherId: null },
+        { id: 602, code: "0448", name: "Operaciones auxiliares de gestión de tesorería", hours: 147, isDual: true, assignedTeacherId: null },
+        { id: 603, code: "0442", name: "Operaciones administrativas de recursos humanos", hours: 105, isDual: true, assignedTeacherId: null },
+        { id: 604, code: "0443", name: "Tratamiento de la documentación contable", hours: 105, isDual: true, assignedTeacherId: null },
+        { id: 605, code: "1710", name: "Itinerario personal para la empleabilidad II", hours: 96, isDual: false, assignedTeacherId: null },
+        { id: 606, code: "1708", name: "Sostenibilidad aplicada al sistema productivo", hours: 32, isDual: false, assignedTeacherId: null }
+      ]
+    },
+    {
+      id: 7,
+      name: "1º Administración y Finanzas",
+      degreeName: "ADG301 - Técnico Superior en Administración y Finanzas",
+      level: "Grado Superior",
+      modules: [
+        { id: 701, code: "0647", name: "Gestión de la documentación jurídica y empresarial", hours: 96, isDual: false, assignedTeacherId: null },
+        { id: 702, code: "0648", name: "Recursos humanos y responsabilidad social corporativa", hours: 64, isDual: false, assignedTeacherId: null },
+        { id: 703, code: "0649", name: "Ofimática y proceso de la información", hours: 192, isDual: false, assignedTeacherId: null },
+        { id: 704, code: "0650", name: "Proceso integral de la actividad comercial", hours: 192, isDual: false, assignedTeacherId: null },
+        { id: 705, code: "0651", name: "Comunicación y atención al cliente", hours: 160, isDual: false, assignedTeacherId: null },
+        { id: 706, code: "0179", name: "Inglés Profesional (GS)", hours: 64, isDual: false, assignedTeacherId: null },
+        { id: 707, code: "1665", name: "Digitalización aplicada a los sectores productivos (GS)", hours: 32, isDual: false, assignedTeacherId: null },
+        { id: 708, code: "1709", name: "Itinerario personal para la empleabilidad I", hours: 96, isDual: false, assignedTeacherId: null }
+      ]
+    },
+    {
+      id: 8,
+      name: "2º Administración y Finanzas",
+      degreeName: "ADG301 - Técnico Superior en Administración y Finanzas",
+      level: "Grado Superior",
+      modules: [
+        { id: 801, code: "0652", name: "Gestión de recursos humanos", hours: 84, isDual: true, assignedTeacherId: null },
+        { id: 802, code: "0653", name: "Gestión financiera", hours: 126, isDual: true, assignedTeacherId: null },
+        { id: 803, code: "0654", name: "Contabilidad y fiscalidad", hours: 126, isDual: true, assignedTeacherId: null },
+        { id: 804, code: "0655", name: "Gestión logística y comercial", hours: 105, isDual: true, assignedTeacherId: null },
+        { id: 805, code: "0656", name: "Simulación empresarial", hours: 126, isDual: true, assignedTeacherId: null },
+        { id: 806, code: "0657", name: "Proyecto de administración y finanzas", hours: 30, isDual: false, assignedTeacherId: null },
+        { id: 807, code: "1710", name: "Itinerario personal para la empleabilidad II", hours: 96, isDual: false, assignedTeacherId: null },
+        { id: 808, code: "1708", name: "Sostenibilidad aplicada al sistema productivo", hours: 32, isDual: false, assignedTeacherId: null }
       ]
     }
   ]);
@@ -219,13 +304,13 @@ function AsignacionesContent() {
         <Header />
         
         <div className="flex-1 p-8 pt-4 overflow-y-auto scrollbar-hide">
-          <div className="max-w-7xl mx-auto space-y-6 animate-in fade-in duration-500">
+          <div className="w-full space-y-6 animate-in fade-in duration-500">
             
             {/* Cabecera */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
               <div>
                 <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3 mb-2">
-                  <span className="text-3xl">📋</span> Asignación de Módulos
+                  <span className="text-3xl">📋</span> Asignación de módulos
                 </h1>
                 <p className="text-gray-400">Jefatura de Estudios: Asigna el profesorado a los módulos de cada ciclo formativo.</p>
               </div>
@@ -331,56 +416,67 @@ function AsignacionesContent() {
                       </div>
                     </div>
 
-                    {/* Tabla de Módulos */}
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-left border-collapse">
-                        <thead>
-                          <tr className="bg-black/20 text-xs text-gray-400 uppercase tracking-wider">
-                            <th className="p-4 font-semibold w-24">Código</th>
-                            <th className="p-4 font-semibold">Módulo Didáctico</th>
-                            <th className="p-4 font-semibold text-center w-24">Horas</th>
-                            <th className="p-4 font-semibold w-72">Profesor/a Asignado</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-white/5">
-                          {group.modules.map(module => (
-                            <tr key={module.id} className="hover:bg-white/[0.02] transition-colors">
-                              <td className="p-4 text-gray-400 font-mono text-sm">{module.code}</td>
-                              <td className="p-4">
-                                <div className="font-medium text-white">{module.name}</div>
-                                {module.isDual && (
-                                  <span className="inline-block mt-1 text-[10px] uppercase tracking-wide px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30">
-                                    Sujeto a FEOE
-                                  </span>
-                                )}
-                              </td>
-                              <td className="p-4 text-center">
-                                <div className="inline-flex items-center gap-1.5 text-gray-300 bg-white/5 px-2.5 py-1 rounded-md text-sm">
-                                  <Clock className="w-3.5 h-3.5 opacity-70" />
-                                  {module.hours}h
+                    {/* Lista de Módulos (Diseño de tarjetas compactas) */}
+                    <div className="p-4 space-y-3">
+                      {group.modules.map(module => (
+                        <div key={module.id} className="bg-black/20 rounded-lg p-3 border border-white/5 hover:border-white/10 transition-colors flex flex-col gap-1.5">
+                          {/* Primera línea: Código + Módulo y Horas */}
+                          <div className="flex justify-between items-center w-full">
+                            <div className="flex items-center gap-2">
+                              <span className="text-accent font-mono text-sm font-bold">{module.code}</span>
+                              <h3 className="text-base font-medium text-white">{module.name}</h3>
+                              {module.isDual && (
+                                <span className="ml-2 text-[10px] uppercase tracking-wide px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30">
+                                  FEOE
+                                </span>
+                              )}
+                            </div>
+                            <div className="text-gray-400 text-sm font-semibold shrink-0">
+                              {module.hours}h
+                            </div>
+                          </div>
+
+                          {/* Segunda línea: Profesor asignado (Indentado) */}
+                          <div className="pl-10">
+                            <div className={`relative rounded transition-colors w-full sm:w-2/3 md:w-1/2 max-w-xs ${!module.assignedTeacherId ? 'border border-red-500/50 bg-red-500/10' : 'border border-transparent hover:border-white/10 hover:bg-white/5'}`}>
+                              {!module.assignedTeacherId && (
+                                <div className="absolute -left-1.5 -top-1.5 w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse" title="Falta asignación" />
+                              )}
+                              <select 
+                                value={module.assignedTeacherId || ""}
+                                onChange={(e) => handleAssignTeacher(group.id, module.id, e.target.value)}
+                                className="w-full bg-transparent border-none outline-none text-sm text-gray-300 focus:ring-0 p-1 appearance-none cursor-pointer"
+                              >
+                                <option value="" className="text-gray-500">Sin profesor/a asignado</option>
+                                {teachers.map(t => (
+                                  <option key={t.id} value={t.id} className="bg-gray-900">{t.name}</option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+
+                          {/* Tercera línea: RA Collapsible */}
+                          {module.ras && module.ras.length > 0 && (
+                            <details className="group pl-10 mt-1">
+                              <summary className="cursor-pointer text-xs font-semibold text-gray-400 hover:text-white flex items-center justify-between list-none select-none transition-colors py-1">
+                                <div className="flex items-center gap-1.5">
+                                  <span className="group-open:rotate-90 transition-transform text-[8px] bg-white/10 p-0.5 rounded flex items-center justify-center">▶</span>
+                                  Resultados de aprendizaje
                                 </div>
-                              </td>
-                              <td className="p-4">
-                                <div className={`relative rounded-lg border transition-colors ${!module.assignedTeacherId ? 'border-red-500/50 bg-red-500/10' : 'border-white/10 bg-black/20'}`}>
-                                  {!module.assignedTeacherId && (
-                                    <div className="absolute -left-2 -top-2 w-4 h-4 bg-red-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(239,68,68,0.5)]" title="Falta asignación" />
-                                  )}
-                                  <select 
-                                    value={module.assignedTeacherId || ""}
-                                    onChange={(e) => handleAssignTeacher(group.id, module.id, e.target.value)}
-                                    className="w-full bg-transparent border-none outline-none text-sm text-white focus:ring-0 p-2.5 appearance-none cursor-pointer"
-                                  >
-                                    <option value="" className="text-gray-500">Sin asignar (Vacante)</option>
-                                    {teachers.map(t => (
-                                      <option key={t.id} value={t.id} className="bg-gray-900">{t.name}</option>
-                                    ))}
-                                  </select>
-                                </div>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                                <span className="text-accent text-xs">{module.ras.length} RA</span>
+                              </summary>
+                              <div className="mt-1.5 space-y-1.5 bg-black/40 p-2.5 rounded border border-white/5 max-h-40 overflow-y-auto custom-scrollbar">
+                                {module.ras.map((ra, idx) => (
+                                  <div key={idx} className="text-xs text-gray-400 flex gap-2 w-full leading-tight">
+                                    <span className="font-bold text-accent shrink-0">RA{ra.raNumber}.</span> 
+                                    <span>{ra.description}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </details>
+                          )}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 ))

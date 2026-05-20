@@ -93,7 +93,7 @@ export default function DatePicker({ value, onChange, label, className, placehol
       <button
         type="button"
         onClick={() => setOpen(o => !o)}
-        className="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-white text-sm text-left flex items-center justify-between hover:border-[#14a085] focus:outline-none focus:border-[#14a085] transition-colors group"
+        className={`w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-white text-sm flex items-center hover:border-[#14a085] focus:outline-none focus:border-[#14a085] transition-colors group ${className?.includes('text-center') ? 'justify-center gap-2' : 'justify-between text-left'}`}
       >
         <span className={selectedDate ? "text-white" : "text-gray-500"}>{displayValue}</span>
         <span className="text-gray-400 group-hover:text-[#14a085] transition-colors">📅</span>

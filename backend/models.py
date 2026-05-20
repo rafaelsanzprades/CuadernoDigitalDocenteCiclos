@@ -72,6 +72,16 @@ class Module(Base):
     is_dual = Column(Boolean, default=True) # Sujeto a FEOE
     
     degree = relationship("Degree", back_populates="modules")
+    learning_outcomes = relationship("LearningOutcome", back_populates="module", cascade="all, delete-orphan")
+
+class LearningOutcome(Base):
+    __tablename__ = "learning_outcomes"
+    id = Column(Integer, primary_key=True, index=True)
+    module_id = Column(Integer, ForeignKey("modules.id"))
+    ra_number = Column(Integer) # e.g., 9 for "RA9"
+    description = Column(String, nullable=False) # e.g., "Desarrolla..."
+    
+    module = relationship("Module", back_populates="learning_outcomes")
 
 # ==========================================
 # 3. CENTROS EDUCATIVOS

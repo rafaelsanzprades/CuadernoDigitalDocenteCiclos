@@ -15,9 +15,12 @@ import {
   ArrowRight,
   UserCheck
 } from "lucide-react";
+import { useAppStore } from "@/store/useAppStore";
 
 export default function RolesPage() {
   const [activeTab, setActiveTab] = useState<"roles" | "arquitectura">("roles");
+  const [isLoginMode, setIsLoginMode] = useState(true);
+  const { isLoggedIn, login, logout } = useAppStore();
 
   const roles = [
     {
@@ -98,13 +101,91 @@ export default function RolesPage() {
       <main className="flex-1 flex flex-col relative z-10 min-w-0">
         <Header />
         <div className="flex-1 overflow-y-auto scrollbar-hide">
-          <div className="min-h-screen p-8 max-w-7xl mx-auto space-y-8">
-          <div>
-            <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3 mb-2">🛡️ Roles y Permisos</h1>
+          <div className="min-h-screen p-8 w-full space-y-8">
+          <div className="mb-8">
+            <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3 mb-2">🛡️ Acceso usuarios</h1>
             <p className="text-gray-400">
               Sistema de Roles Basado en Contextos (RBAC). Los permisos no son estáticos, dependen del contexto geográfico, organizativo y temporal.
             </p>
           </div>
+
+          {!isLoggedIn ? (
+            <div className="max-w-md mx-auto glass-card p-8 animate-in fade-in slide-in-from-top-4 duration-500 mb-12 shadow-[0_8px_30px_rgba(0,0,0,0.4)] border border-[var(--glass-border)]">
+              <div className="flex items-center justify-between mb-8">
+                <button 
+                  onClick={() => setIsLoginMode(true)}
+                  className={`flex-1 text-center py-2 text-lg font-bold border-b-2 transition-all ${isLoginMode ? 'border-accent text-accent' : 'border-transparent text-gray-400 hover:text-gray-200'}`}
+                >
+                  Iniciar Sesión
+                </button>
+                <button 
+                  onClick={() => setIsLoginMode(false)}
+                  className={`flex-1 text-center py-2 text-lg font-bold border-b-2 transition-all ${!isLoginMode ? 'border-accent text-accent' : 'border-transparent text-gray-400 hover:text-gray-200'}`}
+                >
+                  Registro
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                {!isLoginMode && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-1">Nombre Completo</label>
+                    <input type="text" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-accent transition-colors" placeholder="Tu nombre" />
+                  </div>
+                )}
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">Correo Electrónico</label>
+                  <input type="email" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-accent transition-colors" placeholder="usuario@educa.aragon.es" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-1">Contraseña</label>
+                  <input type="password" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-accent transition-colors" placeholder="••••••••" />
+                </div>
+
+                <button 
+                  onClick={() => login()}
+                  className="w-full bg-accent hover:bg-accent/80 text-white font-bold py-3 rounded-lg transition-all transform hover:scale-[1.02] shadow-[0_4px_15px_rgba(20,160,133,0.3)] mt-6"
+                >
+                  {isLoginMode ? 'Acceder' : 'Crear Cuenta'}
+                </button>
+
+                <div className="relative flex items-center py-5">
+                  <div className="flex-grow border-t border-white/10"></div>
+                  <span className="flex-shrink-0 mx-4 text-gray-400 text-sm">o continuar con</span>
+                  <div className="flex-grow border-t border-white/10"></div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <button onClick={() => login()} className="flex items-center justify-center gap-2 glass-button py-2.5 rounded-lg hover:bg-white/10 transition-colors border border-white/10">
+                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-5 h-5" />
+                    <span className="text-sm font-medium text-gray-200">Google</span>
+                  </button>
+                  <button onClick={() => login()} className="flex items-center justify-center gap-2 glass-button py-2.5 rounded-lg hover:bg-white/10 transition-colors border border-white/10">
+                    <img src="https://www.svgrepo.com/show/475667/microsoft-color.svg" alt="Microsoft" className="w-5 h-5" />
+                    <span className="text-sm font-medium text-gray-200">Microsoft</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="max-w-3xl mx-auto glass-card p-6 flex items-center justify-between mb-12 animate-in fade-in duration-500 border-l-4 border-accent shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center text-accent text-xl font-bold border border-accent/30">
+                  <UserCheck className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white">Sesión Iniciada</h3>
+                  <p className="text-sm text-gray-400">Autenticado correctamente en el sistema</p>
+                </div>
+              </div>
+              <button 
+                onClick={() => logout()}
+                className="glass-button px-6 py-2.5 rounded-lg text-red-400 border border-red-500/30 hover:bg-red-500/10 transition-all font-semibold flex items-center gap-2"
+              >
+                <span>Cerrar Sesión</span>
+              </button>
+            </div>
+          )}
 
       <div className="flex justify-center gap-4 mb-8">
         <button 

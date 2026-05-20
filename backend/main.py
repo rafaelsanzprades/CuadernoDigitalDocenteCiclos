@@ -17,7 +17,7 @@ import shutil
 import pandas as pd
 
 from database import SessionLocal, engine, Base, get_db
-from models import ModuleDocument, Center, User, CenterStaff, HeadOfStudies, DepartmentHead, DualCoordinator, DualGeneralTutor, GroupTutor, ProfessionalFamily, Degree
+from models import ModuleDocument, Center, User, CenterStaff, HeadOfStudies, DepartmentHead, DualCoordinator, DualGeneralTutor, GroupTutor, ProfessionalFamily, Degree, Module, LearningOutcome
 
 Base.metadata.create_all(bind=engine)
 
@@ -226,6 +226,19 @@ def list_centers(db: Session = Depends(get_db)):
             "status": "success",
             "data": [{"id": c.id, "name": c.name, "titularity": c.titularity.value if hasattr(c.titularity, 'value') else c.titularity, "code": c.code} for c in centers]
         }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/learning_outcomes")
+def list_learning_outcomes(db: Session = Depends(get_db)):
+    try:
+        modules = db.query(Module).all()
+        result = {}
+        for m in modules:
+            ras = db.query(LearningOutcome).filter(LearningOutcome.module_id == m.id).order_by(LearningOutcome.ra_number).all()
+            if ras:
+                result[m.code] = [{"raNumber": r.ra_number, "description": r.description} for r in ras]
+        return {"status": "success", "data": result}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

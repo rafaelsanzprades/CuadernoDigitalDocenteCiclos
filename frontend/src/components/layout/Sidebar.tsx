@@ -37,7 +37,7 @@ const navGroups = [
   {
     title: "Gestión plataforma",
     items: [
-      { href: "/perfiles", label: "Roles y permisos", icon: "🛡️" },
+      { href: "/perfiles", label: "Acceso usuarios", icon: "🛡️" },
       { href: "/usuarios", label: "Gestión de usuarios", icon: "👥" },
       { href: "/familias", label: "Familias profesionales", icon: "🗂️" },
       { href: "/asignaciones", label: "Asignación de módulos", icon: "📋" }
@@ -109,11 +109,8 @@ export default function Sidebar() {
 
       {/* Footer compacto */}
       <div className={`px-4 py-3 border-t border-[var(--glass-border)] flex flex-col items-center`}>
-        <button title={!isSidebarOpen ? "Cerrar sesión" : undefined} className={`w-full glass-button text-white text-xs font-semibold py-2 rounded-lg flex items-center justify-center gap-2 ${isSidebarOpen ? 'px-3' : 'px-0'}`}>
-          <span className="text-base">🚪</span> {isSidebarOpen && <span>Cerrar sesión</span>}
-        </button>
         {isSidebarOpen && (
-          <p className="text-center text-[0.65rem] text-gray-600 mt-2 whitespace-nowrap">
+          <p className="text-center text-[0.65rem] text-gray-600 mt-1 whitespace-nowrap">
             © {new Date().getFullYear()} Rafael Sanz Prades
           </p>
         )}

@@ -15,12 +15,18 @@ interface AppState {
   updateCursoData: (key: string, data: any) => void;
   isSidebarOpen: boolean;
   toggleSidebar: () => void;
+  isLoggedIn: boolean;
+  login: () => void;
+  logout: () => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
+  isLoggedIn: false,
+  login: () => set({ isLoggedIn: true }),
+  logout: () => set({ isLoggedIn: false }),
   isSidebarOpen: true,
   toggleSidebar: () => set((state) => ({ isSidebarOpen: !state.isSidebarOpen })),
-  activeModuleId: '0237-ictve-pd', // ID por defecto para pruebas
+  activeModuleId: '0237-ictve-curso-2025-26', // ID por defecto para pruebas
   setActiveModuleId: (id) => set({ activeModuleId: id }),
   activeCursoId: '',
   setActiveCursoId: (id) => set({ activeCursoId: id }),

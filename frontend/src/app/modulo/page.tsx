@@ -54,7 +54,7 @@ export default function Home() {
   const info_fechas = moduleData.info_fechas || {};
   const calendar_notes = moduleData.calendar_notes || {};
   const pad = (n: number) => String(n).padStart(2, "0");
-  
+
   const calculateRealHours = (startStr: string, endStr: string) => {
     if (!startStr || !endStr) return 0;
     try {
@@ -62,12 +62,12 @@ export default function Home() {
       const [ey, em, ed] = endStr.split("-").map(Number);
       if (!sy || !ey) return 0;
       const start = new Date(sy, sm - 1, sd);
-      const end   = new Date(ey, em - 1, ed);
-      const dayMap = ["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
+      const end = new Date(ey, em - 1, ed);
+      const dayMap = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
       let total = 0, curr = new Date(start);
       while (curr <= end) {
         if (curr.getDay() !== 0 && curr.getDay() !== 6) {
-          const key = `f_${pad(curr.getDate())}/${pad(curr.getMonth()+1)}/${curr.getFullYear()}`;
+          const key = `f_${pad(curr.getDate())}/${pad(curr.getMonth() + 1)}/${curr.getFullYear()}`;
           if (!calendar_notes[key]) total += Number(horario[dayMap[curr.getDay()]]) || 0;
         }
         curr.setDate(curr.getDate() + 1);
@@ -80,15 +80,15 @@ export default function Home() {
   const h2 = calculateRealHours(info_fechas.ini_2t, info_fechas.fin_2t);
   const h3 = calculateRealHours(info_fechas.ini_3t, info_fechas.fin_3t);
   const h_real = h1 + h2 + h3;
-  const h_boa  = Number(data.h_boa) || 0;
-  const p_ev   = Number(data.p_ev)  || 15;
+  const h_boa = Number(data.h_boa) || 0;
+  const p_ev = Number(data.p_ev) || 15;
   const h_p_ev = Math.round((p_ev / 100) * h_real);
 
   const sumaTrimestres = (data.pond_1t || 0) + (data.pond_2t || 0) + (data.pond_3t || 0);
-  const sumaCriterios = (data.criterio_conocimiento || 0) + 
-                        (data.criterio_procedimiento_practicas || 0) + 
-                        (data.criterio_procedimiento_ejercicios || 0) + 
-                        (data.criterio_tareas || 0);
+  const sumaCriterios = (data.criterio_conocimiento || 0) +
+    (data.criterio_procedimiento_practicas || 0) +
+    (data.criterio_procedimiento_ejercicios || 0) +
+    (data.criterio_tareas || 0);
 
   // Stats
   const numExamTeo = moduleData.df_act?.filter((a: any) => a.Tipo === "Teoria")?.length || 0;
@@ -101,35 +101,35 @@ export default function Home() {
       <Sidebar />
       <div className="flex-1 flex flex-col relative z-10 min-w-0">
         <Header />
-        
+
         <div className="flex-1 p-8 pt-4">
           <div className="space-y-8 pb-12">
             <div>
               <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3 mb-6">⚙️ Módulo didáctico</h1>
-            <p className="text-gray-400 mt-2">Configuración estructural del módulo didáctico, incluyendo RAs, CEs y UDs.</p>
+              <p className="text-gray-400 mt-2">Configuración estructural del módulo didáctico, incluyendo RAs, CEs y UDs.</p>
             </div>
-            
+
             {/* Tarjeta de Datos */}
             <div className="glass-card p-6">
               <h4 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
                 <span>📝</span> Datos
               </h4>
-              
+
               <div className="grid grid-cols-5 gap-6 mb-6">
                 <div className="col-span-4">
                   <label className="block text-sm font-semibold text-gray-400 mb-2">Módulo didáctico</label>
-                  <input type="text" 
-                    value={data.modulo || ""} 
+                  <input type="text"
+                    value={data.modulo || ""}
                     onChange={(e) => updateInfoModulo('modulo', e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors" 
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors"
                   />
                 </div>
                 <div className="col-span-1">
                   <label className="block text-sm font-semibold text-gray-400 mb-2">Curso</label>
-                  <input type="text" 
-                    value={data.curso || ""} 
+                  <input type="text"
+                    value={data.curso || ""}
                     onChange={(e) => updateInfoModulo('curso', e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors" 
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors"
                   />
                 </div>
               </div>
@@ -137,18 +137,18 @@ export default function Home() {
               <div className="grid grid-cols-2 gap-6 mb-6">
                 <div>
                   <label className="block text-sm font-semibold text-gray-400 mb-2">Centro educativo</label>
-                  <input type="text" 
-                    value={data.centro || ""} 
+                  <input type="text"
+                    value={data.centro || ""}
                     onChange={(e) => updateInfoModulo('centro', e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors" 
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-400 mb-2">Profesorado</label>
-                  <input type="text" 
-                    value={data.profesorado || data.profesor || ""} 
+                  <input type="text"
+                    value={data.profesorado || data.profesor || ""}
                     onChange={(e) => updateInfoModulo('profesorado', e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors" 
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors"
                   />
                 </div>
               </div>
@@ -160,34 +160,34 @@ export default function Home() {
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-400 mb-2">Horas/semana clase</label>
-                  <input type="number" 
-                    value={data.h_sem || 0} 
+                  <input type="number"
+                    value={data.h_sem || 0}
                     onChange={(e) => updateInfoModulo('h_sem', Number(e.target.value))}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors" 
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-400 mb-2">Horas BOA</label>
-                  <input type="number" 
-                    value={data.h_boa || 0} 
+                  <input type="number"
+                    value={data.h_boa || 0}
                     onChange={(e) => updateInfoModulo('h_boa', Number(e.target.value))}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors" 
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-400 mb-2">% P.Ev.Continua</label>
-                  <input type="number" 
-                    value={data.p_ev || 0} 
+                  <input type="number"
+                    value={data.p_ev || 0}
                     onChange={(e) => updateInfoModulo('p_ev', Number(e.target.value))}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors" 
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors"
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-400 mb-2">Horas FEOE</label>
-                  <input type="number" 
-                    value={data.h_feoe || 0} 
+                  <input type="number"
+                    value={data.h_feoe || 0}
                     onChange={(e) => updateInfoModulo('h_feoe', Number(e.target.value))}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors" 
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors"
                   />
                 </div>
               </div>
@@ -197,7 +197,7 @@ export default function Home() {
             <div className="glass-card p-6 border-l-4 border-l-purple-500">
               <div className="flex justify-between items-center mb-6">
                 <h4 className="text-lg font-bold text-white flex items-center gap-2">
-                  <span>🕒</span> Horario Semanal
+                  <span>🕒</span> Horario semanal
                 </h4>
                 <div className="bg-black/30 px-4 py-2 rounded-lg border border-white/10 text-sm">
                   Desfase con H/Semanal:{" "}
@@ -207,7 +207,7 @@ export default function Home() {
                 </div>
               </div>
               <div className="grid grid-cols-5 gap-4">
-                {["Lun","Mar","Mié","Jue","Vie"].map(day => (
+                {["Lun", "Mar", "Mié", "Jue", "Vie"].map(day => (
                   <div key={day}>
                     <label className="text-sm text-gray-400 mb-2 block text-center font-bold">{day}</label>
                     <input
@@ -219,56 +219,59 @@ export default function Home() {
                   </div>
                 ))}
               </div>
+
+              <div className="grid grid-cols-3 gap-6 mt-6">
+                <div className="text-center bg-black/20 p-3 rounded-lg border border-white/5 text-emerald-400 font-mono font-bold">{h1} h reales</div>
+                <div className="text-center bg-black/20 p-3 rounded-lg border border-white/5 text-emerald-400 font-mono font-bold">{h2} h reales</div>
+                <div className="text-center bg-black/20 p-3 rounded-lg border border-white/5 text-emerald-400 font-mono font-bold">{h3} h reales</div>
+              </div>
+              <div className="grid grid-cols-3 gap-6 mt-4">
+                {[
+                  { label: "Horas BOA", value: `${h_boa} h`, cls: "text-white" },
+                  { label: "Horas clases real", value: `${h_real} h`, cls: "text-emerald-400" },
+                  { label: `Horas P.Ev. (${p_ev}%)`, value: `${h_p_ev} h`, cls: "text-yellow-400" },
+                ].map(s => (
+                  <div key={s.label} className="bg-black/20 border border-white/10 rounded-xl p-4 text-center">
+                    <div className="text-sm text-gray-400 mb-1">{s.label}</div>
+                    <div className={`text-2xl font-bold ${s.cls}`}>{s.value}</div>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            {/* Tarjeta de % Trimestres */}
+            {/* Tarjeta de % Ponderación por trimestres */}
             <div className="glass-card p-6 border-l-4 border-l-[#14a085]">
               <h4 className="text-lg font-bold text-white mb-6 flex items-center justify-between">
-                <span className="flex items-center gap-2"><span>⚖️</span> % Trimestres</span>
+                <span className="flex items-center gap-2"><span>⚖️</span> % Ponderación por trimestres</span>
                 <span className={`text-sm font-bold px-3 py-1 rounded-full ${sumaTrimestres === 100 ? 'bg-green-500/20 text-green-400 border border-green-500/50' : 'bg-red-500/20 text-red-400 border border-red-500/50'}`}>
                   {sumaTrimestres}% {sumaTrimestres !== 100 && "(Debe sumar 100%)"}
                 </span>
               </h4>
               <div className="grid grid-cols-3 gap-6">
-                 <div>
-                  <label className="block text-sm font-semibold text-gray-400 mb-2">1er trimestre (%)</label>
-                  <input type="number" 
-                    value={data.pond_1t || 0} 
+                <div>
+                  <label className="block text-sm font-semibold text-gray-400 mb-2 text-center">1er trimestre (%)</label>
+                  <input type="number"
+                    value={data.pond_1t || 0}
                     onChange={(e) => updateInfoModulo('pond_1t', Number(e.target.value))}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors mb-4" 
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors text-center"
                   />
-                  <div className="text-center bg-black/40 p-2 rounded text-emerald-400 font-mono font-bold">{h1} h reales</div>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-400 mb-2">2º trimestre (%)</label>
-                  <input type="number" 
-                    value={data.pond_2t || 0} 
+                  <label className="block text-sm font-semibold text-gray-400 mb-2 text-center">2º trimestre (%)</label>
+                  <input type="number"
+                    value={data.pond_2t || 0}
                     onChange={(e) => updateInfoModulo('pond_2t', Number(e.target.value))}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors mb-4" 
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors text-center"
                   />
-                  <div className="text-center bg-black/40 p-2 rounded text-emerald-400 font-mono font-bold">{h2} h reales</div>
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-400 mb-2">3er trimestre (%)</label>
-                  <input type="number" 
-                    value={data.pond_3t || 0} 
+                  <label className="block text-sm font-semibold text-gray-400 mb-2 text-center">3er trimestre (%)</label>
+                  <input type="number"
+                    value={data.pond_3t || 0}
                     onChange={(e) => updateInfoModulo('pond_3t', Number(e.target.value))}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors mb-4" 
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors text-center"
                   />
-                  <div className="text-center bg-black/40 p-2 rounded text-emerald-400 font-mono font-bold">{h3} h reales</div>
                 </div>
-              </div>
-              <div className="grid grid-cols-3 gap-6 mt-6">
-                {[
-                  { label: "Horas BOA",           value: `${h_boa} h`,  cls: "text-white" },
-                  { label: "Horas clases real",    value: `${h_real} h`, cls: "text-emerald-400" },
-                  { label: `Horas P.Ev. (${p_ev}%)`, value: `${h_p_ev} h`, cls: "text-yellow-400" },
-                ].map(s => (
-                  <div key={s.label} className="bg-black/20 border border-white/10 rounded-xl p-4 text-center">
-                    <div className="text-sm text-gray-400">{s.label}</div>
-                    <div className={`text-2xl font-bold ${s.cls}`}>{s.value}</div>
-                  </div>
-                ))}
               </div>
             </div>
 
@@ -279,17 +282,17 @@ export default function Home() {
               </h4>
               <div className="grid grid-cols-3 gap-6">
                 <div>
-                  <label className="text-sm text-gray-400 mb-2 block font-semibold">Inicio FEOE</label>
-                  <DatePicker value={info_fechas.ini_feoe || ""} onChange={v => handleUpdateFechas("ini_feoe", v)} />
+                  <label className="text-sm text-gray-400 mb-2 block font-semibold text-center">Inicio FEOE</label>
+                  <DatePicker value={info_fechas.ini_feoe || ""} onChange={v => handleUpdateFechas("ini_feoe", v)} className="text-center" />
                 </div>
                 <div>
-                  <label className="text-sm text-gray-400 mb-2 block font-semibold">Fin FEOE</label>
-                  <DatePicker value={info_fechas.fin_feoe || ""} onChange={v => handleUpdateFechas("fin_feoe", v)} />
+                  <label className="text-sm text-gray-400 mb-2 block font-semibold text-center">Fin FEOE</label>
+                  <DatePicker value={info_fechas.fin_feoe || ""} onChange={v => handleUpdateFechas("fin_feoe", v)} className="text-center" />
                 </div>
                 <div>
-                  <label className="text-sm text-gray-400 mb-2 block font-semibold">Horas/día FEOE</label>
+                  <label className="text-sm text-gray-400 mb-2 block font-semibold text-center">Horas/día FEOE</label>
                   <input type="number" value={Number(info_fechas.h_sem_feoe) || 8} onChange={e => handleUpdateFechas("h_sem_feoe", Number(e.target.value))}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-pink-500 transition-colors" />
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-pink-500 transition-colors text-center" />
                 </div>
               </div>
             </div>
@@ -303,36 +306,36 @@ export default function Home() {
                 </span>
               </h4>
               <div className="grid grid-cols-4 gap-6">
-                 <div>
-                  <label className="block text-sm font-semibold text-gray-400 mb-2">Exámenes teóricos</label>
-                  <input type="number" 
-                    value={data.criterio_conocimiento || 0} 
+                <div>
+                  <label className="block text-sm font-semibold text-gray-400 mb-2 text-center">Exámenes teóricos</label>
+                  <input type="number"
+                    value={data.criterio_conocimiento || 0}
                     onChange={(e) => updateInfoModulo('criterio_conocimiento', Number(e.target.value))}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors" 
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors text-center"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-400 mb-2">Exámenes prácticos</label>
-                  <input type="number" 
-                    value={data.criterio_procedimiento_practicas || 0} 
+                  <label className="block text-sm font-semibold text-gray-400 mb-2 text-center">Exámenes prácticos</label>
+                  <input type="number"
+                    value={data.criterio_procedimiento_practicas || 0}
                     onChange={(e) => updateInfoModulo('criterio_procedimiento_practicas', Number(e.target.value))}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors" 
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors text-center"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-400 mb-2">Informes de ejercicios</label>
-                  <input type="number" 
-                    value={data.criterio_procedimiento_ejercicios || 0} 
+                  <label className="block text-sm font-semibold text-gray-400 mb-2 text-center">Informes de ejercicios</label>
+                  <input type="number"
+                    value={data.criterio_procedimiento_ejercicios || 0}
                     onChange={(e) => updateInfoModulo('criterio_procedimiento_ejercicios', Number(e.target.value))}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors" 
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors text-center"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-semibold text-gray-400 mb-2">Cuaderno de tareas</label>
-                  <input type="number" 
-                    value={data.criterio_tareas || 0} 
+                  <label className="block text-sm font-semibold text-gray-400 mb-2 text-center">Cuaderno de tareas</label>
+                  <input type="number"
+                    value={data.criterio_tareas || 0}
                     onChange={(e) => updateInfoModulo('criterio_tareas', Number(e.target.value))}
-                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors" 
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#14a085] transition-colors text-center"
                   />
                 </div>
               </div>
@@ -364,7 +367,7 @@ export default function Home() {
             {/* Resultados de aprendizaje */}
             <div className="mt-12 mb-8">
               <h3 className="text-xl font-bold text-white mb-6">🎯 Relación entre Resultados de aprendizaje y Unidades didácticas</h3>
-              
+
               {moduleData.df_ra && moduleData.df_ra.length > 0 ? (
                 <div className="glass-card p-6 space-y-6">
                   {moduleData.df_ra.map((ra: any, idx: number) => {

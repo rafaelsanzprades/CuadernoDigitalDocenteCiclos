@@ -98,13 +98,13 @@ export default function UsuariosPage() {
         <Header />
         
         <div className="flex-1 p-8 pt-4 overflow-y-auto scrollbar-hide">
-          <div className="max-w-7xl mx-auto space-y-6 animate-in fade-in duration-500">
+          <div className="w-full space-y-6 animate-in fade-in duration-500">
             
             {/* Cabecera */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
               <div>
                 <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3 mb-2">
-                  <span className="text-3xl">👥</span> Gestión de Usuarios
+                  <span className="text-3xl">👥</span> Gestión de usuarios
                 </h1>
                 <p className="text-gray-400">Administra el claustro, asigna perfiles RBAC y define los contextos de actuación de cada docente.</p>
               </div>
