@@ -10,6 +10,7 @@ export default function ProgramacionPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
+  const [allUdsOpen, setAllUdsOpen] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -152,9 +153,24 @@ export default function ProgramacionPage() {
           </div>
 
           <section className="glass-card p-6 border-t-4 border-t-[#14a085]">
-            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-              <span>📋</span> Secuenciación por Unidades didácticas
-            </h2>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold flex items-center gap-2">
+                <span>📋</span> Secuenciación por Unidades didácticas
+              </h2>
+              <button
+                onClick={() => {
+                  setAllUdsOpen(prev => !prev);
+                  // Toggle all <details> elements in this section
+                  document.querySelectorAll('.ud-details').forEach((el) => {
+                    (el as HTMLDetailsElement).open = !allUdsOpen ? true : false;
+                  });
+                }}
+                className="text-sm font-semibold px-4 py-2 rounded-lg border border-white/10 bg-black/30 text-gray-300 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-2"
+              >
+                <span>{allUdsOpen ? '▲' : '▼'}</span>
+                {allUdsOpen ? 'Colapsar todas' : 'Expandir todas'}
+              </button>
+            </div>
 
             <div className="space-y-4">
               {df_ud.map((ud: any) => {
@@ -163,7 +179,7 @@ export default function ProgramacionPage() {
                 const totalHoras = udSesiones.reduce((sum: number, s: any) => sum + (Number(s.Horas) || 0), 0);
 
                 return (
-                  <details key={ud.id_ud} open className="group bg-white/5 rounded-lg border border-white/10 overflow-hidden open:bg-white/10 transition-colors">
+                  <details key={ud.id_ud} open className="ud-details group bg-white/5 rounded-lg border border-white/10 overflow-hidden open:bg-white/10 transition-colors">
                     <summary className="p-4 cursor-pointer flex items-center justify-between font-semibold text-lg select-none hover:bg-white/5">
                       <div className="flex items-center gap-4">
                         <span className="text-[#14a085]">{ud.id_ud}</span>

@@ -1,6 +1,6 @@
 // @ts-nocheck
 "use client";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
 import { useAppStore } from "@/store/useAppStore";
@@ -10,6 +10,7 @@ export default function SeguimientoPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
+  const [allDiarioOpen, setAllDiarioOpen] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -200,9 +201,8 @@ export default function SeguimientoPage() {
             <p className="text-gray-400 mt-2">Registro detallado del desarrollo diario de las clases y contingencias.</p>
           </div>
 
-
           {/* Metrics */}
-          <div className="grid grid-cols-4 gap-6">
+          <div className="grid grid-cols-5 gap-6">
             <div className="glass-card p-6 flex flex-col items-center justify-center border-t-4 border-t-blue-500">
               <span className="text-sm text-gray-400 mb-1">Horas Previstas</span>
               <span className="text-3xl font-bold text-white">{total_previsto} h</span>
@@ -214,6 +214,10 @@ export default function SeguimientoPage() {
             <div className="glass-card p-6 flex flex-col items-center justify-center border-t-4 border-t-purple-500">
               <span className="text-sm text-gray-400 mb-1">% Progreso</span>
               <span className="text-3xl font-bold text-white">{porcentaje_progreso.toFixed(1)}%</span>
+            </div>
+            <div className="glass-card p-6 flex flex-col items-center justify-center border-t-4 border-t-orange-500">
+              <span className="text-sm text-gray-400 mb-1">Horas sin docencia</span>
+              <span className="text-3xl font-bold text-white">{h_sin_docencia} h</span>
             </div>
             <div className="glass-card p-6 flex flex-col items-center justify-center border-t-4 border-t-yellow-500">
               <span className="text-sm text-gray-400 mb-1">% Sin docencia</span>
@@ -238,10 +242,10 @@ export default function SeguimientoPage() {
                   <th className="p-2 sticky left-[60px] bg-[#111827] z-10"></th>
                   <th className="p-2 sticky left-[130px] bg-[#111827] z-10 border-r border-white/10"></th>
                   {meses_display.map((m) => (
-                    <optgroup key={m} className="contents">
+                    <React.Fragment key={m}>
                       <th className="p-2 text-center text-blue-400/70">Prv</th>
                       <th className="p-2 text-center text-[#14a085]/70 border-r border-white/10">Imp</th>
-                    </optgroup>
+                    </React.Fragment>
                   ))}
                 </tr>
               </thead>
@@ -252,10 +256,10 @@ export default function SeguimientoPage() {
                     <td className="p-3 text-center sticky left-[60px] bg-[#0b1120] group-hover:bg-[#111827] text-blue-400">{row.horas_ud || ''}</td>
                     <td className="p-3 text-center sticky left-[130px] bg-[#0b1120] group-hover:bg-[#111827] border-r border-white/10 text-[#14a085] font-bold">{row.Total_Imp || ''}</td>
                     {meses_display.map((m) => (
-                      <optgroup key={m} className="contents">
+                      <React.Fragment key={m}>
                         <td className="p-3 text-center text-white/60">{Number(row[`${m}_Prv`]) || ''}</td>
                         <td className="p-3 text-center text-[#14a085] font-semibold border-r border-white/10 bg-[#14a085]/5">{Number(row[`${m}_Imp`]) || ''}</td>
-                      </optgroup>
+                      </React.Fragment>
                     ))}
                   </tr>
                 ))}
@@ -265,16 +269,30 @@ export default function SeguimientoPage() {
 
           {/* Seguimiento diario */}
           <section>
-            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-              <span>🗓️</span> Diario de clases. Contingencias
-            </h2>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold flex items-center gap-2">
+                <span>🗓️</span> Diario de clases. Contingencias
+              </h2>
+              <button
+                onClick={() => {
+                  setAllDiarioOpen(prev => !prev);
+                  document.querySelectorAll('.diario-details').forEach((el) => {
+                    (el as HTMLDetailsElement).open = !allDiarioOpen ? true : false;
+                  });
+                }}
+                className="text-sm font-semibold px-4 py-2 rounded-lg border border-white/10 bg-black/30 text-gray-300 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-2"
+              >
+                <span>{allDiarioOpen ? '▲' : '▼'}</span>
+                {allDiarioOpen ? 'Colapsar todos' : 'Expandir todos'}
+              </button>
+            </div>
             <div className="space-y-4">
               {meses_display.map((m_short) => {
                 const lectivos = getLectivosMes(meses_num[m_short]);
                 if (lectivos.length === 0) return null;
                 
                 return (
-                  <details key={m_short} open className="group bg-white/5 rounded-lg border border-white/10 overflow-hidden open:bg-white/10 transition-colors">
+                  <details key={m_short} open className="diario-details group bg-white/5 rounded-lg border border-white/10 overflow-hidden open:bg-white/10 transition-colors">
                     <summary className="p-4 cursor-pointer flex items-center justify-between font-semibold text-lg select-none hover:bg-white/5">
                       <div className="flex items-center gap-3">
                         <span className="text-blue-400">📅</span>

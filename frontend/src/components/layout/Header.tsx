@@ -18,7 +18,7 @@ const navGroups = [
   {
     title: "Módulo didáctico",
     items: [
-      { href: "/modulo", label: "Módulo didáctico", icon: "⚙️" },
+      { href: "/modulo", label: "Configuración. Datos", icon: "⚙️" },
       { href: "/matrices", label: "Matrices RA→CE→UD", icon: "🧮" },
       { href: "/instrumentos", label: "Instrumentos de evaluación", icon: "🛠️" },
       { href: "/programacion", label: "Programación de aula", icon: "📚" },
@@ -31,7 +31,7 @@ const navGroups = [
       { href: "/matricula", label: "Matrícula alumnado", icon: "👥" },
       { href: "/calificacion", label: "Calificación académica", icon: "📊" },
       { href: "/calificacion-feoe", label: "Calificación FEOE", icon: "🏢" },
-      { href: "/evaluacion", label: "Evaluación continua", icon: "📈" },
+      { href: "/evaluacion", label: "Evaluación por RA", icon: "📈" },
       { href: "/analisis", label: "Análisis grupal", icon: "📉" },
       { href: "/portal", label: "Portal alumnado", icon: "🎓" }
     ]
@@ -108,7 +108,7 @@ export default function Header({ title }: { title?: string }) {
 
             return (
               <div key={group.title} className="relative dropdown-group">
-                <button 
+                <button
                   onClick={() => setActiveDropdown(isOpen ? null : group.title)}
                   className="text-[1.1rem] font-bold tracking-wide text-white px-5 py-2.5 rounded-lg hover:bg-white/5 transition-all flex items-center gap-3 cursor-pointer"
                 >
@@ -122,9 +122,8 @@ export default function Header({ title }: { title?: string }) {
                 </button>
 
                 {/* Dropdown menu */}
-                <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 w-64 bg-[#0b1120] border border-[var(--glass-border)] rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.6)] py-2 z-50 transition-all duration-200 ${
-                  isOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible translate-y-1"
-                }`}>
+                <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 w-64 bg-[#0b1120] border border-[var(--glass-border)] rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.6)] py-2 z-50 transition-all duration-200 ${isOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible translate-y-1"
+                  }`}>
                   {group.items.map(item => {
                     const isActive = pathname === item.href;
                     return (
@@ -147,7 +146,7 @@ export default function Header({ title }: { title?: string }) {
 
         {/* Botón Login/Logout (Derecha) */}
         <div className="flex-1 flex justify-end">
-          <button 
+          <button
             onClick={() => {
               if (isLoggedIn) {
                 logout();
@@ -157,7 +156,7 @@ export default function Header({ title }: { title?: string }) {
             }}
             className="glass-button text-gray-300 font-semibold py-1.5 px-4 text-sm rounded-lg flex items-center gap-2 hover:bg-white/10 transition-colors"
           >
-            <span>{isLoggedIn ? "🔒" : "👤"}</span> 
+            <span>{isLoggedIn ? "🔒" : "👤"}</span>
             {isLoggedIn ? "Cerrar sesión" : "Inicio de sesión"}
           </button>
         </div>

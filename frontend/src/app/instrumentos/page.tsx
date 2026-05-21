@@ -10,6 +10,7 @@ export default function InstrumentosPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
+  const [allTriOpen, setAllTriOpen] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -139,6 +140,93 @@ export default function InstrumentosPage() {
           </div>
 
 
+          {/* ── Resumen por trimestres ────────────────────────── */}
+          <div className="glass-card p-6">
+            <h4 className="text-lg font-bold text-white mb-5 flex items-center gap-2">
+              <span>📊</span> Resumen de instrumentos de evaluación por trimestres
+            </h4>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-white/10">
+                    <th className="p-3 text-left text-gray-400 font-semibold">Trimestre</th>
+                    <th className="p-3 text-center text-gray-400 font-semibold border-l border-white/10">Exámenes teóricos</th>
+                    <th className="p-3 text-center text-gray-400 font-semibold border-l border-white/10">Exámenes prácticos</th>
+                    <th className="p-3 text-center text-gray-400 font-semibold border-l border-white/10">Informes de ejercicios</th>
+                    <th className="p-3 text-center text-gray-400 font-semibold border-l border-white/10">Cuaderno de tareas</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { key: "1T", label: "1er trimestre" },
+                    { key: "2T", label: "2º trimestre" },
+                    { key: "3T", label: "3er trimestre" },
+                  ].map(tri => {
+                    const actTri = df_act.filter((a: any) => String(a.tri_act).toUpperCase() === tri.key);
+                    const nTeo = actTri.filter((a: any) => a.Tipo === "Teoria").length;
+                    const nPra = actTri.filter((a: any) => a.Tipo === "Practica").length;
+                    const nInf = actTri.filter((a: any) => a.Tipo === "Informes").length;
+                    const nTar = actTri.filter((a: any) => a.Tipo === "Tareas").length;
+                    return (
+                      <tr key={tri.key} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                        <td className="p-3 font-semibold text-white">{tri.label}</td>
+                        <td className="p-3 text-center border-l border-white/10">
+                          <span className="bg-blue-500/15 text-blue-400 font-bold text-lg px-3 py-1 rounded-lg inline-block min-w-[40px]">{nTeo}</span>
+                        </td>
+                        <td className="p-3 text-center border-l border-white/10">
+                          <span className="bg-emerald-500/15 text-emerald-400 font-bold text-lg px-3 py-1 rounded-lg inline-block min-w-[40px]">{nPra}</span>
+                        </td>
+                        <td className="p-3 text-center border-l border-white/10">
+                          <span className="bg-orange-500/15 text-orange-400 font-bold text-lg px-3 py-1 rounded-lg inline-block min-w-[40px]">{nInf}</span>
+                        </td>
+                        <td className="p-3 text-center border-l border-white/10">
+                          <span className="bg-purple-500/15 text-purple-400 font-bold text-lg px-3 py-1 rounded-lg inline-block min-w-[40px]">{nTar}</span>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                  <tr className="border-t-2 border-white/20 bg-white/5">
+                    <td className="p-4 font-extrabold text-white text-lg">Total</td>
+                    <td className="p-4 text-center border-l border-white/10">
+                      <span className="bg-blue-500/20 text-blue-400 font-extrabold text-2xl px-4 py-1.5 rounded-lg inline-block min-w-[50px]">{df_act.filter((a: any) => a.Tipo === "Teoria").length}</span>
+                    </td>
+                    <td className="p-4 text-center border-l border-white/10">
+                      <span className="bg-emerald-500/20 text-emerald-400 font-extrabold text-2xl px-4 py-1.5 rounded-lg inline-block min-w-[50px]">{df_act.filter((a: any) => a.Tipo === "Practica").length}</span>
+                    </td>
+                    <td className="p-4 text-center border-l border-white/10">
+                      <span className="bg-orange-500/20 text-orange-400 font-extrabold text-2xl px-4 py-1.5 rounded-lg inline-block min-w-[50px]">{df_act.filter((a: any) => a.Tipo === "Informes").length}</span>
+                    </td>
+                    <td className="p-4 text-center border-l border-white/10">
+                      <span className="bg-purple-500/20 text-purple-400 font-extrabold text-2xl px-4 py-1.5 rounded-lg inline-block min-w-[50px]">{df_act.filter((a: any) => a.Tipo === "Tareas").length}</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* ── Subtítulo Desglose ───────────────────────────── */}
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-extrabold text-white tracking-tight flex items-center gap-3">
+                📝 Desglose trimestral
+              </h2>
+              <p className="text-gray-400 mt-1">Detalle de los instrumentos de evaluación organizados por trimestre.</p>
+            </div>
+            <button
+              onClick={() => {
+                setAllTriOpen(prev => !prev);
+                document.querySelectorAll('.tri-details').forEach((el) => {
+                  (el as HTMLDetailsElement).open = !allTriOpen ? true : false;
+                });
+              }}
+              className="text-sm font-semibold px-4 py-2 rounded-lg border border-white/10 bg-black/30 text-gray-300 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-2"
+            >
+              <span>{allTriOpen ? '▲' : '▼'}</span>
+              {allTriOpen ? 'Colapsar todos' : 'Expandir todos'}
+            </button>
+          </div>
+
           {lista_ce_ids.length === 0 ? (
             <div className="glass-card p-6 border-l-4 border-l-yellow-500">
               <h3 className="text-xl font-bold text-yellow-400 mb-2">Faltan Criterios de evaluación</h3>
@@ -151,7 +239,7 @@ export default function InstrumentosPage() {
                 const sumaPeso = actTri.reduce((sum: number, act: any) => sum + (Number(act.peso_act) || 0), 0);
 
                 return (
-                  <details key={tri.key} open className="group bg-white/5 rounded-lg border border-white/10 overflow-hidden open:bg-white/10 transition-colors">
+                  <details key={tri.key} open className="tri-details group bg-white/5 rounded-lg border border-white/10 overflow-hidden open:bg-white/10 transition-colors">
                     <summary className="p-4 cursor-pointer flex items-center justify-between font-semibold text-lg select-none hover:bg-white/5">
                       <div className="flex items-center gap-4">
                         <span className="text-indigo-400">📋</span>

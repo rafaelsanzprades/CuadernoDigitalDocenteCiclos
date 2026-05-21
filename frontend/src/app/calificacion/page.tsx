@@ -1,6 +1,6 @@
 // @ts-nocheck
 "use client";
-import { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
 import { useAppStore } from "@/store/useAppStore";
@@ -11,6 +11,7 @@ export default function CalificacionPage() {
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
   const [activeTabByStudent, setActiveTabByStudent] = useState<Record<string, string>>({});
+  const [allStudentsOpen, setAllStudentsOpen] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -242,6 +243,145 @@ export default function CalificacionPage() {
             <p className="text-gray-400 mt-2">Registro y cálculo automático de las calificaciones por trimestre y evaluación final.</p>
           </div>
 
+          {/* ── Resumen estadístico por trimestres ────────────── */}
+          <div className="glass-card p-6">
+            <h4 className="text-lg font-bold text-white mb-5 flex items-center gap-2">
+              <span>📊</span> Resumen de calificaciones por trimestres
+            </h4>
+            <div className="overflow-x-auto">
+              {(() => {
+                const tipos = [
+                  { key: "Teoria", label: "Exámenes teóricos", color: "blue" },
+                  { key: "Practica", label: "Exámenes prácticos", color: "emerald" },
+                  { key: "Informes", label: "Informes de ejercicios", color: "orange" },
+                  { key: "Tareas", label: "Cuaderno de tareas", color: "purple" },
+                ];
+                const tris = [
+                  { key: "1T", label: "1er trimestre" },
+                  { key: "2T", label: "2º trimestre" },
+                  { key: "3T", label: "3er trimestre" },
+                ];
+
+                const getStats = (triKey: string, tipoKey: string) => {
+                  const acts = (acts_by_tri[triKey] || []).filter((a: any) => a.Tipo === tipoKey);
+                  if (acts.length === 0) return null;
+                  const allGrades: number[] = [];
+                  df_evaluable.forEach((al: any) => {
+                    const evRow = df_eval.find((e: any) => e.ID === al.ID);
+                    if (!evRow) return;
+                    acts.forEach((act: any) => {
+                      const v = Number(evRow[act.id_act]);
+                      if (!isNaN(v) && v > 0) allGrades.push(v);
+                    });
+                  });
+                  if (allGrades.length === 0) return { min: 0, avg: 0, max: 0 };
+                  return {
+                    min: Math.min(...allGrades),
+                    avg: allGrades.reduce((a, b) => a + b, 0) / allGrades.length,
+                    max: Math.max(...allGrades),
+                  };
+                };
+
+                return (
+                  <table className="w-full text-sm border-collapse">
+                    <thead>
+                      <tr className="border-b border-white/10">
+                        <th className="p-3 text-left text-gray-400 font-semibold" rowSpan={2}>Trimestre</th>
+                        {tipos.map(t => (
+                          <th key={t.key} colSpan={3} className={`p-2 text-center text-${t.color}-400 font-semibold border-l border-white/10`}>{t.label}</th>
+                        ))}
+                      </tr>
+                      <tr className="border-b border-white/20 text-xs text-gray-500">
+                        {tipos.map(t => (
+                          <React.Fragment key={t.key}>
+                            <th className="p-2 text-center border-l border-white/10">Mín</th>
+                            <th className="p-2 text-center">Media</th>
+                            <th className="p-2 text-center">Máx</th>
+                          </React.Fragment>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {tris.map(tri => (
+                        <tr key={tri.key} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                          <td className="p-3 font-semibold text-white">{tri.label}</td>
+                          {tipos.map(t => {
+                            const s = getStats(tri.key, t.key);
+                            return (
+                              <React.Fragment key={t.key}>
+                                <td className="p-3 text-center border-l border-white/10">
+                                  <span className={`text-${t.color}-400/70 font-mono`}>{s ? s.min.toFixed(1) : '—'}</span>
+                                </td>
+                                <td className="p-3 text-center">
+                                  <span className={`bg-${t.color}-500/15 text-${t.color}-400 font-bold px-2 py-0.5 rounded-md`}>{s ? s.avg.toFixed(1) : '—'}</span>
+                                </td>
+                                <td className="p-3 text-center">
+                                  <span className={`text-${t.color}-400/70 font-mono`}>{s ? s.max.toFixed(1) : '—'}</span>
+                                </td>
+                              </React.Fragment>
+                            );
+                          })}
+                        </tr>
+                      ))}
+                      <tr className="border-t-2 border-white/20 bg-white/5">
+                        <td className="p-4 font-extrabold text-white text-lg">Total</td>
+                        {tipos.map(t => {
+                          const allGrades: number[] = [];
+                          df_evaluable.forEach((al: any) => {
+                            const evRow = df_eval.find((e: any) => e.ID === al.ID);
+                            if (!evRow) return;
+                            df_act.filter((a: any) => a.Tipo === t.key).forEach((act: any) => {
+                              const v = Number(evRow[act.id_act]);
+                              if (!isNaN(v) && v > 0) allGrades.push(v);
+                            });
+                          });
+                          const s = allGrades.length > 0
+                            ? { min: Math.min(...allGrades), avg: allGrades.reduce((a, b) => a + b, 0) / allGrades.length, max: Math.max(...allGrades) }
+                            : null;
+                          return (
+                            <React.Fragment key={t.key}>
+                              <td className="p-4 text-center border-l border-white/10">
+                                <span className={`text-${t.color}-400/80 font-mono font-bold`}>{s ? s.min.toFixed(1) : '—'}</span>
+                              </td>
+                              <td className="p-4 text-center">
+                                <span className={`bg-${t.color}-500/20 text-${t.color}-400 font-extrabold text-lg px-3 py-1 rounded-lg`}>{s ? s.avg.toFixed(1) : '—'}</span>
+                              </td>
+                              <td className="p-4 text-center">
+                                <span className={`text-${t.color}-400/80 font-mono font-bold`}>{s ? s.max.toFixed(1) : '—'}</span>
+                              </td>
+                            </React.Fragment>
+                          );
+                        })}
+                      </tr>
+                    </tbody>
+                  </table>
+                );
+              })()}
+            </div>
+          </div>
+
+          {/* ── Subtítulo Calificación por alumnado ──────────── */}
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-2xl font-extrabold text-white tracking-tight flex items-center gap-3">
+                👥 Calificación por alumnado
+              </h2>
+              <p className="text-gray-400 mt-1">Notas individuales por alumno, trimestre e instrumento de evaluación.</p>
+            </div>
+            <button
+              onClick={() => {
+                setAllStudentsOpen(prev => !prev);
+                document.querySelectorAll('.cal-details').forEach((el) => {
+                  (el as HTMLDetailsElement).open = !allStudentsOpen ? true : false;
+                });
+              }}
+              className="text-sm font-semibold px-4 py-2 rounded-lg border border-white/10 bg-black/30 text-gray-300 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-2"
+            >
+              <span>{allStudentsOpen ? '▲' : '▼'}</span>
+              {allStudentsOpen ? 'Colapsar todos' : 'Expandir todos'}
+            </button>
+          </div>
+
           <div className="space-y-4">
             {df_evaluable.map((al: any) => {
               const al_id = al.ID;
@@ -252,7 +392,7 @@ export default function CalificacionPage() {
               const activeTab = activeTabByStudent[al_id] || "1T";
 
               return (
-                <details key={al_id} open className="group bg-white/5 rounded-lg border border-white/10 overflow-hidden open:bg-white/10 transition-colors">
+                <details key={al_id} open className="cal-details group bg-white/5 rounded-lg border border-white/10 overflow-hidden open:bg-white/10 transition-colors">
                   <summary className="p-4 cursor-pointer flex items-center justify-between font-semibold text-lg select-none hover:bg-white/5">
                     <div className="flex items-center gap-4">
                       <span className="text-2xl">👤</span>

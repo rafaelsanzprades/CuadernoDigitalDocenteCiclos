@@ -16,7 +16,7 @@ const navGroups = [
   {
     title: "Módulo didáctico",
     items: [
-      { href: "/modulo", label: "Módulo didáctico", icon: "⚙️" },
+      { href: "/modulo", label: "Configuración. Datos", icon: "⚙️" },
       { href: "/matrices", label: "Matrices RA→CE→UD", icon: "🧮" },
       { href: "/instrumentos", label: "Instrumentos de evaluación", icon: "🛠️" },
       { href: "/programacion", label: "Programación de aula", icon: "📚" },
@@ -29,7 +29,7 @@ const navGroups = [
       { href: "/matricula", label: "Matrícula alumnado", icon: "👥" },
       { href: "/calificacion", label: "Calificación académica", icon: "📊" },
       { href: "/calificacion-feoe", label: "Calificación FEOE", icon: "🏢" },
-      { href: "/evaluacion", label: "Evaluación continua", icon: "📈" },
+      { href: "/evaluacion", label: "Evaluación por RA", icon: "📈" },
       { href: "/analisis", label: "Análisis grupal", icon: "📉" },
       { href: "/portal", label: "Portal alumnado", icon: "🎓" }
     ]

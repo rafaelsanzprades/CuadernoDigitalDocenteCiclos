@@ -277,46 +277,45 @@ export default function AnalisisPage() {
                 </div>
               </div>
             )}
+          </section>
 
-            <div className="glass-card p-6">
-              <h2 className="text-xl font-bold mb-6">⚠️ Seguimiento de Riesgo Académico</h2>
-              {risks.length > 0 ? (
-                <>
-                  <div className="bg-red-500/10 border border-red-500/30 text-red-300 px-4 py-3 rounded-lg mb-4 text-sm font-semibold flex items-center gap-2">
-                    <span className="text-xl">⚠️</span>
-                    Se han detectado {risks.length} alumno(s) con rendimiento insuficiente.
-                  </div>
-                  <div className="overflow-y-auto max-h-[220px] pr-2 custom-scrollbar">
-                    <table className="w-full text-left text-sm whitespace-nowrap">
-                      <thead className="sticky top-0 bg-[#0f172a] z-10">
-                        <tr className="text-gray-400 border-b border-white/10">
-                          <th className="pb-2">Alumno</th>
-                          <th className="pb-2 text-center">Nota</th>
-                          <th className="pb-2">Nivel de Riesgo</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {risks.map((r, i) => (
-                          <tr key={i} className="border-b border-white/5 hover:bg-white/5 transition-colors">
-                            <td className="py-3 font-medium text-gray-200">{r.alumno}</td>
-                            <td className="py-3 font-mono text-center font-bold text-gray-300">{r.nota.toFixed(2)}</td>
-                            <td className={`py-3 font-bold ${r.riskColor}`}>
-                              <span className="bg-white/5 px-2 py-1 rounded-md">{r.riskLevel}</span>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </>
-              ) : (
-                <div className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 px-4 py-8 rounded-lg flex flex-col items-center justify-center gap-3 h-56 text-center">
-                  <span className="text-4xl">🎉</span>
-                  <span className="font-bold text-lg">¡Excelente rendimiento!</span>
-                  <span className="text-sm opacity-80">No hay alumnos en riesgo según la proyección actual.</span>
+          {/* ── Seguimiento de Riesgo Académico (full width) ── */}
+          <section className="glass-card p-6">
+            <h2 className="text-xl font-bold mb-6">⚠️ Seguimiento de Riesgo Académico</h2>
+            {risks.length > 0 ? (
+              <>
+                <div className="bg-red-500/10 border border-red-500/30 text-red-300 px-4 py-3 rounded-lg mb-4 text-sm font-semibold flex items-center gap-2">
+                  <span className="text-xl">⚠️</span>
+                  Se han detectado {risks.length} alumno(s) con rendimiento insuficiente.
                 </div>
-              )}
-            </div>
+                <table className="w-full text-left text-sm whitespace-nowrap">
+                  <thead>
+                    <tr className="text-gray-400 border-b border-white/10">
+                      <th className="pb-2">Alumno</th>
+                      <th className="pb-2 text-center">Nota</th>
+                      <th className="pb-2">Nivel de Riesgo</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {risks.map((r, i) => (
+                      <tr key={i} className="border-b border-white/5 hover:bg-white/5 transition-colors">
+                        <td className="py-3 font-medium text-gray-200">{r.alumno}</td>
+                        <td className="py-3 font-mono text-center font-bold text-gray-300">{r.nota.toFixed(2)}</td>
+                        <td className={`py-3 font-bold ${r.riskColor}`}>
+                          <span className="bg-white/5 px-2 py-1 rounded-md">{r.riskLevel}</span>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </>
+            ) : (
+              <div className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 px-4 py-8 rounded-lg flex flex-col items-center justify-center gap-3 text-center">
+                <span className="text-4xl">🎉</span>
+                <span className="font-bold text-lg">¡Excelente rendimiento!</span>
+                <span className="text-sm opacity-80">No hay alumnos en riesgo según la proyección actual.</span>
+              </div>
+            )}
           </section>
 
         </main>

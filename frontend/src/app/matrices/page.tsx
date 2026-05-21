@@ -10,6 +10,7 @@ export default function MatricesPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
+  const [allCeOpen, setAllCeOpen] = useState(false);
 
   useEffect(() => {
     if (activeModuleId && !moduleData) {
@@ -94,7 +95,7 @@ export default function MatricesPage() {
       <Sidebar />
       <div className="flex-1 flex flex-col relative z-10 min-w-0">
         <Header />
-        
+
         <main className="flex-1 p-8 content-area space-y-8">
           <div className="mb-8">
             <h1 className="text-4xl font-extrabold text-white tracking-tight">
@@ -124,39 +125,39 @@ export default function MatricesPage() {
                     <tr key={idx} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                       <td className="p-3 font-mono text-sm">{ra.id_ra}</td>
                       <td className="p-3">
-                        <input 
-                          type="number" 
+                        <input
+                          type="number"
                           value={ra.peso_ra || 0}
                           onChange={(e) => {
                             const newRa = [...df_ra];
                             newRa[idx].peso_ra = parseFloat(e.target.value) || 0;
                             updateDataFrame("df_ra", newRa);
                           }}
-                          className="w-full bg-black/30 border border-white/10 rounded px-2 py-1 text-white text-sm focus:border-[#14a085] focus:outline-none" 
+                          className="w-full bg-black/30 border border-white/10 rounded px-2 py-1 text-white text-sm focus:border-[#14a085] focus:outline-none"
                         />
                       </td>
                       <td className="p-3 text-center">
-                        <input 
-                          type="checkbox" 
+                        <input
+                          type="checkbox"
                           checked={ra.is_dual || false}
                           onChange={(e) => {
                             const newRa = [...df_ra];
                             newRa[idx].is_dual = e.target.checked;
                             updateDataFrame("df_ra", newRa);
                           }}
-                          className="accent-[#14a085]" 
+                          className="accent-[#14a085]"
                         />
                       </td>
                       <td className="p-3">
-                        <input 
-                          type="text" 
+                        <input
+                          type="text"
                           value={ra.desc_ra || ""}
                           onChange={(e) => {
                             const newRa = [...df_ra];
                             newRa[idx].desc_ra = e.target.value;
                             updateDataFrame("df_ra", newRa);
                           }}
-                          className="w-full bg-black/30 border border-white/10 rounded px-3 py-1 text-white text-sm focus:border-[#14a085] focus:outline-none" 
+                          className="w-full bg-black/30 border border-white/10 rounded px-3 py-1 text-white text-sm focus:border-[#14a085] focus:outline-none"
                         />
                       </td>
                     </tr>
@@ -165,7 +166,7 @@ export default function MatricesPage() {
               </table>
             </div>
             <div className="mt-4 flex justify-between items-center text-sm">
-              <button 
+              <button
                 onClick={() => {
                   const newRa = [...df_ra];
                   const newId = `RA${(newRa.length + 1).toString().padStart(2, '0')}`;
@@ -176,7 +177,7 @@ export default function MatricesPage() {
               >
                 <span>+</span> Añadir nuevo RA
               </button>
-              
+
               <div className="glass-card px-4 py-2 inline-flex items-center gap-2 border-l-4 border-l-blue-500">
                 <span className="text-gray-400">Total suma % RA:</span>
                 <span className={`font-bold ${df_ra.reduce((sum: number, ra: any) => sum + (Number(ra.peso_ra) || 0), 0) === 100 ? 'text-green-400' : 'text-red-400'}`}>
@@ -211,40 +212,40 @@ export default function MatricesPage() {
                     <tr key={idx} className="border-b border-white/5 hover:bg-white/5 transition-colors">
                       <td className="p-3 font-mono text-sm sticky left-0 bg-[#0b1120] group-hover:bg-[#111827]">{ud.id_ud}</td>
                       <td className="p-3 sticky left-[80px] bg-[#0b1120] group-hover:bg-[#111827]">
-                        <input 
-                          type="number" 
+                        <input
+                          type="number"
                           value={ud.horas_ud || 0}
                           onChange={(e) => {
                             const newUd = [...df_ud];
                             newUd[idx].horas_ud = parseFloat(e.target.value) || 0;
                             updateDataFrame("df_ud", newUd);
                           }}
-                          className="w-16 bg-black/30 border border-white/10 rounded px-2 py-1 text-white text-sm focus:border-purple-500 focus:outline-none" 
+                          className="w-16 bg-black/30 border border-white/10 rounded px-2 py-1 text-white text-sm focus:border-purple-500 focus:outline-none"
                         />
                       </td>
                       <td className="p-3 sticky left-[160px] bg-[#0b1120] group-hover:bg-[#111827]">
-                        <input 
-                          type="text" 
+                        <input
+                          type="text"
                           value={ud.desc_ud || ""}
                           onChange={(e) => {
                             const newUd = [...df_ud];
                             newUd[idx].desc_ud = e.target.value;
                             updateDataFrame("df_ud", newUd);
                           }}
-                          className="w-full bg-black/30 border border-white/10 rounded px-3 py-1 text-white text-sm focus:border-purple-500 focus:outline-none" 
+                          className="w-full bg-black/30 border border-white/10 rounded px-3 py-1 text-white text-sm focus:border-purple-500 focus:outline-none"
                         />
                       </td>
                       {df_ra.map((ra: any, raIdx: number) => (
                         <td key={raIdx} className="p-3 text-center">
-                          <input 
-                            type="number" 
+                          <input
+                            type="number"
                             value={ud[ra.id_ra] || ""}
                             onChange={(e) => {
                               const newUd = [...df_ud];
                               newUd[idx][ra.id_ra] = parseFloat(e.target.value) || 0;
                               updateDataFrame("df_ud", newUd);
                             }}
-                            className="w-14 text-center bg-black/30 border border-white/10 rounded px-1 py-1 text-white text-sm focus:border-purple-500 focus:outline-none" 
+                            className="w-14 text-center bg-black/30 border border-white/10 rounded px-1 py-1 text-white text-sm focus:border-purple-500 focus:outline-none"
                           />
                         </td>
                       ))}
@@ -254,7 +255,7 @@ export default function MatricesPage() {
               </table>
             </div>
             <div className="mt-4 flex justify-between items-center text-sm">
-              <button 
+              <button
                 onClick={() => {
                   const newUd = [...df_ud];
                   const newId = `UD${(newUd.length + 1).toString().padStart(2, '0')}`;
@@ -265,7 +266,7 @@ export default function MatricesPage() {
               >
                 <span>+</span> Añadir nueva UD
               </button>
-              
+
               <div className="glass-card px-4 py-2 inline-flex items-center gap-2 border-l-4 border-l-purple-500">
                 <span className="text-gray-400">Total horas UD:</span>
                 <span className="font-bold text-purple-400">
@@ -275,19 +276,68 @@ export default function MatricesPage() {
             </div>
           </section>
 
+          {/* ── RAs ↔ UDs ────────────────────────────────────── */}
+          <section className="glass-card p-6 border-t-4 border-t-amber-500">
+            <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+              <span>🎯</span> Relación entre Resultados de aprendizaje y Unidades didácticas
+            </h2>
+            {df_ra && df_ra.length > 0 ? (
+              <div className="space-y-6">
+                {df_ra.map((ra: any, idx: number) => {
+                  const uds = df_ud?.filter((ud: any) => ud[ra.id_ra] > 0) || [];
+                  return (
+                    <div key={idx} className="border-b border-white/10 pb-6 last:border-0 last:pb-0">
+                      <div className="text-lg text-white mb-3">
+                        <strong>{ra.id_ra} ({ra.peso_ra}%).</strong>{" "}
+                        <span className="text-gray-400 text-sm">{ra.desc_ra}</span>
+                      </div>
+                      {uds.length > 0 ? (
+                        <div className="ml-6 pl-4 border-l-2 border-[#d4af37] text-[#ffe599]">
+                          {uds.map((ud: any, uIdx: number) => (
+                            <div key={uIdx} className="mb-1">
+                              {ud.id_ud} ({ud.horas_ud || ud.Horas || 0}h) - {ud[ra.id_ra]}%
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div className="ml-6 pl-4 border-l-2 border-gray-600 text-gray-500 italic">Sin UDs asignadas</div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="text-center text-gray-400">No hay Resultados de aprendizaje definidos.</div>
+            )}
+          </section>
+
           {/* Criterios de evaluación */}
           <section className="glass-card p-6 border-t-4 border-t-yellow-500">
-            <h2 className="text-2xl font-bold mb-6 flex items-center gap-2">
-              <span>🧩</span> CE. Criterios de evaluación
-            </h2>
-            
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold flex items-center gap-2">
+                <span>🧩</span> CE. Criterios de evaluación
+              </h2>
+              <button
+                onClick={() => {
+                  setAllCeOpen(prev => !prev);
+                  document.querySelectorAll('.ce-details').forEach((el) => {
+                    (el as HTMLDetailsElement).open = !allCeOpen ? true : false;
+                  });
+                }}
+                className="text-sm font-semibold px-4 py-2 rounded-lg border border-white/10 bg-black/30 text-gray-300 hover:bg-white/10 hover:text-white transition-colors flex items-center gap-2"
+              >
+                <span>{allCeOpen ? '▲' : '▼'}</span>
+                {allCeOpen ? 'Colapsar todas' : 'Expandir todas'}
+              </button>
+            </div>
+
             <div className="space-y-4">
               {df_ra.map((ra: any) => {
                 const ceForRa = df_ce.filter((ce: any) => ce.id_ra === ra.id_ra);
                 const totalPeso = ceForRa.reduce((sum: number, ce: any) => sum + (Number(ce.peso_ce) || 0), 0);
-                
+
                 return (
-                  <details key={ra.id_ra} open className="group bg-white/5 rounded-lg border border-white/10 overflow-hidden open:bg-white/10 transition-colors">
+                  <details key={ra.id_ra} className="ce-details group bg-white/5 rounded-lg border border-white/10 overflow-hidden open:bg-white/10 transition-colors">
                     <summary className="p-4 cursor-pointer flex items-center justify-between font-semibold text-lg select-none hover:bg-white/5">
                       <div className="flex items-center gap-4">
                         <span className="text-yellow-400">{ra.id_ra}</span>
@@ -320,56 +370,56 @@ export default function MatricesPage() {
                             return (
                               <tr key={ceIdx} className="border-b border-white/5 hover:bg-white/5">
                                 <td className="py-2 pr-2">
-                                  <input 
-                                    type="text" 
+                                  <input
+                                    type="text"
                                     value={ce.id_ce || ""}
                                     onChange={(e) => {
                                       const newCe = [...df_ce];
                                       newCe[globalIdx].id_ce = e.target.value;
                                       updateDataFrame("df_ce", newCe);
                                     }}
-                                    className="w-16 bg-black/30 border border-white/10 rounded px-2 py-1 text-white focus:border-yellow-500 focus:outline-none" 
+                                    className="w-16 bg-black/30 border border-white/10 rounded px-2 py-1 text-white focus:border-yellow-500 focus:outline-none"
                                   />
                                 </td>
                                 <td className="py-2 pr-2">
-                                  <input 
-                                    type="number" 
+                                  <input
+                                    type="number"
                                     value={ce.peso_ce || 0}
                                     onChange={(e) => {
                                       const newCe = [...df_ce];
                                       newCe[globalIdx].peso_ce = parseFloat(e.target.value) || 0;
                                       updateDataFrame("df_ce", newCe);
                                     }}
-                                    className="w-full bg-black/30 border border-white/10 rounded px-2 py-1 text-white focus:border-yellow-500 focus:outline-none" 
+                                    className="w-full bg-black/30 border border-white/10 rounded px-2 py-1 text-white focus:border-yellow-500 focus:outline-none"
                                   />
                                 </td>
                                 <td className="py-2 text-center">
-                                  <input 
-                                    type="checkbox" 
+                                  <input
+                                    type="checkbox"
                                     checked={ce.feoe || false}
                                     onChange={(e) => {
                                       const newCe = [...df_ce];
                                       newCe[globalIdx].feoe = e.target.checked;
                                       updateDataFrame("df_ce", newCe);
                                     }}
-                                    className="accent-yellow-500" 
+                                    className="accent-yellow-500"
                                   />
                                 </td>
                                 <td className="py-2 pr-2">
-                                  <input 
-                                    type="text" 
+                                  <input
+                                    type="text"
                                     value={ce.desc_ce || ""}
                                     onChange={(e) => {
                                       const newCe = [...df_ce];
                                       newCe[globalIdx].desc_ce = e.target.value;
                                       updateDataFrame("df_ce", newCe);
                                     }}
-                                    className="w-full bg-black/30 border border-white/10 rounded px-3 py-1 text-white focus:border-yellow-500 focus:outline-none" 
+                                    className="w-full bg-black/30 border border-white/10 rounded px-3 py-1 text-white focus:border-yellow-500 focus:outline-none"
                                   />
                                 </td>
                                 <td className="py-2 pr-2">
-                                  <input 
-                                    type="text" 
+                                  <input
+                                    type="text"
                                     value={ce.og_vinc || ""}
                                     onChange={(e) => {
                                       const newCe = [...df_ce];
@@ -377,12 +427,12 @@ export default function MatricesPage() {
                                       updateDataFrame("df_ce", newCe);
                                     }}
                                     placeholder="Ej. OG1"
-                                    className="w-full bg-black/30 border border-white/10 rounded px-2 py-1 text-white focus:border-yellow-500 focus:outline-none text-xs" 
+                                    className="w-full bg-black/30 border border-white/10 rounded px-2 py-1 text-white focus:border-yellow-500 focus:outline-none text-xs"
                                   />
                                 </td>
                                 <td className="py-2 pr-2">
-                                  <input 
-                                    type="text" 
+                                  <input
+                                    type="text"
                                     value={ce.cpe_vinc || ""}
                                     onChange={(e) => {
                                       const newCe = [...df_ce];
@@ -390,7 +440,7 @@ export default function MatricesPage() {
                                       updateDataFrame("df_ce", newCe);
                                     }}
                                     placeholder="Ej. CPE1"
-                                    className="w-full bg-black/30 border border-white/10 rounded px-2 py-1 text-white focus:border-yellow-500 focus:outline-none text-xs" 
+                                    className="w-full bg-black/30 border border-white/10 rounded px-2 py-1 text-white focus:border-yellow-500 focus:outline-none text-xs"
                                   />
                                 </td>
                                 <td className="py-2 text-center">
@@ -412,17 +462,17 @@ export default function MatricesPage() {
                         </tbody>
                       </table>
                       <div className="mt-3">
-                        <button 
+                        <button
                           onClick={() => {
                             const newCe = [...df_ce];
-                            newCe.push({ 
-                              id_ra: ra.id_ra, 
-                              id_ce: `${ra.id_ra.replace('RA', 'CE')}.`, 
-                              peso_ce: 0, 
-                              feoe: false, 
-                              desc_ce: "", 
-                              og_vinc: "", 
-                              cpe_vinc: "" 
+                            newCe.push({
+                              id_ra: ra.id_ra,
+                              id_ce: `${ra.id_ra.replace('RA', 'CE')}.`,
+                              peso_ce: 0,
+                              feoe: false,
+                              desc_ce: "",
+                              og_vinc: "",
+                              cpe_vinc: ""
                             });
                             updateDataFrame("df_ce", newCe);
                           }}

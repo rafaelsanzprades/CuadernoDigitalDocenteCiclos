@@ -16,9 +16,9 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   // ── Selector state ──────────────────────────────────────────
-  const [families, setFamilies]           = useState<any[]>([]);
-  const [viewFamilyId, setViewFamilyId]   = useState("");
-  const [viewDegreeId, setViewDegreeId]   = useState("");
+  const [families, setFamilies] = useState<any[]>([]);
+  const [viewFamilyId, setViewFamilyId] = useState("");
+  const [viewDegreeId, setViewDegreeId] = useState("");
   const [selectedModuleCode, setSelectedModuleCode] = useState("");
 
   useEffect(() => {
@@ -67,15 +67,15 @@ export default function Home() {
 
     // Calcular horas/semana: h_boa / 30 semanas aprox → redondeado
     const h_sem = mod.hours ? Math.round(mod.hours / 30) : 0;
-    const curso  = is2nd ? "2º" : "1º";
+    const curso = is2nd ? "2º" : "1º";
 
     // Autocompletar info_modulo con los datos del módulo de la BBDD (store)
     updateInfoModulo("modulo", `${mod.code} - ${mod.name}`);
-    updateInfoModulo("h_boa",  mod.hours);
-    updateInfoModulo("h_sem",  h_sem);
-    updateInfoModulo("p_ev",   15);         // siempre 15% por defecto
+    updateInfoModulo("h_boa", mod.hours);
+    updateInfoModulo("h_sem", h_sem);
+    updateInfoModulo("p_ev", 15);         // siempre 15% por defecto
     updateInfoModulo("h_feoe", h_feoe);
-    updateInfoModulo("curso",  curso);
+    updateInfoModulo("curso", curso);
 
     // Cargar RAs desde la API y almacenarlas en moduleData
     fetch("/api/learning_outcomes")
@@ -90,7 +90,7 @@ export default function Home() {
           updateModuleData("df_ra", ras);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   // ── Pantalla de carga ─────────────────────────────────────────
@@ -106,16 +106,16 @@ export default function Home() {
     );
   }
 
-  const data           = moduleData.info_modulo || {};
-  const horario        = moduleData.horario || { Lun: 0, Mar: 0, "Mié": 0, Jue: 0, Vie: 0 };
-  const h_sem          = Number(data.h_sem) || 0;
-  const suma_horario   = Object.values(horario).reduce((a: any, b: any) => Number(a) + Number(b), 0) as number;
+  const data = moduleData.info_modulo || {};
+  const horario = moduleData.horario || { Lun: 0, Mar: 0, "Mié": 0, Jue: 0, Vie: 0 };
+  const h_sem = Number(data.h_sem) || 0;
+  const suma_horario = ["Lun", "Mar", "Mié", "Jue", "Vie"].reduce((acc, day) => acc + (Number(horario[day]) || 0), 0);
 
   const handleUpdateHorario = (day: string, val: number) =>
     updateModuleData("horario", { ...horario, [day]: val });
 
-  const info_fechas      = moduleData.info_fechas || {};
-  const calendar_notes   = moduleData.calendar_notes || {};
+  const info_fechas = moduleData.info_fechas || {};
+  const calendar_notes = moduleData.calendar_notes || {};
   const pad = (n: number) => String(n).padStart(2, "0");
 
   const handleUpdateFechas = (field: string, value: string | number) =>
@@ -127,8 +127,8 @@ export default function Home() {
       const [sy, sm, sd] = startStr.split("-").map(Number);
       const [ey, em, ed] = endStr.split("-").map(Number);
       if (!sy || !ey) return 0;
-      const start  = new Date(sy, sm - 1, sd);
-      const end    = new Date(ey, em - 1, ed);
+      const start = new Date(sy, sm - 1, sd);
+      const end = new Date(ey, em - 1, ed);
       const dayMap = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
       let total = 0, curr = new Date(start);
       while (curr <= end) {
@@ -142,25 +142,25 @@ export default function Home() {
     } catch { return 0; }
   };
 
-  const h1     = calculateRealHours(info_fechas.ini_1t, info_fechas.fin_1t);
-  const h2     = calculateRealHours(info_fechas.ini_2t, info_fechas.fin_2t);
-  const h3     = calculateRealHours(info_fechas.ini_3t, info_fechas.fin_3t);
+  const h1 = calculateRealHours(info_fechas.ini_1t, info_fechas.fin_1t);
+  const h2 = calculateRealHours(info_fechas.ini_2t, info_fechas.fin_2t);
+  const h3 = calculateRealHours(info_fechas.ini_3t, info_fechas.fin_3t);
   const h_real = h1 + h2 + h3;
-  const h_boa  = Number(data.h_boa) || 0;
-  const p_ev   = Number(data.p_ev)  || 15;
+  const h_boa = Number(data.h_boa) || 0;
+  const p_ev = Number(data.p_ev) || 15;
   const h_p_ev = Math.round((p_ev / 100) * h_real);
 
   const sumaTrimestres = (data.pond_1t || 0) + (data.pond_2t || 0) + (data.pond_3t || 0);
-  const sumaCriterios  =
-    (data.criterio_conocimiento            || 0) +
-    (data.criterio_procedimiento_practicas  || 0) +
+  const sumaCriterios =
+    (data.criterio_conocimiento || 0) +
+    (data.criterio_procedimiento_practicas || 0) +
     (data.criterio_procedimiento_ejercicios || 0) +
-    (data.criterio_tareas                  || 0);
+    (data.criterio_tareas || 0);
 
-  const numExamTeo  = moduleData.df_act?.filter((a: any) => a.Tipo === "Teoria")?.length   || 0;
+  const numExamTeo = moduleData.df_act?.filter((a: any) => a.Tipo === "Teoria")?.length || 0;
   const numExamPrac = moduleData.df_act?.filter((a: any) => a.Tipo === "Practica")?.length || 0;
-  const numInfEj    = moduleData.df_act?.filter((a: any) => a.Tipo === "Informes")?.length || 0;
-  const numTareas   = moduleData.df_act?.filter((a: any) => a.Tipo === "Tareas")?.length   || 0;
+  const numInfEj = moduleData.df_act?.filter((a: any) => a.Tipo === "Informes")?.length || 0;
+  const numTareas = moduleData.df_act?.filter((a: any) => a.Tipo === "Tareas")?.length || 0;
 
   return (
     <div className="flex min-h-screen bg-[#0b1120]">
@@ -174,15 +174,16 @@ export default function Home() {
             {/* ── Título ─────────────────────────────────────────── */}
             <div>
               <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3 mb-1">
-                ⚙️ Módulo didáctico
+                ⚙️ Configuración
               </h1>
-              <p className="text-gray-400 mt-1">Configuración estructural del módulo didáctico, incluyendo RAs, CEs y UDs.</p>
+              <p className="text-gray-400 mt-1">Configuración básica del módulo didáctico.</p>
             </div>
+
 
             {/* ── Tarjeta Datos ─────────────────────────────────── */}
             <div className="glass-card p-6">
               <h4 className="text-lg font-bold text-white mb-5 flex items-center gap-2">
-                <span>📝</span> Datos
+                <span>📝</span> Selección del Módulo didáctico
               </h4>
 
               {/* Fila 1: Familia + Grado */}
@@ -245,7 +246,7 @@ export default function Home() {
               </div>
 
               {/* Fila 3: Campos numéricos (autocompletados desde BBDD al seleccionar módulo) */}
-              <div className="grid grid-cols-5 gap-4">
+              <div className="grid grid-cols-6 gap-4">
                 <div>
                   <label className="block text-sm font-semibold text-gray-400 mb-2">Nº de trimestres</label>
                   <input type="text"
@@ -278,6 +279,13 @@ export default function Home() {
                   />
                 </div>
                 <div>
+                  <label className="block text-sm font-semibold text-gray-400 mb-2">Horas P.Ev. ({p_ev}%)</label>
+                  <input type="text"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2.5 text-yellow-400 cursor-not-allowed text-center font-bold"
+                    disabled value={`${h_p_ev} h`}
+                  />
+                </div>
+                <div>
                   <label className="block text-sm font-semibold text-gray-400 mb-2">Horas FEOE</label>
                   <input type="number"
                     value={data.h_feoe || 0}
@@ -286,6 +294,14 @@ export default function Home() {
                   />
                 </div>
               </div>
+            </div>
+
+            {/* ── Título Datos ────────────────────────────────────── */}
+            <div>
+              <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3 mb-1">
+                📋 Datos
+              </h1>
+              <p className="text-gray-400 mt-1">Información del docente, horarios y ponderaciones del módulo.</p>
             </div>
 
             {/* ── Tarjeta Datos del docente ─────────────────────── */}
@@ -313,11 +329,11 @@ export default function Home() {
               </div>
             </div>
 
-            {/* ── Horario Semanal ───────────────────────────────── */}
+            {/* ── Sesiones semanales ─────────────────────────────── */}
             <div className="glass-card p-6 border-l-4 border-l-purple-500">
               <div className="flex justify-between items-center mb-6">
                 <h4 className="text-lg font-bold text-white flex items-center gap-2">
-                  <span>🕒</span> Horario semanal
+                  <span>🕒</span> Sesiones semanales
                 </h4>
                 <div className="bg-black/30 px-4 py-2 rounded-lg border border-white/10 text-sm">
                   Desfase con H/Semanal:{" "}
@@ -338,20 +354,38 @@ export default function Home() {
                   </div>
                 ))}
               </div>
-              <div className="grid grid-cols-3 gap-6 mt-6">
-                <div className="text-center bg-black/20 p-3 rounded-lg border border-white/5 text-emerald-400 font-mono font-bold">{h1} h reales</div>
-                <div className="text-center bg-black/20 p-3 rounded-lg border border-white/5 text-emerald-400 font-mono font-bold">{h2} h reales</div>
-                <div className="text-center bg-black/20 p-3 rounded-lg border border-white/5 text-emerald-400 font-mono font-bold">{h3} h reales</div>
+            </div>
+
+            {/* ── Sesiones trimestrales ───────────────────────────── */}
+            <div className="glass-card p-6 border-l-4 border-l-emerald-500">
+              <h4 className="text-lg font-bold text-white flex items-center gap-2 mb-6">
+                <span>📅</span> Sesiones trimestrales
+              </h4>
+              <div className="grid grid-cols-3 gap-6">
+                {[
+                  { label: "1er trimestre", value: h1 },
+                  { label: "2º trimestre", value: h2 },
+                  { label: "3er trimestre", value: h3 },
+                ].map(t => (
+                  <div key={t.label}>
+                    <label className="block text-sm font-semibold text-gray-400 mb-2 text-center">{t.label}</label>
+                    <div className="bg-black/20 border border-white/10 rounded-xl p-4 text-center">
+                      <div className="text-2xl font-bold text-emerald-400 font-mono">{t.value} h</div>
+                    </div>
+                  </div>
+                ))}
               </div>
               <div className="grid grid-cols-3 gap-6 mt-4">
                 {[
-                  { label: "Horas BOA",             value: `${h_boa} h`,    cls: "text-white"       },
-                  { label: "Horas clases real",      value: `${h_real} h`,   cls: "text-emerald-400" },
-                  { label: `Horas P.Ev. (${p_ev}%)`, value: `${h_p_ev} h`,  cls: "text-yellow-400"  },
+                  { label: "Horas BOA", value: `${h_boa} h`, cls: "text-white" },
+                  { label: "Horas clases real", value: `${h_real} h`, cls: "text-emerald-400" },
+                  { label: `Horas P.Ev. (${p_ev}%)`, value: `${h_p_ev} h`, cls: "text-yellow-400" },
                 ].map(s => (
-                  <div key={s.label} className="bg-black/20 border border-white/10 rounded-xl p-4 text-center">
-                    <div className="text-sm text-gray-400 mb-1">{s.label}</div>
-                    <div className={`text-2xl font-bold ${s.cls}`}>{s.value}</div>
+                  <div key={s.label}>
+                    <label className="block text-sm font-semibold text-gray-400 mb-2 text-center">{s.label}</label>
+                    <div className="bg-black/20 border border-white/10 rounded-xl p-4 text-center">
+                      <div className={`text-2xl font-bold ${s.cls}`}>{s.value}</div>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -366,7 +400,7 @@ export default function Home() {
                 </span>
               </h4>
               <div className="grid grid-cols-3 gap-6">
-                {[['pond_1t','1er trimestre (%)'],['pond_2t','2º trimestre (%)'],['pond_3t','3er trimestre (%)']].map(([k, label]) => (
+                {[['pond_1t', '1er trimestre (%)'], ['pond_2t', '2º trimestre (%)'], ['pond_3t', '3er trimestre (%)']].map(([k, label]) => (
                   <div key={k}>
                     <label className="block text-sm font-semibold text-gray-400 mb-2 text-center">{label}</label>
                     <input type="number" value={data[k] || 0} onChange={e => updateInfoModulo(k, Number(e.target.value))}
@@ -407,10 +441,10 @@ export default function Home() {
               </h4>
               <div className="grid grid-cols-4 gap-6">
                 {[
-                  ['criterio_conocimiento',             'Exámenes teóricos'],
-                  ['criterio_procedimiento_practicas',   'Exámenes prácticos'],
-                  ['criterio_procedimiento_ejercicios',  'Informes de ejercicios'],
-                  ['criterio_tareas',                    'Cuaderno de tareas'],
+                  ['criterio_conocimiento', 'Exámenes teóricos'],
+                  ['criterio_procedimiento_practicas', 'Exámenes prácticos'],
+                  ['criterio_procedimiento_ejercicios', 'Informes de ejercicios'],
+                  ['criterio_tareas', 'Cuaderno de tareas'],
                 ].map(([k, label]) => (
                   <div key={k}>
                     <label className="block text-sm font-semibold text-gray-400 mb-2 text-center">{label}</label>
@@ -421,56 +455,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* ── Nº Instrumentos ──────────────────────────────── */}
-            <div className="mt-4">
-              <h3 className="text-xl font-bold text-white mb-6">📊 Nº Instrumentos de evaluación</h3>
-              <div className="grid grid-cols-4 gap-6">
-                {[
-                  { label: "Exámenes teóricos",    val: numExamTeo,  color: "border-t-blue-400"    },
-                  { label: "Exámenes prácticos",   val: numExamPrac, color: "border-t-emerald-400" },
-                  { label: "Informes de ejercicios", val: numInfEj,  color: "border-t-orange-400"  },
-                  { label: "Cuaderno de tareas",   val: numTareas,   color: "border-t-purple-400"  },
-                ].map(({ label, val, color }) => (
-                  <div key={label} className={`glass-card p-6 text-center border-t-2 ${color}`}>
-                    <div className="text-gray-400 text-sm font-semibold mb-2">{label}</div>
-                    <div className="text-4xl font-extrabold text-white">{val}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* ── RAs ↔ UDs ────────────────────────────────────── */}
-            <div className="mt-4 mb-8">
-              <h3 className="text-xl font-bold text-white mb-6">🎯 Relación entre Resultados de aprendizaje y Unidades didácticas</h3>
-              {moduleData.df_ra && moduleData.df_ra.length > 0 ? (
-                <div className="glass-card p-6 space-y-6">
-                  {moduleData.df_ra.map((ra: any, idx: number) => {
-                    const uds = moduleData.df_ud?.filter((ud: any) => ud[ra.id_ra] > 0) || [];
-                    return (
-                      <div key={idx} className="border-b border-white/10 pb-6 last:border-0 last:pb-0">
-                        <div className="text-lg text-white mb-3">
-                          <strong>{ra.id_ra} ({ra.peso_ra}%).</strong>{" "}
-                          <span className="text-gray-400 text-sm">{ra.desc_ra}</span>
-                        </div>
-                        {uds.length > 0 ? (
-                          <div className="ml-6 pl-4 border-l-2 border-[#d4af37] text-[#ffe599]">
-                            {uds.map((ud: any, uIdx: number) => (
-                              <div key={uIdx} className="mb-1">
-                                {ud.id_ud} ({ud.horas_ud || ud.Horas || 0}h) - {ud[ra.id_ra]}%
-                              </div>
-                            ))}
-                          </div>
-                        ) : (
-                          <div className="ml-6 pl-4 border-l-2 border-gray-600 text-gray-500 italic">Sin UDs asignadas</div>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : (
-                <div className="glass-card p-6 text-center text-gray-400">No hay Resultados de aprendizaje definidos.</div>
-              )}
-            </div>
 
           </div>
         </div>
