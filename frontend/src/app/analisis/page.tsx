@@ -257,27 +257,72 @@ export default function AnalisisPage() {
                 </ResponsiveContainer>
               </div>
             </div>
-            
-            {/* Gráfico de Radar: Resultados de aprendizaje */}
-            {raData.length > 0 && (
-              <div className="glass-card p-6">
-                <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-                  🎯 Rendimiento por RA
-                </h2>
-                <div className="h-72 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <RadarChart cx="50%" cy="50%" outerRadius="75%" data={raData}>
-                      <PolarGrid stroke="#334155" />
-                      <PolarAngleAxis dataKey="subject" tick={{ fill: '#94a3b8', fontSize: 12 }} />
-                      <PolarRadiusAxis angle={30} domain={[0, 10]} tick={{ fill: '#94a3b8', fontSize: 10 }} />
-                      <Radar name="Media del Grupo" dataKey="A" stroke="#8b5cf6" fill="#8b5cf6" fillOpacity={0.5} />
-                      <RechartsTooltip content={<CustomTooltip />} />
-                    </RadarChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-            )}
           </section>
+
+          {/* ── Rendimiento por RA (full width, barras horizontales) ── */}
+          {raData.length > 0 && (
+            <section className="glass-card p-6">
+              <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+                🎯 Rendimiento por RA
+              </h2>
+              <div className="space-y-4">
+                {raData.map((ra: any) => {
+                  const val = ra.A;
+                  const pct = (val / 10) * 100;
+
+                  const interpolateColor = (v: number) => {
+                    const p = Math.max(0, Math.min(1, v / 10));
+                    const stops = [
+                      { p: 0, r: 231, g: 76, b: 60 },
+                      { p: 0.25, r: 230, g: 126, b: 34 },
+                      { p: 0.5, r: 241, g: 196, b: 15 },
+                      { p: 0.75, r: 127, g: 190, b: 58 },
+                      { p: 1, r: 39, g: 174, b: 96 },
+                    ];
+                    let i = 0;
+                    for (i = 0; i < stops.length - 1; i++) { if (p <= stops[i + 1].p) break; }
+                    const s1 = stops[i], s2 = stops[Math.min(i + 1, stops.length - 1)];
+                    const t = s2.p > s1.p ? (p - s1.p) / (s2.p - s1.p) : 0;
+                    const r = Math.round(s1.r + (s2.r - s1.r) * t);
+                    const g = Math.round(s1.g + (s2.g - s1.g) * t);
+                    const b = Math.round(s1.b + (s2.b - s1.b) * t);
+                    return `rgb(${r},${g},${b})`;
+                  };
+
+                  return (
+                    <div key={ra.subject} className="flex items-center gap-4">
+                      <span className="w-16 text-sm font-bold text-white shrink-0">{ra.subject}</span>
+                      <div className="flex-1 relative h-7 bg-black/40 rounded-full border border-white/10 overflow-hidden">
+                        <div
+                          className="absolute top-0.5 bottom-0.5 left-0 rounded-full transition-all duration-700 flex items-center justify-end pr-3"
+                          style={{
+                            width: `${Math.max(pct, 3)}%`,
+                            background: `linear-gradient(to right, ${interpolateColor(0)}, ${interpolateColor(val)})`,
+                          }}
+                        >
+                          {pct > 12 && (
+                            <span className="text-[11px] font-bold text-white drop-shadow-md">{val.toFixed(1)}</span>
+                          )}
+                        </div>
+                        {/* 5.0 threshold */}
+                        <div className="absolute top-0 bottom-0 w-px bg-yellow-500/40" style={{ left: '50%' }} />
+                      </div>
+                      {pct <= 12 && (
+                        <span className="text-sm font-bold text-gray-300 w-10">{val.toFixed(1)}</span>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="flex justify-between text-xs text-gray-600 mt-2 px-20">
+                <span>0</span>
+                <span>2.5</span>
+                <span>5.0</span>
+                <span>7.5</span>
+                <span>10</span>
+              </div>
+            </section>
+          )}
 
           {/* ── Seguimiento de Riesgo Académico (full width) ── */}
           <section className="glass-card p-6">
