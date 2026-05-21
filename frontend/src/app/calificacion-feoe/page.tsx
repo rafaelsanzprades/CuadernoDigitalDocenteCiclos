@@ -6,18 +6,37 @@ import Header from "@/components/layout/Header";
 import { useAppStore } from "@/store/useAppStore";
 
 export default function CalificacionFEOEPage() {
-  const { activeModuleId, moduleData, activeCursoId, cursoData, updateCursoData } = useAppStore();
+  const { activeModuleId, moduleData, setModuleData, activeCursoId, cursoData, setCursoData, updateCursoData } = useAppStore();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
 
   useEffect(() => {
-    if ((activeModuleId && !moduleData) || (activeCursoId && !cursoData)) {
+    const fetchData = async () => {
       setLoading(true);
+      try {
+        if (activeModuleId && !moduleData) {
+          const res = await fetch(`/api/module/${activeModuleId}`);
+          const data = await res.json();
+          if (data.status === "success") setModuleData(data.data);
+        }
+        if (activeCursoId && !cursoData) {
+          const res = await fetch(`/api/module/${activeCursoId}`);
+          const data = await res.json();
+          if (data.status === "success") setCursoData(data.data);
+        }
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+      setLoading(false);
+    };
+
+    if (activeModuleId || activeCursoId) {
+      fetchData();
     } else {
       setLoading(false);
     }
-  }, [activeModuleId, moduleData, activeCursoId, cursoData]);
+  }, [activeModuleId, moduleData, activeCursoId, cursoData, setModuleData, setCursoData]);
 
   const handleSave = async () => {
     if (!activeCursoId || !cursoData) return;

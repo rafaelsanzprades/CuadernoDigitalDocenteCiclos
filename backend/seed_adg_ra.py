@@ -2,6 +2,16 @@ import pandas as pd
 from database import SessionLocal
 from models import Degree, Module, LearningOutcome
 
+def to_sentence_case(text):
+    if not text:
+        return text
+    text = text.strip()
+    if text.isupper():
+        if len(text) > 1:
+            return text[0].upper() + text[1:].lower()
+        return text.upper()
+    return text
+
 def seed_adg():
     db = SessionLocal()
 
@@ -37,7 +47,7 @@ def seed_adg():
             ras = df_201[df_201['Modulo'] == m_code]
             for _, row in ras.iterrows():
                 ra_code = str(row['Codigo resultado'])
-                desc = str(row['Resultado aprendizaje']).strip()
+                desc = to_sentence_case(str(row['Resultado aprendizaje']))
                 try:
                     ra_num = int(ra_code.split('-')[-1])
                 except:
@@ -49,6 +59,8 @@ def seed_adg():
                 ).first()
                 if not existing_ra:
                     db.add(LearningOutcome(module_id=mod.id, ra_number=ra_num, description=desc))
+                else:
+                    existing_ra.description = desc
         db.commit()
     except Exception as e:
         print("Error ADG201:", e)
@@ -74,7 +86,7 @@ def seed_adg():
             ras = df_301[df_301['Modulo'] == m_code]
             for _, row in ras.iterrows():
                 ra_code = str(row['Codigo resultado'])
-                desc = str(row['Resultado aprendizaje']).strip()
+                desc = to_sentence_case(str(row['Resultado aprendizaje']))
                 try:
                     ra_num = int(ra_code.split('-')[-1])
                 except:
@@ -86,6 +98,8 @@ def seed_adg():
                 ).first()
                 if not existing_ra:
                     db.add(LearningOutcome(module_id=mod.id, ra_number=ra_num, description=desc))
+                else:
+                    existing_ra.description = desc
         db.commit()
         print("ADG successfully seeded!")
     except Exception as e:

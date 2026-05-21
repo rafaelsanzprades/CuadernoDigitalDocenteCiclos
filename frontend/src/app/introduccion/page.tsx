@@ -6,14 +6,31 @@ import Header from "@/components/layout/Header";
 import { useAppStore } from "@/store/useAppStore";
 
 export default function IntroduccionPage() {
-  const { activeModuleId, moduleData, updateModuleData, updateDataFrame } = useAppStore();
+  const { activeModuleId, moduleData, setModuleData, updateModuleData, updateDataFrame } = useAppStore();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
 
   useEffect(() => {
-    setLoading(!moduleData && !!activeModuleId);
-  }, [moduleData, activeModuleId]);
+    const fetchData = async () => {
+      if (activeModuleId && !moduleData) {
+        setLoading(true);
+        try {
+          const res = await fetch(`/api/module/${activeModuleId}`);
+          const data = await res.json();
+          if (data.status === "success") {
+            setModuleData(data.data);
+          }
+        } catch (err) {
+          console.error("Error fetching module data:", err);
+        }
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [activeModuleId, moduleData, setModuleData]);
 
   const handleSave = async () => {
     if (!activeModuleId || !moduleData) return;
@@ -113,15 +130,15 @@ export default function IntroduccionPage() {
         <main className="flex-1 p-8 content-area space-y-8">
           <div className="mb-8">
             <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3">
-              📝 Introducción y planes
+              📝 Introducción
             </h1>
-            <p className="text-gray-400 mt-2">Información general del centro, profesorado, aulas y planes estratégicos.</p>
+            <p className="text-gray-400 mt-2">Información general del centro, profesorado y aulas.</p>
           </div>
 
 
           <section className="flex flex-col gap-6">
             <div className="glass-card p-6 border-t-4 border-t-indigo-500">
-              <h2 className="text-xl font-bold mb-4 flex items-center gap-2">🏫 Contexto Escolar</h2>
+              <h2 className="text-xl font-bold mb-4 flex items-center gap-2">🏫 Contexto escolar</h2>
               <div className="space-y-4">
                 <div>
                   <label className="text-sm text-gray-400 mb-1 block">Instalaciones</label>
@@ -223,9 +240,9 @@ export default function IntroduccionPage() {
 
           <div className="mb-8 mt-12">
             <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3">
-              📝 Introducción y planes
+              📝 Planes
             </h1>
-            <p className="text-gray-400 mt-2">Información general del centro, profesorado, aulas y planes estratégicos.</p>
+            <p className="text-gray-400 mt-2">Programas educativos del Centro.</p>
           </div>
 
           {/* DUA */}

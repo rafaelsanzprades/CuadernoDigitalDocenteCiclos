@@ -6,18 +6,37 @@ import Header from "@/components/layout/Header";
 import { useAppStore } from "@/store/useAppStore";
 
 export default function DescargasPage() {
-  const { activeModuleId, moduleData, activeCursoId, cursoData } = useAppStore();
+  const { activeModuleId, moduleData, setModuleData, activeCursoId, cursoData, setCursoData } = useAppStore();
   const [loading, setLoading] = useState(true);
 
   const [downloadingStr, setDownloadingStr] = useState<string | null>(null);
 
   useEffect(() => {
-    if ((activeModuleId && !moduleData) || (activeCursoId && !cursoData)) {
+    const fetchData = async () => {
       setLoading(true);
+      try {
+        if (activeModuleId && !moduleData) {
+          const res = await fetch(`/api/module/${activeModuleId}`);
+          const data = await res.json();
+          if (data.status === "success") setModuleData(data.data);
+        }
+        if (activeCursoId && !cursoData) {
+          const res = await fetch(`/api/module/${activeCursoId}`);
+          const data = await res.json();
+          if (data.status === "success") setCursoData(data.data);
+        }
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+      setLoading(false);
+    };
+
+    if (activeModuleId || activeCursoId) {
+      fetchData();
     } else {
       setLoading(false);
     }
-  }, [activeModuleId, moduleData, activeCursoId, cursoData]);
+  }, [activeModuleId, moduleData, activeCursoId, cursoData, setModuleData, setCursoData]);
 
   const handleDownload = async (type: string, al_id?: string) => {
     try {

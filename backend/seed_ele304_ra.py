@@ -4,6 +4,16 @@ from sqlalchemy.orm import Session
 from database import SessionLocal, engine, Base
 from models import Degree, ProfessionalFamily, Module, LearningOutcome, NivelFP
 
+def to_sentence_case(text):
+    if not text:
+        return text
+    text = text.strip()
+    if text.isupper():
+        if len(text) > 1:
+            return text[0].upper() + text[1:].lower()
+        return text.upper()
+    return text
+
 def seed():
     Base.metadata.create_all(bind=engine)
     db = SessionLocal()
@@ -47,7 +57,7 @@ def seed():
             continue
             
         cod_resultado = str(row['Codigo resultado']).strip()
-        resultado = str(row['Resultado aprendizaje']).strip()
+        resultado = to_sentence_case(str(row['Resultado aprendizaje']))
         
         # Extraer el número del RA (ej. ELE304-0156-1 -> 1)
         ra_num = 0

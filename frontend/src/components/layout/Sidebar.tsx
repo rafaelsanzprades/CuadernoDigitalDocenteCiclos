@@ -8,7 +8,7 @@ const navGroups = [
     title: "Centro educativo",
     items: [
       { href: "/", label: "Gestión de archivos", icon: "📁" },
-      { href: "/introduccion", label: "Introducción y planes", icon: "📝" },
+      { href: "/introduccion", label: "Introducción. Planes", icon: "📝" },
       { href: "/calendario", label: "Calendario académico", icon: "🗓️" },
       { href: "/descargas", label: "Descargas PDF", icon: "📥" }
     ]
@@ -40,7 +40,8 @@ const navGroups = [
       { href: "/perfiles", label: "Acceso usuarios", icon: "🛡️" },
       { href: "/usuarios", label: "Gestión de usuarios", icon: "👥" },
       { href: "/familias", label: "Familias profesionales", icon: "🗂️" },
-      { href: "/asignaciones", label: "Asignación de módulos", icon: "📋" }
+      { href: "/asignaciones", label: "Asignación de módulos", icon: "📋" },
+      { href: "/docentes", label: "Asignación de docentes", icon: "👨‍🏫" }
     ]
   }
 ];

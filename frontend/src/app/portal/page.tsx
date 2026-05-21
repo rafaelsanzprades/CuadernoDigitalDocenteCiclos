@@ -6,22 +6,44 @@ import Header from "@/components/layout/Header";
 import { useAppStore } from "@/store/useAppStore";
 
 export default function PortalPage() {
-  const { activeModuleId, moduleData, activeCursoId, cursoData } = useAppStore();
+  const { activeModuleId, moduleData, setModuleData, activeCursoId, cursoData, setCursoData } = useAppStore();
   const [loading, setLoading] = useState(true);
   const [selectedAlId, setSelectedAlId] = useState<string>("");
   const [simVals, setSimVals] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    if ((activeModuleId && !moduleData) || (activeCursoId && !cursoData)) {
+    const fetchData = async () => {
       setLoading(true);
+      try {
+        if (activeModuleId && !moduleData) {
+          const res = await fetch(`/api/module/${activeModuleId}`);
+          const data = await res.json();
+          if (data.status === "success") setModuleData(data.data);
+        }
+        if (activeCursoId && !cursoData) {
+          const res = await fetch(`/api/module/${activeCursoId}`);
+          const data = await res.json();
+          if (data.status === "success") setCursoData(data.data);
+        }
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+      setLoading(false);
+    };
+
+    if (activeModuleId || activeCursoId) {
+      fetchData();
     } else {
       setLoading(false);
-      if (cursoData?.df_al?.length > 0 && !selectedAlId) {
-        const activos = cursoData.df_al.filter((al: any) => al.Estado !== "Baja");
-        if (activos.length > 0) setSelectedAlId(activos[0].ID);
-      }
     }
-  }, [activeModuleId, moduleData, activeCursoId, cursoData]);
+  }, [activeModuleId, moduleData, activeCursoId, cursoData, setModuleData, setCursoData]);
+
+  useEffect(() => {
+    if (cursoData?.df_al?.length > 0 && !selectedAlId) {
+      const activos = cursoData.df_al.filter((al: any) => al.Estado !== "Baja");
+      if (activos.length > 0) setSelectedAlId(activos[0].ID);
+    }
+  }, [cursoData, selectedAlId]);
 
   if (!activeCursoId || !activeModuleId) {
     return (

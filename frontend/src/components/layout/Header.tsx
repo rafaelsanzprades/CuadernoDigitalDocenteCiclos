@@ -1,7 +1,7 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useAppStore } from "@/store/useAppStore";
-import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -10,7 +10,7 @@ const navGroups = [
     title: "Centro educativo",
     items: [
       { href: "/", label: "Gestión de archivos", icon: "📁" },
-      { href: "/introduccion", label: "Introducción y planes", icon: "📝" },
+      { href: "/introduccion", label: "Introducción. Planes", icon: "📝" },
       { href: "/calendario", label: "Calendario académico", icon: "🗓️" },
       { href: "/descargas", label: "Descargas PDF", icon: "📥" }
     ]
@@ -42,8 +42,19 @@ export default function Header({ title }: { title?: string }) {
   const { activeModuleId, activeCursoId, moduleData, isLoggedIn, logout } = useAppStore();
   const [isSaving, setIsSaving] = useState(false);
   const [savedStatus, setSavedStatus] = useState<"idle" | "saved" | "error">("idle");
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const pathname = usePathname();
   const router = useRouter();
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (!(event.target as HTMLElement).closest(".dropdown-group")) {
+        setActiveDropdown(null);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
 
   const handleSave = async () => {
     if (!moduleData) return;
@@ -93,26 +104,34 @@ export default function Header({ title }: { title?: string }) {
               badgeColor = "text-blue-300 bg-blue-500/10 border-blue-500/30";
             }
 
+            const isOpen = activeDropdown === group.title;
+
             return (
-              <div key={group.title} className="relative group">
-                <button className="text-[1.1rem] font-bold tracking-wide text-white px-5 py-2.5 rounded-lg hover:bg-white/5 transition-all flex items-center gap-3">
+              <div key={group.title} className="relative dropdown-group">
+                <button 
+                  onClick={() => setActiveDropdown(isOpen ? null : group.title)}
+                  className="text-[1.1rem] font-bold tracking-wide text-white px-5 py-2.5 rounded-lg hover:bg-white/5 transition-all flex items-center gap-3 cursor-pointer"
+                >
                   {group.title}
                   {badgeText && (
                     <div className={`px-2 py-0.5 rounded text-[0.65rem] border font-semibold tracking-wider uppercase ${badgeColor}`}>
                       {badgeText}
                     </div>
                   )}
-                  <span className="text-[0.55rem] text-gray-500 group-hover:text-white transition-colors">▼</span>
+                  <span className={`text-[0.55rem] text-gray-500 transition-transform duration-200 ${isOpen ? 'rotate-180 text-white' : ''}`}>▼</span>
                 </button>
 
                 {/* Dropdown menu */}
-                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible w-64 bg-[#0b1120] border border-[var(--glass-border)] rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.6)] py-2 z-50 transition-all duration-200 transform translate-y-1 group-hover:translate-y-0 before:absolute before:top-[-10px] before:left-0 before:w-full before:h-[10px] before:content-['']">
+                <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-1 w-64 bg-[#0b1120] border border-[var(--glass-border)] rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.6)] py-2 z-50 transition-all duration-200 ${
+                  isOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible translate-y-1"
+                }`}>
                   {group.items.map(item => {
                     const isActive = pathname === item.href;
                     return (
                       <Link
                         key={item.href}
                         href={item.href}
+                        onClick={() => setActiveDropdown(null)}
                         className={`flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors ${isActive ? 'bg-gradient-to-r from-blue-500/10 to-transparent border-l-2 border-blue-400' : 'border-l-2 border-transparent'}`}
                       >
                         <span className="text-xl">{item.icon}</span>
