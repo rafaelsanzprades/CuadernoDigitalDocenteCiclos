@@ -207,3 +207,145 @@ class ModuleDocument(Base):
     data = Column(JSON, nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+
+# ==========================================
+# 5. NORMALIZED JSON DATA TABLES
+# ==========================================
+class DidacticUnit(Base):
+    __tablename__ = "didactic_units"
+    id = Column(Integer, primary_key=True, index=True)
+    module_document_id = Column(String, ForeignKey("module_documents.id", ondelete="CASCADE"), index=True)
+    id_ud = Column(String, index=True)
+    desc_ud = Column(String)
+    horas_ud = Column(Integer)
+    ra_mappings = Column(JSON, default={})
+
+class SessionModel(Base):
+    __tablename__ = "sessions"
+    id = Column(Integer, primary_key=True, index=True)
+    module_document_id = Column(String, ForeignKey("module_documents.id", ondelete="CASCADE"), index=True)
+    session_id = Column(String)
+    id_ud = Column(String, index=True)
+    num_orden = Column(Integer)
+    horas = Column(Integer)
+    tipo_actividad = Column(String)
+    ra_ce = Column(String)
+    contenidos = Column(String)
+    aspectos_clave = Column(String)
+    recursos = Column(String)
+
+class CourseStudent(Base):
+    __tablename__ = "course_students"
+    id = Column(Integer, primary_key=True, index=True)
+    module_document_id = Column(String, ForeignKey("module_documents.id", ondelete="CASCADE"), index=True)
+    student_id = Column(String, index=True)
+    estado = Column(String)
+    apellidos = Column(String)
+    nombre = Column(String)
+    edad = Column(String) # string since it might be empty or invalid in json
+    nacimiento = Column(String)
+    repite = Column(String)
+    matricula = Column(String)
+    comentarios = Column(String)
+    email = Column(String)
+    movil = Column(String)
+
+class StudentEvaluation(Base):
+    __tablename__ = "student_evaluations"
+    id = Column(Integer, primary_key=True, index=True)
+    module_document_id = Column(String, ForeignKey("module_documents.id", ondelete="CASCADE"), index=True)
+    student_id = Column(String, index=True)
+    eval_data = Column(JSON, default={})
+
+# ==========================================
+# 6. NORMALIZED JSON DATA TABLES (PHASE 2)
+# ==========================================
+class LearningOutcomeItem(Base):
+    __tablename__ = "learning_outcome_items"
+    id = Column(Integer, primary_key=True, index=True)
+    module_document_id = Column(String, ForeignKey("module_documents.id", ondelete="CASCADE"), index=True)
+    id_ra = Column(String, index=True)
+    desc_ra = Column(String)
+    peso_ra = Column(String)
+    is_dual = Column(String)
+    data = Column(JSON, default={})
+
+class EvaluationCriterionItem(Base):
+    __tablename__ = "evaluation_criterion_items"
+    id = Column(Integer, primary_key=True, index=True)
+    module_document_id = Column(String, ForeignKey("module_documents.id", ondelete="CASCADE"), index=True)
+    id_ce = Column(String, index=True)
+    id_ra = Column(String, index=True)
+    id_ud = Column(String)
+    desc_ce = Column(String)
+    peso_ce = Column(String)
+    data = Column(JSON, default={})
+
+class ActivityItem(Base):
+    __tablename__ = "activity_items"
+    id = Column(Integer, primary_key=True, index=True)
+    module_document_id = Column(String, ForeignKey("module_documents.id", ondelete="CASCADE"), index=True)
+    id_act = Column(String, index=True)
+    desc_act = Column(String)
+    tipo = Column(String)
+    tri_act = Column(String)
+    peso_act = Column(String)
+    is_active = Column(String)
+    data = Column(JSON, default={})
+
+class InstrumentItem(Base):
+    __tablename__ = "instrument_items"
+    id = Column(Integer, primary_key=True, index=True)
+    module_document_id = Column(String, ForeignKey("module_documents.id", ondelete="CASCADE"), index=True)
+    item_id = Column(String, index=True)
+    practica = Column(String)
+    data = Column(JSON, default={})
+
+class TaskItem(Base):
+    __tablename__ = "task_items"
+    id = Column(Integer, primary_key=True, index=True)
+    module_document_id = Column(String, ForeignKey("module_documents.id", ondelete="CASCADE"), index=True)
+    item_id = Column(String, index=True)
+    nombre_tarea = Column(String)
+    reto = Column(String)
+    ra_asociados = Column(String)
+    instrumento = Column(String)
+    data = Column(JSON, default={})
+
+class AceItem(Base):
+    __tablename__ = "ace_items"
+    id = Column(Integer, primary_key=True, index=True)
+    module_document_id = Column(String, ForeignKey("module_documents.id", ondelete="CASCADE"), index=True)
+    item_id = Column(String, index=True)
+    tipo = Column(String)
+    data = Column(JSON, default={})
+
+class DuaItem(Base):
+    __tablename__ = "dua_items"
+    id = Column(Integer, primary_key=True, index=True)
+    module_document_id = Column(String, ForeignKey("module_documents.id", ondelete="CASCADE"), index=True)
+    item_id = Column(String, index=True)
+    barrera = Column(String)
+    data = Column(JSON, default={})
+
+class ContingencyItem(Base):
+    __tablename__ = "contingency_items"
+    id = Column(Integer, primary_key=True, index=True)
+    module_document_id = Column(String, ForeignKey("module_documents.id", ondelete="CASCADE"), index=True)
+    item_id = Column(String, index=True)
+    escenario = Column(String)
+    data = Column(JSON, default={})
+
+class FeoeItem(Base):
+    __tablename__ = "feoe_items"
+    id = Column(Integer, primary_key=True, index=True)
+    module_document_id = Column(String, ForeignKey("module_documents.id", ondelete="CASCADE"), index=True)
+    item_id = Column(String, index=True)
+    data = Column(JSON, default={})
+
+class SgmtItem(Base):
+    __tablename__ = "sgmt_items"
+    id = Column(Integer, primary_key=True, index=True)
+    module_document_id = Column(String, ForeignKey("module_documents.id", ondelete="CASCADE"), index=True)
+    id_ud = Column(String, index=True)
+    data = Column(JSON, default={})

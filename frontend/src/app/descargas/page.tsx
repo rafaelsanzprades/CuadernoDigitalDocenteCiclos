@@ -1,15 +1,17 @@
-// @ts-nocheck
 "use client";
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
 import { useAppStore } from "@/store/useAppStore";
+import { Alumno } from "@/types";
 
 export default function DescargasPage() {
   const { activeModuleId, moduleData, setModuleData, activeCursoId, cursoData, setCursoData } = useAppStore();
   const [loading, setLoading] = useState(true);
 
   const [downloadingStr, setDownloadingStr] = useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [previewFilename, setPreviewFilename] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,17 +51,13 @@ export default function DescargasPage() {
 
       const blob = await response.blob();
       const downloadUrl = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = downloadUrl;
       const modName = moduleData?.info_modulo?.modulo || "Modulo";
 
       let filename = `${type}_${modName}.pdf`;
       if (al_id) filename = `Boletin_${al_id}_${modName}.pdf`;
 
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
+      setPreviewUrl(downloadUrl);
+      setPreviewFilename(filename);
     } catch (err) {
       console.error(err);
       alert("Error al generar el PDF. Asegúrate de que el backend está configurado.");
@@ -102,8 +100,8 @@ export default function DescargasPage() {
   }
 
   const df_al = cursoData?.df_al || [];
-  const activeAlumnos = df_al.filter((al: any) => al.Estado !== "Baja");
-  activeAlumnos.sort((a: any, b: any) => String(a.Apellidos || "").localeCompare(String(b.Apellidos || "")));
+  const activeAlumnos = df_al.filter((al: Alumno) => al.Estado !== "Baja");
+  activeAlumnos.sort((a: Alumno, b: Alumno) => String(a.Apellidos || "").localeCompare(String(b.Apellidos || "")));
 
   return (
     <div className="flex min-h-screen bg-[#0b1120]">
@@ -120,7 +118,7 @@ export default function DescargasPage() {
           </div>
 
           <section className="glass-card p-6 border-t-4 border-t-purple-500">
-            <h2 className="text-2xl font-bold mb-1">📅 Gestión del tiempo</h2>
+            <h2 className="text-2xl font-bold mb-1">📅 Gestión temporal global</h2>
             <p className="text-sm text-gray-400 mb-6">Planificación y seguimiento mensual</p>
             <div className="grid grid-cols-3 gap-6">
               <div className="bg-black/20 border border-white/10 rounded-xl p-6 flex flex-col justify-between">
@@ -139,7 +137,7 @@ export default function DescargasPage() {
 
               <div className="bg-black/20 border border-white/10 rounded-xl p-6 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-lg font-bold mb-2">📊 Planificación y seguimiento mensual</h3>
+                  <h3 className="text-lg font-bold mb-2">📊 Planificación mensual</h3>
                   <p className="text-sm text-gray-400 mb-6">Horas previstas frente a impartidas por UD y mes.</p>
                 </div>
                 <button
@@ -151,9 +149,16 @@ export default function DescargasPage() {
                 </button>
               </div>
 
+            </div>
+          </section>
+
+          <section className="glass-card p-6 border-t-4 border-t-emerald-500">
+            <h2 className="text-2xl font-bold mb-1">📝 Clases mensual - por UD</h2>
+            <p className="text-sm text-gray-400 mb-6">Registro detallado de clases impartidas y secuenciación por unidad didáctica.</p>
+            <div className="grid grid-cols-3 gap-6">
               <div className="bg-black/20 border border-white/10 rounded-xl p-6 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-lg font-bold mb-2">📝 Diario de clases. Contingencia</h3>
+                  <h3 className="text-lg font-bold mb-2">📝 Clases mensual</h3>
                   <p className="text-sm text-gray-400 mb-6">Registro detallado de la planificación del día a día.</p>
                 </div>
                 <button
@@ -162,6 +167,20 @@ export default function DescargasPage() {
                   className="w-full bg-[#14a085] hover:bg-[#11876f] disabled:bg-[#14a085]/50 text-white py-2 rounded-lg font-bold transition-colors flex justify-center gap-2"
                 >
                   {downloadingStr === 'seguimiento' ? '⏳ Generando PDF...' : 'PDF Seguimiento'}
+                </button>
+              </div>
+
+              <div className="bg-black/20 border border-white/10 rounded-xl p-6 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-lg font-bold mb-2">📚 Clases por UD</h3>
+                  <p className="text-sm text-gray-400 mb-6">Secuenciación de sesiones de cada Unidad Didáctica.</p>
+                </div>
+                <button
+                  onClick={() => handleDownload('clases_ud')}
+                  disabled={downloadingStr === 'clases_ud'}
+                  className="w-full bg-[#14a085] hover:bg-[#11876f] disabled:bg-[#14a085]/50 text-white py-2 rounded-lg font-bold transition-colors flex justify-center gap-2"
+                >
+                  {downloadingStr === 'clases_ud' ? '⏳ Generando PDF...' : 'PDF Clases por UD'}
                 </button>
               </div>
             </div>
@@ -251,8 +270,8 @@ export default function DescargasPage() {
                 <div className="flex-1">
                   <h3 className="text-lg font-bold mb-2">📄 Boletín de alumnado</h3>
                   <p className="text-sm text-gray-400 mb-4">Genera un boletín detallado de un alumnado específico.</p>
-                  <select id="alumno_select" className="w-full bg-black/50 border border-white/20 rounded-lg p-3 text-white focus:border-blue-500 focus:outline-none font-bold">
-                    {activeAlumnos.map((al: any) => (
+                  <select id="alumno_select" className="w-full bg-black/50 border border-white/20 rounded-lg p-3 text-[var(--foreground)] focus:border-blue-500 focus:outline-none font-bold">
+                    {activeAlumnos.map((al: Alumno) => (
                       <option key={al.ID} value={al.ID}>{al.Apellidos}, {al.Nombre} ({al.ID})</option>
                     ))}
                   </select>
@@ -274,6 +293,43 @@ export default function DescargasPage() {
           </section>
 
         </main>
+
+        {/* Modal de Previsualización PDF */}
+        {previewUrl && (
+          <div className="fixed inset-0 z-50 flex flex-col bg-black/90 backdrop-blur-md">
+            <div className="flex items-center justify-between p-4 bg-[var(--glass-bg)] border-b border-[var(--glass-border)]">
+              <h3 className="text-[var(--foreground)] font-bold text-lg flex items-center gap-2">
+                <span>📄</span> {previewFilename}
+              </h3>
+              <div className="flex gap-4">
+                <button 
+                  onClick={() => {
+                    const a = document.createElement("a");
+                    a.href = previewUrl;
+                    a.download = previewFilename || "documento.pdf";
+                    a.click();
+                  }}
+                  className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 transition-colors"
+                >
+                  ⬇️ Descargar
+                </button>
+                <button 
+                  onClick={() => {
+                    setPreviewUrl(null);
+                    setPreviewFilename(null);
+                  }}
+                  className="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 transition-colors"
+                >
+                  ❌ Cerrar
+                </button>
+              </div>
+            </div>
+            <div className="flex-1 w-full h-full p-4 bg-[#525659]"> {/* Fondo estándar de visor PDF */}
+              <iframe src={`${previewUrl}#toolbar=0`} className="w-full h-full rounded-lg shadow-2xl" title="PDF Preview" />
+            </div>
+          </div>
+        )}
+
       </div>
     </div>
   );

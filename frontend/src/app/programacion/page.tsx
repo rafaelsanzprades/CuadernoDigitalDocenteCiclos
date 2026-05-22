@@ -1,9 +1,12 @@
-// @ts-nocheck
 "use client";
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
 import { useAppStore } from "@/store/useAppStore";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import { GripVertical } from "lucide-react";
+import toast from "react-hot-toast";
+import { UnidadDidactica, Sesion } from "@/types";
 
 export default function ProgramacionPage() {
   const { activeModuleId, moduleData, setModuleData, updateDataFrame } = useAppStore();
@@ -37,7 +40,6 @@ export default function ProgramacionPage() {
   const handleSave = async () => {
     if (!activeModuleId || !moduleData) return;
     setSaving(true);
-    setSaveMessage("");
     try {
       const res = await fetch(`/api/module/${activeModuleId}`, {
         method: "PUT",
@@ -46,21 +48,44 @@ export default function ProgramacionPage() {
       });
       const result = await res.json();
       if (result.status === "success") {
-        setSaveMessage("Guardado correctamente");
-        setTimeout(() => setSaveMessage(""), 3000);
+        toast.success("Programación guardada correctamente");
       } else {
-        setSaveMessage("Error al guardar");
+        toast.error("Error al guardar");
       }
     } catch (err) {
       console.error(err);
-      setSaveMessage("Error al guardar");
+      toast.error("Fallo de conexión");
     }
     setSaving(false);
   };
 
+  const onDragEnd = (result: any) => {
+    if (!result.destination) return;
+    
+    const { source, destination } = result;
+    if (source.droppableId !== destination.droppableId) return; // Sólo reordenar dentro de la misma UD
+
+    const udId = source.droppableId;
+    const newSesiones = [...moduleData.df_sesiones];
+    
+    // Extraer sesiones de esta UD y ordenarlas por Num_Orden actual
+    const udSesiones = newSesiones.filter(s => s.id_ud === udId).sort((a, b) => (Number(a.Num_Orden) || 0) - (Number(b.Num_Orden) || 0));
+    
+    // Reordenar en el array
+    const [moved] = udSesiones.splice(source.index, 1);
+    udSesiones.splice(destination.index, 0, moved);
+    
+    // Reasignar Num_Orden de 1 a N
+    udSesiones.forEach((ses, idx) => {
+      ses.Num_Orden = idx + 1;
+    });
+    
+    updateDataFrame("df_sesiones", newSesiones);
+  };
+
   if (!activeModuleId) {
     return (
-      <div className="flex min-h-screen bg-[#0b1120]">
+      <div className="flex min-h-screen bg-[var(--background)]">
         <Sidebar />
         <div className="flex-1 flex flex-col relative z-10 min-w-0">
           <Header />
@@ -77,7 +102,7 @@ export default function ProgramacionPage() {
 
   if (loading || !moduleData) {
     return (
-      <div className="flex min-h-screen bg-[#0b1120]">
+      <div className="flex min-h-screen bg-[var(--background)]">
         <Sidebar />
         <div className="flex-1 flex flex-col relative z-10 min-w-0">
           <Header />
@@ -139,14 +164,14 @@ export default function ProgramacionPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-[#0b1120]">
+    <div className="flex min-h-screen bg-[var(--background)]">
       <Sidebar />
       <div className="flex-1 flex flex-col relative z-10 min-w-0">
         <Header />
         
         <main className="flex-1 p-8 content-area space-y-8">
           <div className="mb-8">
-            <h1 className="text-4xl font-extrabold text-white tracking-tight flex items-center gap-3">
+            <h1 className="text-4xl font-extrabold text-[var(--foreground)] tracking-tight flex items-center gap-3">
               📚 Programación de aula
             </h1>
             <p className="text-gray-400 mt-2">Secuenciación temporal de las unidades didácticas y diseño de tareas competenciales.</p>
@@ -173,10 +198,11 @@ export default function ProgramacionPage() {
             </div>
 
             <div className="space-y-4">
-              {df_ud.map((ud: any) => {
-                const udSesiones = df_sesiones.filter((s: any) => s.id_ud === ud.id_ud);
-                udSesiones.sort((a: any, b: any) => (Number(a.Num_Orden) || 0) - (Number(b.Num_Orden) || 0));
-                const totalHoras = udSesiones.reduce((sum: number, s: any) => sum + (Number(s.Horas) || 0), 0);
+              <DragDropContext onDragEnd={onDragEnd}>
+              {df_ud.map((ud: UnidadDidactica) => {
+                const udSesiones = df_sesiones.filter((s: Sesion) => s.id_ud === ud.id_ud);
+                udSesiones.sort((a: Sesion, b: Sesion) => (Number(a.Num_Orden) || 0) - (Number(b.Num_Orden) || 0));
+                const totalHoras = udSesiones.reduce((sum: number, s: Sesion) => sum + (Number(s.Horas) || 0), 0);
 
                 return (
                   <details key={ud.id_ud} open className="ud-details group bg-white/5 rounded-lg border border-white/10 overflow-hidden open:bg-white/10 transition-colors">
@@ -194,7 +220,8 @@ export default function ProgramacionPage() {
                     <div className="p-4 border-t border-white/10 bg-black/20 overflow-x-auto">
                       <table className="w-full text-left text-sm whitespace-nowrap">
                         <thead>
-                          <tr className="text-gray-400 border-b border-white/10">
+                          <tr className="text-[var(--text-muted)] border-b border-[var(--glass-border)]">
+                            <th className="pb-2 w-10"></th>
                             <th className="pb-2 w-16">Nº</th>
                             <th className="pb-2 w-16">Horas</th>
                             <th className="pb-2 w-48">Tipo</th>
@@ -205,12 +232,27 @@ export default function ProgramacionPage() {
                             <th className="pb-2 w-10"></th>
                           </tr>
                         </thead>
-                        <tbody>
-                          {udSesiones.map((ses: any) => {
-                            const globalIdx = df_sesiones.findIndex((gSes: any) => gSes === ses);
-                            return (
-                              <tr key={globalIdx} className="border-b border-white/5 hover:bg-white/5">
-                                <td className="py-2 pr-2">
+                        <Droppable droppableId={ud.id_ud}>
+                          {(provided) => (
+                            <tbody ref={provided.innerRef} {...provided.droppableProps}>
+                              {udSesiones.map((ses: Sesion, idx: number) => {
+                                const globalIdx = df_sesiones.findIndex((gSes: Sesion) => gSes === ses);
+                                const dragId = ses.ID || `ses-${globalIdx}`;
+                                return (
+                                  <Draggable key={dragId} draggableId={dragId} index={idx}>
+                                    {(provided, snapshot) => (
+                                      <tr 
+                                        ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        className={`border-b border-[var(--glass-border)] hover:bg-[var(--glass-bg)] ${snapshot.isDragging ? 'bg-[var(--background)] shadow-2xl z-50' : ''}`}
+                                        style={{ ...provided.draggableProps.style }}
+                                      >
+                                        <td className="py-2 pr-2" {...provided.dragHandleProps}>
+                                          <div className="p-1 hover:bg-gray-500/20 rounded cursor-grab active:cursor-grabbing inline-flex items-center justify-center">
+                                            <GripVertical className="text-gray-500 w-4 h-4" />
+                                          </div>
+                                        </td>
+                                        <td className="py-2 pr-2">
                                   <input 
                                     type="number" 
                                     value={ses.Num_Orden || 0}
@@ -284,9 +326,14 @@ export default function ProgramacionPage() {
                                   </button>
                                 </td>
                               </tr>
-                            );
-                          })}
-                        </tbody>
+                                    )}
+                                  </Draggable>
+                                );
+                              })}
+                              {provided.placeholder}
+                            </tbody>
+                          )}
+                        </Droppable>
                       </table>
                       <div className="mt-4">
                         <button 
@@ -300,6 +347,7 @@ export default function ProgramacionPage() {
                   </details>
                 );
               })}
+              </DragDropContext>
             </div>
           </section>
 

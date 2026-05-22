@@ -1,9 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAppStore } from "@/store/useAppStore";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
+import toast from "react-hot-toast";
+import { Sun, Moon } from "lucide-react";
 
 const navGroups = [
   {
@@ -41,10 +44,20 @@ const navGroups = [
 export default function Header({ title }: { title?: string }) {
   const { activeModuleId, activeCursoId, moduleData, isLoggedIn, logout } = useAppStore();
   const [isSaving, setIsSaving] = useState(false);
-  const [savedStatus, setSavedStatus] = useState<"idle" | "saved" | "error">("idle");
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const pathname = usePathname();
   const router = useRouter();
+  
+  const [autosaveStatus, setAutosaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
+  const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const initialLoadRef = useRef<boolean>(true);
+
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -56,10 +69,52 @@ export default function Header({ title }: { title?: string }) {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
+  // Autosave Effect
+  useEffect(() => {
+    if (initialLoadRef.current) {
+      initialLoadRef.current = false;
+      return;
+    }
+    
+    if (!moduleData || !activeModuleId) return;
+
+    if (saveTimeoutRef.current) {
+      clearTimeout(saveTimeoutRef.current);
+    }
+    setAutosaveStatus("idle");
+
+    saveTimeoutRef.current = setTimeout(async () => {
+      setAutosaveStatus("saving");
+      try {
+        const res = await fetch(`/api/module/${activeModuleId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(moduleData)
+        });
+        const data = await res.json();
+        if (data.status === "success") {
+          setAutosaveStatus("saved");
+          setTimeout(() => setAutosaveStatus("idle"), 2000);
+        } else {
+          setAutosaveStatus("error");
+        }
+      } catch (err) {
+        setAutosaveStatus("error");
+      }
+    }, 3000);
+
+    return () => {
+      if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+    };
+  }, [moduleData]); // Solo vigilar cambios en moduleData
+
   const handleSave = async () => {
-    if (!moduleData) return;
+    if (!moduleData) {
+      toast.error("No hay módulo cargado para guardar");
+      return;
+    }
     setIsSaving(true);
-    setSavedStatus("idle");
+    
     try {
       const res = await fetch(`/api/module/${activeModuleId}`, {
         method: "PUT",
@@ -68,14 +123,13 @@ export default function Header({ title }: { title?: string }) {
       });
       const data = await res.json();
       if (data.status === "success") {
-        setSavedStatus("saved");
-        setTimeout(() => setSavedStatus("idle"), 3000);
+        toast.success(`Módulo ${activeModuleId} guardado con éxito`);
       } else {
-        setSavedStatus("error");
+        toast.error("Error al guardar el módulo");
       }
     } catch (err) {
       console.error(err);
-      setSavedStatus("error");
+      toast.error("Fallo de conexión al guardar");
     } finally {
       setIsSaving(false);
     }
@@ -141,25 +195,46 @@ export default function Header({ title }: { title?: string }) {
           })}
         </div>
 
-        {/* Botón Guardar + Login/Logout (Derecha) */}
+        {/* Botón Guardar + Login/Logout + Tema (Derecha) */}
         <div className="flex-1 flex justify-end items-center gap-3">
-          {savedStatus === "error" && <span className="text-red-400 text-sm font-bold">❌ Error</span>}
+          
+          {moduleData && (
+            <div className="mr-2 flex items-center">
+              {autosaveStatus === "saved" && <span className="text-green-500 text-sm font-medium">☁️ Guardado</span>}
+              {autosaveStatus === "saving" && <span className="text-amber-500 text-sm font-medium animate-pulse">⏳ Guardando...</span>}
+              {autosaveStatus === "error" && <span className="text-red-500 text-sm font-medium">❌ Error al guardar</span>}
+              {autosaveStatus === "idle" && <span className="text-[var(--text-muted)] text-sm font-medium">☁️ Sincronizado</span>}
+            </div>
+          )}
+
+          {mounted && (
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="glass-button text-gray-300 hover:text-amber-400 p-2 rounded-lg flex items-center justify-center transition-colors"
+              title="Cambiar tema"
+            >
+              {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
+          )}
+
           <button
             onClick={handleSave}
             disabled={isSaving}
-            className={`glass-button ${savedStatus === "saved" ? "bg-green-500/20 text-green-400 border-green-500/30" : "bg-[#14a085]/10 text-[#14a085] border-[#14a085]/30 hover:bg-[#14a085]/20"} font-semibold py-1.5 px-4 text-sm rounded-lg flex items-center gap-2 transition-all`}>
-            <span>{isSaving ? "⏳" : (savedStatus === "saved" ? "✅" : "💾")}</span>
-            {isSaving ? "Guardando..." : (savedStatus === "saved" ? "¡Guardado!" : "Guardar")}
+            className="glass-button bg-[var(--accent-color)]/10 text-[var(--accent-color)] border-[var(--accent-color)]/30 hover:bg-[var(--accent-color)]/20 font-semibold py-1.5 px-4 text-sm rounded-lg flex items-center gap-2 transition-all"
+          >
+            <span>{isSaving ? "⏳" : "💾"}</span>
+            {isSaving ? "Guardando..." : "Guardar"}
           </button>
           <button
             onClick={() => {
               if (isLoggedIn) {
                 logout();
+                toast("Sesión cerrada", { icon: "👋" });
               } else {
                 router.push("/perfiles");
               }
             }}
-            className="glass-button text-gray-300 font-semibold py-1.5 px-4 text-sm rounded-lg flex items-center gap-2 hover:bg-white/10 transition-colors"
+            className="glass-button text-[var(--foreground)] font-semibold py-1.5 px-4 text-sm rounded-lg flex items-center gap-2 hover:bg-black/10 transition-colors"
           >
             <span>{isLoggedIn ? "🔒" : "👤"}</span>
             {isLoggedIn ? "Cerrar" : "Sesión"}

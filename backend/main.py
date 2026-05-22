@@ -17,7 +17,7 @@ import shutil
 import pandas as pd
 
 from database import SessionLocal, engine, Base, get_db
-from models import ModuleDocument, Center, User, CenterStaff, HeadOfStudies, DepartmentHead, DualCoordinator, DualGeneralTutor, GroupTutor, ProfessionalFamily, Degree, Module, LearningOutcome
+from models import ModuleDocument, Center, User, CenterStaff, HeadOfStudies, DepartmentHead, DualCoordinator, DualGeneralTutor, GroupTutor, ProfessionalFamily, Degree, Module, LearningOutcome, DidacticUnit, SessionModel, CourseStudent, StudentEvaluation, LearningOutcomeItem, EvaluationCriterionItem, ActivityItem, InstrumentItem, TaskItem, AceItem, DuaItem, ContingencyItem, FeoeItem, SgmtItem
 
 Base.metadata.create_all(bind=engine)
 
@@ -47,7 +47,107 @@ def get_module(module_id: str, db: Session = Depends(get_db)):
         doc = db.query(ModuleDocument).filter(ModuleDocument.id == module_id).first()
         if not doc:
             raise HTTPException(status_code=404, detail="Module not found")
-        return {"status": "success", "data": doc.data}
+            
+        base_data = dict(doc.data)
+        
+        # Merge DidacticUnits
+        uds = db.query(DidacticUnit).filter_by(module_document_id=module_id).all()
+        if uds:
+            ud_list = []
+            for ud in uds:
+                d = {"id_ud": ud.id_ud, "desc_ud": ud.desc_ud, "horas_ud": ud.horas_ud}
+                if ud.ra_mappings:
+                    d.update(ud.ra_mappings)
+                ud_list.append(d)
+            base_data["df_ud"] = ud_list
+            
+        # Merge Sessions
+        sessions = db.query(SessionModel).filter_by(module_document_id=module_id).all()
+        if sessions:
+            ses_list = []
+            for ses in sessions:
+                ses_list.append({
+                    "ID": ses.session_id,
+                    "id_ud": ses.id_ud,
+                    "Num_Orden": ses.num_orden,
+                    "Horas": ses.horas,
+                    "Tipo_Actividad": ses.tipo_actividad,
+                    "RA_CE": ses.ra_ce,
+                    "Contenidos": ses.contenidos,
+                    "Aspectos_Clave": ses.aspectos_clave,
+                    "Recursos": ses.recursos
+                })
+            base_data["df_sesiones"] = ses_list
+            
+        # Merge Students
+        students = db.query(CourseStudent).filter_by(module_document_id=module_id).all()
+        if students:
+            al_list = []
+            for al in students:
+                al_list.append({
+                    "ID": al.student_id,
+                    "Estado": al.estado,
+                    "Apellidos": al.apellidos,
+                    "Nombre": al.nombre,
+                    "Edad": al.edad,
+                    "Nacimiento": al.nacimiento,
+                    "Repite": al.repite,
+                    "Matricula": al.matricula,
+                    "Comentarios": al.comentarios,
+                    "email": al.email,
+                    "Movil": al.movil
+                })
+            base_data["df_al"] = al_list
+            
+        # Merge Evaluations
+        evals = db.query(StudentEvaluation).filter_by(module_document_id=module_id).all()
+        if evals:
+            ev_list = []
+            for ev in evals:
+                d = {"ID": ev.student_id}
+                if ev.eval_data:
+                    d.update(ev.eval_data)
+                ev_list.append(d)
+            base_data["df_eval"] = ev_list
+            
+        # Merge Phase 2 Models
+        models_map = [
+            (LearningOutcomeItem, "df_ra", ["id_ra", "desc_ra", "peso_ra", "is_dual"]),
+            (EvaluationCriterionItem, "df_ce", ["id_ce", "id_ra", "id_ud", "desc_ce", "peso_ce"]),
+            (ActivityItem, "df_act", ["id_act", "desc_act", "tipo", "tri_act", "peso_act", "is_active"]),
+            (InstrumentItem, "df_pr", ["item_id", "practica"]),
+            (TaskItem, "df_tareas", ["item_id", "nombre_tarea", "reto", "ra_asociados", "instrumento"]),
+            (AceItem, "df_ace", ["item_id", "tipo"]),
+            (DuaItem, "df_dua", ["item_id", "barrera"]),
+            (ContingencyItem, "df_contingencia", ["item_id", "escenario"]),
+            (FeoeItem, "df_feoe", ["item_id"]),
+            (SgmtItem, "df_sgmt", ["id_ud"])
+        ]
+        
+        for ModelClass, df_key, field_names in models_map:
+            items = db.query(ModelClass).filter_by(module_document_id=module_id).all()
+            if items:
+                item_list = []
+                for item in items:
+                    d = {}
+                    # map fields back to JSON keys
+                    if df_key == "df_pr": d["ID"] = item.item_id; d["Práctica"] = item.practica
+                    elif df_key == "df_tareas": d["ID"] = item.item_id; d["Nombre_Tarea"] = item.nombre_tarea; d["Reto"] = item.reto; d["RA_Asociados"] = item.ra_asociados; d["Instrumento"] = item.instrumento
+                    elif df_key == "df_ace": d["ID"] = item.item_id; d["Tipo"] = item.tipo
+                    elif df_key == "df_dua": d["ID"] = item.item_id; d["Barrera"] = item.barrera
+                    elif df_key == "df_contingencia": d["ID"] = item.item_id; d["Escenario"] = item.escenario
+                    elif df_key == "df_feoe": d["ID"] = item.item_id
+                    elif df_key == "df_act": d["id_act"] = item.id_act; d["desc_act"] = item.desc_act; d["Tipo"] = item.tipo; d["tri_act"] = item.tri_act; d["peso_act"] = item.peso_act; d["is_active"] = item.is_active
+                    else:
+                        for f in field_names:
+                            d[f] = getattr(item, f)
+                            
+                    if item.data:
+                        d.update(item.data)
+                    item_list.append(d)
+                base_data[df_key] = item_list
+            
+        return {"status": "success", "data": base_data}
     except HTTPException:
         raise
     except Exception as e:
@@ -60,12 +160,161 @@ async def update_module(module_id: str, request: Request, db: Session = Depends(
     """
     try:
         body = await request.json()
+        
+        # 1. Extract and delete normalized lists from JSON body to save space
+        df_ud = body.pop("df_ud", [])
+        df_sesiones = body.pop("df_sesiones", [])
+        df_al = body.pop("df_al", [])
+        df_eval = body.pop("df_eval", [])
+        
+        # Phase 2 lists
+        df_ra = body.pop("df_ra", [])
+        df_ce = body.pop("df_ce", [])
+        df_act = body.pop("df_act", [])
+        df_pr = body.pop("df_pr", [])
+        df_tareas = body.pop("df_tareas", [])
+        df_ace = body.pop("df_ace", [])
+        df_dua = body.pop("df_dua", [])
+        df_contingencia = body.pop("df_contingencia", [])
+        df_feoe = body.pop("df_feoe", [])
+        df_sgmt = body.pop("df_sgmt", [])
+        
+        # 2. Update JSON Blob
         doc = db.query(ModuleDocument).filter(ModuleDocument.id == module_id).first()
         if doc:
             doc.data = body
         else:
             new_doc = ModuleDocument(id=module_id, data=body)
             db.add(new_doc)
+            
+        # 3. Upsert DidacticUnits
+        db.query(DidacticUnit).filter_by(module_document_id=module_id).delete()
+        if isinstance(df_ud, list):
+            for ud in df_ud:
+                ra_mappings = {k: v for k, v in ud.items() if k not in ['id_ud', 'desc_ud', 'horas_ud']}
+                new_ud = DidacticUnit(
+                    module_document_id=module_id,
+                    id_ud=str(ud.get("id_ud", "")),
+                    desc_ud=str(ud.get("desc_ud", "")),
+                    horas_ud=int(ud.get("horas_ud", 0) or 0),
+                    ra_mappings=ra_mappings
+                )
+                db.add(new_ud)
+                
+        # 4. Upsert Sessions
+        db.query(SessionModel).filter_by(module_document_id=module_id).delete()
+        if isinstance(df_sesiones, list):
+            for ses in df_sesiones:
+                new_ses = SessionModel(
+                    module_document_id=module_id,
+                    session_id=str(ses.get("ID", "")),
+                    id_ud=str(ses.get("id_ud", "")),
+                    num_orden=int(ses.get("Num_Orden", 0) or 0),
+                    horas=int(ses.get("Horas", 0) or 0),
+                    tipo_actividad=str(ses.get("Tipo_Actividad", "")),
+                    ra_ce=str(ses.get("RA_CE", "")),
+                    contenidos=str(ses.get("Contenidos", "")),
+                    aspectos_clave=str(ses.get("Aspectos_Clave", "")),
+                    recursos=str(ses.get("Recursos", ""))
+                )
+                db.add(new_ses)
+                
+        # 5. Upsert Students
+        db.query(CourseStudent).filter_by(module_document_id=module_id).delete()
+        if isinstance(df_al, list):
+            for al in df_al:
+                new_al = CourseStudent(
+                    module_document_id=module_id,
+                    student_id=str(al.get("ID", "")),
+                    estado=str(al.get("Estado", "")),
+                    apellidos=str(al.get("Apellidos", "")),
+                    nombre=str(al.get("Nombre", "")),
+                    edad=str(al.get("Edad", "")),
+                    nacimiento=str(al.get("Nacimiento", "")),
+                    repite=str(al.get("Repite", "")),
+                    matricula=str(al.get("Matricula", "")),
+                    comentarios=str(al.get("Comentarios", "")),
+                    email=str(al.get("email", "")),
+                    movil=str(al.get("Movil", ""))
+                )
+                db.add(new_al)
+                
+        # 6. Upsert Evaluations
+        db.query(StudentEvaluation).filter_by(module_document_id=module_id).delete()
+        if isinstance(df_eval, list):
+            for ev in df_eval:
+                student_id = str(ev.get("ID", ""))
+                eval_data = {k: v for k, v in ev.items() if k != "ID"}
+                new_ev = StudentEvaluation(
+                    module_document_id=module_id,
+                    student_id=student_id,
+                    eval_data=eval_data
+                )
+                db.add(new_ev)
+                
+        # 7. Upsert Phase 2 Lists
+        def safe_str(val):
+            return str(val) if val is not None else ""
+            
+        db.query(LearningOutcomeItem).filter_by(module_document_id=module_id).delete()
+        if isinstance(df_ra, list):
+            for row in df_ra:
+                d = {k: v for k, v in row.items() if k not in ["id_ra", "desc_ra", "peso_ra", "is_dual"]}
+                db.add(LearningOutcomeItem(module_document_id=module_id, id_ra=safe_str(row.get("id_ra")), desc_ra=safe_str(row.get("desc_ra")), peso_ra=safe_str(row.get("peso_ra")), is_dual=safe_str(row.get("is_dual")), data=d))
+
+        db.query(EvaluationCriterionItem).filter_by(module_document_id=module_id).delete()
+        if isinstance(df_ce, list):
+            for row in df_ce:
+                d = {k: v for k, v in row.items() if k not in ["id_ce", "id_ra", "id_ud", "desc_ce", "peso_ce"]}
+                db.add(EvaluationCriterionItem(module_document_id=module_id, id_ce=safe_str(row.get("id_ce")), id_ra=safe_str(row.get("id_ra")), id_ud=safe_str(row.get("id_ud")), desc_ce=safe_str(row.get("desc_ce")), peso_ce=safe_str(row.get("peso_ce")), data=d))
+
+        db.query(ActivityItem).filter_by(module_document_id=module_id).delete()
+        if isinstance(df_act, list):
+            for row in df_act:
+                d = {k: v for k, v in row.items() if k not in ["id_act", "desc_act", "Tipo", "tri_act", "peso_act", "is_active"]}
+                db.add(ActivityItem(module_document_id=module_id, id_act=safe_str(row.get("id_act")), desc_act=safe_str(row.get("desc_act")), tipo=safe_str(row.get("Tipo")), tri_act=safe_str(row.get("tri_act")), peso_act=safe_str(row.get("peso_act")), is_active=safe_str(row.get("is_active")), data=d))
+
+        db.query(InstrumentItem).filter_by(module_document_id=module_id).delete()
+        if isinstance(df_pr, list):
+            for row in df_pr:
+                d = {k: v for k, v in row.items() if k not in ["ID", "Práctica"]}
+                db.add(InstrumentItem(module_document_id=module_id, item_id=safe_str(row.get("ID")), practica=safe_str(row.get("Práctica")), data=d))
+
+        db.query(TaskItem).filter_by(module_document_id=module_id).delete()
+        if isinstance(df_tareas, list):
+            for row in df_tareas:
+                d = {k: v for k, v in row.items() if k not in ["ID", "Nombre_Tarea", "Reto", "RA_Asociados", "Instrumento"]}
+                db.add(TaskItem(module_document_id=module_id, item_id=safe_str(row.get("ID")), nombre_tarea=safe_str(row.get("Nombre_Tarea")), reto=safe_str(row.get("Reto")), ra_asociados=safe_str(row.get("RA_Asociados")), instrumento=safe_str(row.get("Instrumento")), data=d))
+
+        db.query(AceItem).filter_by(module_document_id=module_id).delete()
+        if isinstance(df_ace, list):
+            for row in df_ace:
+                d = {k: v for k, v in row.items() if k not in ["ID", "Tipo"]}
+                db.add(AceItem(module_document_id=module_id, item_id=safe_str(row.get("ID")), tipo=safe_str(row.get("Tipo")), data=d))
+
+        db.query(DuaItem).filter_by(module_document_id=module_id).delete()
+        if isinstance(df_dua, list):
+            for row in df_dua:
+                d = {k: v for k, v in row.items() if k not in ["ID", "Barrera"]}
+                db.add(DuaItem(module_document_id=module_id, item_id=safe_str(row.get("ID")), barrera=safe_str(row.get("Barrera")), data=d))
+
+        db.query(ContingencyItem).filter_by(module_document_id=module_id).delete()
+        if isinstance(df_contingencia, list):
+            for row in df_contingencia:
+                d = {k: v for k, v in row.items() if k not in ["ID", "Escenario"]}
+                db.add(ContingencyItem(module_document_id=module_id, item_id=safe_str(row.get("ID")), escenario=safe_str(row.get("Escenario")), data=d))
+
+        db.query(FeoeItem).filter_by(module_document_id=module_id).delete()
+        if isinstance(df_feoe, list):
+            for row in df_feoe:
+                d = {k: v for k, v in row.items() if k not in ["ID"]}
+                db.add(FeoeItem(module_document_id=module_id, item_id=safe_str(row.get("ID")), data=d))
+
+        db.query(SgmtItem).filter_by(module_document_id=module_id).delete()
+        if isinstance(df_sgmt, list):
+            for row in df_sgmt:
+                d = {k: v for k, v in row.items() if k not in ["id_ud"]}
+                db.add(SgmtItem(module_document_id=module_id, id_ud=safe_str(row.get("id_ud")), data=d))
         
         db.commit()
         return {"status": "success", "message": "Module updated successfully"}
@@ -253,6 +502,7 @@ def generate_pdf(type: str, pd_id: str, curso_id: str, al_id: str = None, db: Se
         from pdf_matrices import generar_pdf_matrices
         from pdf_boletin_grupal import generar_pdf_boletin_grupal, generar_pdf_boletin_grupal_final
         from pdf_boletin_individual import generar_pdf_boletin_individual
+        from pdf_clases_ud import generar_pdf_clases_ud
         
         # Load Data from DB
         def load_db(m_id):
@@ -300,6 +550,8 @@ def generate_pdf(type: str, pd_id: str, curso_id: str, al_id: str = None, db: Se
             buffer = generar_pdf_calendario(info_modulo, info_fechas, planning_ledger, calendar_notes)
         elif type == "seguimiento":
             buffer = generar_pdf_seguimiento(info_modulo, info_fechas, horario, planning_ledger, calendar_notes, df_sesiones)
+        elif type == "clases_ud":
+            buffer = generar_pdf_clases_ud(info_modulo, df_ud, df_sesiones)
         elif type == "planificacion":
             df_sgmt = get_df(curso_data, "df_sgmt")
             daily_ledger = curso_data.get("daily_ledger", {})

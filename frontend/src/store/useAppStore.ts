@@ -18,29 +18,7 @@ export interface CourseGroup {
   modules: ModuleAssignment[];
 }
 
-interface AppState {
-  activeModuleId: string;
-  setActiveModuleId: (id: string) => void;
-  moduleData: any;
-  setModuleData: (data: any) => void;
-  updateInfoModulo: (key: string, value: any) => void;
-  updateDataFrame: (key: string, data: any[]) => void;
-  updateModuleData: (key: string, data: any) => void;
-  activeCursoId: string;
-  setActiveCursoId: (id: string) => void;
-  cursoData: any;
-  setCursoData: (data: any) => void;
-  updateCursoData: (key: string, data: any) => void;
-  isSidebarOpen: boolean;
-  toggleSidebar: () => void;
-  isLoggedIn: boolean;
-  login: () => void;
-  logout: () => void;
-  
-  // Shared state for assignments and teachers
-  groups: CourseGroup[];
-  setGroups: (groups: CourseGroup[] | ((prev: CourseGroup[]) => CourseGroup[])) => void;
-}
+import { AppState } from '@/types';
 
 const initialGroups: CourseGroup[] = [
   {

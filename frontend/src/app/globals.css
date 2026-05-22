@@ -1,7 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0f172a;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --primary-gradient: linear-gradient(135deg, #14a085 0%, #0d7377 100%);
+  --secondary-gradient: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(0, 0, 0, 0.1);
+  --text-muted: #6b7280;
+  --accent-color: #14a085;
+}
+
+.dark {
+  --background: #0b1120;
   --foreground: #f3f4f6;
   --primary-gradient: linear-gradient(135deg, #0d7377 0%, #14a085 100%);
   --secondary-gradient: linear-gradient(135deg, #1f2937 0%, #111827 100%);
