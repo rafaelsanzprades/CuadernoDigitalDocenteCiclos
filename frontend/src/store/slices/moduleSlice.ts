@@ -1,17 +1,17 @@
 import { StateCreator } from 'zustand';
 import { AppState } from '@/types';
 
-export const createModuleSlice: StateCreator<AppState> = (set) => ({
+export const createModuleSlice: StateCreator<AppState, [], [], any> = (set) => ({
   activeModuleId: '0237-ictve-pd', // ID por defecto para pruebas
-  setActiveModuleId: (id) => set({ activeModuleId: id }),
+  setActiveModuleId: (id: any) => set({ activeModuleId: id }),
   
   activeCursoId: '0237-ictve-curso-2025-26',
-  setActiveCursoId: (id) => set({ activeCursoId: id }),
+  setActiveCursoId: (id: any) => set({ activeCursoId: id }),
   
   moduleData: null,
-  setModuleData: (data) => set({ moduleData: data }),
+  setModuleData: (data: any) => set({ moduleData: data }),
   
-  updateInfoModulo: (key, value) => set((state) => ({
+  updateInfoModulo: (key: any, value: any) => set((state: any) => ({
     moduleData: state.moduleData ? {
       ...state.moduleData,
       info_modulo: {
@@ -21,14 +21,14 @@ export const createModuleSlice: StateCreator<AppState> = (set) => ({
     } : null
   })),
   
-  updateDataFrame: (key, data) => set((state) => ({
+  updateDataFrame: (key: any, data: any) => set((state: any) => ({
     moduleData: state.moduleData ? {
       ...state.moduleData,
       [key]: data
     } : null
   })),
   
-  updateModuleData: (key, data) => set((state) => ({
+  updateModuleData: (key: any, data: any) => set((state: any) => ({
     moduleData: state.moduleData ? {
       ...state.moduleData,
       [key]: data
@@ -36,9 +36,9 @@ export const createModuleSlice: StateCreator<AppState> = (set) => ({
   })),
   
   cursoData: null,
-  setCursoData: (data) => set({ cursoData: data }),
+  setCursoData: (data: any) => set({ cursoData: data }),
   
-  updateCursoData: (key, data) => set((state) => ({
+  updateCursoData: (key: any, data: any) => set((state: any) => ({
     cursoData: state.cursoData ? {
       ...state.cursoData,
       [key]: data

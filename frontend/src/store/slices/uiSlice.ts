@@ -1,7 +1,7 @@
 import { StateCreator } from 'zustand';
 import { AppState } from '@/types';
 
-export const createUiSlice: StateCreator<AppState> = (set) => ({
+export const createUiSlice: StateCreator<AppState, [], [], any> = (set) => ({
   isSidebarOpen: true,
-  toggleSidebar: () => set((state) => ({ isSidebarOpen: !state.isSidebarOpen })),
+  toggleSidebar: () => set((state: any) => ({ isSidebarOpen: !state.isSidebarOpen })),
 });

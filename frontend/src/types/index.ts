@@ -85,6 +85,10 @@ export const ModuleDataSchema = z.object({
   df_dua: z.array(z.any()).optional(),
   df_contingencia: z.array(z.any()).optional(),
   info_modulo: z.record(z.string(), z.any()).optional(),
+  horario: z.record(z.string(), z.any()).optional(),
+  info_fechas: z.record(z.string(), z.any()).optional(),
+  calendar_notes: z.record(z.string(), z.any()).optional(),
+  planning_ledger: z.record(z.string(), z.any()).optional(),
 });
 export type ModuleData = z.infer<typeof ModuleDataSchema>;
 
