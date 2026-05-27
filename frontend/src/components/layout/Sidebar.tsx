@@ -24,6 +24,18 @@ export default function Sidebar() {
         </button>
       </div>
 
+      {/* Botón Asistente */}
+      {isSidebarOpen && (
+        <div className="px-4 pb-3">
+          <button 
+            onClick={() => useAppStore.getState().setWizardOpen(true)}
+            className="w-full flex items-center justify-center gap-2 py-1.5 px-2 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 border border-purple-500/20 hover:border-purple-500/40 rounded-md text-sm font-bold transition-all shadow-[0_0_10px_rgba(168,85,247,0.1)] hover:shadow-[0_0_15px_rgba(168,85,247,0.2)]"
+          >
+            <span>✨</span> Asistente de inicio
+          </button>
+        </div>
+      )}
+
 
       {/* Nav sin overflow */}
       <nav className={`flex-1 ${isSidebarOpen ? 'px-3' : 'px-2'} py-2 space-y-4 overflow-x-hidden overflow-y-auto scrollbar-hide`}>

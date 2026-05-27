@@ -149,6 +149,8 @@ export interface AppState {
   
   isSidebarOpen: boolean;
   toggleSidebar: () => void;
+  isWizardOpen: boolean;
+  setWizardOpen: (open: boolean) => void;
   isLoggedIn: boolean;
   login: () => void;
   logout: () => void;

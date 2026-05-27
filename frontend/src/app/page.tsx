@@ -14,7 +14,13 @@ import { WelcomeWizard } from "@/components/features/dashboard/WelcomeWizard";
 import { useModulesList } from "@/hooks/useApi";
 
 export default function Dashboard() {
-  const { activeModuleId, setActiveModuleId, activeCursoId, setActiveCursoId, moduleData, setModuleData, cursoData, setCursoData } = useAppStore();
+  const { 
+    activeModuleId, setActiveModuleId, 
+    activeCursoId, setActiveCursoId, 
+    moduleData, setModuleData, 
+    cursoData, setCursoData,
+    isWizardOpen, setWizardOpen 
+  } = useAppStore();
 
   const { data: modulesList, isLoading: loadingModules, mutate: fetchModules } = useModulesList();
 
@@ -33,14 +39,13 @@ export default function Dashboard() {
   const [newCursoName, setNewCursoName] = useState(activeCursoId || "nuevo-modulo-curso");
 
   const [activeTab, setActiveTab] = useState("resumen");
-  const [showWizard, setShowWizard] = useState(false);
 
   useEffect(() => {
     if (modulesList) {
       if (modules.pd_modules.length === 0 && !activeModuleId) {
-        setShowWizard(true);
+        setWizardOpen(true);
       } else {
-        setShowWizard(false);
+        setWizardOpen(false);
       }
 
       if (!selectedCentro && modules.centro_modules.length > 0) setSelectedCentro(modules.centro_modules[0]);
@@ -189,9 +194,9 @@ export default function Dashboard() {
 
   return (
     <div className="flex min-h-screen bg-background relative">
-      {showWizard && (
+      {isWizardOpen && (
         <WelcomeWizard
-          onComplete={() => setShowWizard(false)}
+          onComplete={() => setWizardOpen(false)}
           fetchModules={fetchModules}
           setActiveModuleId={setActiveModuleId}
           setActiveCursoId={setActiveCursoId}
@@ -257,12 +262,6 @@ export default function Dashboard() {
                   <h2 className="text-2xl font-bold text-foreground flex items-center gap-2">
                     <span>⚙️</span> Entorno de trabajo
                   </h2>
-                  <button 
-                    onClick={() => setShowWizard(true)}
-                    className="text-sm px-4 py-2 bg-accent/10 text-accent hover:bg-accent/20 rounded-md font-bold transition-colors flex items-center gap-2"
-                  >
-                    <span>✨</span> Ver Asistente de Bienvenida
-                  </button>
                 </div>
                 <FileManagementPanel
                   modules={modules}
