@@ -11,5 +11,5 @@ python-jose
 pytest
 httpx
 pytest-asyncio
-docx2pdf
-pywin32
+docx2pdf; sys_platform == 'win32'
+pywin32; sys_platform == 'win32'

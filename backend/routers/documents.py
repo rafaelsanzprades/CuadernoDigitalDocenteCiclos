@@ -3,8 +3,17 @@ from fastapi.responses import FileResponse
 import os
 import mimetypes
 import tempfile
-import pythoncom
-from docx2pdf import convert
+import sys
+
+if sys.platform == "win32":
+    try:
+        import pythoncom
+        from docx2pdf import convert
+        DOCX_CONVERSION_AVAILABLE = True
+    except ImportError:
+        DOCX_CONVERSION_AVAILABLE = False
+else:
+    DOCX_CONVERSION_AVAILABLE = False
 
 router = APIRouter(prefix="/api/documents", tags=["documents"])
 
@@ -20,6 +29,8 @@ def get_safe_path(requested_path: str) -> str:
     return target_path
 
 def convert_to_pdf_sync(docx_path: str, pdf_path: str):
+    if not DOCX_CONVERSION_AVAILABLE:
+        raise HTTPException(status_code=501, detail="La conversión de DOCX a PDF no está soportada en este entorno.")
     # Initialize COM for the current thread (FastAPI runs this in a threadpool)
     pythoncom.CoInitialize()
     try:
