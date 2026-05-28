@@ -13,11 +13,11 @@ export default function SeguimientoPage() {
   const [allDiarioOpen, setAllDiarioOpen] = useState(true);
 
   const TABS = [
-    { id: "diario", label: "📝 Diario de aula", cleanLabel: "Diario de aula" },
-    { id: "resumen", label: "📊 Resumen mensual", cleanLabel: "Resumen mensual" }
+    { id: "resumen", label: "📊 Resumen mensual", cleanLabel: "Resumen mensual" },
+    { id: "diario", label: "📝 Diario de aula", cleanLabel: "Diario de aula" }
   ];
 
-  const [activeTab, setActiveTab] = useState("diario");
+  const [activeTab, setActiveTab] = useState("resumen");
   const activeTabCleanLabel = TABS.find(t => t.id === activeTab)?.cleanLabel;
 
   useEffect(() => {
