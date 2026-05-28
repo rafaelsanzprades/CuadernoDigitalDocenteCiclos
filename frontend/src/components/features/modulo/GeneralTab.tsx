@@ -177,12 +177,6 @@ export function GeneralTab() {
         </div>
       </Card>
 
-      <div>
-        <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3 mb-1">
-          📋 Datos
-        </h1>
-        <p className="text-muted mt-1">Información del docente, horarios y ponderaciones del módulo.</p>
-      </div>
 
       <Card className="p-6">
         <h4 className="text-lg font-bold text-foreground mb-5 flex items-center gap-2">

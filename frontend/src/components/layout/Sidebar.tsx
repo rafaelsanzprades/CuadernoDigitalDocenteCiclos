@@ -24,15 +24,12 @@ export default function Sidebar() {
         </button>
       </div>
 
-      {/* Botón Asistente */}
+      {/* Botón Hoy */}
       {isSidebarOpen && (
         <div className="px-4 pb-3">
-          <button 
-            onClick={() => useAppStore.getState().setWizardOpen(true)}
-            className="w-full flex items-center justify-center gap-2 py-1.5 px-2 bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 border border-purple-500/20 hover:border-purple-500/40 rounded-md text-sm font-bold transition-all shadow-[0_0_10px_rgba(168,85,247,0.1)] hover:shadow-[0_0_15px_rgba(168,85,247,0.2)]"
-          >
-            <span>✨</span> Asistente de inicio
-          </button>
+          <Link href="/hoy" className="w-full flex items-center justify-center gap-2 py-1.5 px-2 bg-accent/10 hover:bg-accent/20 text-accent border border-accent/20 hover:border-accent/40 rounded-md text-sm font-bold transition-all shadow-[0_0_10px_rgba(26,188,156,0.1)] hover:shadow-[0_0_15px_rgba(26,188,156,0.2)]">
+            <span>📅</span> Tu día y semana
+          </Link>
         </div>
       )}
 
@@ -53,6 +50,12 @@ export default function Sidebar() {
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={(e) => {
+                  if (item.href === "#wizard") {
+                    e.preventDefault();
+                    useAppStore.getState().setWizardOpen(true);
+                  }
+                }}
                 title={!isSidebarOpen ? item.label : undefined}
                 className={`flex items-center ${isSidebarOpen ? 'gap-2.5 px-3' : 'justify-center px-0'} py-2 rounded-lg transition-all duration-150 group
                   ${pathname === item.href

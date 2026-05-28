@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import { AppState, CourseGroup } from '@/types';
 
 import { createAuthSlice } from './slices/authSlice';
@@ -6,12 +7,19 @@ import { createUiSlice } from './slices/uiSlice';
 import { createModuleSlice } from './slices/moduleSlice';
 import { createGroupsSlice } from './slices/groupsSlice';
 
-export const useAppStore = create<AppState>((...a) => ({
-  ...createAuthSlice(...a),
-  ...createUiSlice(...a),
-  ...createModuleSlice(...a),
-  ...createGroupsSlice(...a),
-}));
+export const useAppStore = create<AppState>()(
+  persist(
+    (...a) => ({
+      ...createAuthSlice(...a),
+      ...createUiSlice(...a),
+      ...createModuleSlice(...a),
+      ...createGroupsSlice(...a),
+    }),
+    {
+      name: 'cdd-store-cache',
+    }
+  )
+);
 
 // Selectores compartidos
 export const calculateTeacherHours = (groups: CourseGroup[], teacherId: number) => {

@@ -11,7 +11,7 @@ if _backend_dir not in sys.path:
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers import modules, users, catalogs, pdf, documents, demo
+from routers import modules, users, catalogs, pdf, documents, demo, attendance
 
 app = FastAPI(
     title="Cuaderno Digital Docente API",
@@ -35,6 +35,7 @@ app.include_router(users.router)
 app.include_router(pdf.router)
 app.include_router(documents.router)
 app.include_router(demo.router)
+app.include_router(attendance.router)
 
 @app.get("/")
 def read_root():

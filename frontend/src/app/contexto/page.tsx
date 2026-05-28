@@ -5,17 +5,17 @@ import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
 import { useAppStore } from "@/store/useAppStore";
 
-export default function IntroduccionPage() {
+export default function ContextoPage() {
   const { activeModuleId, moduleData, setModuleData, updateModuleData, updateDataFrame } = useAppStore();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
 
   const TABS = [
-    { id: "introduccion", label: "📝 Introducción", cleanLabel: "Introducción" },
+    { id: "contexto", label: "📝 Contexto", cleanLabel: "Contexto" },
     { id: "planes", label: "📄 Planes", cleanLabel: "Planes" }
   ];
-  const [activeTab, setActiveTab] = useState("introduccion");
+  const [activeTab, setActiveTab] = useState("contexto");
   const activeTabCleanLabel = TABS.find(t => t.id === activeTab)?.cleanLabel;
 
   useEffect(() => {
@@ -137,10 +137,10 @@ export default function IntroduccionPage() {
         <main className="flex-1 p-8 content-area space-y-8">
           <div className="mb-4">
             <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
-              {activeTab === "introduccion" ? "📝 Introducción" : "📝 Planes"}
+              {activeTab === "contexto" ? "📝 Contexto" : "📝 Planes"}
             </h1>
             <p className="text-muted mt-2">
-              {activeTab === "introduccion" 
+              {activeTab === "contexto" 
                 ? "Información general del centro, profesorado y aulas."
                 : "Programas educativos del Centro."}
             </p>
@@ -158,7 +158,7 @@ export default function IntroduccionPage() {
             ))}
           </div>
 
-          {activeTab === "introduccion" && (
+          {activeTab === "contexto" && (
             <section className="flex flex-col gap-6">
               <div className="glass-card p-6 border-t-4 border-t-indigo-500">
                 <h2 className="text-xl font-bold mb-4 flex items-center gap-2">🏫 Contexto escolar</h2>

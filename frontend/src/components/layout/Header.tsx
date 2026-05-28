@@ -131,12 +131,15 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
             if (group.title === "Centro educativo" || group.title === "Centro") {
               badgeText = "ciclos-fp";
               badgeColor = "text-purple-300 bg-purple-500/10 border-purple-500/30";
-            } else if (group.title === "Módulo didáctico" || group.title === "Módulo") {
+            } else if (group.title === "Programación" || group.title === "Módulo") {
               badgeText = activeModuleId || "—";
               badgeColor = "text-[#14a085] bg-[#14a085]/10 border-[#14a085]/30";
             } else if (group.title === "Curso y alumnado" || group.title === "Curso") {
               badgeText = activeCursoId || "—";
               badgeColor = "text-blue-300 bg-blue-500/10 border-blue-500/30";
+            } else if (group.title === "Gestión") {
+              badgeText = session?.user?.name || session?.user?.email?.split('@')[0] || "Admin";
+              badgeColor = "text-amber-300 bg-amber-500/10 border-amber-500/30";
             }
 
             const isOpen = activeDropdown === group.title;

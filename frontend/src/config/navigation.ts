@@ -1,21 +1,16 @@
 export const navGroups = [
   {
-    title: "Centro",
+    title: "Programación",
     items: [
-      { href: "/", label: "Inicio", icon: "🏠" },
-      { href: "/documentos", label: "Visor documental", icon: "📄" },
-      { href: "/descargas", label: "Descargas PDF", icon: "📥" }
-    ]
-  },
-  {
-    title: "Módulo",
-    items: [
-      { href: "/modulo", label: "Configuración. Datos", icon: "⚙️" },
-      { href: "/introduccion", label: "Introducción. Planes", icon: "📝" },
+      { href: "/modulo", label: "Módulo", icon: "⚙️" },
+      { href: "/contexto", label: "Contexto y planes", icon: "📝" },
       { href: "/calendario", label: "Calendario académico", icon: "🗓️" },
+      { href: "/resultados", label: "Resultados AP. RAs", icon: "🎯" },
       { href: "/matrices", label: "Matrices RA→CE→UD", icon: "🧮" },
       { href: "/instrumentos", label: "Instrumentos de evaluación", icon: "🛠️" },
-      { href: "/programacion", label: "Programación de aula", icon: "📚" }
+      { href: "/programacion", label: "Programación de aula", icon: "📚" },
+      { href: "/documentos", label: "Visor documental", icon: "📄" },
+      { href: "/descargas", label: "Descargas PDF", icon: "📥" }
     ]
   },
   {
@@ -23,6 +18,7 @@ export const navGroups = [
     items: [
       { href: "/matricula", label: "Matrícula alumnado", icon: "👥" },
       { href: "/seguimiento", label: "Seguimiento diario", icon: "📍" },
+      { href: "/seguimiento/asistencia", label: "Control de asistencia", icon: "🙋‍♂️" },
       { href: "/calificacion", label: "Calificación académica", icon: "📊" },
       { href: "/calificacion-feoe", label: "Calificación FEOE", icon: "🏢" },
       { href: "/evaluacion", label: "Evaluación por RA", icon: "📈" },
@@ -33,6 +29,8 @@ export const navGroups = [
   {
     title: "Gestión",
     items: [
+      { href: "#wizard", label: "Asistente de inicio", icon: "✨" },
+      { href: "/gestion/entorno", label: "Entorno de trabajo", icon: "📂" },
       { href: "/perfiles", label: "Acceso usuarios", icon: "🛡️" },
       { href: "/usuarios", label: "Gestión de usuarios", icon: "👥" },
       { href: "/familias", label: "Familias profesionales", icon: "🗂️" },

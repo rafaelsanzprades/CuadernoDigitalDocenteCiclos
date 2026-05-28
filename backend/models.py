@@ -390,4 +390,10 @@ class PlanningLedgerItem(Base):
     date_str = Column(String, index=True)
     id_ud = Column(String)
 
-
+class AttendanceRecord(Base):
+    __tablename__ = "attendance_records"
+    id = Column(Integer, primary_key=True, index=True)
+    module_document_id = Column(String, ForeignKey("module_documents.id", ondelete="CASCADE"), index=True)
+    student_id = Column(String, index=True)
+    date_str = Column(String, index=True)
+    status = Column(String)

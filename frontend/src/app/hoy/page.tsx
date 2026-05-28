@@ -1,0 +1,117 @@
+"use client";
+
+import { useState } from "react";
+import Sidebar from "@/components/layout/Sidebar";
+import Header from "@/components/layout/Header";
+import { useAppStore } from "@/store/useAppStore";
+import { DashboardKPIs } from "@/components/features/dashboard/DashboardKPIs";
+import { DashboardCharts } from "@/components/features/dashboard/DashboardCharts";
+import { TodayClasses } from "@/components/features/dashboard/TodayClasses";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { MotionWrapper } from "@/components/ui/MotionWrapper";
+import { Calendar } from "lucide-react";
+import { WelcomeWizard } from "@/components/features/dashboard/WelcomeWizard";
+import { useModulesList } from "@/hooks/useApi";
+import { useEffect } from "react";
+
+export default function HoyPage() {
+  const { moduleData, cursoData, isWizardOpen, setWizardOpen, activeModuleId, setActiveModuleId, setActiveCursoId } = useAppStore();
+  const [activeTab, setActiveTab] = useState("hoy");
+  const { data: modulesList, mutate: fetchModules } = useModulesList();
+
+  useEffect(() => {
+    if (modulesList) {
+      if ((!modulesList.pd_modules || modulesList.pd_modules.length === 0) && !activeModuleId) {
+        setWizardOpen(true);
+      } else {
+        setWizardOpen(false);
+      }
+    }
+  }, [modulesList, activeModuleId, setWizardOpen]);
+
+  const TABS = [
+    { id: "hoy", label: "📅 Hoy y semana", cleanLabel: "Hoy" },
+    { id: "resumen", label: "📊 Resumen global", cleanLabel: "Resumen" }
+  ];
+
+  const activeTabCleanLabel = TABS.find(t => t.id === activeTab)?.cleanLabel;
+
+  return (
+    <div className="flex min-h-screen bg-background relative">
+      {isWizardOpen && (
+        <WelcomeWizard
+          onComplete={() => setWizardOpen(false)}
+          fetchModules={fetchModules}
+          setActiveModuleId={setActiveModuleId}
+          setActiveCursoId={setActiveCursoId}
+        />
+      )}
+      <Sidebar />
+      <div className="flex-1 flex flex-col relative z-10 min-w-0">
+        <Header breadcrumbSuffix={activeTabCleanLabel} />
+
+        <div className="flex-1 p-8 pt-4 overflow-y-auto scrollbar-hide">
+          <div className="max-w-6xl mx-auto space-y-8 pb-12">
+
+            {/* Título */}
+            <div>
+              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3 mb-1">
+                📅 Tu día y semana
+              </h1>
+              <p className="text-muted mt-1">Revisa lo que toca impartir hoy y el estado general de tu clase.</p>
+            </div>
+
+            {/* Pestañas */}
+            <div className="flex border-b border-[var(--glass-border)] mt-6 mb-8 overflow-x-auto scrollbar-hide">
+              {TABS.map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === tab.id ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground'}`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Contenido Pestaña Hoy */}
+            {activeTab === "hoy" && (
+              <div className="space-y-8 animate-in fade-in duration-500">
+                <TodayClasses />
+
+                <MotionWrapper className="glass-panel p-6 border-l-4 border-l-blue-400">
+                  <h3 className="text-xl font-bold flex items-center gap-2 mb-4">
+                    <Calendar className="w-6 h-6 text-blue-400" /> Previsión de la Semana
+                  </h3>
+                  <div className="bg-background/40 p-8 rounded-xl border border-[var(--glass-border)] text-center">
+                    <p className="text-muted font-medium mb-2">Sección en construcción</p>
+                    <p className="text-sm text-muted/70">Aquí aparecerá el desglose de las sesiones planificadas para los próximos días.</p>
+                  </div>
+                </MotionWrapper>
+              </div>
+            )}
+
+            {/* Contenido Pestaña Resumen */}
+            {activeTab === "resumen" && (
+              <div className="space-y-6 animate-in fade-in duration-500">
+                {moduleData || cursoData ? (
+                  <MotionWrapper className="space-y-6">
+                    <DashboardKPIs cursoData={cursoData} moduleData={moduleData} />
+                    <DashboardCharts cursoData={cursoData} />
+                  </MotionWrapper>
+                ) : (
+                  <EmptyState
+                    title="No hay datos de resumen"
+                    description="Selecciona o crea una Programación y Curso en Gestión > Entorno de trabajo para ver las analíticas."
+                    icon={Calendar}
+                  />
+                )}
+              </div>
+            )}
+
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

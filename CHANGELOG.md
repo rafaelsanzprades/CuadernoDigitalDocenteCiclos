@@ -3,6 +3,10 @@
 ## [Unreleased]
 - **Migración a SQL (Fase 3):** Finalizada la migración absoluta al modelo relacional. Se eliminó la dependencia del campo JSON para guardar `info_fechas`, `horario`, `info_modulo` y `planning_ledger`. Creadas tablas `ConfigDates`, `ScheduleItem`, `ModuleInfo` y `PlanningLedgerItem`.
 - **UI:** Fusión de las pestañas de Inicio y Datos de Módulos. Modificados los subtítulos de las pestañas a "Resumen" y "Gestión de ficheros".
+- **Navegación y Arquitectura:** Reestructuración de la barra lateral, eliminando el bloque "Centro", agrupando opciones en "Programación", y moviendo "Entorno de trabajo" a la primera posición de "Gestión".
+- **Nueva Vista 'Hoy':** Se estableció `/hoy` como página principal redirigida desde `/`, ofreciendo un resumen de tareas diarias, panel de bienvenida y acceso rápido mediante el botón "Tu día y semana".
+- **Mantenimiento:** Limpieza profunda de directorios, eliminación de 18 scripts obsoletos de Python, bases de datos residuales en raíz y archivos temporales del frontend.
+- **Renombrado:** Actualización de la ruta `/introduccion` a `/contexto` en el código y navegación.
 
 ## Fecha: 27 de Mayo de 2026
 

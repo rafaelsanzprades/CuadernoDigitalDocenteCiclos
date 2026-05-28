@@ -56,7 +56,7 @@ export default function ModuloConfigPage() {
             {/* ── Título ─────────────────────────────────────────── */}
             <div>
               <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3 mb-1">
-                ⚙️ Configuración
+                ⚙️ Módulo
               </h1>
               <p className="text-muted mt-1">Configuración básica del módulo didáctico.</p>
             </div>
