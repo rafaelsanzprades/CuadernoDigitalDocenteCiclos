@@ -27,11 +27,11 @@ export default function AsistenciaPage() {
         
         <div className="flex-1 p-8 overflow-y-auto">
           <div className="w-full space-y-8 pb-12">
-            <div className="pl-6">
-              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3 mb-2 animate-in slide-in-from-left-4 duration-500">
+            <div className="mb-8">
+              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
                 <Users className="w-10 h-10 text-accent" /> Control de asistencia
               </h1>
-              <p className="text-muted text-lg">
+              <p className="text-muted mt-2 text-lg">
                 Pasa lista diaria o revisa el estado acumulado de las faltas y las alertas PdEvC.
               </p>
             </div>

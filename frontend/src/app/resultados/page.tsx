@@ -44,13 +44,13 @@ export default function ResultadosPage() {
       <Sidebar />
       <div className="flex-1 flex flex-col relative z-10 min-w-0">
         <Header breadcrumbSuffix="Contribución RA->OG" />
-        <div className="flex-1 p-8 pt-4 overflow-y-auto scrollbar-hide">
+        <div className="flex-1 p-8 overflow-y-auto scrollbar-hide">
           <MotionWrapper className="space-y-8 pb-12">
-            <div className="pl-6">
-              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3 mb-1">
+            <div className="mb-8">
+              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
                 🎯 Contribución RA-&gt;OG
               </h1>
-              <p className="text-muted mt-1">Definición de los Resultados de Aprendizaje y su contribución a los Objetivos Generales del Título.</p>
+              <p className="text-muted mt-2 text-lg">Definición de los Resultados de Aprendizaje y su contribución a los Objetivos Generales del Título.</p>
             </div>
             
             <RaOgMatrix />

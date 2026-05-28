@@ -144,11 +144,11 @@ export default function InstrumentosPage() {
         <Header breadcrumbSuffix={activeTabCleanLabel} />
         
         <main className="flex-1 p-8 content-area space-y-8">
-          <div className="mb-8 pl-6">
+          <div className="mb-8">
             <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
               🛠️ Instrumentos de evaluación
             </h1>
-            <p className="text-muted mt-2">Definición y ponderación de las herramientas y métodos de evaluación.</p>
+            <p className="text-muted mt-2 text-lg">Definición y ponderación de las herramientas y métodos de evaluación.</p>
           </div>
 
           <div className="flex border-b border-[var(--glass-border)] mb-8 overflow-x-auto scrollbar-hide">

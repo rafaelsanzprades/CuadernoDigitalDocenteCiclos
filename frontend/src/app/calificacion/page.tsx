@@ -242,14 +242,14 @@ export default function CalificacionPage() {
         <Header />
         
         <main className="flex-1 p-8 content-area space-y-6">
-          <div className="mb-6 pl-6">
+          <div className="mb-8">
             <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
               📊 Calificación académica
             </h1>
-            <p className="text-muted mt-2">Registro y cálculo automático de las calificaciones por trimestre y evaluación final.</p>
+            <p className="text-muted mt-2 text-lg">Registro y cálculo automático de las calificaciones por trimestre y evaluación final.</p>
           </div>
 
-          <div className="flex border-b border-[var(--glass-border)] mb-6 overflow-x-auto scrollbar-hide">
+          <div className="flex border-b border-[var(--glass-border)] mb-8 overflow-x-auto scrollbar-hide">
             {[
               { id: "resumen", label: "📊 Resumen estadístico" },
               { id: "detalle", label: "👥 Detalle por alumnado" },
@@ -257,7 +257,7 @@ export default function CalificacionPage() {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-6 py-3 font-bold text-sm transition-all border-b-2 whitespace-nowrap ${
+                className={`px-6 py-4 font-bold text-sm transition-all border-b-2 whitespace-nowrap ${
                   activeTab === tab.id
                     ? "border-blue-500 text-blue-400"
                     : "border-transparent text-muted hover:text-foreground hover:bg-foreground/5"

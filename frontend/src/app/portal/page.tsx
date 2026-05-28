@@ -183,10 +183,10 @@ export default function PortalPage() {
       <div className="flex-1 flex flex-col relative z-10 min-w-0">
         <Header />
         
-        <main className="flex-1 p-8 pt-4 space-y-8">
-          <div className="pl-6">
-            <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3 mb-4">🎓 Portal alumnado</h1>
-            <p className="text-muted mt-2">Vista individualizada por estudiante con sus calificaciones y adquisición de competencias.</p>
+        <main className="flex-1 p-8 space-y-8">
+          <div className="mb-8">
+            <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">🎓 Portal alumnado</h1>
+            <p className="text-muted mt-2 text-lg">Vista individualizada por estudiante con sus calificaciones y adquisición de competencias.</p>
             
             <div className="flex items-center gap-3 bg-foreground/5 border border-[var(--glass-border)] rounded-xl px-4 py-3 w-fit">
               <span className="text-muted text-sm font-semibold">Viendo como:</span>

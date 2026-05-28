@@ -112,11 +112,11 @@ export default function DescargasPage() {
         <Header />
 
         <main className="flex-1 p-8 content-area space-y-8">
-          <div className="pl-6">
+          <div className="mb-8">
             <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
               📥 Descargas PDF
             </h1>
-            <p className="text-muted mt-2">Genera y descarga los documentos oficiales de tu cuaderno digital en formato PDF.</p>
+            <p className="text-muted mt-2 text-lg">Genera y descarga los documentos oficiales de tu cuaderno digital en formato PDF.</p>
           </div>
 
           <Card className="p-6 border-t-4 border-t-purple-500">

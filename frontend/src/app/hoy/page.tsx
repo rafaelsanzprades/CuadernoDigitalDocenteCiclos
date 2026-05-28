@@ -50,19 +50,19 @@ export default function HoyPage() {
       <div className="flex-1 flex flex-col relative z-10 min-w-0">
         <Header breadcrumbSuffix={activeTabCleanLabel} />
 
-        <div className="flex-1 p-8 pt-4 overflow-y-auto scrollbar-hide">
+        <div className="flex-1 p-8 overflow-y-auto scrollbar-hide">
           <div className="w-full space-y-8 pb-12">
 
             {/* Título */}
-            <div className="pl-6">
-              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3 mb-1">
+            <div className="mb-8">
+              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
                 📅 Tu día y semana
               </h1>
-              <p className="text-muted mt-1">Revisa lo que toca impartir hoy y el estado general de tu clase.</p>
+              <p className="text-muted mt-2 text-lg">Revisa lo que toca impartir hoy y el estado general de tu clase.</p>
             </div>
 
             {/* Pestañas */}
-            <div className="flex border-b border-[var(--glass-border)] mt-6 mb-8 overflow-x-auto scrollbar-hide">
+            <div className="flex border-b border-[var(--glass-border)] mb-8 overflow-x-auto scrollbar-hide">
               {TABS.map(tab => (
                 <button
                   key={tab.id}

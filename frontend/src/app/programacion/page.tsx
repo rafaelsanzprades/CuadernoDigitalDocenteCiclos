@@ -174,11 +174,11 @@ export default function ProgramacionPage() {
         
         <main className="flex-1 p-8 space-y-8 overflow-y-auto">
           <div className="flex justify-between items-center mb-8">
-            <div className="pl-6">
+            <div className="mb-8">
               <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
                 📚 Programación de aula
               </h1>
-              <p className="text-muted mt-2">Secuenciación temporal de las unidades didácticas y diseño de tareas competenciales.</p>
+              <p className="text-muted mt-2 text-lg">Secuenciación temporal de las unidades didácticas y diseño de tareas competenciales.</p>
             </div>
             
             <Button 

@@ -101,16 +101,16 @@ export default function UsuariosPage() {
       <main className="flex-1 flex flex-col relative z-10 min-w-0">
         <Header />
         
-        <div className="flex-1 p-8 pt-4 overflow-y-auto scrollbar-hide">
+        <div className="flex-1 p-8 overflow-y-auto scrollbar-hide">
           <div className="w-full space-y-6 animate-in fade-in duration-500">
             
             {/* Cabecera */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-              <div className="pl-6">
-                <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3 mb-2">
+              <div className="mb-8">
+                <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
                   <span className="text-3xl">👥</span> Gestión de usuarios
                 </h1>
-                <p className="text-muted">Administra el claustro, asigna perfiles RBAC y define los contextos de actuación de cada docente.</p>
+                <p className="text-muted mt-2 text-lg">Administra el claustro, asigna perfiles RBAC y define los contextos de actuación de cada docente.</p>
               </div>
               <Button 
                 onClick={() => setIsModalOpen(true)}

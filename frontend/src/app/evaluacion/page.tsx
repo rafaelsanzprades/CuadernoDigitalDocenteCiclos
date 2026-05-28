@@ -176,11 +176,11 @@ export default function EvaluacionPage() {
         <Header breadcrumbSuffix={activeTabCleanLabel} />
 
         <main className="flex-1 p-8 content-area space-y-6">
-          <div className="mb-4 pl-6">
-            <h1 className="text-4xl font-extrabold text-foreground tracking-tight">
+          <div className="mb-8">
+            <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
               📈 Evaluación por RA
             </h1>
-            <p className="text-muted mt-2">Control de faltas de asistencia, incidencias y notas de clase diarias.</p>
+            <p className="text-muted mt-2 text-lg">Control de faltas de asistencia, incidencias y notas de clase diarias.</p>
           </div>
 
           <div className="flex border-b border-[var(--glass-border)] mb-8 overflow-x-auto scrollbar-hide">
