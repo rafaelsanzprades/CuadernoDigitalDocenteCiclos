@@ -245,14 +245,14 @@ export default function CalificacionPage() {
         <main className="flex-1 p-8 content-area space-y-6">
           <div>
               <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
-              📊 Calificación académica
+              📊 Calificación numérica
             </h1>
             <p className="text-muted mt-2 text-lg">Registro y cálculo automático de las calificaciones por trimestre y evaluación final.</p>
           </div>
 
           <div className="flex border-b border-[var(--glass-border)] overflow-x-auto scrollbar-hide">
             {[
-              { id: "resumen", label: "📊 Resumen estadístico" },
+              { id: "resumen", label: "📊 Resumen" },
               { id: "detalle", label: "👥 Detalle por alumnado" },
               { id: "feoe", label: "🏢 Calificación FEOE" },
             ].map(tab => (

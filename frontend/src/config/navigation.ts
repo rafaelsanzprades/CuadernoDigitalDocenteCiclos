@@ -19,7 +19,7 @@ export const navGroups = [
       { href: "/matricula", label: "Matrícula alumnado", icon: "👥" },
       { href: "/seguimiento", label: "Seguimiento diario", icon: "📍" },
       { href: "/asistencia", label: "Control de asistencia", icon: "🙋‍♂️" },
-      { href: "/calificacion", label: "Calificación académica", icon: "📊" },
+      { href: "/calificacion", label: "Calificación numérica", icon: "📊" },
       { href: "/evaluacion", label: "Evaluación por RA", icon: "📈" },
       { href: "/analisis", label: "Análisis grupal", icon: "📉" },
       { href: "/portal", label: "Portal alumnado", icon: "🎓" }
