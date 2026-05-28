@@ -27,7 +27,7 @@ export default function AsistenciaPage() {
         
         <div className="flex-1 p-8 overflow-y-auto">
           <div className="w-full space-y-8 pb-12">
-            <div className="mb-8">
+            <div>
               <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
                 <Users className="w-10 h-10 text-accent" /> Control de asistencia
               </h1>
@@ -36,7 +36,7 @@ export default function AsistenciaPage() {
               </p>
             </div>
 
-            <div className="flex border-b border-[var(--glass-border)] mb-8 overflow-x-auto scrollbar-hide">
+            <div className="flex border-b border-[var(--glass-border)] overflow-x-auto scrollbar-hide">
               {TABS.map(tab => (
                 <button
                   key={tab.id}

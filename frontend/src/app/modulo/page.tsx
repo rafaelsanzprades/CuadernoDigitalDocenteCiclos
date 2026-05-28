@@ -52,14 +52,14 @@ export default function ModuloConfigPage() {
           <MotionWrapper className="space-y-8 pb-12">
 
             {/* ── Título ─────────────────────────────────────────── */}
-            <div className="mb-8">
+            <div>
               <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
                 ⚙️ Módulo didáctico
               </h1>
               <p className="text-muted mt-2 text-lg">Configuración básica del módulo didáctico.</p>
             </div>
 
-            <div className="flex border-b border-[var(--glass-border)] mb-8 overflow-x-auto scrollbar-hide">
+            <div className="flex border-b border-[var(--glass-border)] overflow-x-auto scrollbar-hide">
               {TABS.map(tab => (
                 <button
                   key={tab.id}

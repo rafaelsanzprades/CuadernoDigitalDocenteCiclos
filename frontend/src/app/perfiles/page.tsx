@@ -111,8 +111,8 @@ export default function RolesPage() {
         <Header breadcrumbSuffix={activeTabLabel} />
         <div className="flex-1 overflow-y-auto scrollbar-hide">
           <div className="min-h-screen p-8 w-full space-y-8">
-          <div className="mb-8">
-            <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">🛡️ Acceso usuarios</h1>
+          <div>
+              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">🛡️ Acceso usuarios</h1>
             <p className="text-muted mt-2 text-lg">
               Sistema de Roles Basado en Contextos (RBAC). Los permisos no son estáticos, dependen del contexto geográfico, organizativo y temporal.
             </p>

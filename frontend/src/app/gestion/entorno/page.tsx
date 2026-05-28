@@ -162,7 +162,7 @@ export default function EntornoTrabajoPage() {
         
         <div className="flex-1 p-8 overflow-y-auto">
           <div className="w-full mx-auto space-y-8 pb-12">
-            <div className="mb-8">
+            <div>
               <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
                 📂 Entorno de trabajo
               </h1>

@@ -133,8 +133,8 @@ export default function DocumentosPage() {
 
             {/* Cabecera */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-              <div className="mb-8">
-                <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
+              <div>
+              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
                   <span className="text-3xl">📄</span> Visor documental
                 </h1>
                 <p className="text-muted mt-2 text-lg">Carpetas y archivos de Boletines oficiales, modelos y plantillas.</p>

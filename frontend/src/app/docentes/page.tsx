@@ -49,8 +49,8 @@ function DocentesContent() {
           <div className="w-full space-y-6 animate-in fade-in duration-500">
             
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-              <div className="mb-8">
-                <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
+              <div>
+              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
                   <span className="text-3xl">👨‍🏫</span> Asignación de docentes
                 </h1>
                 <p className="text-muted mt-2 text-lg">Jefatura de Estudios: Control de carga horaria lectiva del profesorado y módulos asignados.</p>

@@ -146,8 +146,8 @@ export default function CalificacionFEOEPage() {
         <Header />
         
         <main className="flex-1 p-8 content-area space-y-8">
-          <div className="mb-8">
-            <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
+          <div>
+              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
               🏢 Calificación FEOE
             </h1>
             <p className="text-muted mt-2 text-lg">Seguimiento y evaluación del periodo de Formación en Empresa u Organismo Equiparado (FEOE).</p>

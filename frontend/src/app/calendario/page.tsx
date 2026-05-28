@@ -425,8 +425,8 @@ export default function CalendarioPage() {
         <main className="flex-1 p-8 content-area space-y-8">
 
           {/* Page heading */}
-          <div className="mb-8">
-            <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">🗓️ Calendario académico</h1>
+          <div>
+              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">🗓️ Calendario académico</h1>
             <p className="text-muted mt-2 text-lg">Fechas generales, trimestres, horario semanal, festivos y eventos relevantes del curso.</p>
           </div>
 
@@ -437,7 +437,7 @@ export default function CalendarioPage() {
             </p>
           )}
 
-          <div className="flex border-b border-[var(--glass-border)] mb-8 overflow-x-auto scrollbar-hide">
+          <div className="flex border-b border-[var(--glass-border)] overflow-x-auto scrollbar-hide">
             {TABS.map(tab => (
               <button
                 key={tab.id}

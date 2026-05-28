@@ -54,7 +54,7 @@ export default function HoyPage() {
           <div className="w-full space-y-8 pb-12">
 
             {/* Título */}
-            <div className="mb-8">
+            <div>
               <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
                 📅 Tu día y semana
               </h1>
@@ -62,7 +62,7 @@ export default function HoyPage() {
             </div>
 
             {/* Pestañas */}
-            <div className="flex border-b border-[var(--glass-border)] mb-8 overflow-x-auto scrollbar-hide">
+            <div className="flex border-b border-[var(--glass-border)] overflow-x-auto scrollbar-hide">
               {TABS.map(tab => (
                 <button
                   key={tab.id}

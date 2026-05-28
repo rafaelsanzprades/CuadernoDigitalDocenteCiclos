@@ -184,8 +184,8 @@ export default function PortalPage() {
         <Header />
         
         <main className="flex-1 p-8 space-y-8">
-          <div className="mb-8">
-            <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">🎓 Portal alumnado</h1>
+          <div>
+              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">🎓 Portal alumnado</h1>
             <p className="text-muted mt-2 text-lg">Vista individualizada por estudiante con sus calificaciones y adquisición de competencias.</p>
             
             <div className="flex items-center gap-3 bg-foreground/5 border border-[var(--glass-border)] rounded-xl px-4 py-3 w-fit">

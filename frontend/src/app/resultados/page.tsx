@@ -46,7 +46,7 @@ export default function ResultadosPage() {
         <Header breadcrumbSuffix="Contribución RA->OG" />
         <div className="flex-1 p-8 overflow-y-auto scrollbar-hide">
           <MotionWrapper className="space-y-8 pb-12">
-            <div className="mb-8">
+            <div>
               <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
                 🎯 Contribución RA-&gt;OG
               </h1>

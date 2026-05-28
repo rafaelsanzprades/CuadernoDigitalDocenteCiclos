@@ -8,14 +8,11 @@ import { SessionTable } from "@/components/features/programacion/SessionTable";
 import { TaskTable } from "@/components/features/programacion/TaskTable";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { Save, CheckCircle2 } from "lucide-react";
-import toast from "react-hot-toast";
+
 
 export default function ProgramacionPage() {
   const { activeModuleId, moduleData, updateDataFrame } = useAppStore();
   const { isLoading } = useModule(activeModuleId);
-  const [saving, setSaving] = useState(false);
-  const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved">("idle");
   const [allUdsOpen, setAllUdsOpen] = useState(true);
 
   const TABS = [
@@ -26,32 +23,7 @@ export default function ProgramacionPage() {
   const [activeTab, setActiveTab] = useState("secuenciacion");
   const activeTabCleanLabel = TABS.find(t => t.id === activeTab)?.cleanLabel;
 
-  const handleSave = async () => {
-    if (!activeModuleId || !moduleData) return;
-    setSaving(true);
-    setSaveStatus("saving");
-    try {
-      const res = await fetch(`/api/module/${activeModuleId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(moduleData),
-      });
-      const result = await res.json();
-      if (result.status === "success") {
-        toast.success("Programación guardada correctamente");
-        setSaveStatus("saved");
-        setTimeout(() => setSaveStatus("idle"), 3000);
-      } else {
-        toast.error("Error al guardar");
-        setSaveStatus("idle");
-      }
-    } catch (err) {
-      console.error(err);
-      toast.error("Fallo de conexión");
-      setSaveStatus("idle");
-    }
-    setSaving(false);
-  };
+
 
   const onDragEnd = (result: any) => {
     if (!result.destination) return;
@@ -173,31 +145,14 @@ export default function ProgramacionPage() {
         <Header breadcrumbSuffix={activeTabCleanLabel} />
         
         <main className="flex-1 p-8 space-y-8 overflow-y-auto">
-          <div className="flex justify-between items-center mb-8">
-            <div className="mb-8">
-              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                📚 Programación de aula
-              </h1>
-              <p className="text-muted mt-2 text-lg">Secuenciación temporal de las unidades didácticas y diseño de tareas competenciales.</p>
-            </div>
-            
-            <Button 
-              onClick={handleSave}
-              disabled={saving || saveStatus === "saved"}
-              variant={saveStatus === "saved" ? "success" : "primary"}
-            >
-              {saveStatus === "saving" ? (
-                <div className="w-5 h-5 border-2 border-accent border-t-transparent rounded-full animate-spin" />
-              ) : saveStatus === "saved" ? (
-                <CheckCircle2 className="w-5 h-5" />
-              ) : (
-                <Save className="w-5 h-5" />
-              )}
-              <span>{saveStatus === "saving" ? "Guardando..." : saveStatus === "saved" ? "¡Guardado!" : "Guardar Cambios"}</span>
-            </Button>
+          <div>
+            <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
+              📚 Programación de aula
+            </h1>
+            <p className="text-muted mt-2 text-lg">Secuenciación temporal de las unidades didácticas y diseño de tareas competenciales.</p>
           </div>
 
-          <div className="flex border-b border-[var(--glass-border)] mb-8 overflow-x-auto scrollbar-hide">
+          <div className="flex border-b border-[var(--glass-border)] overflow-x-auto scrollbar-hide">
             {TABS.map(tab => (
               <button
                 key={tab.id}
