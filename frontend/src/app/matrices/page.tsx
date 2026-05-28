@@ -141,7 +141,7 @@ export default function MatricesPage() {
               <table className="w-full text-left text-sm">
                 <thead>
                   <tr className="text-muted border-b border-[var(--glass-border)]">
-                    <th className="pb-2 w-24">ID-RA</th>
+                    <th className="pb-2 w-24">RA</th>
                     <th className="pb-2 w-24">% RA</th>
                     <th className="pb-2 w-16 text-center">FEOE</th>
                     <th className="pb-2">Resultados de aprendizaje</th>
@@ -296,7 +296,7 @@ export default function MatricesPage() {
                             <table className="w-full text-left text-sm">
                               <thead>
                                 <tr className="text-muted border-b border-[var(--glass-border)]">
-                                  <th className="pb-2 w-24">ID-CE</th>
+                                  <th className="pb-2 w-24">CE</th>
                                   <th className="pb-2 w-24">% CE</th>
                                   <th className="pb-2">Criterio de Evaluación</th>
                                   <th className="pb-2 w-10"></th>
