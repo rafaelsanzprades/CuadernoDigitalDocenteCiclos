@@ -7,6 +7,7 @@ import { useAppStore } from "@/store/useAppStore";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { motion, AnimatePresence } from "framer-motion";
+import { RaOgMatrix } from "@/components/features/resultados/RaOgMatrix";
 
 export default function MatricesPage() {
   const { activeModuleId, moduleData, setModuleData, updateDataFrame } = useAppStore();
@@ -21,6 +22,7 @@ export default function MatricesPage() {
     { id: "ra", label: "RA y sus CE", icon: "🎓" },
     { id: "ud", label: "UD Unidades didácticas", icon: "📚" },
     { id: "relacion", label: "Relación entre RA y UD", icon: "🎯" },
+    { id: "contribucion", label: "Contribución de RA en OG", icon: "🎯" },
   ];
 
   useEffect(() => {
@@ -557,6 +559,13 @@ export default function MatricesPage() {
               <div className="text-center text-muted">No hay Resultados de aprendizaje definidos.</div>
             )}
           </Card>
+            </div>
+          )}
+
+          {/* ── Contribución de RA en OG ────────────────────────────────────── */}
+          {activeTab === "contribucion" && (
+            <div className="animate-in fade-in duration-500">
+              <RaOgMatrix />
             </div>
           )}
 

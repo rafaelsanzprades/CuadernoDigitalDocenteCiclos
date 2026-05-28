@@ -6,7 +6,6 @@ export const navGroups = [
       { href: "/contexto", label: "Contexto y planes", icon: "📝" },
       { href: "/calendario", label: "Calendario académico", icon: "🗓️" },
       { href: "/matrices", label: "Matrices RA→CE→UD", icon: "🧮" },
-      { href: "/resultados", label: "Contribución RA→OG", icon: "🎯" },
       { href: "/instrumentos", label: "Instrumentos de evaluación", icon: "🛠️" },
       { href: "/programacion", label: "Programación de aula", icon: "📚" },
       { href: "/documentos", label: "Visor documental", icon: "📄" },
