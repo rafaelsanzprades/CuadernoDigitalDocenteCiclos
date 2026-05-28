@@ -3,13 +3,15 @@ import { Users, CheckCircle, BarChart3, Clock } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { motion, animate, useMotionValue, useTransform } from "framer-motion";
 
-function AnimatedCounter({ value, suffix = "" }: { value: number, suffix?: string }) {
+function AnimatedCounter({ value, suffix = "", decimals = 0 }: { value: number, suffix?: string, decimals?: number }) {
   const count = useMotionValue(0);
-  const rounded = useTransform(count, Math.round);
+  const rounded = useTransform(count, (latest) => {
+    return Number(latest).toFixed(decimals);
+  });
   const display = useTransform(rounded, (v) => `${v}${suffix}`);
 
   useEffect(() => {
-    const animation = animate(count, value, { duration: 2, ease: "easeOut" });
+    const animation = animate(count, value, { duration: 1.5, ease: "easeOut" });
     return animation.stop;
   }, [value, count]);
 
@@ -22,62 +24,101 @@ interface DashboardKPIsProps {
 }
 
 export function DashboardKPIs({ cursoData, moduleData }: DashboardKPIsProps) {
-  const alumnosCount = cursoData?.df_al?.length || 0;
+  // Calculo de total impartido a partir del df_sgmt mensual (las horas se guardan en los meses _Imp)
+  const df_sgmt = cursoData?.df_sgmt || [];
+  const total_impartido = df_sgmt.reduce((sum: number, row: any) => {
+    let row_imp = 0;
+    Object.keys(row).forEach(k => {
+      if (k.endsWith('_Imp') && k !== 'Total_Imp') {
+        row_imp += (Number(row[k]) || 0);
+      }
+    });
+    return sum + row_imp;
+  }, 0);
+
+  const total_previsto = moduleData?.df_ud?.reduce((sum: number, ud: any) => sum + (Number(ud.horas_ud) || 0), 0) || 0;
+  const porcentaje_progreso = total_previsto > 0 ? (total_impartido / total_previsto) * 100 : 0;
+
+  // Calculo de horas sin docencia desde el calendario (para h_real_total) y el daily_ledger
+  let h_real_total = 0;
+  let h_sin_docencia = 0;
+  const dias_semana_list = ["Lun", "Mar", "Mié", "Jue", "Vie"];
   
-  const sgmtData = cursoData?.df_sgmt || [];
-  let hPlan = 0; 
-  let hImp = 0;
-  sgmtData.forEach((ud: any) => { 
-    hPlan += Number(ud.horas_ud || 0); 
-    hImp += Number(ud.Total_Imp || 0); 
-  });
-  const progreso = hPlan > 0 ? Math.round((hImp / hPlan) * 100) : 0;
-  
-  const tareasCount = moduleData?.df_tareas?.length || 0;
+  const daily_ledger = cursoData?.daily_ledger || {};
+  const info_fechas = moduleData?.info_fechas || {};
+  const horario = moduleData?.horario || {};
+  const calendar_notes = moduleData?.calendar_notes || {};
+
+  const processTrimestre = (ini_str: string, fin_str: string) => {
+    if (!ini_str || !fin_str) return;
+    const ini = new Date(ini_str);
+    const fin = new Date(fin_str);
+    let curr = new Date(ini);
+
+    while (curr <= fin) {
+      if (curr.getDay() >= 1 && curr.getDay() <= 5) {
+        const diaSemana = dias_semana_list[curr.getDay() - 1];
+        const dateStr = curr.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+        if (!calendar_notes[`f_${dateStr}`]) {
+          const h_dia = Number(horario[diaSemana]) || 0;
+          h_real_total += h_dia;
+          if (daily_ledger[dateStr]?.sin_docencia) {
+            h_sin_docencia += h_dia;
+          }
+        }
+      }
+      curr.setDate(curr.getDate() + 1);
+    }
+  };
+
+  processTrimestre(info_fechas.ini_1t, info_fechas.fin_1t);
+  processTrimestre(info_fechas.ini_2t, info_fechas.fin_2t);
+  processTrimestre(info_fechas.ini_3t, info_fechas.fin_3t);
+
+  const perc_sin_docencia = h_real_total > 0 ? (h_sin_docencia / h_real_total) * 100 : 0;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-      <Card className="p-6 border-l-4 border-l-blue-500 flex items-center gap-4 hover:scale-[1.02] transition-transform shadow-lg hover:shadow-blue-500/20">
-        <div className="p-3 bg-blue-500/20 rounded-lg">
-          <Users className="w-8 h-8 text-blue-400" />
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
+        <span>📊</span> Resumen planificación y seguimiento global
+      </h2>
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
+        <div className="glass-card p-6 flex flex-col items-center justify-center border-t-4 border-t-blue-500 hover:scale-[1.02] transition-transform shadow-lg hover:shadow-blue-500/20">
+          <span className="text-sm text-muted mb-1 text-center">Horas Previstas</span>
+          <span className="text-3xl font-bold text-foreground">
+            <AnimatedCounter value={total_previsto} /> h
+          </span>
         </div>
-        <div>
-          <p className="text-sm text-muted font-semibold">Alumnado</p>
-          <p className="text-3xl font-bold text-foreground"><AnimatedCounter value={alumnosCount} /></p>
+        
+        <div className="glass-card p-6 flex flex-col items-center justify-center border-t-4 border-t-[#14a085] hover:scale-[1.02] transition-transform shadow-lg hover:shadow-[#14a085]/20">
+          <span className="text-sm text-muted mb-1 text-center">Horas Impartidas</span>
+          <span className="text-3xl font-bold text-foreground">
+            <AnimatedCounter value={total_impartido} /> h
+          </span>
         </div>
-      </Card>
-
-      <Card className="p-6 border-l-4 border-l-[#14a085] flex items-center gap-4 hover:scale-[1.02] transition-transform shadow-lg hover:shadow-[#14a085]/20">
-        <div className="p-3 bg-[#14a085]/20 rounded-lg">
-          <CheckCircle className="w-8 h-8 text-[#14a085]" />
+        
+        <div className="glass-card p-6 flex flex-col items-center justify-center border-t-4 border-t-purple-500 hover:scale-[1.02] transition-transform shadow-lg hover:shadow-purple-500/20">
+          <span className="text-sm text-muted mb-1 text-center">% Progreso</span>
+          <span className="text-3xl font-bold text-foreground">
+            <AnimatedCounter value={porcentaje_progreso} suffix="%" decimals={1} />
+          </span>
         </div>
-        <div>
-          <p className="text-sm text-muted font-semibold">Progreso</p>
-          <p className="text-3xl font-bold text-foreground"><AnimatedCounter value={progreso} suffix="%" /></p>
+        
+        <div className="glass-card p-6 flex flex-col items-center justify-center border-t-4 border-t-orange-500 hover:scale-[1.02] transition-transform shadow-lg hover:shadow-orange-500/20">
+          <span className="text-sm text-muted mb-1 text-center">Horas sin docencia</span>
+          <span className="text-3xl font-bold text-foreground">
+            <AnimatedCounter value={h_sin_docencia} /> h
+          </span>
         </div>
-      </Card>
-
-      <Card className="p-6 border-l-4 border-l-purple-500 flex items-center gap-4 hover:scale-[1.02] transition-transform shadow-lg hover:shadow-purple-500/20">
-        <div className="p-3 bg-purple-500/20 rounded-lg">
-          <Clock className="w-8 h-8 text-purple-400" />
+        
+        <div className="glass-card p-6 flex flex-col items-center justify-center border-t-4 border-t-yellow-500 hover:scale-[1.02] transition-transform shadow-lg hover:shadow-yellow-500/20">
+          <span className="text-sm text-muted mb-1 text-center">% Sin docencia</span>
+          <span className="text-3xl font-bold text-foreground">
+            <AnimatedCounter value={perc_sin_docencia} suffix="%" decimals={1} />
+          </span>
         </div>
-        <div>
-          <p className="text-sm text-muted font-semibold">Impartidas</p>
-          <p className="text-3xl font-bold text-foreground">
-            <AnimatedCounter value={hImp} /> <span className="text-sm font-normal text-muted">h</span>
-          </p>
-        </div>
-      </Card>
-
-      <Card className="p-6 border-l-4 border-l-amber-500 flex items-center gap-4 hover:scale-[1.02] transition-transform shadow-lg hover:shadow-amber-500/20">
-        <div className="p-3 bg-amber-500/20 rounded-lg">
-          <BarChart3 className="w-8 h-8 text-amber-400" />
-        </div>
-        <div>
-          <p className="text-sm text-muted font-semibold">Tareas</p>
-          <p className="text-3xl font-bold text-foreground"><AnimatedCounter value={tareasCount} /></p>
-        </div>
-      </Card>
+      </div>
     </div>
   );
 }

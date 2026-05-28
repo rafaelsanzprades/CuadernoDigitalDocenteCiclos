@@ -223,33 +223,7 @@ export default function SeguimientoPage() {
 
           {activeTab === "resumen" && (
             <>
-              <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
-<span>📊</span> Resumen planificación y seguimiento global
-</h2>
 
-              {/* Metrics */}
-              <div className="grid grid-cols-5 gap-6">
-                <div className="glass-card p-6 flex flex-col items-center justify-center border-t-4 border-t-blue-500">
-                  <span className="text-sm text-muted mb-1">Horas Previstas</span>
-                  <span className="text-3xl font-bold text-foreground">{total_previsto} h</span>
-                </div>
-                <div className="glass-card p-6 flex flex-col items-center justify-center border-t-4 border-t-[#14a085]">
-                  <span className="text-sm text-muted mb-1">Horas Impartidas</span>
-                  <span className="text-3xl font-bold text-foreground">{total_impartido} h</span>
-                </div>
-                <div className="glass-card p-6 flex flex-col items-center justify-center border-t-4 border-t-purple-500">
-                  <span className="text-sm text-muted mb-1">% Progreso</span>
-                  <span className="text-3xl font-bold text-foreground">{porcentaje_progreso.toFixed(1)}%</span>
-                </div>
-                <div className="glass-card p-6 flex flex-col items-center justify-center border-t-4 border-t-orange-500">
-                  <span className="text-sm text-muted mb-1">Horas sin docencia</span>
-                  <span className="text-3xl font-bold text-foreground">{h_sin_docencia} h</span>
-                </div>
-                <div className="glass-card p-6 flex flex-col items-center justify-center border-t-4 border-t-yellow-500">
-                  <span className="text-sm text-muted mb-1">% Sin docencia</span>
-                  <span className="text-3xl font-bold text-foreground">{perc_sin_docencia.toFixed(1)}%</span>
-                </div>
-              </div>
 
               <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
 <span>📅</span> Planificación y seguimiento mensual
