@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { motion, AnimatePresence } from "framer-motion";
 import { LineChart, Line, ResponsiveContainer, YAxis } from "recharts";
+import { CalificacionFEOETab } from "@/components/features/calificacion/CalificacionFEOETab";
 
 export default function CalificacionPage() {
   const { activeModuleId, moduleData, setModuleData, activeCursoId, cursoData, setCursoData, updateCursoData } = useAppStore();
@@ -253,6 +254,7 @@ export default function CalificacionPage() {
             {[
               { id: "resumen", label: "📊 Resumen estadístico" },
               { id: "detalle", label: "👥 Detalle por alumnado" },
+              { id: "feoe", label: "🏢 Calificación FEOE" },
             ].map(tab => (
               <button
                 key={tab.id}
@@ -549,6 +551,8 @@ export default function CalificacionPage() {
           </div>
             </div>
           )}
+
+          {activeTab === "feoe" && <CalificacionFEOETab />}
 
         </main>
       </div>

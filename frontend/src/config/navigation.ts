@@ -20,7 +20,6 @@ export const navGroups = [
       { href: "/seguimiento", label: "Seguimiento diario", icon: "📍" },
       { href: "/asistencia", label: "Control de asistencia", icon: "🙋‍♂️" },
       { href: "/calificacion", label: "Calificación académica", icon: "📊" },
-      { href: "/calificacion-feoe", label: "Calificación FEOE", icon: "🏢" },
       { href: "/evaluacion", label: "Evaluación por RA", icon: "📈" },
       { href: "/analisis", label: "Análisis grupal", icon: "📉" },
       { href: "/portal", label: "Portal alumnado", icon: "🎓" }
