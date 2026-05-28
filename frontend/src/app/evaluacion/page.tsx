@@ -197,9 +197,9 @@ export default function EvaluacionPage() {
 
           {activeTab === "resumen" && (
             <Card className="p-6">
-              <h4 className="text-lg font-bold text-foreground mb-5 flex items-center gap-2">
-                <span>📊</span> Resumen de Resultados de aprendizaje por trimestres
-              </h4>
+              <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-5">
+<span>📊</span> Resumen de Resultados de aprendizaje por trimestres
+</h2>
               <div className="space-y-5">
                 {Object.keys(ra_info).map(ra_id => {
                   const info = ra_info[ra_id];

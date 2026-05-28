@@ -132,9 +132,9 @@ export default function MatricesPage() {
           {activeTab === "ra" && (
             <div className="space-y-8 animate-in fade-in duration-500">
           <Card className="p-6 border-t-4 border-t-accent">
-            <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-              <span>🎓</span> RA. Resultados de aprendizaje
-            </h2>
+            <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-4">
+<span>🎓</span> RA. Resultados de aprendizaje
+</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
@@ -222,9 +222,9 @@ export default function MatricesPage() {
           {/* Criterios de evaluación */}
           <Card className="p-6 border-t-4 border-t-yellow-500">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold flex items-center gap-2">
-                <span>🧩</span> CE. Criterios de evaluación
-              </h2>
+              <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
+<span>🧩</span> CE. Criterios de evaluación
+</h2>
               <Button
                 variant="secondary"
                 onClick={() => {
@@ -431,9 +431,9 @@ export default function MatricesPage() {
           {activeTab === "ud" && (
             <div className="animate-in fade-in duration-500">
           <Card className="p-6 border-t-4 border-t-purple-500">
-            <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-              <span>📚</span> UD. Unidades didácticas
-            </h2>
+            <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-4">
+<span>📚</span> UD. Unidades didácticas
+</h2>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
@@ -525,9 +525,9 @@ export default function MatricesPage() {
           {activeTab === "relacion" && (
             <div className="animate-in fade-in duration-500">
           <Card className="p-6 border-t-4 border-t-amber-500">
-            <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-              <span>🎯</span> Relación entre Resultados de aprendizaje y Unidades didácticas
-            </h2>
+            <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-4">
+<span>🎯</span> Relación entre Resultados de aprendizaje y Unidades didácticas
+</h2>
             {df_ra && df_ra.length > 0 ? (
               <div className="space-y-6">
                 {df_ra.map((ra: any, idx: number) => {

@@ -80,9 +80,9 @@ export default function HoyPage() {
                 <TodayClasses />
 
                 <MotionWrapper className="glass-panel p-6 border-l-4 border-l-blue-400">
-                  <h3 className="text-xl font-bold flex items-center gap-2 mb-4">
-                    <Calendar className="w-6 h-6 text-blue-400" /> Previsión de la Semana
-                  </h3>
+                  <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-4">
+<Calendar className="w-6 h-6 text-blue-400" /> Previsión de la Semana
+</h2>
                   <div className="bg-background/40 p-8 rounded-xl border border-[var(--glass-border)] text-center">
                     <p className="text-muted font-medium mb-2">Sección en construcción</p>
                     <p className="text-sm text-muted/70">Aquí aparecerá el desglose de las sesiones planificadas para los próximos días.</p>

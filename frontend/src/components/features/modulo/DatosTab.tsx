@@ -132,9 +132,9 @@ export function DatosTab() {
       
       {/* 1. Centro y docente */}
       <Card className="p-6">
-        <h4 className="text-lg font-bold text-foreground mb-5 flex items-center gap-2">
-          <span>🧑‍🏫</span> Centro y docente
-        </h4>
+        <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-5">
+<span>🧑‍🏫</span> Centro y docente
+</h2>
         <div className="grid grid-cols-2 gap-6">
           <Input 
             label="Centro educativo"
@@ -153,9 +153,9 @@ export function DatosTab() {
 
       {/* 2. Módulo didáctico */}
       <Card className="p-6">
-        <h4 className="text-lg font-bold text-foreground mb-5 flex items-center gap-2">
-          <span>📝</span> Módulo didáctico
-        </h4>
+        <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-5">
+<span>📝</span> Módulo didáctico
+</h2>
 
         <div className="grid grid-cols-2 gap-4 mb-4">
           <Select
@@ -244,9 +244,9 @@ export function DatosTab() {
       {/* 3. Sesiones semanales */}
       <Card className="p-6 border-l-4 border-l-purple-500">
         <div className="flex justify-between items-center mb-6">
-          <h4 className="text-lg font-bold text-foreground flex items-center gap-2">
-            <span>🕒</span> Sesiones semanales
-          </h4>
+          <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
+<span>🕒</span> Sesiones semanales
+</h2>
           <div className="bg-foreground/15 px-4 py-2 rounded-lg border border-[var(--glass-border)] text-sm">
             Desfase con H/Semanal:{" "}
             <span className={`font-bold ${suma_horario === h_sem ? "text-green-400" : "text-yellow-400"}`}>
@@ -270,9 +270,9 @@ export function DatosTab() {
 
       {/* 4. Sesiones trimestrales */}
       <Card className="p-6 border-l-4 border-l-emerald-500">
-        <h4 className="text-lg font-bold text-foreground flex items-center gap-2 mb-6">
-          <span>📅</span> Sesiones trimestrales
-        </h4>
+        <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-6">
+<span>📅</span> Sesiones trimestrales
+</h2>
         <div className="grid grid-cols-3 gap-6">
           {[
             { label: "1er trimestre", value: h1 },

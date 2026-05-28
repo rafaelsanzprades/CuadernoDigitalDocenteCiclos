@@ -157,7 +157,9 @@ export default function ContextoPage() {
           {activeTab === "contexto" && (
             <section className="flex flex-col gap-6">
               <div className="glass-card p-6 border-t-4 border-t-indigo-500">
-                <h2 className="text-xl font-bold mb-4 flex items-center gap-2">🏫 Contexto escolar</h2>
+                <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-4">
+🏫 Contexto escolar
+</h2>
                 <div className="space-y-4">
                   <div>
                     <label className="text-sm text-muted mb-1 block">Instalaciones</label>
@@ -196,7 +198,9 @@ export default function ContextoPage() {
 
               <div className="space-y-6">
                 <div className="glass-card p-6 border-t-4 border-t-purple-500">
-                  <h2 className="text-xl font-bold mb-4 flex items-center gap-2">👦🏻 Alumnado (ACNEAE)</h2>
+                  <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-4">
+👦🏻 Alumnado (ACNEAE)
+</h2>
                   <div className="space-y-4">
                     <div>
                       <label className="text-sm text-muted mb-1 block">Inclusión</label>
@@ -226,7 +230,9 @@ export default function ContextoPage() {
                 </div>
 
                 <div className="glass-card p-6 border-t-4 border-t-pink-500">
-                  <h2 className="text-xl font-bold mb-4 flex items-center gap-2">⚙️ Configuración del aula</h2>
+                  <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-4">
+⚙️ Configuración del aula
+</h2>
                   <div className="space-y-4">
                     <div>
                       <label className="text-sm text-muted mb-1 block">Estrategias metodológicas. Espacios</label>
@@ -262,7 +268,9 @@ export default function ContextoPage() {
             <div className="space-y-8">
               {/* DUA */}
               <section className="glass-card p-6 border-t-4 border-t-emerald-500">
-                <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">🧩 Plan de Atención a la diversidad</h2>
+                <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-4">
+🧩 Plan de Atención a la diversidad
+</h2>
                 <div className="overflow-x-auto mb-4">
                   <table className="w-full text-left text-sm border-collapse whitespace-nowrap">
                     <thead>
@@ -310,7 +318,9 @@ export default function ContextoPage() {
 
               {/* Contingencia */}
               <section className="glass-card p-6 border-t-4 border-t-orange-500">
-                <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">🛡️ Plan de Contingencia</h2>
+                <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-4">
+🛡️ Plan de Contingencia
+</h2>
                 <div className="overflow-x-auto mb-4">
                   <table className="w-full text-left text-sm border-collapse whitespace-nowrap">
                     <thead>
@@ -359,7 +369,9 @@ export default function ContextoPage() {
 
               {/* ACE */}
               <section className="glass-card p-6 border-t-4 border-t-[#14a085]">
-                <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">🚌 Plan de Actividades complementarias</h2>
+                <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-4">
+🚌 Plan de Actividades complementarias
+</h2>
                 <div className="overflow-x-auto mb-4">
                   <table className="w-full text-left text-sm border-collapse whitespace-nowrap">
                     <thead>

@@ -43,9 +43,9 @@ export function FileManagementPanel({
         {/* Tarjeta de Programación */}
         <Card className="h-full p-6 border-t-4 border-t-accent flex flex-col gap-6 transform transition-all duration-300 hover:shadow-2xl hover:shadow-accent/10">
           <div>
-            <h4 className="text-xl font-bold text-foreground mb-2 flex items-center gap-2">
-              <span>⚙️</span> Programación
-            </h4>
+            <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-2">
+<span>⚙️</span> Programación
+</h2>
             <p className="text-sm text-muted">
               Activa la Programación Didáctica maestra (RAs, UDs, Tareas, etc.) que servirá de plantilla.
             </p>
@@ -101,9 +101,9 @@ export function FileManagementPanel({
         {/* Tarjeta de Curso */}
         <Card className="h-full p-6 border-t-4 border-t-blue-500 flex flex-col gap-6 transform transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10">
           <div>
-            <h4 className="text-xl font-bold text-foreground mb-2 flex items-center gap-2">
-              <span>📅</span> Curso
-            </h4>
+            <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-2">
+<span>📅</span> Curso
+</h2>
             <p className="text-sm text-muted">
               Activa el Curso escolar real (Alumnado, Notas, Seguimiento diario) de la Programación seleccionada.
             </p>

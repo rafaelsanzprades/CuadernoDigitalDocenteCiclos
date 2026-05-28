@@ -261,10 +261,10 @@ export default function UsuariosPage() {
             >
               <div className="flex-1 overflow-y-auto">
             <div className="flex items-center justify-between p-6 border-b border-[var(--glass-border)]">
-              <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
-                <UserPlus className="w-5 h-5 text-accent" />
+              <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
+<UserPlus className="w-5 h-5 text-accent" />
                 Añadir Profesorado
-              </h2>
+</h2>
               <button onClick={() => setIsModalOpen(false)} className="text-muted hover:text-foreground transition-colors">
                 <X className="w-5 h-5" />
               </button>

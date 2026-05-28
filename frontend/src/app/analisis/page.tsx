@@ -220,9 +220,9 @@ export default function AnalisisPage() {
           <section className="grid grid-cols-2 gap-6">
             {/* Gráfico de Barras: Distribución */}
             <Card className="p-6">
-              <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-                📉 Distribución de Calificaciones
-              </h2>
+              <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-6">
+📉 Distribución de Calificaciones
+</h2>
               <div className="h-72 w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={distributionData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
@@ -242,9 +242,9 @@ export default function AnalisisPage() {
 
             {/* Gráfico de Área: Evolución Trimestral */}
             <Card className="p-6">
-              <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-                📈 Evolución por Trimestres
-              </h2>
+              <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-6">
+📈 Evolución por Trimestres
+</h2>
               <div className="h-72 w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <AreaChart data={trendData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
@@ -268,9 +268,9 @@ export default function AnalisisPage() {
           {/* ── Rendimiento por RA (full width, barras horizontales) ── */}
           {raData.length > 0 && (
             <Card className="p-6">
-              <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
-                🎯 Rendimiento por RA
-              </h2>
+              <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-6">
+🎯 Rendimiento por RA
+</h2>
               <div className="space-y-4">
                 {raData.map((ra: any) => {
                   const val = ra.A;

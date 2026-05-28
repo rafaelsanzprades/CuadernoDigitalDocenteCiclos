@@ -41,10 +41,10 @@ export function AddGroupModal({
           <X className="w-6 h-6" />
         </button>
         
-        <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
-          <BookOpen className="w-6 h-6 text-blue-400" />
+        <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-6">
+<BookOpen className="w-6 h-6 text-blue-400" />
           Nuevo Grupo Escolar
-        </h2>
+</h2>
 
         <div className="space-y-4">
           <Select 

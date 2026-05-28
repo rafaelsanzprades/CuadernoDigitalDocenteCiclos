@@ -305,9 +305,9 @@ export default function DescargasPage() {
         {previewUrl && (
           <div className="fixed inset-0 z-50 flex flex-col bg-black/90 backdrop-blur-md">
             <div className="flex items-center justify-between p-4 bg-[var(--glass-bg)] border-b border-[var(--glass-border)]">
-              <h3 className="text-[var(--foreground)] font-bold text-lg flex items-center gap-2">
-                <span>📄</span> {previewFilename}
-              </h3>
+              <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
+<span>📄</span> {previewFilename}
+</h2>
               <div className="flex gap-4">
                 <button 
                   onClick={() => {

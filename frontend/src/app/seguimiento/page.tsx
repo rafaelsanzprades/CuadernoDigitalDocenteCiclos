@@ -223,9 +223,9 @@ export default function SeguimientoPage() {
 
           {activeTab === "resumen" && (
             <>
-              <h2 className="text-2xl font-bold flex items-center gap-2">
-                <span>📊</span> Resumen planificación y seguimiento global
-              </h2>
+              <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
+<span>📊</span> Resumen planificación y seguimiento global
+</h2>
 
               {/* Metrics */}
               <div className="grid grid-cols-5 gap-6">
@@ -251,9 +251,9 @@ export default function SeguimientoPage() {
                 </div>
               </div>
 
-              <h2 className="text-2xl font-bold flex items-center gap-2 mt-8">
-                <span>📅</span> Planificación y seguimiento mensual
-              </h2>
+              <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
+<span>📅</span> Planificación y seguimiento mensual
+</h2>
 
               {/* Data Table */}
               <section className="glass-card p-6 overflow-x-auto">
@@ -303,9 +303,9 @@ export default function SeguimientoPage() {
             <section>
               {/* Seguimiento diario */}
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold flex items-center gap-2">
-                  <span>🗓️</span> Diario de clases. Contingencias
-                </h2>
+                <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
+<span>🗓️</span> Diario de clases. Contingencias
+</h2>
                 <button
                   onClick={() => {
                     setAllDiarioOpen(prev => !prev);

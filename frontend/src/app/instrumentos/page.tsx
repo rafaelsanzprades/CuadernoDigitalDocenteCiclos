@@ -166,9 +166,9 @@ export default function InstrumentosPage() {
           {activeTab === "resumen" && (
             <Card className="p-6">
               {/* ── Resumen por trimestres ────────────────────────── */}
-              <h4 className="text-lg font-bold text-foreground mb-5 flex items-center gap-2">
-                <span>📊</span> Resumen de instrumentos de evaluación por trimestres
-              </h4>
+              <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-5">
+<span>📊</span> Resumen de instrumentos de evaluación por trimestres
+</h2>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm border-collapse">
                   <thead>

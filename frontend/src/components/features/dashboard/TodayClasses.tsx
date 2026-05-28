@@ -26,9 +26,9 @@ export const TodayClasses = () => {
   if (!idUdToday) {
     return (
       <MotionWrapper className="glass-panel p-6 border-l-4 border-l-gray-400">
-        <h3 className="text-xl font-bold flex items-center gap-2 mb-2">
-          <Calendar className="w-6 h-6" /> Tus Clases de Hoy ({format(new Date(), "EEEE d 'de' MMMM", { locale: es })})
-        </h3>
+        <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-2">
+<Calendar className="w-6 h-6" /> Tus Clases de Hoy ({format(new Date(), "EEEE d 'de' MMMM", { locale: es })})
+</h2>
         <p className="text-muted">No tienes sesiones planificadas para el día de hoy según el calendario del módulo.</p>
       </MotionWrapper>
     );
@@ -39,9 +39,9 @@ export const TodayClasses = () => {
       <div className="absolute -right-10 -top-10 text-accent opacity-10">
         <BookOpen className="w-48 h-48" />
       </div>
-      <h3 className="text-xl font-bold flex items-center gap-2 mb-4">
-        <Calendar className="w-6 h-6 text-accent" /> Tus Clases de Hoy ({format(new Date(), "EEEE d 'de' MMMM", { locale: es })})
-      </h3>
+      <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-4">
+<Calendar className="w-6 h-6 text-accent" /> Tus Clases de Hoy ({format(new Date(), "EEEE d 'de' MMMM", { locale: es })})
+</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 relative z-10">
         <div className="bg-background/40 p-4 rounded-xl border border-[var(--glass-border)]">

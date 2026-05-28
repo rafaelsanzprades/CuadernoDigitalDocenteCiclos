@@ -162,10 +162,10 @@ export default function MatriculaPage() {
           {activeTab === "alumnado" && (
             <Card className="p-6 border-t-4 border-t-blue-500">
               <div className="flex justify-between items-end mb-6">
-                <h2 className="text-xl font-bold flex items-center gap-2">
-                  <span>Lista oficial</span>
+                <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
+<span>Lista oficial</span>
                   <span className="text-sm font-normal text-muted bg-foreground/5 px-3 py-1 rounded-full">{df_al.length} alumnos</span>
-                </h2>
+</h2>
                 {n_menores > 0 && (
                   <span className="text-pink-400 text-sm font-semibold">🌸 {n_menores} alumno(s) menor(es) de 18 años</span>
                 )}

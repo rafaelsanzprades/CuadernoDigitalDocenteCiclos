@@ -37,9 +37,9 @@ export function RaOgMatrix() {
 
   return (
     <Card className="p-6 border-l-4 border-l-blue-500 overflow-hidden animate-in fade-in duration-500">
-      <h3 className="text-xl font-bold text-foreground mb-6 flex items-center gap-2">
-        <span>🔗</span> Contribución de los RA a los OG del Título
-      </h3>
+      <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-6">
+<span>🔗</span> Contribución de los RA a los OG del Título
+</h2>
       
       <div className="overflow-x-auto pb-4 scrollbar-hide">
         <table className="w-full text-left border-collapse text-sm">

@@ -64,10 +64,10 @@ export function GroupList({
               <div className="flex items-center gap-3">
                 {isCollapsed ? <ChevronDown className="w-5 h-5 text-muted shrink-0" /> : <ChevronUp className="w-5 h-5 text-accent shrink-0" />}
                 <div>
-                  <h2 className="text-xl font-bold text-foreground flex items-center gap-2">
-                    <BookOpen className="w-5 h-5 text-accent" />
+                  <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
+<BookOpen className="w-5 h-5 text-accent" />
                     {group.name}
-                  </h2>
+</h2>
                   <div className="text-sm text-muted mt-1 flex items-center gap-2">
                     <span className="px-2 py-0.5 rounded bg-foreground/10 text-xs">{group.level}</span>
                     <span>{group.degreeName}</span>

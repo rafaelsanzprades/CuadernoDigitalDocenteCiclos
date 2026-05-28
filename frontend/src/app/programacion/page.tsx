@@ -213,8 +213,8 @@ export default function ProgramacionPage() {
             <Card className="p-6 border-t-4 border-t-accent">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
-                  <span>📋</span> Secuenciación por Unidades didácticas
-                </h2>
+<span>📋</span> Secuenciación por Unidades didácticas
+</h2>
                 <Button
                   variant="ghost"
                   onClick={() => setAllUdsOpen(prev => !prev)}
@@ -239,9 +239,9 @@ export default function ProgramacionPage() {
 
           {activeTab === "tareas" && (
             <Card className="p-6 border-t-4 border-t-blue-500">
-              <h2 className="text-2xl font-bold mb-6 flex items-center gap-2 text-foreground">
-                <span>🎯</span> Diseño de tareas competenciales (TC)
-              </h2>
+              <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-6">
+<span>🎯</span> Diseño de tareas competenciales (TC)
+</h2>
               <TaskTable 
                 df_tareas={df_tareas}
                 handleUpdateTarea={handleUpdateTarea}
