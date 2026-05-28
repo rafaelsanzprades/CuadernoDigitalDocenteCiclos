@@ -112,7 +112,7 @@ export default function MatricesPage() {
         <main className="flex-1 p-8 content-area space-y-8">
           <div>
               <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
-              🧮 Matrices RA → CE → UD
+              🧮 Matrices OG→ RA→ CE→ UD
             </h1>
             <p className="text-muted mt-2 text-lg">Relación y ponderación entre los RA, CE y las diferentes UD del módulo.</p>
           </div>
