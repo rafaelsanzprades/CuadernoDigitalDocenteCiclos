@@ -9,9 +9,9 @@ export const AnalisisIndividualTab = () => {
   const [simVals, setSimVals] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    if (cursoData?.df_al?.length > 0 && !selectedAlId) {
+    if (cursoData?.df_al && cursoData.df_al.length > 0 && !selectedAlId) {
       const activos = cursoData.df_al.filter((al: any) => al.Estado !== "Baja");
-      if (activos.length > 0) setSelectedAlId(activos[0].ID);
+      if (activos.length > 0) setSelectedAlId(activos[0].ID || "");
     }
   }, [cursoData, selectedAlId]);
 

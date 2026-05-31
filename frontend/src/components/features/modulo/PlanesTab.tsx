@@ -14,19 +14,19 @@ export function PlanesTab() {
     const newDf = [...dataFrame];
     const newId = `${prefix}${(newDf.length + 1).toString().padStart(2, '0')}`;
     newDf.push({ ID: newId, ...template });
-    updateDataFrame(dfName, newDf);
+    updateDataFrame(dfName as any, newDf);
   };
 
   const updateRow = (dataFrame: any[], dfName: string, idx: number, field: string, value: any) => {
     const newDf = [...dataFrame];
     newDf[idx][field] = value;
-    updateDataFrame(dfName, newDf);
+    updateDataFrame(dfName as any, newDf);
   };
 
   const removeRow = (dataFrame: any[], dfName: string, idx: number) => {
     const newDf = [...dataFrame];
     newDf.splice(idx, 1);
-    updateDataFrame(dfName, newDf);
+    updateDataFrame(dfName as any, newDf);
   };
 
   return (

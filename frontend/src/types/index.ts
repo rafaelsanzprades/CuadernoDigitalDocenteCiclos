@@ -82,13 +82,17 @@ export const ModuleDataSchema = z.object({
   df_tareas: z.array(TareaSchema).optional(),
   df_act: z.array(z.any()).optional(),
   df_instr: z.array(z.any()).optional(),
+  df_pr: z.array(z.any()).optional(),
   df_dua: z.array(z.any()).optional(),
   df_contingencia: z.array(z.any()).optional(),
+  df_ace: z.array(z.any()).optional(),
   info_modulo: z.record(z.string(), z.any()).optional(),
   horario: z.record(z.string(), z.any()).optional(),
   info_fechas: z.record(z.string(), z.any()).optional(),
   calendar_notes: z.record(z.string(), z.any()).optional(),
   planning_ledger: z.record(z.string(), z.any()).optional(),
+  config_contexto: z.record(z.string(), z.any()).optional(),
+  config_aula: z.record(z.string(), z.any()).optional(),
 });
 export type ModuleData = z.infer<typeof ModuleDataSchema>;
 
@@ -96,6 +100,9 @@ export const CursoDataSchema = z.object({
   df_al: z.array(AlumnoSchema).optional(),
   df_sgmt: z.array(SeguimientoUDSchema).optional(),
   df_feoe: z.array(z.any()).optional(),
+  df_eval: z.array(z.any()).optional(),
+  daily_ledger: z.record(z.string(), z.any()).optional(),
+  tutoria_ledger: z.record(z.string(), z.any()).optional(),
   info_fechas: z.record(z.string(), z.any()).optional(),
   horario: z.record(z.string(), z.any()).optional(),
 });

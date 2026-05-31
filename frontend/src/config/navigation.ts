@@ -13,11 +13,9 @@ export const navGroups = [
   {
     title: "Curso",
     items: [
-      { href: "/matricula", label: "Matrícula alumnado", icon: "👥" },
+      { href: "/alumnado", label: "Alumnado y tutoría", icon: "👥" },
       { href: "/seguimiento", label: "Seguimiento diario", icon: "📍" },
-      { href: "/calificacion", label: "Calificación numérica", icon: "📊" },
-      { href: "/evaluacion", label: "Evaluación por RA", icon: "📈" },
-      { href: "/analisis", label: "Análisis académico", icon: "📉" }
+      { href: "/progreso", label: "Progreso académico", icon: "📈" }
     ]
   },
   {

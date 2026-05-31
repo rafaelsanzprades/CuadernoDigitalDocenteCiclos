@@ -6,8 +6,10 @@ import Header from "@/components/layout/Header";
 import { useAppStore } from "@/store/useAppStore";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { TutoriaTab } from "@/components/features/alumnado/TutoriaTab";
+import { TutoriaMatrixTab } from "@/components/features/alumnado/TutoriaMatrixTab";
 
-export default function MatriculaPage() {
+export default function AlumnadoPage() {
   const { activeCursoId, cursoData, setCursoData, updateCursoData } = useAppStore();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -15,6 +17,8 @@ export default function MatriculaPage() {
 
   const TABS = [
     { id: "alumnado", label: "👥 Alumnado", cleanLabel: "Alumnado" },
+    { id: "tutoria", label: "🎯 Ficha de Tutoría", cleanLabel: "Ficha de Tutoría" },
+    { id: "matriz", label: "📊 Matriz de Tutoría", cleanLabel: "Matriz de Tutoría" },
     { id: "empresas", label: "🏢 Empresas FEOE", cleanLabel: "Empresas FEOE" }
   ];
 
@@ -91,7 +95,7 @@ export default function MatriculaPage() {
         <div className="flex-1 flex flex-col relative z-10 min-w-0">
           <Header />
           <main className="flex-1 flex items-center justify-center content-area">
-            <div className="text-xl text-blue-400 animate-pulse">Cargando matrícula...</div>
+            <div className="text-xl text-blue-400 animate-pulse">Cargando alumnado y tutoría...</div>
           </main>
         </div>
       </div>
@@ -127,6 +131,13 @@ export default function MatriculaPage() {
 
   const handleRemoveAlumno = (idx: number) => {
     const newAl = [...df_al];
+    // Also clean up their tutoring data from the ledger if it exists
+    const studentId = newAl[idx].ID;
+    if (studentId && cursoData.tutoria_ledger && cursoData.tutoria_ledger[studentId]) {
+      const newLedger = { ...cursoData.tutoria_ledger };
+      delete newLedger[studentId];
+      updateCursoData("tutoria_ledger", newLedger);
+    }
     newAl.splice(idx, 1);
     updateCursoData("df_al", newAl);
   };
@@ -140,13 +151,32 @@ export default function MatriculaPage() {
         <Header breadcrumbSuffix={activeTabCleanLabel} />
         
         <main className="flex-1 p-8 content-area space-y-8">
-          <div>
+          <div className="flex justify-between items-start">
+            <div>
               <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
-              👥 Matrícula
-            </h1>
-            <p className="text-muted mt-2 text-lg">Listado oficial de estudiantes matriculados y empresas de formación.</p>
+                👥 Alumnado y tutoría
+              </h1>
+              <p className="text-muted mt-2 text-lg">Gestión oficial de estudiantes, ficha individual de orientación y matriz de tutoría.</p>
+            </div>
+            
+            {/* Save Button */}
+            <div className="flex items-center gap-4">
+              {saveMessage && (
+                <span className={`text-sm font-semibold ${saveMessage.includes("Error") ? "text-red-400" : "text-green-400"}`}>
+                  {saveMessage}
+                </span>
+              )}
+              <Button 
+                onClick={handleSave} 
+                disabled={saving}
+                className="bg-accent text-background hover:bg-accent/80 font-bold px-6 py-2 rounded-xl flex items-center gap-2"
+              >
+                {saving ? "Guardando..." : "Guardar Cambios 💾"}
+              </Button>
+            </div>
           </div>
 
+          {/* Navigation Tabs */}
           <div className="flex border-b border-[var(--glass-border)] overflow-x-auto scrollbar-hide">
             {TABS.map(tab => (
               <button
@@ -159,13 +189,14 @@ export default function MatriculaPage() {
             ))}
           </div>
 
+          {/* Tab 1: Alumnado */}
           {activeTab === "alumnado" && (
             <Card className="p-6 border-t-4 border-t-blue-500">
               <div className="flex justify-between items-end mb-6">
                 <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
-<span>Lista oficial</span>
+                  <span>Lista oficial</span>
                   <span className="text-sm font-normal text-muted bg-foreground/5 px-3 py-1 rounded-full">{df_al.length} alumnos</span>
-</h2>
+                </h2>
                 {n_menores > 0 && (
                   <span className="text-pink-400 text-sm font-semibold">🌸 {n_menores} alumno(s) menor(es) de 18 años</span>
                 )}
@@ -272,7 +303,7 @@ export default function MatriculaPage() {
                               className="text-red-400 hover:text-red-300 font-bold"
                               title="Eliminar Alumno"
                             >
-                              ×
+                              &times;
                             </button>
                           </td>
                         </tr>
@@ -293,6 +324,17 @@ export default function MatriculaPage() {
             </Card>
           )}
 
+          {/* Tab 2: Ficha de Tutoría */}
+          {activeTab === "tutoria" && (
+            <TutoriaTab />
+          )}
+
+          {/* Tab 3: Matriz de Tutoría */}
+          {activeTab === "matriz" && (
+            <TutoriaMatrixTab />
+          )}
+
+          {/* Tab 4: Empresas FEOE */}
           {activeTab === "empresas" && (
             <div className="p-12 text-center text-muted border border-[var(--glass-border)] rounded-xl bg-foreground/5">
               <h2 className="text-2xl font-bold mb-4">Empresas FEOE</h2>
