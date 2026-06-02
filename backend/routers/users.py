@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from datetime import timedelta
 from database import get_db
 from auth.security import get_password_hash, verify_password, create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES
+from auth.dependencies import get_current_user, get_optional_user
 from models import (
     User, Center, CenterStaff, HeadOfStudies, DepartmentHead,
     DualCoordinator, DualGeneralTutor, GroupTutor, TeachingAssignment
@@ -15,7 +16,7 @@ class UserCreate(BaseModel):
     name: str
     surname: str
     email: str
-    password: str = "password"  # Valor por defecto temporal para compatibilidad
+    password: str = "password"
     centers: list[int]
     roles: list[str]
 
@@ -26,33 +27,13 @@ class LoginRequest(BaseModel):
 @router.post("/auth/login")
 def login(req: LoginRequest, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.email == req.email).first()
-    
-    # Simulación de creación al vuelo sólo si es entorno de desarrollo o admin local
-    if not user and "admin" in req.email.lower():
-        user = User(
-            name=req.email.split('@')[0].capitalize(), 
-            surname="", 
-            email=req.email,
-            password=get_password_hash(req.password),
-            is_superadmin=True
-        )
-        db.add(user)
-        db.commit()
-        db.refresh(user)
-    elif not user:
+    if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Credenciales inválidas")
-        
-    if not user.password:
-        # Migración: asignar clave temporal si el usuario antiguo no tiene
-        user.password = get_password_hash("password")
-        db.commit()
         
     if not verify_password(req.password, user.password):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Credenciales inválidas")
     
-    roles_str = "Profesorado"
-    if getattr(user, 'is_superadmin', False):
-        roles_str = "Superadmin"
+    roles_str = "Superadmin" if getattr(user, 'is_superadmin', False) else "Profesorado"
         
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
@@ -72,7 +53,7 @@ def login(req: LoginRequest, db: Session = Depends(get_db)):
     }
 
 @router.get("/users")
-def list_users(db: Session = Depends(get_db)):
+def list_users(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     try:
         users = db.query(User).all()
         result = []
@@ -128,7 +109,11 @@ def list_users(db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/users")
-def create_user(user: UserCreate, db: Session = Depends(get_db)):
+def create_user(user: UserCreate, db: Session = Depends(get_db), current_user: User | None = Depends(get_optional_user)):
+    # Allow user creation without auth only when no users exist yet (bootstrap)
+    existing_count = db.query(User).count()
+    if existing_count > 0 and current_user is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication required")
     try:
         new_user = User(
             name=user.name, 
@@ -172,7 +157,7 @@ class AssignmentUpdate(BaseModel):
     module_ids: list[int]
 
 @router.get("/assignments")
-def get_assignments(db: Session = Depends(get_db)):
+def get_assignments(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     try:
         assignments = db.query(TeachingAssignment).all()
         result = {}
@@ -185,7 +170,7 @@ def get_assignments(db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.post("/assignments/{user_id}")
-def update_assignments(user_id: int, req: AssignmentUpdate, db: Session = Depends(get_db)):
+def update_assignments(user_id: int, req: AssignmentUpdate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     try:
         db.query(TeachingAssignment).filter(TeachingAssignment.user_id == user_id).delete()
         for mid in req.module_ids:

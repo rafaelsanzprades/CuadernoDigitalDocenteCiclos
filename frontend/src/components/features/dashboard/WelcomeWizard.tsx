@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { MotionWrapper } from "@/components/ui/MotionWrapper";
+import { fileManager } from "@/services/fileManager";
 import toast from "react-hot-toast";
 
 interface WelcomeWizardProps {
@@ -21,19 +22,15 @@ export function WelcomeWizard({ onComplete, fetchModules, setActiveModuleId, set
     setStep("LOADING");
     const toastId = toast.loading("Inyectando entorno de demostración...");
     try {
-      const res = await fetch("/api/demo/seed", { method: "POST" });
-      const data = await res.json();
-      if (data.status === "success") {
-        await fetchModules();
-        setActiveModuleId(data.pd_id);
-        setActiveCursoId(data.curso_id);
-        toast.success("¡Entorno de demostración cargado!", { id: toastId });
-        onComplete();
-      } else {
-        throw new Error(data.detail || "Error desconocido");
-      }
-    } catch (error: any) {
-      toast.error(`Error al cargar demo: ${error.message}`, { id: toastId });
+      fileManager.resetActiveDb();
+      await fetchModules();
+      setActiveModuleId("demo-ictve-pd");
+      setActiveCursoId("demo-ictve-curso-2025-26");
+      toast.success("Entorno de demostración cargado!", { id: toastId });
+      onComplete();
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Error desconocido";
+      toast.error(`Error al cargar demo: ${message}`, { id: toastId });
       setStep("CHOICE");
     }
   };

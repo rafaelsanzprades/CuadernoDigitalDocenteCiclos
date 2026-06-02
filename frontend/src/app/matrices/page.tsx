@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
@@ -7,10 +6,11 @@ import { useAppStore } from "@/store/useAppStore";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { motion, AnimatePresence } from "framer-motion";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { RaOgMatrix } from "@/components/features/resultados/RaOgMatrix";
 
 export default function MatricesPage() {
-  const { activeModuleId, moduleData, setModuleData, updateDataFrame } = useAppStore();
+  const { activeModuleId, moduleData, setModuleData, updateDataFrame, saveModuleData } = useAppStore();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
@@ -45,24 +45,13 @@ export default function MatricesPage() {
   }, [activeModuleId, moduleData, setModuleData]);
 
   const handleSave = async () => {
-    if (!activeModuleId || !moduleData) return;
     setSaving(true);
     setSaveMessage("");
-    try {
-      const res = await fetch(`/api/module/${activeModuleId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(moduleData),
-      });
-      const result = await res.json();
-      if (result.status === "success") {
-        setSaveMessage("Guardado correctamente");
-        setTimeout(() => setSaveMessage(""), 3000);
-      } else {
-        setSaveMessage("Error al guardar");
-      }
-    } catch (err) {
-      console.error(err);
+    const ok = await saveModuleData();
+    if (ok) {
+      setSaveMessage("Guardado correctamente");
+      setTimeout(() => setSaveMessage(""), 3000);
+    } else {
       setSaveMessage("Error al guardar");
     }
     setSaving(false);
@@ -86,17 +75,7 @@ export default function MatricesPage() {
   }
 
   if (loading) {
-    return (
-      <div className="flex min-h-screen bg-background">
-        <Sidebar />
-        <div className="flex-1 flex flex-col relative z-10 min-w-0">
-          <Header />
-          <main className="flex-1 flex items-center justify-center content-area">
-            <div className="text-xl text-[#14a085] animate-pulse">Cargando matrices...</div>
-          </main>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner text="Cargando matrices..." />;
   }
 
   const df_ra = moduleData?.df_ra || [];
@@ -179,8 +158,8 @@ export default function MatricesPage() {
                           onClick={() => {
                             const newRa = [...df_ra];
                             const currentVal = newRa[idx].is_dual;
-                            const isChecked = currentVal === true || String(currentVal).toLowerCase() === 'true';
-                            newRa[idx].is_dual = !isChecked;
+                            const isChecked = String(currentVal).toLowerCase() === 'true';
+                            newRa[idx].is_dual = String(!isChecked);
                             updateDataFrame("df_ra", newRa);
                           }}
                           className={`w-6 h-6 rounded flex items-center justify-center transition-all mx-auto ${
@@ -215,7 +194,7 @@ export default function MatricesPage() {
                 onClick={() => {
                   const newRa = [...df_ra];
                   const newId = `RA${(newRa.length + 1).toString().padStart(2, '0')}`;
-                  newRa.push({ id_ra: newId, peso_ra: 0, is_dual: false, desc_ra: "" });
+                  newRa.push({ id_ra: newId, peso_ra: 0, is_dual: "false", desc_ra: "" });
                   updateDataFrame("df_ra", newRa);
                 }}
                 className="text-accent hover:text-[#1abc9c]"
@@ -483,7 +462,7 @@ export default function MatricesPage() {
                             value={ud[ra.id_ra] || ""}
                             onChange={(e) => {
                               const newUd = [...df_ud];
-                              newUd[idx][ra.id_ra] = parseFloat(e.target.value) || 0;
+                              (newUd[idx] as any)[ra.id_ra] = parseFloat(e.target.value) || 0;
                               updateDataFrame("df_ud", newUd);
                             }}
                             className="w-14 text-center bg-foreground/15 border border-[var(--glass-border)] rounded px-1 py-1 text-foreground text-sm focus:border-purple-500 focus:outline-none"

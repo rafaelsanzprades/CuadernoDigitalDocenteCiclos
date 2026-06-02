@@ -103,6 +103,7 @@ export const CursoDataSchema = z.object({
   df_eval: z.array(z.any()).optional(),
   daily_ledger: z.record(z.string(), z.any()).optional(),
   tutoria_ledger: z.record(z.string(), z.any()).optional(),
+  profesional_ledger: z.record(z.string(), z.any()).optional(),
   info_fechas: z.record(z.string(), z.any()).optional(),
   horario: z.record(z.string(), z.any()).optional(),
   plano_clase: z.any().optional(),
@@ -154,6 +155,9 @@ export interface AppState {
   cursoData: CursoData | null;
   setCursoData: (data: CursoData | null) => void;
   updateCursoData: (key: keyof CursoData, data: any) => void;
+  
+  saveModuleData: () => Promise<boolean>;
+  saveCursoData: () => Promise<boolean>;
   
   isSidebarOpen: boolean;
   toggleSidebar: () => void;

@@ -1,13 +1,13 @@
-// @ts-nocheck
 "use client";
 import React, { useEffect, useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
 import { useAppStore } from "@/store/useAppStore";
 import { AsistenciaTab } from "@/components/features/seguimiento/AsistenciaTab";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 
 export default function SeguimientoPage() {
-  const { activeModuleId, moduleData, setModuleData, activeCursoId, cursoData, setCursoData, updateCursoData } = useAppStore();
+  const { activeModuleId, moduleData, setModuleData, activeCursoId, cursoData, setCursoData, updateCursoData, saveCursoData } = useAppStore();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
@@ -49,24 +49,13 @@ export default function SeguimientoPage() {
   }, [activeModuleId, moduleData, activeCursoId, cursoData]);
 
   const handleSave = async () => {
-    if (!activeCursoId || !cursoData) return;
     setSaving(true);
     setSaveMessage("");
-    try {
-      const res = await fetch(`/api/module/${activeCursoId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(cursoData),
-      });
-      const result = await res.json();
-      if (result.status === "success") {
-        setSaveMessage("Guardado correctamente");
-        setTimeout(() => setSaveMessage(""), 3000);
-      } else {
-        setSaveMessage("Error al guardar");
-      }
-    } catch (err) {
-      console.error(err);
+    const ok = await saveCursoData();
+    if (ok) {
+      setSaveMessage("Guardado correctamente");
+      setTimeout(() => setSaveMessage(""), 3000);
+    } else {
       setSaveMessage("Error al guardar");
     }
     setSaving(false);
@@ -90,17 +79,7 @@ export default function SeguimientoPage() {
   }
 
   if (loading || !moduleData || !cursoData) {
-    return (
-      <div className="flex min-h-screen bg-background">
-        <Sidebar />
-        <div className="flex-1 flex flex-col relative z-10 min-w-0">
-          <Header />
-          <main className="flex-1 flex items-center justify-center content-area">
-            <div className="text-xl text-[#14a085] animate-pulse">Cargando datos de seguimiento...</div>
-          </main>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner text="Cargando datos de seguimiento..." />;
   }
 
   const df_sgmt = cursoData?.df_sgmt || [];
@@ -147,7 +126,7 @@ export default function SeguimientoPage() {
   const meses_num: any = { "Sep": 9, "Oct": 10, "Nov": 11, "Dic": 12, "Ene": 1, "Feb": 2, "Mar": 3, "Abr": 4, "May": 5, "Jun": 6 };
 
   const getLectivosMes = (mes_num: number) => {
-    const lectivos = [];
+    const lectivos: Date[] = [];
     const checkFechas = (ini_str: string, fin_str: string) => {
       if (!ini_str || !fin_str) return;
       const ini = new Date(ini_str);

@@ -2345,13 +2345,231 @@ export const demoSeed = {
         "informe_emitido": "",
         "resumen_orientacion": "Sergio tiene muy buen perfil. Se orienta hacia FEOE en empresa tecnológica grande o ciberseguridad."
       }
+    },
+    "tutoria_ledger": {
+      "AN01": {
+        "SEXO": "H",
+        "ORIGEN FAMILIAR. Nacionalidad": "Española/Marruecos",
+        "REPETICIONES": "0",
+        "TOTAL VULNERABILIDAD": "0",
+        "REPITE CURSO": "No",
+        "MATERIAS PENDIENTES": "0",
+        "BECA MATERIALES": "",
+        "BECA AMPA MATERIALES BANCO LIBROS": "",
+        "BECA ACNEAES": "",
+        "BECA GENERAL MEC": "",
+        "SOCIOECONÓMICO, SS": "",
+        "DIFICULTADES FAMILIARES": "",
+        "AUNA, OZANAM, YMCA": "",
+        "ACNEAE": "",
+        "TIPO": "",
+        "OTRAS DIFICULTADES APRENDIZAJE": "",
+        "ABSENTISMO": "",
+        "ABSENTISMO 10%": "",
+        "SALUD": "",
+        "ACS": "",
+        "Lengua": "",
+        "PT": "",
+        "AL": "",
+        "COMPENSATORIA": "",
+        "TDAH_otros": "",
+        "Orientacion": "",
+        "Refuerzo": "",
+        "PROA": "",
+        "TOTAL INTERVENCIONES": "0"
+      },
+      "AN02": {
+        "SEXO": "M",
+        "ORIGEN FAMILIAR. Nacionalidad": "Española",
+        "REPETICIONES": "0",
+        "TOTAL VULNERABILIDAD": "0",
+        "BECA MATERIALES": "X",
+        "BECA ACNEAES": ""
+      },
+      "AN03": {
+        "SEXO": "M",
+        "ORIGEN FAMILIAR. Nacionalidad": "Española",
+        "REPETICIONES": "2",
+        "TOTAL VULNERABILIDAD": "3",
+        "REPITE CURSO": "Sí",
+        "MATERIAS PENDIENTES": "4",
+        "BECA GENERAL MEC": "X",
+        "SOCIOECONÓMICO, SS": "X",
+        "DIFICULTADES FAMILIARES": "X",
+        "ACNEAE": "X",
+        "TIPO": "ACNEE",
+        "ABSENTISMO": "10%",
+        "PT": "X",
+        "TOTAL INTERVENCIONES": "3"
+      },
+      "AN07": {
+        "SEXO": "H",
+        "ORIGEN FAMILIAR. Nacionalidad": "Española",
+        "REPETICIONES": "1",
+        "TOTAL VULNERABILIDAD": "2",
+        "REPITE CURSO": "Sí",
+        "MATERIAS PENDIENTES": "3",
+        "BECA MATERIALES": "X",
+        "DIFICULTADES FAMILIARES": "X",
+        "TIPO": "COMPENSATORIA",
+        "COMPENSATORIA": "X",
+        "TOTAL INTERVENCIONES": "1"
+      }
+    },
+    "plano_clase": {
+      "rows": 5,
+      "cols": 6,
+      "seats": {
+        "0_0": "AN01",
+        "0_1": "AN02",
+        "0_2": "AN03",
+        "1_0": "AN04",
+        "1_1": "AN05",
+        "1_2": "AN06",
+        "2_0": "AN07",
+        "2_1": "AN08",
+        "2_2": "AN09",
+        "3_0": "AN10",
+        "3_1": "AN11",
+        "3_2": "AN12"
+      }
     }
   },
   "0237-ictve-pd": {
     "tipo": "pd",
+    "info_modulo": {
+      "codigo": "0237",
+      "nombre": "Infraestructuras comunes de telecomunicaciones en viviendas y edificios",
+      "horas": 167,
+      "ciclo": "Técnico en Instalaciones de Telecomunicaciones",
+      "nivel": "Grado Medio",
+      "familia": "Electricidad y Electrónica",
+      "curso": "1º",
+      "profesor": "Equipo Docente"
+    },
+    "config_contexto": {
+      "curso_escolar": "2025-2026",
+      "grupo": "1º I.T.",
+      "aula": "Taller 3",
+      "centro": "IES San Martín"
+    },
     "config_aula": {
-      "Metodologia": "",
-      "Atencion a la diversidad": ""
+      "Metodologia": "Aprendizaje basado en proyectos con actividades prácticas en taller y aula virtual. Se combinan exposiciones teóricas con montajes prácticos en maquetas de viviendas.",
+      "Atencion a la diversidad": "Adaptaciones curriculares no significativas, refuerzos en horas de tutoría, materiales complementarios en formato digital, actividades de ampliación para alumnado con ritmo más avanzado."
+    },
+    "horario": {
+      "lunes": "08:30-10:30",
+      "martes": "11:00-12:00",
+      "miercoles": "12:30-13:30",
+      "jueves": "",
+      "viernes": "09:30-10:30"
+    },
+    "info_fechas": {
+      "inicio": "15/09/2025",
+      "fin": "22/06/2026",
+      "evaluacion_1": "18/12/2025",
+      "evaluacion_2": "25/03/2026",
+      "evaluacion_final": "18/06/2026"
+    },
+    "df_ra": [
+      { "id_ra": "RA01", "desc_ra": "Identifica los elementos de las instalaciones de telecomunicaciones en viviendas y edificios, reconociendo su funcionalidad y características técnicas.", "peso_ra": 15, "is_dual": "No" },
+      { "id_ra": "RA02", "desc_ra": "Configura pequeñas instalaciones de infraestructuras comunes de telecomunicaciones, realizando los cálculos y ajustes necesarios.", "peso_ra": 20, "is_dual": "No" },
+      { "id_ra": "RA03", "desc_ra": "Monta instalaciones de infraestructuras comunes de telecomunicaciones, interpretando planos y esquemas.", "peso_ra": 25, "is_dual": "Sí" },
+      { "id_ra": "RA04", "desc_ra": "Verifica el funcionamiento de las instalaciones de telecomunicaciones, realizando las pruebas y mediciones reglamentarias.", "peso_ra": 15, "is_dual": "No" },
+      { "id_ra": "RA05", "desc_ra": "Mantiene y repara instalaciones de telecomunicaciones, diagnosticando averías y aplicando técnicas de mantenimiento.", "peso_ra": 15, "is_dual": "Sí" },
+      { "id_ra": "RA06", "desc_ra": "Cumple las normas de prevención de riesgos laborales y protección ambiental, evaluando los riesgos asociados.", "peso_ra": 10, "is_dual": "No" }
+    ],
+    "df_ce": [
+      { "id_ce": "CE01", "id_ra": "RA01", "id_ud": "UD01", "desc_ce": "Se han identificado los elementos que componen la ICT de una vivienda o edificio.", "peso_ce": 25 },
+      { "id_ce": "CE02", "id_ra": "RA01", "id_ud": "UD01", "desc_ce": "Se ha descrito la funcionalidad de cada elemento de la instalación.", "peso_ce": 25 },
+      { "id_ce": "CE03", "id_ra": "RA01", "id_ud": "UD01", "desc_ce": "Se han reconocido las características técnicas de los equipos y materiales.", "peso_ce": 25 },
+      { "id_ce": "CE04", "id_ra": "RA01", "id_ud": "UD02", "desc_ce": "Se ha interpretado la normativa vigente aplicable a las ICT.", "peso_ce": 25 },
+      { "id_ce": "CE05", "id_ra": "RA02", "id_ud": "UD02", "desc_ce": "Se han seleccionado los equipos y materiales adecuados para cada instalación.", "peso_ce": 30 },
+      { "id_ce": "CE06", "id_ra": "RA02", "id_ud": "UD02", "desc_ce": "Se han realizado los cálculos necesarios para la configuración de la instalación.", "peso_ce": 35 },
+      { "id_ce": "CE07", "id_ra": "RA02", "id_ud": "UD03", "desc_ce": "Se han elaborado esquemas y croquis de la instalación.", "peso_ce": 35 },
+      { "id_ce": "CE08", "id_ra": "RA03", "id_ud": "UD03", "desc_ce": "Se han interpretado planos técnicos de instalaciones de telecomunicaciones.", "peso_ce": 20 },
+      { "id_ce": "CE09", "id_ra": "RA03", "id_ud": "UD03", "desc_ce": "Se han montado los elementos de la instalación siguiendo las especificaciones técnicas.", "peso_ce": 30 },
+      { "id_ce": "CE10", "id_ra": "RA03", "id_ud": "UD04", "desc_ce": "Se han realizado las conexiones entre equipos siguiendo los esquemas.", "peso_ce": 25 },
+      { "id_ce": "CE11", "id_ra": "RA03", "id_ud": "UD04", "desc_ce": "Se han aplicado las técnicas de montaje y fijación adecuadas.", "peso_ce": 25 },
+      { "id_ce": "CE12", "id_ra": "RA04", "id_ud": "UD05", "desc_ce": "Se han realizado las pruebas funcionales de la instalación.", "peso_ce": 30 },
+      { "id_ce": "CE13", "id_ra": "RA04", "id_ud": "UD05", "desc_ce": "Se han efectuado las mediciones reglamentarias con los instrumentos adecuados.", "peso_ce": 35 },
+      { "id_ce": "CE14", "id_ra": "RA04", "id_ud": "UD05", "desc_ce": "Se ha verificado el cumplimiento de la normativa vigente.", "peso_ce": 35 },
+      { "id_ce": "CE15", "id_ra": "RA05", "id_ud": "UD06", "desc_ce": "Se han diagnosticado averías típicas en instalaciones de ICT.", "peso_ce": 35 },
+      { "id_ce": "CE16", "id_ra": "RA05", "id_ud": "UD06", "desc_ce": "Se han aplicado técnicas de mantenimiento preventivo.", "peso_ce": 30 },
+      { "id_ce": "CE17", "id_ra": "RA05", "id_ud": "UD06", "desc_ce": "Se han reparado las averías detectadas utilizando las herramientas adecuadas.", "peso_ce": 35 },
+      { "id_ce": "CE18", "id_ra": "RA06", "id_ud": "UD01", "desc_ce": "Se han identificado los riesgos laborales asociados a las instalaciones de ICT.", "peso_ce": 30 },
+      { "id_ce": "CE19", "id_ra": "RA06", "id_ud": "UD01", "desc_ce": "Se han aplicado las medidas de prevención y protección adecuadas.", "peso_ce": 35 },
+      { "id_ce": "CE20", "id_ra": "RA06", "id_ud": "UD01", "desc_ce": "Se ha cumplido la normativa de protección ambiental en la gestión de residuos.", "peso_ce": 35 }
+    ],
+    "df_ud": [
+      { "id_ud": "UD01", "desc_ud": "ICT en viviendas y edificios: elementos, normativa y diseño", "horas_ud": 30, "ra_mappings": { "RA01": "RA01", "RA06": "RA06" }, "RA01": 50, "RA02": 0, "RA03": 0, "RA04": 0, "RA05": 0, "RA06": 100 },
+      { "id_ud": "UD02", "desc_ud": "Instalaciones de antenas y televisión satélite", "horas_ud": 30, "ra_mappings": { "RA01": "RA01", "RA02": "RA02" }, "RA01": 30, "RA02": 40, "RA03": 0, "RA04": 0, "RA05": 0, "RA06": 0 },
+      { "id_ud": "UD03", "desc_ud": "Infraestructuras de telecomunicaciones de banda ancha", "horas_ud": 28, "ra_mappings": { "RA02": "RA02", "RA03": "RA03" }, "RA01": 20, "RA02": 40, "RA03": 30, "RA04": 0, "RA05": 0, "RA06": 0 },
+      { "id_ud": "UD04", "desc_ud": "Instalaciones de telefonía y redes de datos", "horas_ud": 30, "ra_mappings": { "RA03": "RA03" }, "RA01": 0, "RA02": 20, "RA03": 40, "RA04": 0, "RA05": 0, "RA06": 0 },
+      { "id_ud": "UD05", "desc_ud": "Seguridad y verificación de instalaciones de telecomunicaciones", "horas_ud": 25, "ra_mappings": { "RA04": "RA04" }, "RA01": 0, "RA02": 0, "RA03": 10, "RA04": 60, "RA05": 0, "RA06": 0 },
+      { "id_ud": "UD06", "desc_ud": "Mantenimiento y reparación de instalaciones ICT", "horas_ud": 24, "ra_mappings": { "RA05": "RA05" }, "RA01": 0, "RA02": 0, "RA03": 20, "RA04": 40, "RA05": 100, "RA06": 0 }
+    ],
+    "df_sesiones": [
+      { "ID": "S001", "id_ud": "UD01", "Num_Orden": 1, "Horas": 2, "Tipo_Actividad": "Teoría", "RA_CE": "RA01 / CE01-CE02", "Contenidos": "Introducción a las ICT. Elementos básicos de una instalación.", "Aspectos_Clave": "Identificar los componentes principales", "Recursos": "Presentación digital, muestras físicas de materiales" },
+      { "ID": "S002", "id_ud": "UD01", "Num_Orden": 2, "Horas": 2, "Tipo_Actividad": "Práctica", "RA_CE": "RA01 / CE03", "Contenidos": "Reconocimiento de materiales y equipos en maqueta didáctica.", "Aspectos_Clave": "Manipulación correcta de materiales", "Recursos": "Maqueta didáctica, catálogos técnicos" },
+      { "ID": "S003", "id_ud": "UD01", "Num_Orden": 3, "Horas": 2, "Tipo_Actividad": "Teoría", "RA_CE": "RA01 / CE04", "Contenidos": "Normativa ICT: Real Decreto 346/2011, UNE 133100.", "Aspectos_Clave": "Interpretación de normativa", "Recursos": "Documentación normativa, esquemas" },
+      { "ID": "S004", "id_ud": "UD02", "Num_Orden": 4, "Horas": 2, "Tipo_Actividad": "Teoría", "RA_CE": "RA01 / CE01-CE02", "Contenidos": "Instalaciones de antenas: tipos, elementos, características.", "Aspectos_Clave": "Comprensión del sistema de antenas", "Recursos": "Esquemas, vídeos demostrativos" },
+      { "ID": "S005", "id_ud": "UD02", "Num_Orden": 5, "Horas": 2, "Tipo_Actividad": "Práctica", "RA_CE": "RA02 / CE05-CE06", "Contenidos": "Cálculo de instalaciones de antenas: niveles de señal, pérdidas.", "Aspectos_Clave": "Realizar cálculos correctamente", "Recursos": "Calculadora, tablas de datos, software de simulación" },
+      { "ID": "S006", "id_ud": "UD02", "Num_Orden": 6, "Horas": 2, "Tipo_Actividad": "Taller", "RA_CE": "RA02 / CE07", "Contenidos": "Montaje de antena parabólica y soporte.", "Aspectos_Clave": "Orientación y fijación correcta", "Recursos": "Antena parabólica, soporte, herramientas" },
+      { "ID": "S007", "id_ud": "UD03", "Num_Orden": 7, "Horas": 2, "Tipo_Actividad": "Teoría", "RA_CE": "RA02 / CE05", "Contenidos": "Infraestructuras de banda ancha: fibra óptica, cable coaxial, par trenzado.", "Aspectos_Clave": "Diferencias entre medios de transmisión", "Recursos": "Muestras de cables, presentación" },
+      { "ID": "S008", "id_ud": "UD03", "Num_Orden": 8, "Horas": 2, "Tipo_Actividad": "Práctica", "RA_CE": "RA02 / CE06-CE07", "Contenidos": "Elaboración de esquemas de instalación de banda ancha.", "Aspectos_Clave": "Cumplir simbología normalizada", "Recursos": "Software de diseño, plantillas" },
+      { "ID": "S009", "id_ud": "UD03", "Num_Orden": 9, "Horas": 2, "Tipo_Actividad": "Taller", "RA_CE": "RA03 / CE08-CE09", "Contenidos": "Montaje de toma de fibra óptica y cableado interior.", "Aspectos_Clave": "Técnicas de conexión y fijación", "Recursos": "Fibra óptica, conectorizadora, herramientas" },
+      { "ID": "S010", "id_ud": "UD04", "Num_Orden": 10, "Horas": 2, "Tipo_Actividad": "Teoría", "RA_CE": "RA03 / CE10", "Contenidos": "Instalaciones de telefonía: centralización, distribución, puntos de acceso.", "Aspectos_Clave": "Arquitectura de la red telefónica", "Recursos": "Planos, esquemas" },
+      { "ID": "S011", "id_ud": "UD04", "Num_Orden": 11, "Horas": 2, "Tipo_Actividad": "Taller", "RA_CE": "RA03 / CE10-CE11", "Contenidos": "Montaje de rosetas telefónicas y conexionado de red de datos.", "Aspectos_Clave": "Conexionado correcto según norma", "Recursos": "Rosetas, cable FTP, crimpadora, comprobador" },
+      { "ID": "S012", "id_ud": "UD05", "Num_Orden": 12, "Horas": 2, "Tipo_Actividad": "Práctica", "RA_CE": "RA04 / CE12-CE13", "Contenidos": "Mediciones en instalaciones: nivel de señal, impedancia, continuidad.", "Aspectos_Clave": "Uso correcto de instrumentos de medida", "Recursos": "Medidor de campo, polímetro, analizador" },
+      { "ID": "S013", "id_ud": "UD05", "Num_Orden": 13, "Horas": 2, "Tipo_Actividad": "Teoría", "RA_CE": "RA04 / CE14", "Contenidos": "Verificación reglamentaria de instalaciones. Certificados.", "Aspectos_Clave": "Cumplimiento de normativa", "Recursos": "Modelos de certificados, checklist" },
+      { "ID": "S014", "id_ud": "UD06", "Num_Orden": 14, "Horas": 2, "Tipo_Actividad": "Práctica", "RA_CE": "RA05 / CE15-CE16", "Contenidos": "Diagnóstico de averías típicas en ICT.", "Aspectos_Clave": "Método sistemático de diagnóstico", "Recursos": "Maqueta con averías simuladas, documentación técnica" },
+      { "ID": "S015", "id_ud": "UD06", "Num_Orden": 15, "Horas": 2, "Tipo_Actividad": "Taller", "RA_CE": "RA05 / CE17", "Contenidos": "Reparación de averías: sustitución de elementos, ajustes.", "Aspectos_Clave": "Técnicas de reparación", "Recursos": "Herramientas, repuestos, maqueta" }
+    ],
+    "df_tareas": [
+      { "ID": "T01", "id_act": "ACT01", "Nombre_Tarea": "Diseño de ICT para vivienda unifamiliar", "Reto": "Diseñar y presupuestar la instalación completa de ICT para una vivienda de 100m²", "RA_Asociados": "RA01, RA02", "Instrumento": "Rúbrica de proyecto", "desc_act": "Los alumnos deberán diseñar la ICT completa de una vivienda unifamiliar, incluyendo antenas, telefonía y banda ancha, elaborando planos, lista de materiales y presupuesto." },
+      { "ID": "T02", "id_act": "ACT02", "Nombre_Tarea": "Montaje de instalación de antena colectiva", "Reto": "Montar y poner en marcha una instalación de antena colectiva para 4 viviendas", "RA_Asociados": "RA03", "Instrumento": "Lista de verificación", "desc_act": "Montaje de una instalación de antena colectiva con amplificador, derivadores y tomas, siguiendo el esquema proporcionado." },
+      { "ID": "T03", "id_act": "ACT03", "Nombre_Tarea": "Verificación y medidas de instalación ICT", "Reto": "Realizar el informe de verificación de una instalación ICT existente", "RA_Asociados": "RA04", "Instrumento": "Informe técnico", "desc_act": "Los alumnos realizarán mediciones de nivel de señal, pérdidas y continuidad en una instalación existente, elaborando el informe técnico correspondiente." },
+      { "ID": "T04", "id_act": "ACT04", "Nombre_Tarea": "Diagnóstico y reparación de averías en ICT", "Reto": "Diagnosticar y reparar 3 averías simuladas en una instalación ICT", "RA_Asociados": "RA05", "Instrumento": "Rúbrica de práctica", "desc_act": "Los alumnos deberán identificar y reparar averías en una maqueta de ICT, documentando el proceso seguido." },
+      { "ID": "T05", "id_act": "ACT05", "Nombre_Tarea": "Evaluación de riesgos en instalaciones ICT", "Reto": "Elaborar un plan de prevención para el montaje de una ICT", "RA_Asociados": "RA06", "Instrumento": "Checklist de PRL", "desc_act": "Identificar los riesgos laborales asociados al montaje de ICT y proponer medidas preventivas." }
+    ],
+    "df_act": [],
+    "df_instr": [],
+    "df_pr": [],
+    "df_dua": [],
+    "df_contingencia": [],
+    "df_ace": [],
+    "calendar_notes": {
+      "f_2025-10-12": "Fiesta Nacional de España",
+      "f_2025-11-01": "Todos los Santos",
+      "f_2025-12-06": "Día de la Constitución",
+      "f_2025-12-08": "Inmaculada Concepción",
+      "f_2025-12-22": "Inicio vacaciones Navidad",
+      "f_2026-01-07": "Fin vacaciones Navidad",
+      "f_2026-03-30": "Inicio vacaciones Semana Santa",
+      "f_2026-04-06": "Fin vacaciones Semana Santa",
+      "f_2026-05-01": "Día del Trabajo",
+      "r_2025-12-17": "1ª Evaluación",
+      "r_2026-03-24": "2ª Evaluación",
+      "r_2026-06-17": "Evaluación Final"
+    },
+    "planning_ledger": {
+      "2025-09-15": ["UD01"],
+      "2025-09-22": ["UD01"],
+      "2025-09-29": ["UD01"],
+      "2025-10-06": ["UD02"],
+      "2025-10-20": ["UD02"],
+      "2025-10-27": ["UD02"],
+      "2025-11-03": ["UD03"],
+      "2025-11-10": ["UD03"],
+      "2025-11-17": ["UD03"],
+      "2025-11-24": ["UD04"],
+      "2025-12-01": ["UD04"],
+      "2025-12-15": ["UD04"],
+      "2026-01-12": ["UD05"],
+      "2026-01-19": ["UD05"],
+      "2026-01-26": ["UD06"],
+      "2026-02-02": ["UD06"]
     }
   }
 };

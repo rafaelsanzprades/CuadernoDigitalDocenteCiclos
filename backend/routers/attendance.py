@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from database import get_db
 import models
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import Optional
 
 router = APIRouter(prefix="/api/attendance", tags=["Attendance"])
 
@@ -16,10 +16,9 @@ class AttendanceCreate(BaseModel):
 class AttendanceResponse(AttendanceCreate):
     id: int
 
-    class Config:
-        from_attributes = True
+    model_config = {"from_attributes": True}
 
-@router.get("/{module_document_id}", response_model=List[AttendanceResponse])
+@router.get("/{module_document_id}", response_model=list[AttendanceResponse])
 def get_attendance(module_document_id: str, date_str: Optional[str] = None, db: Session = Depends(get_db)):
     query = db.query(models.AttendanceRecord).filter(models.AttendanceRecord.module_document_id == module_document_id)
     if date_str:
@@ -28,7 +27,6 @@ def get_attendance(module_document_id: str, date_str: Optional[str] = None, db: 
 
 @router.post("/")
 def save_attendance(attendance: AttendanceCreate, db: Session = Depends(get_db)):
-    # Upsert logic: find existing record
     existing = db.query(models.AttendanceRecord).filter(
         models.AttendanceRecord.module_document_id == attendance.module_document_id,
         models.AttendanceRecord.student_id == attendance.student_id,

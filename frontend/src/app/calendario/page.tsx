@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
@@ -26,7 +25,7 @@ const MONTH_NAMES = [
 const DAY_NAMES_SHORT = ["Lu","Ma","Mi","Ju","Vi","Sa","Do"];
 
 // ── Notes Table Component ─────────────────────────────────────────────────────
-function NotesTable({ calendar_notes, onUpdateNote }) {
+function NotesTable({ calendar_notes, onUpdateNote }: { calendar_notes: Record<string, string>; onUpdateNote: (key: string, val: string) => void }) {
   const [newDate, setNewDate]     = useState("");
   const [newType, setNewType]     = useState<"f" | "r">("f");
   const [newText, setNewText]     = useState("");
@@ -137,7 +136,7 @@ function NotesTable({ calendar_notes, onUpdateNote }) {
 
 // ── Interactive Calendar Component ────────────────────────────────────────────
 
-function InteractiveCalendar({ info_fechas, horario, calendar_notes, onUpdateNote }) {
+function InteractiveCalendar({ info_fechas, horario, calendar_notes, onUpdateNote }: { info_fechas: Record<string, string>; horario: Record<string, any>; calendar_notes: Record<string, string>; onUpdateNote: (key: string, val: string) => void }) {
   const [popup, setPopup] = useState<{ key: string; x: number; y: number } | null>(null);
   const [noteType, setNoteType] = useState<"f" | "r">("f");
   const [noteText, setNoteText] = useState("");
@@ -352,7 +351,7 @@ function InteractiveCalendar({ info_fechas, horario, calendar_notes, onUpdateNot
 
 // ── Main Page ─────────────────────────────────────────────────────────────────
 export default function CalendarioPage() {
-  const { activeModuleId, moduleData, setModuleData, updateModuleData } = useAppStore();
+  const { activeModuleId, moduleData, setModuleData, updateModuleData, saveModuleData } = useAppStore();
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
 
@@ -364,6 +363,19 @@ export default function CalendarioPage() {
       .then(json => { if (json.status === "success") setModuleData(json.data); })
       .catch(console.error);
   }, [activeModuleId, moduleData, setModuleData]);
+
+  const handleSave = async () => {
+    setSaving(true);
+    setSaveMessage("");
+    const ok = await saveModuleData();
+    if (ok) {
+      setSaveMessage("Guardado correctamente");
+      setTimeout(() => setSaveMessage(""), 3000);
+    } else {
+      setSaveMessage("Error al guardar");
+    }
+    setSaving(false);
+  };
 
   if (!activeModuleId) {
     return (

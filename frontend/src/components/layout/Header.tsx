@@ -15,7 +15,7 @@ import { fileManager } from "@/services/fileManager";
 
 
 export default function Header({ title, breadcrumbSuffix }: { title?: string; breadcrumbSuffix?: string }) {
-  const { activeModuleId, activeCursoId, moduleData } = useAppStore();
+  const { activeModuleId, activeCursoId, moduleData, cursoData, saveModuleData, saveCursoData, isSidebarOpen, toggleSidebar } = useAppStore();
   const [isSaving, setIsSaving] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const pathname = usePathname();
@@ -23,6 +23,7 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
 
   const [autosaveStatus, setAutosaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle");
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const cursoSaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const initialLoadRef = useRef<boolean>(true);
 
   const { theme, setTheme } = useTheme();
@@ -64,7 +65,7 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
-  // Autosave Effect
+  // Autosave Effect for moduleData
   useEffect(() => {
     if (initialLoadRef.current) {
       initialLoadRef.current = false;
@@ -80,20 +81,11 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
 
     saveTimeoutRef.current = setTimeout(async () => {
       setAutosaveStatus("saving");
-      try {
-        const res = await fetch(`/api/module/${activeModuleId}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(moduleData)
-        });
-        const data = await res.json();
-        if (data.status === "success") {
-          setAutosaveStatus("saved");
-          setTimeout(() => setAutosaveStatus("idle"), 2000);
-        } else {
-          setAutosaveStatus("error");
-        }
-      } catch (err) {
+      const ok = await saveModuleData();
+      if (ok) {
+        setAutosaveStatus("saved");
+        setTimeout(() => setAutosaveStatus("idle"), 2000);
+      } else {
         setAutosaveStatus("error");
       }
     }, 3000);
@@ -101,33 +93,41 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
     return () => {
       if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
     };
-  }, [moduleData]); // Solo vigilar cambios en moduleData
+  }, [moduleData, activeModuleId, saveModuleData]);
+
+  // Autosave Effect for cursoData
+  useEffect(() => {
+    if (!cursoData || !activeCursoId) return;
+
+    if (cursoSaveTimeoutRef.current) {
+      clearTimeout(cursoSaveTimeoutRef.current);
+    }
+
+    cursoSaveTimeoutRef.current = setTimeout(async () => {
+      await saveCursoData();
+    }, 3000);
+
+    return () => {
+      if (cursoSaveTimeoutRef.current) clearTimeout(cursoSaveTimeoutRef.current);
+    };
+  }, [cursoData, activeCursoId, saveCursoData]);
 
   const handleSave = async () => {
-    if (!moduleData) {
-      toast.error("No hay módulo cargado para guardar");
-      return;
-    }
     setIsSaving(true);
-
-    try {
-      const res = await fetch(`/api/module/${activeModuleId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(moduleData)
-      });
-      const data = await res.json();
-      if (data.status === "success") {
-        showRichToast.success(`Guardado con éxito`, `Módulo ${activeModuleId} actualizado.`);
-      } else {
-        showRichToast.error("Error al guardar", "Revisa la conexión o los datos.");
-      }
-    } catch (err) {
-      console.error(err);
-      showRichToast.error("Fallo de conexión", "No se pudo guardar el módulo.");
-    } finally {
-      setIsSaving(false);
+    let ok = false;
+    if (moduleData && activeModuleId) {
+      ok = await saveModuleData();
     }
+    if (cursoData && activeCursoId) {
+      const cursoOk = await saveCursoData();
+      ok = ok || cursoOk;
+    }
+    if (ok) {
+      showRichToast.success(`Guardado con éxito`, `Datos actualizados.`);
+    } else {
+      showRichToast.error("Error al guardar", "Revisa la conexión o los datos.");
+    }
+    setIsSaving(false);
   };
 
   return (
@@ -136,6 +136,16 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
       <nav className="w-full px-6 py-2 flex items-center justify-between">
         {/* Menús */}
         <div className="flex justify-start items-center gap-4">
+          {/* Mobile hamburger */}
+          <button
+            onClick={toggleSidebar}
+            className="lg:hidden text-muted hover:text-foreground p-2 rounded-lg hover:bg-foreground/5 transition-colors"
+            aria-label="Toggle sidebar"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isSidebarOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+            </svg>
+          </button>
           {navGroups.map(group => {
             let badgeText = "";
             let badgeColor = "";

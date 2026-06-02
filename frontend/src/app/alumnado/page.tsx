@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
@@ -9,9 +8,10 @@ import { Button } from "@/components/ui/Button";
 import { TutoriaTab } from "@/components/features/alumnado/TutoriaTab";
 import { TutoriaMatrixTab } from "@/components/features/alumnado/TutoriaMatrixTab";
 import { PlanoClaseTab } from "@/components/features/alumnado/PlanoClaseTab";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 
 export default function AlumnadoPage() {
-  const { activeCursoId, cursoData, setCursoData, updateCursoData } = useAppStore();
+  const { activeCursoId, cursoData, setCursoData, updateCursoData, saveCursoData } = useAppStore();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
@@ -49,24 +49,13 @@ export default function AlumnadoPage() {
   }, [activeCursoId, cursoData]);
 
   const handleSave = async () => {
-    if (!activeCursoId || !cursoData) return;
     setSaving(true);
     setSaveMessage("");
-    try {
-      const res = await fetch(`/api/module/${activeCursoId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(cursoData),
-      });
-      const result = await res.json();
-      if (result.status === "success") {
-        setSaveMessage("Guardado correctamente");
-        setTimeout(() => setSaveMessage(""), 3000);
-      } else {
-        setSaveMessage("Error al guardar");
-      }
-    } catch (err) {
-      console.error(err);
+    const ok = await saveCursoData();
+    if (ok) {
+      setSaveMessage("Guardado correctamente");
+      setTimeout(() => setSaveMessage(""), 3000);
+    } else {
       setSaveMessage("Error al guardar");
     }
     setSaving(false);
@@ -90,17 +79,7 @@ export default function AlumnadoPage() {
   }
 
   if (loading || !cursoData) {
-    return (
-      <div className="flex min-h-screen bg-background">
-        <Sidebar />
-        <div className="flex-1 flex flex-col relative z-10 min-w-0">
-          <Header />
-          <main className="flex-1 flex items-center justify-center content-area">
-            <div className="text-xl text-blue-400 animate-pulse">Cargando alumnado y tutoría...</div>
-          </main>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner text="Cargando datos de alumnado..." />;
   }
 
   const df_al = cursoData?.df_al || [];
@@ -108,14 +87,14 @@ export default function AlumnadoPage() {
   const handleAddAlumno = () => {
     const newAl = [...df_al];
     const newId = `AN${(newAl.length + 1).toString().padStart(2, '0')}`;
-    newAl.push({
+    (newAl as any[]).push({
       ID: newId,
       Estado: "Alta",
       Apellidos: "",
       Nombre: "",
       Edad: "",
       Nacimiento: "",
-      Repite: false,
+      Repite: "false",
       Matricula: "",
       Comentarios: "",
       email: "",
@@ -126,7 +105,7 @@ export default function AlumnadoPage() {
 
   const handleUpdateAlumno = (idx: number, field: string, value: any) => {
     const newAl = [...df_al];
-    newAl[idx][field] = value;
+    (newAl[idx] as any)[field] = value;
     updateCursoData("df_al", newAl);
   };
 

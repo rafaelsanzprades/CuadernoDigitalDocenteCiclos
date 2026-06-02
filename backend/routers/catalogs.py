@@ -1,12 +1,15 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
+from pydantic import BaseModel
 from database import get_db
 from models import (
     Module, ProfessionalFamily, Degree, Center, LearningOutcome,
     User, TeachingAssignment, ModuleDocument
 )
+from auth.dependencies import get_optional_user
 
 router = APIRouter(prefix="/api", tags=["Catalogs"])
+
 
 @router.get("/admin/modules")
 def list_admin_modules(db: Session = Depends(get_db)):
@@ -18,6 +21,18 @@ def list_admin_modules(db: Session = Depends(get_db)):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+class FamilyResponse(BaseModel):
+    id: int
+    code: str
+    name: str
+    icon_url: str | None = None
+    color_hex: str | None = None
+    degrees: list[dict]
+
+    model_config = {"from_attributes": True}
+
 
 @router.get("/families")
 def list_families(db: Session = Depends(get_db)):
@@ -38,11 +53,9 @@ def list_families(db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
 @router.get("/modules")
-def list_modules(user_id: int = Query(None), db: Session = Depends(get_db)):
-    """
-    Lists all available PD and Curso modules in the database, filtered by user if provided.
-    """
+def list_modules(user_id: int = Query(None), current_user: User | None = Depends(get_optional_user), db: Session = Depends(get_db)):
     try:
         allowed_codes = None
         if user_id:
@@ -55,14 +68,14 @@ def list_modules(user_id: int = Query(None), db: Session = Depends(get_db)):
 
         docs = db.query(ModuleDocument.id).all()
         ids = [doc.id for doc in docs]
-        
+
         if allowed_codes is not None:
             ids = [i for i in ids if any(i.startswith(code) for code in allowed_codes) or i == "ciclos-fp" or i.endswith("-centro")]
-        
+
         pd_modules = [i for i in ids if i.endswith("-pd") or ("curso" not in i and i != "ciclos-fp")]
         curso_modules = [i for i in ids if "curso" in i]
         centro_modules = [i for i in ids if i == "ciclos-fp" or i.endswith("-centro")]
-        
+
         return {
             "status": "success",
             "data": {
@@ -74,11 +87,9 @@ def list_modules(user_id: int = Query(None), db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+
 @router.get("/centers")
 def list_centers(db: Session = Depends(get_db)):
-    """
-    Lists all real Aragon centers from the relational DB.
-    """
     try:
         centers = db.query(Center).order_by(Center.name).all()
         return {
@@ -87,6 +98,7 @@ def list_centers(db: Session = Depends(get_db)):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
 
 @router.get("/learning_outcomes")
 def list_learning_outcomes(db: Session = Depends(get_db)):

@@ -41,7 +41,53 @@ export default function EntornoTrabajoPage() {
     const currentDataSource = fileManager.getDataSourceType();
     setDataSource(currentDataSource);
     setActiveTab(currentDataSource === 'demo' ? 'demo' : 'real');
-    setDb(fileManager.getDb());
+
+    // Helper to load data from backend when in local mode with empty cache
+    const loadFromBackend = async () => {
+      try {
+        const [pdRes, cursoRes] = await Promise.all([
+          fetch('/api/module/demo-ictve-pd'),
+          fetch('/api/module/demo-ictve-curso-2025-26')
+        ]);
+        const pdData = await pdRes.json();
+        const cursoData = await cursoRes.json();
+        const db: Record<string, any> = {};
+        if (pdData.status === 'success') {
+          db['demo-ictve-pd'] = pdData.data;
+          setActiveModuleId('demo-ictve-pd');
+          setModuleData(pdData.data);
+        }
+        if (cursoData.status === 'success') {
+          db['demo-ictve-curso-2025-26'] = cursoData.data;
+          setActiveCursoId('demo-ictve-curso-2025-26');
+          setCursoData(cursoData.data);
+        }
+        fileManager.saveDb(db);
+        setDb(db);
+      } catch (err) {
+        console.error("Error fetching backend data on mount:", err);
+      }
+    };
+
+    const currentDb = fileManager.getDb();
+    const hasLocalData = Object.keys(currentDb).some(k => k.endsWith('-pd') || k.includes('-curso-'));
+
+    if (currentDataSource === 'local' && !hasLocalData) {
+      loadFromBackend();
+    } else {
+      setDb(currentDb);
+      const pds = Object.keys(currentDb).filter(k => k.endsWith('-pd'));
+      const cursos = Object.keys(currentDb).filter(k => k.includes('-curso-'));
+      if (pds.length > 0) {
+        setActiveModuleId(pds[0]);
+        setModuleData(currentDb[pds[0]]);
+      }
+      if (cursos.length > 0) {
+        setActiveCursoId(cursos[0]);
+        setCursoData(currentDb[cursos[0]]);
+      }
+    }
+
     setGoogleConnected(fileManager.isGoogleConnected());
     setGoogleUser(fileManager.getGoogleUser());
     setOnedriveConnected(fileManager.isOneDriveConnected());
@@ -68,39 +114,77 @@ export default function EntornoTrabajoPage() {
 
       if (pds.length > 0 && !currentDb[activeModuleId]) {
         setActiveModuleId(pds[0]);
+        setModuleData(currentDb[pds[0]]);
+      } else if (pds.length > 0 && currentDb[activeModuleId]) {
+        setModuleData(currentDb[activeModuleId]);
       }
       if (cursos.length > 0 && !currentDb[activeCursoId]) {
         setActiveCursoId(cursos[0]);
+        setCursoData(currentDb[cursos[0]]);
+      } else if (cursos.length > 0 && currentDb[activeCursoId]) {
+        setCursoData(currentDb[activeCursoId]);
       }
     };
 
     window.addEventListener('cdd-datasource-changed', handleChanged);
     return () => window.removeEventListener('cdd-datasource-changed', handleChanged);
-  }, [activeModuleId, activeCursoId, setActiveModuleId, setActiveCursoId]);
+  }, [activeModuleId, activeCursoId, setActiveModuleId, setActiveCursoId, setModuleData, setCursoData]);
 
   // Handle data source toggle
-  const handleSourceChange = (type: DataSourceType) => {
+  const handleSourceChange = async (type: DataSourceType) => {
     fileManager.setDataSourceType(type);
-    const newDb = fileManager.getDb();
 
-    // Select active modules/courses from the database loaded
-    const pds = Object.keys(newDb).filter(k => k.endsWith('-pd'));
-    const cursos = Object.keys(newDb).filter(k => k.includes('-curso-'));
+    if (type === 'local') {
+      // Fetch real data from the backend API
+      try {
+        const [pdRes, cursoRes] = await Promise.all([
+          fetch('/api/module/demo-ictve-pd'),
+          fetch('/api/module/demo-ictve-curso-2025-26')
+        ]);
+        const pdData = await pdRes.json();
+        const cursoData = await cursoRes.json();
 
-    if (pds.length > 0) {
-      setActiveModuleId(pds[0]);
-      setModuleData(newDb[pds[0]]);
+        // Build a DB object and save it to fileManager's local storage
+        const db: Record<string, any> = {};
+        if (pdData.status === 'success') {
+          db['demo-ictve-pd'] = pdData.data;
+          setActiveModuleId('demo-ictve-pd');
+          setModuleData(pdData.data);
+        }
+        if (cursoData.status === 'success') {
+          db['demo-ictve-curso-2025-26'] = cursoData.data;
+          setActiveCursoId('demo-ictve-curso-2025-26');
+          setCursoData(cursoData.data);
+        }
+        fileManager.saveDb(db);
+      } catch (err) {
+        console.error("Error fetching data from backend:", err);
+        toast.error("No se pudo conectar con el backend");
+        setActiveModuleId("");
+        setModuleData(null);
+        setActiveCursoId("");
+        setCursoData(null);
+      }
     } else {
-      setActiveModuleId("");
-      setModuleData(null);
-    }
+      const newDb = fileManager.getDb();
+      const pds = Object.keys(newDb).filter(k => k.endsWith('-pd'));
+      const cursos = Object.keys(newDb).filter(k => k.includes('-curso-'));
 
-    if (cursos.length > 0) {
-      setActiveCursoId(cursos[0]);
-      setCursoData(newDb[cursos[0]]);
-    } else {
-      setActiveCursoId("");
-      setCursoData(null);
+      if (pds.length > 0) {
+        setActiveModuleId(pds[0]);
+        setModuleData(newDb[pds[0]]);
+      } else {
+        setActiveModuleId("");
+        setModuleData(null);
+      }
+
+      if (cursos.length > 0) {
+        setActiveCursoId(cursos[0]);
+        setCursoData(newDb[cursos[0]]);
+      } else {
+        setActiveCursoId("");
+        setCursoData(null);
+      }
     }
 
     toast.success(`Cargados datos en modo: ${type === 'demo' ? 'DEMOSTRACIÓN' : 'LOCAL'}`);

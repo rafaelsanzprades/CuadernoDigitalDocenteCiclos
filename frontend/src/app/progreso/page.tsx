@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import React, { useEffect, useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
@@ -8,6 +7,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { motion, AnimatePresence } from "framer-motion";
 import { LineChart, Line, ResponsiveContainer, YAxis } from "recharts";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { CalificacionFEOETab } from "@/components/features/calificacion/CalificacionFEOETab";
 import { AnalisisGrupalTab } from "@/components/features/analisis/AnalisisGrupalTab";
 import { AnalisisIndividualTab } from "@/components/features/analisis/AnalisisIndividualTab";
@@ -20,7 +20,8 @@ export default function ProgresoPage() {
     activeCursoId, 
     cursoData, 
     setCursoData, 
-    updateCursoData 
+    updateCursoData,
+    saveCursoData 
   } = useAppStore();
 
   const [loading, setLoading] = useState(true);
@@ -46,7 +47,7 @@ export default function ProgresoPage() {
           if (data.status === "success") setCursoData(data.data);
         }
       } catch (err) {
-        print("Error fetching data:", err);
+        console.error("Error fetching data:", err);
       }
       setLoading(false);
     };
@@ -59,24 +60,13 @@ export default function ProgresoPage() {
   }, [activeModuleId, moduleData, activeCursoId, cursoData, setModuleData, setCursoData]);
 
   const handleSave = async () => {
-    if (!activeCursoId || !cursoData) return;
     setSaving(true);
     setSaveMessage("");
-    try {
-      const res = await fetch(`/api/module/${activeCursoId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(cursoData),
-      });
-      const result = await res.json();
-      if (result.status === "success") {
-        setSaveMessage("Guardado correctamente");
-        setTimeout(() => setSaveMessage(""), 3000);
-      } else {
-        setSaveMessage("Error al guardar");
-      }
-    } catch (err) {
-      console.error(err);
+    const ok = await saveCursoData();
+    if (ok) {
+      setSaveMessage("Guardado correctamente");
+      setTimeout(() => setSaveMessage(""), 3000);
+    } else {
       setSaveMessage("Error al guardar");
     }
     setSaving(false);
@@ -100,17 +90,7 @@ export default function ProgresoPage() {
   }
 
   if (loading || !cursoData || !moduleData) {
-    return (
-      <div className="flex min-h-screen bg-background">
-        <Sidebar />
-        <div className="flex-1 flex flex-col relative z-10 min-w-0">
-          <Header />
-          <main className="flex-1 flex items-center justify-center content-area">
-            <div className="text-xl text-blue-400 animate-pulse">Cargando datos de progreso académico...</div>
-          </main>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner text="Cargando datos de progreso académico..." />;
   }
 
   const df_al = cursoData?.df_al || [];

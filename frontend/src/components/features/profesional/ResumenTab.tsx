@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import React, { useState, useMemo } from "react";
@@ -82,12 +81,12 @@ export const ResumenTab = () => {
 
     if (filterIntencion) {
       list = list.filter((al: Alumno) =>
-        profesionalLedger[al.ID]?.intencion_al_terminar === filterIntencion
+        profesionalLedger[al.ID!]?.intencion_al_terminar === filterIntencion
       );
     }
     if (filterAptitud) {
       list = list.filter((al: Alumno) =>
-        profesionalLedger[al.ID]?.aptitud_principal === filterAptitud
+        profesionalLedger[al.ID!]?.aptitud_principal === filterAptitud
       );
     }
     if (searchText.trim()) {
@@ -101,14 +100,14 @@ export const ResumenTab = () => {
       let va = "", vb = "";
       if (sortField === "apellidos") { va = a.Apellidos || ""; vb = b.Apellidos || ""; }
       else if (sortField === "intencion") {
-        va = profesionalLedger[a.ID]?.intencion_al_terminar || "";
-        vb = profesionalLedger[b.ID]?.intencion_al_terminar || "";
+        va = profesionalLedger[a.ID!]?.intencion_al_terminar || "";
+        vb = profesionalLedger[b.ID!]?.intencion_al_terminar || "";
       } else if (sortField === "aptitud") {
-        va = profesionalLedger[a.ID]?.aptitud_principal || "";
-        vb = profesionalLedger[b.ID]?.aptitud_principal || "";
+        va = profesionalLedger[a.ID!]?.aptitud_principal || "";
+        vb = profesionalLedger[b.ID!]?.aptitud_principal || "";
       } else if (sortField === "area") {
-        va = profesionalLedger[a.ID]?.area_interes || "";
-        vb = profesionalLedger[b.ID]?.area_interes || "";
+        va = profesionalLedger[a.ID!]?.area_interes || "";
+        vb = profesionalLedger[b.ID!]?.area_interes || "";
       }
       return sortDir === "asc" ? va.localeCompare(vb) : vb.localeCompare(va);
     });
@@ -127,7 +126,7 @@ export const ResumenTab = () => {
   };
 
   const nConFicha = filtered.filter((al: Alumno) =>
-    profesionalLedger[al.ID] && Object.keys(profesionalLedger[al.ID]).length > 0
+    profesionalLedger[al.ID!] && Object.keys(profesionalLedger[al.ID!]).length > 0
   ).length;
 
   return (
@@ -234,7 +233,7 @@ export const ResumenTab = () => {
                   </td>
                 </tr>
               ) : filtered.map((al: Alumno) => {
-                const d = profesionalLedger[al.ID] || {};
+                const d = profesionalLedger[al.ID!] || {};
                 const hasFicha = Object.keys(d).length > 0;
                 const isExpanded = expandedId === al.ID;
                 const isBaja = al.Estado === "Baja";
@@ -244,7 +243,7 @@ export const ResumenTab = () => {
                     {/* Main row */}
                     <tr
                       className={`border-b border-white/5 transition-colors cursor-pointer ${isExpanded ? "bg-accent/5" : "hover:bg-foreground/5"} ${isBaja ? "opacity-50" : ""}`}
-                      onClick={() => setExpandedId(isExpanded ? null : al.ID)}
+                      onClick={() => setExpandedId(isExpanded ? null : al.ID ?? null)}
                     >
                       {/* Name */}
                       <td className="p-4">
@@ -414,10 +413,10 @@ export const ResumenTab = () => {
             Mostrando <strong className="text-foreground">{filtered.length}</strong> alumnos/as
           </span>
           <div className="flex gap-4 text-xs text-muted">
-            <span>🌍 Erasmus: <strong className="text-foreground">{filtered.filter((al: Alumno) => profesionalLedger[al.ID]?.interes_erasmus === "X").length}</strong></span>
-            <span>🚀 Emprender: <strong className="text-foreground">{filtered.filter((al: Alumno) => profesionalLedger[al.ID]?.interes_emprender === "X").length}</strong></span>
-            <span>🎓 Universidad: <strong className="text-foreground">{filtered.filter((al: Alumno) => profesionalLedger[al.ID]?.interes_universidad === "X").length}</strong></span>
-            <span>⚠️ Derivados: <strong className="text-amber-400">{filtered.filter((al: Alumno) => profesionalLedger[al.ID]?.derivado_orientador === "X").length}</strong></span>
+            <span>🌍 Erasmus: <strong className="text-foreground">{filtered.filter((al: Alumno) => profesionalLedger[al.ID!]?.interes_erasmus === "X").length}</strong></span>
+            <span>🚀 Emprender: <strong className="text-foreground">{filtered.filter((al: Alumno) => profesionalLedger[al.ID!]?.interes_emprender === "X").length}</strong></span>
+            <span>🎓 Universidad: <strong className="text-foreground">{filtered.filter((al: Alumno) => profesionalLedger[al.ID!]?.interes_universidad === "X").length}</strong></span>
+            <span>⚠️ Derivados: <strong className="text-amber-400">{filtered.filter((al: Alumno) => profesionalLedger[al.ID!]?.derivado_orientador === "X").length}</strong></span>
           </div>
         </div>
       </Card>

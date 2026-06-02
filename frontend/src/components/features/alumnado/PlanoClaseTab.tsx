@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useAppStore } from '@/store/useAppStore';
-import { Card, CardContent } from '@/components/ui/Card';
+import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Select } from '@/components/ui/Select';
 import { Badge } from '@/components/ui/Badge';

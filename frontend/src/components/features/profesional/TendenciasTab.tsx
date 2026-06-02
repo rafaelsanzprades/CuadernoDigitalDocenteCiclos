@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import React from "react";
@@ -47,7 +46,7 @@ export const TendenciasTab = () => {
 
   // Only students with orientation data
   const withData = activeStudents.filter((al: Alumno) => {
-    const d = profesionalLedger[al.ID];
+    const d = profesionalLedger[al.ID!];
     return d && Object.keys(d).length > 0;
   });
 

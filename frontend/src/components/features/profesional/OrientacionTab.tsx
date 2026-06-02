@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import React, { useState } from "react";
@@ -154,7 +153,7 @@ export const OrientacionTab = () => {
         <div className="flex-1 overflow-y-auto p-2 space-y-1 scrollbar-hide">
           {activeStudents.map((al) => {
             const isSelected = al.ID === selectedStudentId;
-            const hasData = !!(profesionalLedger[al.ID] && Object.keys(profesionalLedger[al.ID]).length > 0);
+            const hasData = !!(profesionalLedger[al.ID!] && Object.keys(profesionalLedger[al.ID!]).length > 0);
             return (
               <button
                 key={al.ID}

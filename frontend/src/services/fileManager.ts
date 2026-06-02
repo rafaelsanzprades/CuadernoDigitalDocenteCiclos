@@ -20,9 +20,9 @@ function clone<T>(obj: T): T {
 export const fileManager = {
   // Get active data source type
   getDataSourceType(): DataSourceType {
-    if (typeof window === 'undefined') return 'demo';
+    if (typeof window === 'undefined') return 'local';
     const stored = localStorage.getItem(STORAGE_KEYS.SOURCE_TYPE);
-    return (stored === 'local' ? 'local' : 'demo') as DataSourceType;
+    return (stored === 'local' || stored === null ? 'local' : stored) as DataSourceType;
   },
 
   // Set active data source type
@@ -97,6 +97,8 @@ export const fileManager = {
           }
           if (changed) {
             localStorage.setItem(key, JSON.stringify(parsed));
+            // Invalidate Zustand persist cache so it re-loads fresh data
+            localStorage.removeItem('cdd-store-cache');
           }
         }
         return parsed;

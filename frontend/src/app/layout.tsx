@@ -1,4 +1,3 @@
-// @ts-nocheck
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import "./globals.css";
@@ -34,7 +33,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased bg-[var(--background)] text-[var(--foreground)] min-h-screen flex flex-col transition-colors duration-300">
         <AuthProvider>
-          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={true}>
             {children}
             <Toaster position="bottom-right" toastOptions={{
               style: { background: 'var(--glass-bg)', color: 'var(--foreground)', backdropFilter: 'blur(12px)', border: '1px solid var(--glass-border)' },

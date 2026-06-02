@@ -37,6 +37,11 @@ env/
 *.db
 *.sqlite
 
+# Node / Next.js
+node_modules/
+.next/
+.npm/
+
 # Variables de entorno (no subir credenciales)
 .env
 .env.local

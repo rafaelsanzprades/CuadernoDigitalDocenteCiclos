@@ -5,7 +5,7 @@ import { ModuleData, CursoData, ModuleDataSchema, CursoDataSchema } from '@/type
 
 export function useModulesList() {
   const { data: session } = useSession();
-  const userId = (session?.user as any)?.id;
+  const userId = session?.user?.id;
   const url = userId ? `/api/modules?user_id=${userId}` : '/api/modules';
   return useSWR(url, fetcher);
 }

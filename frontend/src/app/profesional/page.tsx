@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 
 import { useEffect, useState } from "react";
@@ -11,6 +10,7 @@ import { OrientacionTab } from "@/components/features/profesional/OrientacionTab
 import { ResumenTab } from "@/components/features/profesional/ResumenTab";
 import { TendenciasTab } from "@/components/features/profesional/TendenciasTab";
 import { PanoramaTab } from "@/components/features/profesional/PanoramaTab";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 
 const TABS = [
   { id: "perfil",     label: "🧭 Perfil individual",    cleanLabel: "Perfil individual" },
@@ -96,17 +96,7 @@ export default function ProfesionalPage() {
 
   // ── Loading ───────────────────────────────────────────────────────────────
   if (loading || !cursoData) {
-    return (
-      <div className="flex min-h-screen bg-background">
-        <Sidebar />
-        <div className="flex-1 flex flex-col relative z-10 min-w-0">
-          <Header />
-          <main className="flex-1 flex items-center justify-center">
-            <div className="text-xl text-accent animate-pulse">Cargando datos del curso...</div>
-          </main>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner text="Cargando datos de orientación..." />;
   }
 
   return (

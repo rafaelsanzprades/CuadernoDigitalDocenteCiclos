@@ -1,4 +1,3 @@
-// @ts-nocheck
 "use client";
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
@@ -6,9 +5,10 @@ import Header from "@/components/layout/Header";
 import { useAppStore } from "@/store/useAppStore";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 
 export default function InstrumentosPage() {
-  const { activeModuleId, moduleData, setModuleData, updateDataFrame } = useAppStore();
+  const { activeModuleId, moduleData, setModuleData, updateDataFrame, saveModuleData } = useAppStore();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
@@ -46,24 +46,13 @@ export default function InstrumentosPage() {
   }, [activeModuleId, moduleData]);
 
   const handleSave = async () => {
-    if (!activeModuleId || !moduleData) return;
     setSaving(true);
     setSaveMessage("");
-    try {
-      const res = await fetch(`/api/module/${activeModuleId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(moduleData),
-      });
-      const result = await res.json();
-      if (result.status === "success") {
-        setSaveMessage("Guardado correctamente");
-        setTimeout(() => setSaveMessage(""), 3000);
-      } else {
-        setSaveMessage("Error al guardar");
-      }
-    } catch (err) {
-      console.error(err);
+    const ok = await saveModuleData();
+    if (ok) {
+      setSaveMessage("Guardado correctamente");
+      setTimeout(() => setSaveMessage(""), 3000);
+    } else {
       setSaveMessage("Error al guardar");
     }
     setSaving(false);
@@ -87,17 +76,7 @@ export default function InstrumentosPage() {
   }
 
   if (loading || !moduleData) {
-    return (
-      <div className="flex min-h-screen bg-background">
-        <Sidebar />
-        <div className="flex-1 flex flex-col relative z-10 min-w-0">
-          <Header />
-          <main className="flex-1 flex items-center justify-center content-area">
-            <div className="text-xl text-[#14a085] animate-pulse">Cargando instrumentos de evaluación...</div>
-          </main>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner text="Cargando..." />;
   }
 
   const df_ce = moduleData?.df_ce || [];

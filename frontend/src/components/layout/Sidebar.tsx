@@ -19,16 +19,24 @@ export default function Sidebar() {
     }
   }, []);
 
+  useEffect(() => {
+    if (isSidebarOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [isSidebarOpen]);
+
   const handleScroll = (e: React.UIEvent<HTMLElement>) => {
     sessionStorage.setItem('sidebar-scroll', e.currentTarget.scrollTop.toString());
   };
 
-  return (
-    <aside className={`${isSidebarOpen ? 'w-64' : 'w-[4.5rem]'} sticky top-0 h-screen border-r border-[var(--glass-border)] bg-background flex flex-col flex-shrink-0 transition-all duration-300 z-50`}>
-      {/* Header compacto */}
+  const sidebarContent = (
+    <>
       <div className={`px-4 pt-4 pb-2 flex ${isSidebarOpen ? 'justify-between' : 'justify-center'} items-center`}>
         {isSidebarOpen && (
-          <Link href="/">
+          <Link href="/" onClick={() => toggleSidebar()}>
             <h1 className="text-[1.3rem] font-extrabold leading-tight text-foreground hover:text-blue-400 transition-colors mb-4 tracking-tight whitespace-nowrap cursor-pointer">
               Cuaderno Ciclos FP
             </h1>
@@ -39,12 +47,9 @@ export default function Sidebar() {
         </button>
       </div>
 
-
-
-
-      {/* Nav sin overflow */}
       <nav 
         ref={navRef}
+        aria-label="Navegación principal"
         onScroll={handleScroll}
         className={`flex-1 ${isSidebarOpen ? 'px-3' : 'px-2'} py-2 space-y-4 overflow-x-hidden overflow-y-auto scrollbar-hide`}
       >
@@ -67,6 +72,7 @@ export default function Sidebar() {
                     e.preventDefault();
                     useAppStore.getState().setWizardOpen(true);
                   }
+                  toggleSidebar();
                 }}
                 title={!isSidebarOpen ? item.label : undefined}
                 className={`flex items-center ${isSidebarOpen ? 'gap-2.5 px-3' : 'justify-center px-0'} py-2 rounded-lg transition-all duration-150 group
@@ -94,19 +100,40 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      {/* Footer compacto */}
       <div className={`px-4 py-3 border-t border-[var(--glass-border)] flex flex-col items-center gap-1`}>
         {isSidebarOpen && (
           <>
             <p className="text-center text-[0.65rem] text-muted/80 mt-1 whitespace-nowrap">
               © {new Date().getFullYear()} Rafael Sanz Prades
             </p>
-            <Link href="/avisolegal" className="text-[0.6rem] text-blue-400 hover:text-blue-300 hover:underline">
+            <Link href="/avisolegal" className="text-[0.6rem] text-blue-400 hover:text-blue-300 hover:underline" onClick={() => toggleSidebar()}>
               Aviso Legal y Privacidad
             </Link>
           </>
         )}
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* Mobile overlay backdrop */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/60 z-40 lg:hidden"
+          onClick={toggleSidebar}
+        />
+      )}
+
+      {/* Desktop sidebar */}
+      <aside className={`hidden lg:flex ${isSidebarOpen ? 'w-64' : 'w-[4.5rem]'} sticky top-0 h-screen border-r border-[var(--glass-border)] bg-background flex-col flex-shrink-0 transition-all duration-300 z-50`}>
+        {sidebarContent}
+      </aside>
+
+      {/* Mobile sidebar (overlay) */}
+      <aside className={`lg:hidden fixed inset-y-0 left-0 z-50 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} w-64 border-r border-[var(--glass-border)] bg-background flex flex-col transition-transform duration-300`}>
+        {sidebarContent}
+      </aside>
+    </>
   );
 }
