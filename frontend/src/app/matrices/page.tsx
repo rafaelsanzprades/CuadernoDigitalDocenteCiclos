@@ -8,9 +8,10 @@ import { Button } from "@/components/ui/Button";
 import { motion, AnimatePresence } from "framer-motion";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { RaOgMatrix } from "@/components/features/resultados/RaOgMatrix";
+import { curriculos, CompetenciaCPP } from "@/data/curriculos";
 
 export default function MatricesPage() {
-  const { activeModuleId, moduleData, setModuleData, updateDataFrame, saveModuleData } = useAppStore();
+  const { activeModuleId, moduleData, setModuleData, updateDataFrame, saveModuleData, cursoData, updateCursoData } = useAppStore();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
@@ -23,6 +24,7 @@ export default function MatricesPage() {
     { id: "ud", label: "UD Unidades didácticas", icon: "📚" },
     { id: "relacion", label: "Relación entre RA y UD", icon: "🎯" },
     { id: "contribucion", label: "Contribución de RA en OG", icon: "🎯" },
+    { id: "cpps", label: "Competencias (CPPS)", icon: "🏅" },
   ];
 
   useEffect(() => {
@@ -90,7 +92,7 @@ export default function MatricesPage() {
 
         <main className="flex-1 p-8 content-area space-y-8">
           <div>
-              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
+              <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
               🧮 Matrices OG→ RA→ CE→ UD
             </h1>
             <p className="text-muted mt-2 text-lg">Relación y ponderación entre los RA, CE y las diferentes UD del módulo.</p>
@@ -542,6 +544,34 @@ export default function MatricesPage() {
           {activeTab === "contribucion" && (
             <div className="animate-in fade-in duration-500">
               <RaOgMatrix />
+            </div>
+          )}
+
+          {/* ── Competencias CPPS ──────────────────────────────────────────── */}
+          {activeTab === "cpps" && (
+            <div className="animate-in fade-in duration-500">
+              <Card className="p-6 border-t-4 border-t-[#14a085]">
+                <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-2">
+                  <span>🏅</span> Competencias profesionales, personales y sociales (CPPS)
+                </h2>
+                <p className="text-sm text-muted mb-6">
+                  Del Catálogo Nacional de Cualificaciones Profesionales. Artículo 5 de la ORDEN de 14 de julio de 2010 (BOA).
+                </p>
+
+                {(() => {
+                  const cpps = curriculos["ELE203"]?.competencias_cpps || [];
+                  return (
+                    <div className="space-y-2">
+                      {cpps.map((cpp: CompetenciaCPP) => (
+                        <div key={cpp.id} className="flex items-start gap-3 p-3 rounded-lg border border-[var(--glass-border)] bg-foreground/5">
+                          <span className="font-mono font-bold text-[#14a085] shrink-0 mt-0.5">CPPS {cpp.id}.</span>
+                          <span className="text-sm text-foreground">{cpp.descripcion}</span>
+                        </div>
+                      ))}
+                    </div>
+                  );
+                })()}
+              </Card>
             </div>
           )}
 

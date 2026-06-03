@@ -19,7 +19,7 @@ export function ContextoTab() {
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="glass-card p-6 border-t-4 border-t-indigo-500">
-        <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-4">
+        <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-4">
           🏫 Contexto escolar
         </h2>
         <div className="space-y-4">
@@ -59,7 +59,7 @@ export function ContextoTab() {
       </div>
 
       <div className="glass-card p-6 border-t-4 border-t-purple-500">
-        <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-4">
+        <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-4">
           👦🏻 Alumnado (ACNEAE)
         </h2>
         <div className="space-y-4">
@@ -91,7 +91,7 @@ export function ContextoTab() {
       </div>
 
       <div className="glass-card p-6 border-t-4 border-t-pink-500">
-        <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-4">
+        <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-4">
           ⚙️ Configuración del aula
         </h2>
         <div className="space-y-4">

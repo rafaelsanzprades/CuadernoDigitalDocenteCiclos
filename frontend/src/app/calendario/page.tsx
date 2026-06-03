@@ -438,7 +438,7 @@ export default function CalendarioPage() {
 
           {/* Page heading */}
           <div>
-              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">🗓️ Calendario académico</h1>
+              <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">🗓️ Calendario académico</h1>
             <p className="text-muted mt-2 text-lg">Fechas generales, trimestres, horario semanal, festivos y eventos relevantes del curso.</p>
           </div>
 

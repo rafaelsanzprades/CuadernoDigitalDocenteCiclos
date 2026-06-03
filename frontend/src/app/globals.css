@@ -189,3 +189,17 @@ tr:hover td {
 
 /* Page transition */
 .page-enter { animation: fadeIn 0.3s ease-out; }
+
+/* Allow inner overflow-y-auto to work */
+.flex.min-h-screen:not(body) {
+  max-height: 100vh;
+  overflow: hidden;
+}
+.flex.min-h-screen:not(body) > div,
+.flex.min-h-screen:not(body) > main {
+  min-height: 0;
+  overflow: hidden;
+}
+.flex.min-h-screen:not(body) main {
+  overflow-y: auto;
+}

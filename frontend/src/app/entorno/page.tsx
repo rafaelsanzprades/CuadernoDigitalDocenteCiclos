@@ -46,20 +46,20 @@ export default function EntornoTrabajoPage() {
     const loadFromBackend = async () => {
       try {
         const [pdRes, cursoRes] = await Promise.all([
-          fetch('/api/module/demo-ictve-pd'),
-          fetch('/api/module/demo-ictve-curso-2025-26')
+          fetch('/api/module/0237-ictve-pd'),
+          fetch('/api/module/0237-ictve-curso-2025-26')
         ]);
         const pdData = await pdRes.json();
         const cursoData = await cursoRes.json();
         const db: Record<string, any> = {};
         if (pdData.status === 'success') {
-          db['demo-ictve-pd'] = pdData.data;
-          setActiveModuleId('demo-ictve-pd');
+          db['0237-ictve-pd'] = pdData.data;
+          setActiveModuleId('0237-ictve-pd');
           setModuleData(pdData.data);
         }
         if (cursoData.status === 'success') {
-          db['demo-ictve-curso-2025-26'] = cursoData.data;
-          setActiveCursoId('demo-ictve-curso-2025-26');
+          db['0237-ictve-curso-2025-26'] = cursoData.data;
+          setActiveCursoId('0237-ictve-curso-2025-26');
           setCursoData(cursoData.data);
         }
         fileManager.saveDb(db);
@@ -138,8 +138,8 @@ export default function EntornoTrabajoPage() {
       // Fetch real data from the backend API
       try {
         const [pdRes, cursoRes] = await Promise.all([
-          fetch('/api/module/demo-ictve-pd'),
-          fetch('/api/module/demo-ictve-curso-2025-26')
+          fetch('/api/module/0237-ictve-pd'),
+          fetch('/api/module/0237-ictve-curso-2025-26')
         ]);
         const pdData = await pdRes.json();
         const cursoData = await cursoRes.json();
@@ -147,13 +147,13 @@ export default function EntornoTrabajoPage() {
         // Build a DB object and save it to fileManager's local storage
         const db: Record<string, any> = {};
         if (pdData.status === 'success') {
-          db['demo-ictve-pd'] = pdData.data;
-          setActiveModuleId('demo-ictve-pd');
+          db['0237-ictve-pd'] = pdData.data;
+          setActiveModuleId('0237-ictve-pd');
           setModuleData(pdData.data);
         }
         if (cursoData.status === 'success') {
-          db['demo-ictve-curso-2025-26'] = cursoData.data;
-          setActiveCursoId('demo-ictve-curso-2025-26');
+          db['0237-ictve-curso-2025-26'] = cursoData.data;
+          setActiveCursoId('0237-ictve-curso-2025-26');
           setCursoData(cursoData.data);
         }
         fileManager.saveDb(db);
@@ -326,7 +326,7 @@ export default function EntornoTrabajoPage() {
 
             {/* Title */}
             <div>
-              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
+              <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
                 📂 Entorno de trabajo
               </h1>
               <p className="text-muted mt-2 text-lg">

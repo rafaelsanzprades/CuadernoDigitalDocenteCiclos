@@ -33,7 +33,7 @@ export function PlanesTab() {
     <div className="space-y-8 animate-in fade-in duration-500">
       {/* DUA */}
       <section className="glass-card p-6 border-t-4 border-t-emerald-500">
-        <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-4">
+        <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-4">
           🧩 Plan de Atención a la diversidad
         </h2>
         <div className="overflow-x-auto mb-4">
@@ -83,7 +83,7 @@ export function PlanesTab() {
 
       {/* Contingencia */}
       <section className="glass-card p-6 border-t-4 border-t-orange-500">
-        <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-4">
+        <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-4">
           🛡️ Plan de Contingencia
         </h2>
         <div className="overflow-x-auto mb-4">
@@ -134,7 +134,7 @@ export function PlanesTab() {
 
       {/* ACE */}
       <section className="glass-card p-6 border-t-4 border-t-[#14a085]">
-        <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-4">
+        <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-4">
           🚌 Plan de Actividades complementarias
         </h2>
         <div className="overflow-x-auto mb-4">

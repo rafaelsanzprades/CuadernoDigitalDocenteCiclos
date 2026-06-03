@@ -145,7 +145,7 @@ export const AnalisisGrupalTab = () => {
 
       <section className="grid grid-cols-2 gap-6">
         <Card className="p-6">
-          <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-6">
+          <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-6">
             📉 Distribución de Calificaciones
           </h2>
           <div className="h-72 w-full">
@@ -166,7 +166,7 @@ export const AnalisisGrupalTab = () => {
         </Card>
 
         <Card className="p-6">
-          <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-6">
+          <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-6">
             📈 Evolución por Trimestres
           </h2>
           <div className="h-72 w-full">
@@ -191,7 +191,7 @@ export const AnalisisGrupalTab = () => {
 
       {raData.length > 0 && (
         <Card className="p-6">
-          <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-6">
+          <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-6">
             🎯 Rendimiento por RA
           </h2>
           <div className="space-y-4">
@@ -254,7 +254,7 @@ export const AnalisisGrupalTab = () => {
       )}
 
       <Card className="p-6">
-        <h2 className="text-2xl font-bold mb-6">⚠️ Seguimiento de Riesgo Académico</h2>
+        <h2 className="text-[1.1rem] font-bold mb-6">⚠️ Seguimiento de Riesgo Académico</h2>
         {risks.length > 0 ? (
           <>
             <div className="bg-red-500/10 border border-red-500/30 text-red-300 px-4 py-3 rounded-lg mb-4 text-sm font-semibold flex items-center gap-2">

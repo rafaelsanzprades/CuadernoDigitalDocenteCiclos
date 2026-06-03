@@ -1,11 +1,12 @@
 export const navGroups = [
   {
-    title: "Inicio",
+    title: "General",
     items: [
       { href: "/entorno", label: "Entorno de trabajo", icon: "📂" },
       { href: "/ciclos", label: "Ciclos formativos", icon: "🏫" },
       { href: "/hoy", label: "Tu día, semana y mes", icon: "📅" },
-      { href: "/documentos", label: "Documentos y descargas", icon: "📄" }
+      { href: "/documentos", label: "Documentos", icon: "📄" },
+      { href: "/descargas", label: "Descargas PDF", icon: "⬇️" }
     ]
   },
   {

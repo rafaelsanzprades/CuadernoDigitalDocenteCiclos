@@ -102,7 +102,7 @@ export function AccesoUsuariosTab() {
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-2xl font-bold text-foreground tracking-tight flex items-center gap-3">🛡️ Acceso usuarios</h2>
+        <h2 className="text-[1.1rem] font-bold text-foreground tracking-tight flex items-center gap-3">🛡️ Acceso usuarios</h2>
         <p className="text-muted mt-2">
           Sistema de Roles Basado en Contextos (RBAC). Los permisos no son estáticos, dependen del contexto geográfico, organizativo y temporal.
         </p>
@@ -231,7 +231,7 @@ export function AccesoUsuariosTab() {
       {activeTab === "arquitectura" && (
         <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
           <Card className="p-8">
-            <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
+            <h2 className="text-[1.1rem] font-bold mb-6 flex items-center gap-3">
               <Database className="w-6 h-6 text-accent" />
               Efecto Cascada y Relaciones
             </h2>

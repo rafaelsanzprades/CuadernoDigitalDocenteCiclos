@@ -7,7 +7,7 @@ import { es } from 'date-fns/locale';
 import { simulateSchedule, DaySchedule } from '@/utils/scheduleSimulator';
 
 export const WeeklyClasses = () => {
-  const { moduleData } = useAppStore();
+  const { moduleData, activeModuleId } = useAppStore();
   const [activeWeekTab, setActiveWeekTab] = useState<'current' | 'next'>('current');
 
   if (!moduleData) return null;
@@ -16,7 +16,8 @@ export const WeeklyClasses = () => {
   const simulation = simulateSchedule(moduleData);
 
   // 2. Compute current and next week dates
-  const now = new Date();
+  const isDemo = activeModuleId === '0237-ictve-pd';
+  const now = isDemo ? new Date('2025-10-06T10:00:00') : new Date();
   const dayOfWeek = now.getDay(); // 0 = Sun, 1 = Mon, ..., 6 = Sat
   const isThursdayOrLater = dayOfWeek === 0 || dayOfWeek >= 4;
 
@@ -175,7 +176,7 @@ export const WeeklyClasses = () => {
     <MotionWrapper className="glass-panel p-6 border-l-4 border-l-blue-400">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div>
-          <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
+          <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground">
             <CalendarDays className="w-6 h-6 text-blue-400" /> Previsión Semanal
           </h2>
           <p className="text-sm text-muted mt-1">

@@ -32,7 +32,7 @@ export default function ProfesoradoPage() {
 
             {/* ── Título ─────────────────────────────────────────── */}
             <div>
-              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
+              <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
                 👨‍🏫 Profesorado
               </h1>
               <p className="text-muted mt-2 text-lg">Administración del profesorado, perfiles y asignaciones docentes.</p>

@@ -34,7 +34,7 @@ export function AsignacionDocentesTab() {
       
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
         <div>
-          <h2 className="text-2xl font-bold flex items-center gap-3">
+          <h2 className="text-[1.1rem] font-bold flex items-center gap-3">
             <span className="text-2xl">👨‍🏫</span> Asignación de docentes
           </h2>
           <p className="text-muted mt-2">Jefatura de Estudios: Control de carga horaria lectiva del profesorado y módulos asignados.</p>

@@ -11,7 +11,7 @@ export default function SeguimientoPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
-  const [allDiarioOpen, setAllDiarioOpen] = useState(true);
+  const [allDiarioOpen, setAllDiarioOpen] = useState(false);
 
   const TABS = [
     { id: "diario", label: "📝 Diario de aula", cleanLabel: "Diario de aula" },
@@ -166,7 +166,7 @@ export default function SeguimientoPage() {
 
         <main className="flex-1 p-8 content-area space-y-8">
           <div>
-              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
+              <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
               📍 Seguimiento diario
             </h1>
             <p className="text-muted mt-2 text-lg">Registro detallado del desarrollo diario de las clases y contingencias.</p>

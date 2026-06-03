@@ -1,0 +1,642 @@
+INFO:     127.0.0.1:57349 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61916 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61920 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61918 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63283 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:63285 - "GET /api/learning_outcomes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63284 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62204 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62206 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52072 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:54366 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54368 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57610 - "GET /api/modules?degree_id=137 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62323 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:59621 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59622 - "GET /api/learning_outcomes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55163 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55165 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64214 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64217 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64218 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64222 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64221 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61690 - "GET /api/modules HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56339 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56337 - "GET /api/modules HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56341 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51434 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51435 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62531 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62533 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:65070 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:65072 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:65526 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65528 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65532 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65531 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60806 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60810 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60808 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60814 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60813 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51324 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51326 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51328 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52736 - "GET /api/modules HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52739 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52740 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51504 - "GET /api/modules HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59617 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59615 - "GET /api/modules HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59619 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59507 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59506 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56889 - "GET /api/modules HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54575 - "GET /api/modules HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64614 - "GET /api/documents/list?path= HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64616 - "GET /api/documents/list?path= HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61951 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61953 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57569 - "GET /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57571 - "GET /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57573 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57575 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56535 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53803 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49682 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49683 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50240 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50239 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55580 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55582 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52593 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52592 - "GET /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52595 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58118 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58119 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56838 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56837 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63066 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63065 - "GET /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63068 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50586 - "GET /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50588 - "GET /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50590 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53366 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56151 - "GET /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56180 - "GET /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65054 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63027 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57336 - "GET /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51826 - "GET /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60708 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49720 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52701 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52700 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63144 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63143 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61004 - "GET /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49765 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49766 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49266 - "GET /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64020 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64021 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63089 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63088 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61941 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61943 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54679 - "GET /api/modules HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60047 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60046 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51263 - "GET /api/modules HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64828 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64827 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63602 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63604 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51256 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51258 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60526 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60528 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52418 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52420 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64434 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64436 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57100 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57102 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57105 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57106 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52803 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52805 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52809 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52808 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60799 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60800 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58626 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58628 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50077 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50076 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65165 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65166 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56067 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56066 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60571 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60570 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57862 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57864 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58350 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58352 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53675 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53677 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64594 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64596 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62758 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62757 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51657 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51656 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51659 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51257 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51259 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62383 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62382 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62385 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53271 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53273 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62807 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62806 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62809 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56046 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56045 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56048 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63668 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63667 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63670 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64254 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64253 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64256 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56781 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56780 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56783 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55236 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55235 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55238 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55240 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55242 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61284 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61282 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61286 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50931 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50930 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50933 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52073 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52072 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52075 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51857 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51856 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51859 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61595 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61594 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61597 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62748 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62747 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62750 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60723 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60722 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60725 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54629 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54628 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54631 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53198 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53197 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53200 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57523 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57525 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:57522 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59736 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59734 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59738 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51181 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51180 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51183 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61685 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61687 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61691 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61690 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63972 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63973 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58736 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58734 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58738 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58740 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58742 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62329 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62330 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62422 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62421 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62424 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49674 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49672 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49675 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49674 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49677 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52601 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52600 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52603 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49675 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49674 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49677 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58337 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58336 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58339 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54784 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54786 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63055 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63054 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63057 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63059 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63061 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59486 - "GET /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59487 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50395 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50396 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51615 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51617 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58863 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58865 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58862 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56455 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53004 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53006 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53003 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59987 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59989 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59986 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51139 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51141 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51138 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53354 - "GET /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53355 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53357 - "GET /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52266 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65436 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65438 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61792 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61794 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50206 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50208 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53394 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53396 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53400 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53398 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53402 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56094 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56096 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50271 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50273 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54468 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54466 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54470 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54474 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54473 - "GET /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53134 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53138 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53137 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57486 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57488 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60174 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60176 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60196 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60179 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63821 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:63823 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63822 - "GET /api/learning_outcomes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63825 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:54139 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:54140 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54141 - "GET /api/learning_outcomes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55424 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55426 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54829 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:65292 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65293 - "GET /api/learning_outcomes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65295 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:55511 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:58539 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:63199 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:63200 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63201 - "GET /api/learning_outcomes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53365 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:49153 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:55272 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:55005 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:49897 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:52375 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:62085 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62087 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62089 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53982 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53984 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:60479 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60478 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51346 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:60713 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:63403 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63405 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52372 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52373 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52402 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:62227 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:62228 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62229 - "GET /api/learning_outcomes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53515 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60042 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51188 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:59357 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59358 - "GET /api/learning_outcomes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52783 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52784 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55227 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:52870 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:60380 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:54345 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:54346 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54347 - "GET /api/learning_outcomes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56473 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56475 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63355 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:52882 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52883 - "GET /api/learning_outcomes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64771 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:59628 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:52372 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:62846 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:62847 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62848 - "GET /api/learning_outcomes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52307 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62057 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62598 - "GET /api/modules?degree_id=137 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49211 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:63049 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63048 - "GET /api/learning_outcomes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63051 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:55274 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:55855 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:60489 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60488 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52723 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54361 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63844 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63846 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59963 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59962 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55830 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55832 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55688 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55690 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49698 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49700 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50727 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50729 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50733 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:50734 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50735 - "GET /api/learning_outcomes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53590 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53591 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60063 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60065 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49396 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49398 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62045 - "GET /api/users HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:56154 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56155 - "GET /api/learning_outcomes HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54744 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54746 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65005 - "GET /api/modules HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65008 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65009 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58095 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58096 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53983 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53985 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53984 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53988 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53989 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60792 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50736 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50738 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59449 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59450 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59452 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59454 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64349 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64351 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64353 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64218 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64220 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55330 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55332 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55334 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55336 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55338 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61383 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61385 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62196 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62200 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:62198 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62202 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62204 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53485 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53487 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54319 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54321 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61087 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61089 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61785 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61789 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61790 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61794 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61796 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52259 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52261 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54503 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54505 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54507 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57558 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63087 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63088 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50125 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50127 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64695 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64697 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49775 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49774 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50043 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50044 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57719 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57721 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59074 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59076 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65247 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65249 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55731 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55733 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55129 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49312 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49314 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59360 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59362 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49850 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49852 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63518 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63520 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54523 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54525 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62441 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62443 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60699 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60701 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53635 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53637 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49706 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49708 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49710 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52038 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52040 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:52042 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52044 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52046 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58943 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58945 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63052 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63054 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63056 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63058 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63060 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60119 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60121 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63121 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63123 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61084 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61086 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62039 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62041 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64193 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61337 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56970 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56475 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51922 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51924 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64907 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64909 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64911 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64913 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64915 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55389 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55391 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49266 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49268 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49273 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49274 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49276 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49271 - "GET /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49278 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49282 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49280 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62109 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50509 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:50511 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55850 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55854 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55852 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62176 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62180 - "PUT /api/module/0237-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62178 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63992 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63994 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55709 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55711 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56525 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56527 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57593 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57595 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55392 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55394 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63317 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63319 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49684 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49686 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65455 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:65457 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64059 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64058 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64067 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55823 - "PUT /api/module/0237-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63478 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63480 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63204 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63206 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63208 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61296 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61295 - "GET /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61298 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:61300 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61302 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55822 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55824 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58547 - "GET /api/auth/session HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58545 - "GET /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58549 - "POST /api/auth/_log HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58551 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58553 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50961 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50963 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58260 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58262 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55656 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58392 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53479 - "PUT /api/module/demo-ictve-pd HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53481 - "PUT /api/module/demo-ictve-curso-2025-26 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49671 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49674 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64850 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64852 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54649 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54651 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55946 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55948 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64709 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64711 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49756 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49758 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58936 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58938 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56111 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56113 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57810 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57812 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57802 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57804 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61846 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61848 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60515 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54391 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61528 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62932 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59927 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59929 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49676 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49680 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61449 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61451 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60134 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60136 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62569 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58100 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52374 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52376 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58700 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58702 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62405 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62407 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57225 - "GET /api/families HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57227 - "GET /api/families HTTP/1.1" 200 OK

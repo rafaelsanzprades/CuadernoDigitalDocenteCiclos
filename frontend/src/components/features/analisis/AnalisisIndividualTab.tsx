@@ -167,7 +167,7 @@ export const AnalisisIndividualTab = () => {
       </section>
 
       <Card className="p-6">
-        <h2 className="text-2xl font-bold mb-6">🎯 Adquisición de competencias (RA)</h2>
+        <h2 className="text-[1.1rem] font-bold mb-6">🎯 Adquisición de competencias (RA)</h2>
         <div className="grid grid-cols-2 gap-6">
           {df_ra.map((ra: any) => {
             if (!ra.id_ra) return null;
@@ -196,7 +196,7 @@ export const AnalisisIndividualTab = () => {
       </Card>
 
       <Card className="p-6 border-t-4 border-t-purple-500">
-        <h2 className="text-2xl font-bold mb-2">🎮 Simulador de calificaciones</h2>
+        <h2 className="text-[1.1rem] font-bold mb-2">🎮 Simulador de calificaciones</h2>
         <p className="text-muted mb-6 text-sm">Experimenta con tus notas para proyectar tu resultado final.</p>
 
         <div className="flex gap-8">
@@ -252,7 +252,7 @@ export const AnalisisIndividualTab = () => {
             >
               <div className="text-sm uppercase tracking-widest font-bold opacity-80 mb-4">Nota Proyectada</div>
               <div className="text-7xl font-black mb-4 drop-shadow-lg">{simCalc.nota_final.toFixed(2)}</div>
-              <div className="text-2xl font-bold mb-1">{simSigad.txt}</div>
+              <div className="text-[1.1rem] font-bold mb-1">{simSigad.txt}</div>
               <div className="text-lg opacity-80">({simSigad.cod})</div>
             </div>
           </div>

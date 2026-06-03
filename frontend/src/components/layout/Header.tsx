@@ -190,7 +190,7 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
                   className="px-5 py-2.5 rounded-lg hover:bg-foreground/5 transition-all flex items-center gap-3 cursor-pointer"
                 >
                   <div className="flex flex-col items-start gap-1">
-                    <span className="text-[1.1rem] font-bold tracking-wide text-foreground leading-none">{group.title}</span>
+                    <span className="text-[0.95rem] font-bold tracking-wide text-foreground leading-none">{group.title}</span>
                     {badgeText ? (
                       <div className={`px-2 py-0.5 rounded text-[0.65rem] border font-semibold tracking-wider uppercase leading-none ${badgeColor}`}>
                         {badgeText}

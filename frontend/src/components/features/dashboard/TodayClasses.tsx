@@ -7,17 +7,20 @@ import { es } from 'date-fns/locale';
 import { simulateSchedule } from '@/utils/scheduleSimulator';
 
 export const TodayClasses = () => {
-  const { moduleData } = useAppStore();
+  const { moduleData, activeModuleId } = useAppStore();
 
   if (!moduleData) return null;
 
+  const isDemo = activeModuleId === '0237-ictve-pd';
+  const now = isDemo ? new Date('2025-10-06T10:00:00') : new Date();
+
   // Simulate schedule to get exact classroom programming for today
   const simulation = simulateSchedule(moduleData);
-  const todayStr = format(new Date(), 'dd/MM/yyyy');
+  const todayStr = format(now, 'dd/MM/yyyy');
   const todaySchedule = simulation[todayStr];
 
   const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
-  const formattedToday = capitalize(format(new Date(), "EEEE d 'de' MMMM", { locale: es }));
+  const formattedToday = capitalize(format(now, "EEEE d 'de' MMMM", { locale: es }));
 
   if (!todaySchedule || todaySchedule.isFestivo || !todaySchedule.udId || todaySchedule.sessions.length === 0) {
     const reason = todaySchedule?.isFestivo 
@@ -26,7 +29,7 @@ export const TodayClasses = () => {
 
     return (
       <MotionWrapper className="glass-panel p-6 border-l-4 border-l-gray-400">
-        <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-2">
+        <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-2">
           <Calendar className="w-6 h-6" /> Tus Clases de Hoy ({formattedToday})
         </h2>
         <p className="text-muted">{reason}</p>
@@ -43,7 +46,7 @@ export const TodayClasses = () => {
         <BookOpen className="w-48 h-48" />
       </div>
       
-      <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-4 relative z-10">
+      <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-4 relative z-10">
         <Calendar className="w-6 h-6 text-accent" /> Tus Clases de Hoy ({formattedToday})
       </h2>
       

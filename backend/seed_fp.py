@@ -38,16 +38,23 @@ def seed():
     # 3. Ejemplo de Títulos (Grado Superior en Aragón)
     ifc = db.query(ProfessionalFamily).filter_by(code="IFC").first()
     if ifc and not db.query(Degree).filter_by(name="Desarrollo de Aplicaciones Web").first():
-        daw = Degree(family_id=ifc.id, level=NivelFP.SUPERIOR, name="Desarrollo de Aplicaciones Web", hours=2000)
-        dam = Degree(family_id=ifc.id, level=NivelFP.SUPERIOR, name="Desarrollo de Aplicaciones Multiplataforma", hours=2000)
+        daw = Degree(family_id=ifc.id, level=NivelFP.SUPERIOR, name="Desarrollo de Aplicaciones Web", hours=2000, code="IFC302")
+        dam = Degree(family_id=ifc.id, level=NivelFP.SUPERIOR, name="Desarrollo de Aplicaciones Multiplataforma", hours=2000, code="IFC301")
         db.add_all([daw, dam])
         print("✔️ Añadidos Títulos de Informática (DAW y DAM)")
     db.commit()
 
-    # 4. Centros Educativos (Con Titularidad)
-    if not db.query(Center).filter_by(code="50011500").first(): # Ejemplo IES Ítaca o similar
-        c1 = Center(code="50011500", name="IES Fray Luis de León", titularity=Titularidad.PUBLICA)
+    ele = db.query(ProfessionalFamily).filter_by(code="ELE").first()
+    if ele and not db.query(Degree).filter_by(name="Instalaciones de Telecomunicaciones").first():
+        it = Degree(family_id=ele.id, level=NivelFP.MEDIO, name="Instalaciones de Telecomunicaciones", hours=2000, code="ELE203")
+        db.add(it)
+        print("✔️ Añadido Título de Electricidad: Instalaciones de Telecomunicaciones")
+    db.commit()
 
+    # 4. Centros Educativos (Con Titularidad)
+    if not db.query(Center).filter_by(code="50011500").first():
+        c1 = Center(code="50011500", name="IES Fray Luis de León", titularity=Titularidad.PUBLICA)
+        c2 = Center(code="50000001", name="Colegio San Valero", titularity=Titularidad.CONCERTADA)
         c3 = Center(code="50000002", name="Academia Técnica Privada", titularity=Titularidad.PRIVADA)
         db.add_all([c1, c2, c3])
         print("✔️ Añadidos Centros Educativos de ejemplo (Público, Concertado y Privado)")

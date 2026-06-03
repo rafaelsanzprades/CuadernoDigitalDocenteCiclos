@@ -24,8 +24,8 @@ export function WelcomeWizard({ onComplete, fetchModules, setActiveModuleId, set
     try {
       fileManager.resetActiveDb();
       await fetchModules();
-      setActiveModuleId("demo-ictve-pd");
-      setActiveCursoId("demo-ictve-curso-2025-26");
+      setActiveModuleId("0237-ictve-pd");
+      setActiveCursoId("0237-ictve-curso-2025-26");
       toast.success("Entorno de demostración cargado!", { id: toastId });
       onComplete();
     } catch (error: unknown) {
@@ -102,7 +102,7 @@ export function WelcomeWizard({ onComplete, fetchModules, setActiveModuleId, set
                 className="group cursor-pointer border-2 border-[var(--glass-border)] hover:border-purple-500 rounded-2xl p-6 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20 bg-background/50 hover:bg-purple-500/5 flex flex-col items-center text-center gap-4"
               >
                 <span className="text-6xl group-hover:scale-110 transition-transform">🎁</span>
-                <h3 className="text-2xl font-bold text-foreground">Cargar Demo</h3>
+                <h3 className="text-[1.1rem] font-bold text-foreground">Cargar Demo</h3>
                 <p className="text-sm text-muted">
                   Inyecta un entorno ficticio completo con Resultados de Aprendizaje, Unidades y Alumnos para ver cómo funciona todo al instante.
                 </p>
@@ -116,7 +116,7 @@ export function WelcomeWizard({ onComplete, fetchModules, setActiveModuleId, set
                 className="group cursor-pointer border-2 border-[var(--glass-border)] hover:border-accent rounded-2xl p-6 transition-all duration-300 hover:shadow-lg hover:shadow-accent/20 bg-background/50 hover:bg-accent/5 flex flex-col items-center text-center gap-4"
               >
                 <span className="text-6xl group-hover:scale-110 transition-transform">🚀</span>
-                <h3 className="text-2xl font-bold text-foreground">Empezar de Cero</h3>
+                <h3 className="text-[1.1rem] font-bold text-foreground">Empezar de Cero</h3>
                 <p className="text-sm text-muted">
                   Crea tu propio Módulo vacío y empieza a introducir tus rúbricas y alumnos desde cero.
                 </p>

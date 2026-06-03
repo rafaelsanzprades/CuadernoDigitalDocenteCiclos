@@ -16,7 +16,7 @@ export function FeoeTab() {
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
       <Card className="p-6 border-l-4 border-l-pink-500 hover:shadow-lg hover:shadow-pink-500/10 transition-shadow">
-        <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-6">
+        <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-6">
 <span>🏢</span> Formación en Empresa (FEOE)
 </h2>
         <div className="grid grid-cols-3 gap-6">

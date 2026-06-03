@@ -6,14 +6,26 @@ import { Card } from "@/components/ui/Card";
 import { Select } from "@/components/ui/Select";
 import { Input } from "@/components/ui/Input";
 import { Family } from "@/types";
+import { fileManager } from "@/services/fileManager";
 
 export function DatosTab() {
   const {
     moduleData,
+    setModuleData,
     updateInfoModulo,
     updateModuleData,
     groups
   } = useAppStore();
+
+  useEffect(() => {
+    // Force reload of new demo values if they are missing
+    if (moduleData?.info_modulo?.centro !== "IES Andalán" || (moduleData?.df_act && moduleData.df_act.length < 21)) {
+      const db = fileManager.getDb();
+      if (db['0237-ictve-pd']) {
+        setModuleData(db['0237-ictve-pd']);
+      }
+    }
+  }, [moduleData?.info_modulo?.centro, moduleData?.df_act?.length, setModuleData]);
 
   // --- States for Módulo didáctico ---
   const [families, setFamilies] = useState<Family[]>([]);
@@ -26,6 +38,31 @@ export function DatosTab() {
       .then(r => r.json())
       .then(json => { if (json.status === "success") setFamilies(json.data); });
   }, []);
+
+  useEffect(() => {
+    if (families.length > 0 && moduleData?.info_modulo) {
+      const { familia, ciclo, codigo } = moduleData.info_modulo;
+      
+      const cleanStr = (s: string) => s ? s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim() : "";
+
+      if (familia && !viewFamilyId) {
+        const fam = families.find(f => cleanStr(f.name) === cleanStr(familia));
+        if (fam) {
+          setViewFamilyId(fam.id.toString());
+          if (ciclo) {
+            const deg = fam.degrees.find(d => cleanStr(d.name) === cleanStr(ciclo) || cleanStr(d.name).includes(cleanStr(ciclo)));
+            if (deg) {
+              setViewDegreeId(deg.id.toString());
+            }
+          }
+        }
+      }
+      
+      if (codigo && !selectedModuleCode) {
+        setSelectedModuleCode(codigo);
+      }
+    }
+  }, [families, moduleData, viewFamilyId, selectedModuleCode]);
 
   const viewFamily = families.find(f => f.id.toString() === viewFamilyId);
   const viewDegree = viewFamily?.degrees.find(d => d.id.toString() === viewDegreeId);
@@ -132,7 +169,7 @@ export function DatosTab() {
       
       {/* 1. Centro y docente */}
       <Card className="p-6">
-        <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-5">
+        <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-5">
 <span>🧑‍🏫</span> Centro y docente
 </h2>
         <div className="grid grid-cols-2 gap-6">
@@ -153,7 +190,7 @@ export function DatosTab() {
 
       {/* 2. Módulo didáctico */}
       <Card className="p-6">
-        <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-5">
+        <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-5">
 <span>📝</span> Módulo didáctico
 </h2>
 
@@ -169,14 +206,14 @@ export function DatosTab() {
             ))}
           </Select>
           <Select
-            label="Grado y Título"
+            label="Título"
             value={viewDegreeId}
             onChange={e => { setViewDegreeId(e.target.value); setSelectedModuleCode(""); }}
             disabled={!viewFamilyId}
           >
             <option value="">-- Selecciona Título --</option>
             {viewFamily?.degrees.map(d => (
-              <option key={d.id} value={d.id}>{d.level} · {d.name}</option>
+              <option key={d.id} value={d.id}>{d.name}</option>
             ))}
           </Select>
         </div>
@@ -244,7 +281,7 @@ export function DatosTab() {
       {/* 3. Sesiones semanales */}
       <Card className="p-6 border-l-4 border-l-purple-500">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
+          <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground">
 <span>🕒</span> Sesiones semanales
 </h2>
           <div className="bg-foreground/15 px-4 py-2 rounded-lg border border-[var(--glass-border)] text-sm">
@@ -270,7 +307,7 @@ export function DatosTab() {
 
       {/* 4. Sesiones trimestrales */}
       <Card className="p-6 border-l-4 border-l-emerald-500">
-        <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-6">
+        <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-6">
 <span>📅</span> Sesiones trimestrales
 </h2>
         <div className="grid grid-cols-3 gap-6">
@@ -282,7 +319,7 @@ export function DatosTab() {
             <div key={t.label}>
               <label className="block text-sm font-semibold text-muted mb-2 text-center">{t.label}</label>
               <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-4 text-center">
-                <div className="text-2xl font-bold text-emerald-400 font-mono">{t.value} h</div>
+                <div className="text-[1.1rem] font-bold text-emerald-400 font-mono">{t.value} h</div>
               </div>
             </div>
           ))}
@@ -296,7 +333,7 @@ export function DatosTab() {
             <div key={s.label}>
               <label className="block text-sm font-semibold text-muted mb-2 text-center">{s.label}</label>
               <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-4 text-center">
-                <div className={`text-2xl font-bold ${s.cls}`}>{s.value}</div>
+                <div className={`text-[1.1rem] font-bold ${s.cls}`}>{s.value}</div>
               </div>
             </div>
           ))}

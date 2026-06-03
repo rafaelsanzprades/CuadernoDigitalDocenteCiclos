@@ -31,7 +31,7 @@ export function PlanificacionMensualTab() {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
-      <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
+      <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground">
         <span>📅</span> Planificación y seguimiento mensual
       </h2>
 

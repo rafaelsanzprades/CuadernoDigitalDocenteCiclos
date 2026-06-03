@@ -18,7 +18,7 @@ export default function LegalNoticePage() {
             
             {/* Header Title */}
             <div>
-              <h1 className="text-4xl font-extrabold text-foreground tracking-tight">
+              <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight">
                 ⚖️ Información Legal y Privacidad
               </h1>
               <p className="text-muted mt-2 text-lg">

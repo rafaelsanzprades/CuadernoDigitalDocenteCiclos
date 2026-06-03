@@ -37,7 +37,7 @@ export function RaOgMatrix() {
 
   return (
     <Card className="p-6 border-l-4 border-l-blue-500 overflow-hidden animate-in fade-in duration-500">
-      <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-6">
+      <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-6">
 <span>🔗</span> Contribución de los RA a los OG del Título
 </h2>
       
@@ -66,7 +66,7 @@ export function RaOgMatrix() {
               <tr key={idx} className="hover:bg-foreground/5 transition-colors border-b border-[var(--glass-border)]/50 group">
                 <td className="p-3 align-top">
                   <div className="flex gap-2">
-                    <span className="font-mono text-xs font-bold text-blue-400 mt-0.5">OG{idx + 1}.</span>
+                    <span className="font-mono text-xs font-bold text-blue-400 mt-0.5">OG{String.fromCharCode(97 + idx)}.</span>
                     <span className="text-foreground/90 leading-relaxed">{og}</span>
                   </div>
                 </td>

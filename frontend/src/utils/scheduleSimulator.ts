@@ -34,15 +34,21 @@ export function simulateSchedule(moduleData: any): Record<string, DaySchedule> {
 
   const parseDate = (s: string) => {
     if (!s) return null;
-    const parts = String(s).split("-").map(Number);
-    if (parts.length !== 3 || parts.some(isNaN)) return null;
-    return new Date(parts[0], parts[1] - 1, parts[2]);
+    if (String(s).includes("-")) {
+      const parts = String(s).split("-").map(Number);
+      if (parts.length !== 3 || parts.some(isNaN)) return null;
+      return new Date(parts[0], parts[1] - 1, parts[2]);
+    } else {
+      const parts = String(s).split("/").map(Number);
+      if (parts.length !== 3 || parts.some(isNaN)) return null;
+      return new Date(parts[2], parts[1] - 1, parts[0]);
+    }
   };
 
   const termRanges = [
-    { ini: parseDate(info_fechas.ini_1t), fin: parseDate(info_fechas.fin_1t) },
-    { ini: parseDate(info_fechas.ini_2t), fin: parseDate(info_fechas.fin_2t) },
-    { ini: parseDate(info_fechas.ini_3t), fin: parseDate(info_fechas.fin_3t) }
+    { ini: parseDate(info_fechas.inicio || info_fechas.ini_1t), fin: parseDate(info_fechas.evaluacion_1 || info_fechas.fin_1t) },
+    { ini: parseDate(info_fechas.evaluacion_1 || info_fechas.ini_2t), fin: parseDate(info_fechas.evaluacion_2 || info_fechas.fin_2t) },
+    { ini: parseDate(info_fechas.evaluacion_2 || info_fechas.ini_3t), fin: parseDate(info_fechas.fin || info_fechas.evaluacion_final || info_fechas.fin_3t) }
   ];
 
   // 1. Gather all calendar dates in sorted order across the terms
@@ -90,17 +96,35 @@ export function simulateSchedule(moduleData: any): Record<string, DaySchedule> {
   datesList.forEach((d) => {
     const rawDay = d.getDay(); // 0 = Sun, 1 = Mon, ..., 6 = Sat
     const dayIndex = rawDay - 1; // 0 = Lun, ..., 4 = Vie
-    const dayName = dias_semana_list[dayIndex] || "Lun";
+    const dayOfWeekName = dias_semana_list[dayIndex] || "Lun";
     const dateStr = `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
+    const lookupDateStr = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 
-    const isFestivo = !!calendar_notes[`f_${dateStr}`];
-    const festivoName = calendar_notes[`f_${dateStr}`] || undefined;
-    const isEvent = !!calendar_notes[`r_${dateStr}`];
-    const eventName = calendar_notes[`r_${dateStr}`] || undefined;
+    const isFestivo = !!calendar_notes[`f_${lookupDateStr}`];
+    const festivoName = calendar_notes[`f_${lookupDateStr}`] || undefined;
+    const isEvent = !!calendar_notes[`r_${lookupDateStr}`];
+    const eventName = calendar_notes[`r_${lookupDateStr}`] || undefined;
 
-    const hours = isFestivo ? 0 : (Number(horario[dayName]) || 0);
+    const dayKeyMap = ["lunes", "martes", "miercoles", "jueves", "viernes"];
+    const dayKey = dayKeyMap[dayIndex] || "lunes";
+    const horarioStr = horario[dayKey] || "";
+    
+    let hours = 0;
+    if (horarioStr) {
+      const [start, end] = horarioStr.split("-");
+      if (start && end) {
+        const startParts = start.split(":");
+        const endParts = end.split(":");
+        if (startParts.length === 2 && endParts.length === 2) {
+          const startH = Number(startParts[0]) + Number(startParts[1]) / 60;
+          const endH = Number(endParts[0]) + Number(endParts[1]) / 60;
+          hours = Math.max(0, Math.round(endH - startH));
+        }
+      }
+    }
+    if (isFestivo) hours = 0;
 
-    const udsToday = planning_ledger[dateStr] || [];
+    const udsToday = planning_ledger[lookupDateStr] || [];
     const udId = udsToday[0] ? String(udsToday[0]) : undefined;
     const udDesc = udId ? (df_ud.find((u: any) => String(u.id_ud) === udId)?.desc_ud || udId) : undefined;
 
@@ -137,7 +161,7 @@ export function simulateSchedule(moduleData: any): Record<string, DaySchedule> {
     simulation[dateStr] = {
       dateStr,
       date: d,
-      dayOfWeekName: dayName,
+      dayOfWeekName,
       hours,
       isFestivo,
       festivoName,

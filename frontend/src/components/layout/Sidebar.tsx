@@ -36,7 +36,7 @@ export default function Sidebar() {
     <>
       <div className={`px-4 pt-4 pb-2 flex ${isSidebarOpen ? 'justify-between' : 'justify-center'} items-center`}>
         {isSidebarOpen && (
-          <Link href="/" onClick={() => toggleSidebar()}>
+          <Link href="/" onClick={() => { if (window.innerWidth < 1024) toggleSidebar(); }}>
             <h1 className="text-[1.3rem] font-extrabold leading-tight text-foreground hover:text-blue-400 transition-colors mb-4 tracking-tight whitespace-nowrap cursor-pointer">
               Cuaderno Ciclos FP
             </h1>
@@ -72,7 +72,7 @@ export default function Sidebar() {
                     e.preventDefault();
                     useAppStore.getState().setWizardOpen(true);
                   }
-                  toggleSidebar();
+                  if (window.innerWidth < 1024) toggleSidebar();
                 }}
                 title={!isSidebarOpen ? item.label : undefined}
                 className={`flex items-center ${isSidebarOpen ? 'gap-2.5 px-3' : 'justify-center px-0'} py-2 rounded-lg transition-all duration-150 group
@@ -106,7 +106,7 @@ export default function Sidebar() {
             <p className="text-center text-[0.65rem] text-muted/80 mt-1 whitespace-nowrap">
               © {new Date().getFullYear()} Rafael Sanz Prades
             </p>
-            <Link href="/avisolegal" className="text-[0.6rem] text-blue-400 hover:text-blue-300 hover:underline" onClick={() => toggleSidebar()}>
+            <Link href="/avisolegal" className="text-[0.6rem] text-blue-400 hover:text-blue-300 hover:underline" onClick={() => { if (window.innerWidth < 1024) toggleSidebar(); }}>
               Aviso Legal y Privacidad
             </Link>
           </>

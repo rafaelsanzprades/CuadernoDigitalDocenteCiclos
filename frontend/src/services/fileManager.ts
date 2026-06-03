@@ -1,4 +1,4 @@
-import { demoSeed } from "./demoSeed";
+import { demoSeed, CRM_SEED_VERSION } from "./demoSeed";
 
 export type DataSourceType = 'demo' | 'local';
 
@@ -12,6 +12,17 @@ const STORAGE_KEYS = {
   ONEDRIVE_USER: 'cdd_onedrive_user',
 };
 
+// Eager cache invalidation — runs at module import time (before Zustand hydrates)
+if (typeof window !== 'undefined') {
+  const storedVersion = localStorage.getItem('cdd_seed_version');
+  if (storedVersion !== String(CRM_SEED_VERSION)) {
+    localStorage.removeItem(STORAGE_KEYS.DEMO_DB);
+    localStorage.removeItem(STORAGE_KEYS.LOCAL_DB);
+    localStorage.removeItem('cdd-store-cache');
+    localStorage.setItem('cdd_seed_version', String(CRM_SEED_VERSION));
+  }
+}
+
 // Helper to deep clone objects
 function clone<T>(obj: T): T {
   return JSON.parse(JSON.stringify(obj));
@@ -20,9 +31,9 @@ function clone<T>(obj: T): T {
 export const fileManager = {
   // Get active data source type
   getDataSourceType(): DataSourceType {
-    if (typeof window === 'undefined') return 'local';
+    if (typeof window === 'undefined') return 'demo';
     const stored = localStorage.getItem(STORAGE_KEYS.SOURCE_TYPE);
-    return (stored === 'local' || stored === null ? 'local' : stored) as DataSourceType;
+    return (stored === null ? 'demo' : stored) as DataSourceType;
   },
 
   // Set active data source type
@@ -86,9 +97,9 @@ export const fileManager = {
               parsed[docId] = clone(seedDoc);
               changed = true;
             } else if (typeof seedDoc === 'object' && seedDoc !== null) {
-              // Document exists — merge missing top-level keys into it
+              // Document exists — merge missing top-level keys, always refresh crm_empresas
               for (const [field, value] of Object.entries(seedDoc)) {
-                if (parsed[docId][field] === undefined) {
+                if (field === 'crm_empresas' || parsed[docId][field] === undefined) {
                   parsed[docId][field] = clone(value);
                   changed = true;
                 }

@@ -31,6 +31,14 @@ export default function InstrumentosPage() {
           const res = await fetch(`/api/module/${activeModuleId}`);
           const data = await res.json();
           if (data.status === "success") setModuleData(data.data);
+        } else if (moduleData && (!moduleData.df_act || moduleData.df_act.length < 21)) {
+          // Force demo seed injection for hot reload updates
+          import('@/services/fileManager').then(({ fileManager }) => {
+            const db = fileManager.getDb();
+            if (db['0237-ictve-pd']) {
+              setModuleData(db['0237-ictve-pd']);
+            }
+          });
         }
       } catch (err) {
         console.error("Error fetching data:", err);
@@ -43,7 +51,7 @@ export default function InstrumentosPage() {
     } else {
       setLoading(false);
     }
-  }, [activeModuleId, moduleData]);
+  }, [activeModuleId, moduleData, setModuleData]);
 
   const handleSave = async () => {
     setSaving(true);
@@ -254,7 +262,7 @@ export default function InstrumentosPage() {
         
         <main className="flex-1 p-8 content-area space-y-8">
           <div>
-            <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
+            <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
               🛠️ Instrumentos de evaluación
             </h1>
             <p className="text-muted mt-2 text-lg">Definición y ponderación de las herramientas y métodos de evaluación.</p>

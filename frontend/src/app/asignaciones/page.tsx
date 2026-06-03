@@ -140,7 +140,7 @@ function AsignacionesContent() {
             {/* Cabecera */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
               <div>
-                <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3 mb-2">
+                <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3 mb-2">
                   <span className="text-3xl">📋</span> Asignación de módulos
                 </h1>
                 <p className="text-muted mt-2 text-lg">Jefatura de Estudios: Asigna el profesorado a los módulos de cada ciclo formativo.</p>

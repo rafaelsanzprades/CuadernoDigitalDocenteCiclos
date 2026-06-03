@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/Button";
 export default function ProgramacionPage() {
   const { activeModuleId, moduleData, updateDataFrame } = useAppStore();
   const { isLoading } = useModule(activeModuleId);
-  const [allUdsOpen, setAllUdsOpen] = useState(true);
+  const [allUdsOpen, setAllUdsOpen] = useState(false);
 
   const TABS = [
     { id: "secuenciacion", label: "📋 Secuenciación de UD", cleanLabel: "Secuenciación de UD" },
@@ -146,7 +146,7 @@ export default function ProgramacionPage() {
         
         <main className="flex-1 p-8 space-y-8 overflow-y-auto">
           <div>
-            <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
+            <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
               📚 Programación de aula
             </h1>
             <p className="text-muted mt-2 text-lg">Secuenciación temporal de las unidades didácticas y diseño de tareas competenciales.</p>

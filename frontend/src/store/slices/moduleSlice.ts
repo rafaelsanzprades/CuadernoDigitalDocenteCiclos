@@ -25,10 +25,10 @@ async function saveToApi(id: string, data: ModuleData | CursoData): Promise<bool
 }
 
 export const createModuleSlice: StateCreator<AppState, [], [], ModuleSlice> = (set, get) => ({
-  activeModuleId: 'demo-ictve-pd',
+  activeModuleId: '0237-ictve-pd',
   setActiveModuleId: (id: string) => set({ activeModuleId: id }),
 
-  activeCursoId: 'demo-ictve-curso-2025-26',
+  activeCursoId: '0237-ictve-curso-2025-26',
   setActiveCursoId: (id: string) => set({ activeCursoId: id }),
 
   moduleData: null,

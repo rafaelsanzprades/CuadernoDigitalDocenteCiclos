@@ -133,7 +133,7 @@ export default function AlumnadoPage() {
         <main className="flex-1 p-8 content-area space-y-8">
           <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
+              <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
                 👥 Alumnado y tutoría
               </h1>
               <p className="text-muted mt-2 text-lg">Gestión oficial de estudiantes, ficha individual de orientación y matriz de tutoría.</p>

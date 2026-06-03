@@ -78,7 +78,7 @@ export function AsignacionModulosTab() {
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
       <div>
-        <h2 className="text-2xl font-bold flex items-center gap-3 text-foreground">
+        <h2 className="text-[1.1rem] font-bold flex items-center gap-3 text-foreground">
           <UserCog className="w-8 h-8 text-accent" />
           Asignación de Módulos
         </h2>

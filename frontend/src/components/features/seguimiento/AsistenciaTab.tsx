@@ -20,7 +20,7 @@ export function AsistenciaTab() {
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <div>
-        <h2 className="text-2xl font-bold flex items-center gap-3 text-foreground">
+        <h2 className="text-[1.1rem] font-bold flex items-center gap-3 text-foreground">
           <Users className="w-8 h-8 text-accent" /> Control de asistencia
         </h2>
         <p className="text-muted mt-2">

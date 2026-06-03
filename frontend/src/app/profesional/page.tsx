@@ -110,7 +110,7 @@ export default function ProfesionalPage() {
           {/* Page header */}
           <div className="flex justify-between items-start gap-4">
             <div>
-              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
+              <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
                 🧭 Orientación profesional
               </h1>
               <p className="text-muted mt-2 text-lg">

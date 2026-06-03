@@ -80,7 +80,7 @@ export function DashboardKPIs({ cursoData, moduleData }: DashboardKPIsProps) {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
+      <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground">
         <span>📊</span> Resumen planificación y seguimiento global
       </h2>
       <div className="grid grid-cols-2 md:grid-cols-5 gap-6">

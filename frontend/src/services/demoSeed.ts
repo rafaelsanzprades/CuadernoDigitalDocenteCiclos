@@ -1,3 +1,5 @@
+export const CRM_SEED_VERSION = 11;
+
 export const demoSeed = {
   "0237-ictve-curso-2025-26": {
     "tipo": "curso",
@@ -2441,35 +2443,76 @@ export const demoSeed = {
       "codigo": "0237",
       "nombre": "Infraestructuras comunes de telecomunicaciones en viviendas y edificios",
       "horas": 167,
+      "h_sem": 5,
+      "h_boa": 167,
+      "p_ev": 15,
       "ciclo": "Técnico en Instalaciones de Telecomunicaciones",
       "nivel": "Grado Medio",
       "familia": "Electricidad y Electrónica",
       "curso": "1º",
-      "profesor": "Equipo Docente"
+      "centro": "IES Andalán",
+      "profesorado": "Rafael Sanz Prades",
+      "pond_1t": 30,
+      "pond_2t": 30,
+      "pond_3t": 40,
+      "criterio_conocimiento": 40,
+      "criterio_procedimiento_practicas": 30,
+      "criterio_procedimiento_ejercicios": 20,
+      "criterio_tareas": 10,
+      "objetivos_generales": [
+        "Identificar los elementos de las infraestructuras, instalaciones y equipos, analizando planos y esquemas y reconociendo los materiales y procedimientos previstos, para establecer la logística asociada al montaje y mantenimiento.",
+        "Elaborar croquis y esquemas, empleando medios y técnicas de dibujo y representación simbólica normalizada, para configurar y calcular la instalación.",
+        "Obtener los parámetros típicos de las instalaciones y equipos, aplicando procedimientos de cálculo y atendiendo a las especificaciones y prescripciones reglamentarias, para configurar y calcular la instalación.",
+        "Valorar el coste de los materiales y mano de obra, consultando catálogos y unidades de obra, para elaborar el presupuesto del montaje o mantenimiento.",
+        "Seleccionar el utillaje, herramientas, equipos y medios de montaje y de seguridad, analizando las condiciones de obra y considerando las operaciones a realizar, para acopiar los recursos y medios.",
+        "Identificar y marcar la posición de los elementos de la instalación o equipo y el trazado de los circuitos, relacionando los planos de la documentación técnica con su ubicación real, para replantear la instalación."
+      ],
+      "ra_og_mapping": {
+        "0": ["RA01", "RA02"],
+        "1": ["RA02", "RA03"],
+        "2": ["RA04", "RA05"],
+        "3": ["RA06"],
+        "4": ["RA03", "RA07"],
+        "5": ["RA01", "RA04"]
+      }
     },
     "config_contexto": {
       "curso_escolar": "2025-2026",
       "grupo": "1º I.T.",
       "aula": "Taller 3",
-      "centro": "IES San Martín"
+      "centro": "IES Andalán",
+      "instalaciones": "Taller de Electrónica General 3. Equipado con puestos dobles, instrumentación básica y entrenadores de telecomunicaciones.",
+      "horario_lectivo": "Turno de mañana, de 8:30 a 14:30. 5 horas semanales asignadas al módulo.",
+      "equipo_docente": "Profesorado técnico de FP de la especialidad de Equipos Electrónicos.",
+      "entorno_socioeconomico": "Centro situado en entorno urbano/industrial con gran presencia de empresas del sector servicios y mantenimiento.",
+      "inclusion": "Adaptaciones curriculares de acceso para un alumno con discapacidad motriz leve.",
+      "elenco_situaciones": "Diversidad de ritmos de aprendizaje. Un grupo de 5 alumnos con formación profesional básica previa.",
+      "circunstancias_ocultas": "Posibles problemas de brecha digital en un 10% del alumnado.",
+      "metodologia": "Aprendizaje Basado en Retos (ABR). Talleres eminentemente prácticos combinados con píldoras teóricas."
     },
     "config_aula": {
-      "Metodologia": "Aprendizaje basado en proyectos con actividades prácticas en taller y aula virtual. Se combinan exposiciones teóricas con montajes prácticos en maquetas de viviendas.",
-      "Atencion a la diversidad": "Adaptaciones curriculares no significativas, refuerzos en horas de tutoría, materiales complementarios en formato digital, actividades de ampliación para alumnado con ritmo más avanzado."
+      "Metodología": "Trabajo cooperativo en pequeños grupos (2-3 personas). Uso de maquetas de simulación de viviendas.",
+      "Atención a la diversidad": "Ampliación de prácticas para alumnos de ritmo rápido. Refuerzo personalizado en horas de desdoble."
     },
     "horario": {
-      "lunes": "08:30-10:30",
-      "martes": "11:00-12:00",
-      "miercoles": "12:30-13:30",
-      "jueves": "",
-      "viernes": "09:30-10:30"
+      "Lun": 2,
+      "Mar": 0,
+      "Mié": 1,
+      "Jue": 1,
+      "Vie": 0
     },
     "info_fechas": {
-      "inicio": "15/09/2025",
-      "fin": "22/06/2026",
-      "evaluacion_1": "18/12/2025",
-      "evaluacion_2": "25/03/2026",
-      "evaluacion_final": "18/06/2026"
+      "ini_curso": "2025-09-01",
+      "fin_curso": "2026-06-30",
+      "ini_1t": "2025-09-15",
+      "fin_1t": "2025-12-18",
+      "ini_2t": "2025-12-19",
+      "fin_2t": "2026-03-25",
+      "ini_3t": "2026-03-26",
+      "fin_3t": "2026-06-18",
+      "ini_feoe": "2026-02-01",
+      "fin_feoe": "2026-03-05",
+      "h_sem_feoe": 8
     },
     "df_ra": [
       { "id_ra": "RA01", "desc_ra": "Identifica los elementos de las instalaciones de telecomunicaciones en viviendas y edificios, reconociendo su funcionalidad y características técnicas.", "peso_ra": 15, "is_dual": "No" },
@@ -2533,12 +2576,43 @@ export const demoSeed = {
       { "ID": "T04", "id_act": "ACT04", "Nombre_Tarea": "Diagnóstico y reparación de averías en ICT", "Reto": "Diagnosticar y reparar 3 averías simuladas en una instalación ICT", "RA_Asociados": "RA05", "Instrumento": "Rúbrica de práctica", "desc_act": "Los alumnos deberán identificar y reparar averías en una maqueta de ICT, documentando el proceso seguido." },
       { "ID": "T05", "id_act": "ACT05", "Nombre_Tarea": "Evaluación de riesgos en instalaciones ICT", "Reto": "Elaborar un plan de prevención para el montaje de una ICT", "RA_Asociados": "RA06", "Instrumento": "Checklist de PRL", "desc_act": "Identificar los riesgos laborales asociados al montaje de ICT y proponer medidas preventivas." }
     ],
-    "df_act": [],
+    "df_act": [
+      { "id_act": "ACT01", "tri_act": "1T", "Tipo": "Teoria", "desc_act": "Examen teórico 1T", "peso_act": 40, "is_active": true },
+      { "id_act": "ACT02", "tri_act": "1T", "Tipo": "Practica", "desc_act": "Examen práctico 1T", "peso_act": 30, "is_active": true },
+      { "id_act": "ACT03", "tri_act": "1T", "Tipo": "Informes", "desc_act": "Informe de prácticas Pr11", "peso_act": 5, "is_active": true },
+      { "id_act": "ACT04", "tri_act": "1T", "Tipo": "Informes", "desc_act": "Informe de prácticas Pr12", "peso_act": 5, "is_active": true },
+      { "id_act": "ACT05", "tri_act": "1T", "Tipo": "Informes", "desc_act": "Informe de prácticas Pr13", "peso_act": 5, "is_active": true },
+      { "id_act": "ACT06", "tri_act": "1T", "Tipo": "Informes", "desc_act": "Informe de prácticas Pr14", "peso_act": 5, "is_active": true },
+      { "id_act": "ACT07", "tri_act": "1T", "Tipo": "Tareas", "desc_act": "Cuaderno de tareas 1T", "peso_act": 10, "is_active": true },
+      { "id_act": "ACT08", "tri_act": "2T", "Tipo": "Teoria", "desc_act": "Examen teórico 2T", "peso_act": 40, "is_active": true },
+      { "id_act": "ACT09", "tri_act": "2T", "Tipo": "Practica", "desc_act": "Examen práctico 2T", "peso_act": 30, "is_active": true },
+      { "id_act": "ACT10", "tri_act": "2T", "Tipo": "Informes", "desc_act": "Informe de prácticas Pr21", "peso_act": 5, "is_active": true },
+      { "id_act": "ACT11", "tri_act": "2T", "Tipo": "Informes", "desc_act": "Informe de prácticas Pr22", "peso_act": 5, "is_active": true },
+      { "id_act": "ACT12", "tri_act": "2T", "Tipo": "Informes", "desc_act": "Informe de prácticas Pr23", "peso_act": 5, "is_active": true },
+      { "id_act": "ACT13", "tri_act": "2T", "Tipo": "Informes", "desc_act": "Informe de prácticas Pr24", "peso_act": 5, "is_active": true },
+      { "id_act": "ACT14", "tri_act": "2T", "Tipo": "Tareas", "desc_act": "Cuaderno de tareas 2T", "peso_act": 10, "is_active": true },
+      { "id_act": "ACT15", "tri_act": "3T", "Tipo": "Teoria", "desc_act": "Examen teórico 3T", "peso_act": 40, "is_active": true },
+      { "id_act": "ACT16", "tri_act": "3T", "Tipo": "Practica", "desc_act": "Examen práctico 3T", "peso_act": 30, "is_active": true },
+      { "id_act": "ACT17", "tri_act": "3T", "Tipo": "Informes", "desc_act": "Informe de prácticas Pr31", "peso_act": 5, "is_active": true },
+      { "id_act": "ACT18", "tri_act": "3T", "Tipo": "Informes", "desc_act": "Informe de prácticas Pr32", "peso_act": 5, "is_active": true },
+      { "id_act": "ACT19", "tri_act": "3T", "Tipo": "Informes", "desc_act": "Informe de prácticas Pr33", "peso_act": 5, "is_active": true },
+      { "id_act": "ACT20", "tri_act": "3T", "Tipo": "Informes", "desc_act": "Informe de prácticas Pr34", "peso_act": 5, "is_active": true },
+      { "id_act": "ACT21", "tri_act": "3T", "Tipo": "Tareas", "desc_act": "Cuaderno de tareas 3T", "peso_act": 10, "is_active": true }
+    ],
     "df_instr": [],
     "df_pr": [],
-    "df_dua": [],
-    "df_contingencia": [],
-    "df_ace": [],
+    "df_dua": [
+      { "ID": "DUA01", "Alumnado_Aula": "Alumno A", "Barrera": "Dificultad motriz leve", "Medida_Metodologica": "Uso de herramientas ergonómicas", "Medida_Acceso": "Mesa adaptada en primera fila", "Medida_Evaluacion": "Tiempo adicional en pruebas prácticas" },
+      { "ID": "DUA02", "Alumnado_Aula": "Grupo clase", "Barrera": "Desmotivación teórica", "Medida_Metodologica": "Aprendizaje Basado en Retos (ABR)", "Medida_Acceso": "Materiales audiovisuales interactivos", "Medida_Evaluacion": "Evaluación mediante rúbricas de proyecto" }
+    ],
+    "df_contingencia": [
+      { "ID": "PC01", "Escenario": "Ausencia de Profesorado", "Organizacion": "Profesor de guardia con material preparado", "Actividades": "Realización de ejercicios de cálculo en aula de informática", "Seguimiento": "Entrega al final de la sesión vía Moodle" },
+      { "ID": "PC02", "Escenario": "Interrupción Generalizada", "Organizacion": "Paso a docencia online síncrona", "Actividades": "Simulación de circuitos con software especializado", "Seguimiento": "Revisión de proyectos simulados compartidos en la nube" }
+    ],
+    "df_ace": [
+      { "ID": "ACE01", "Tipo": "Complementaria", "RA_Vinculados": "RA01", "Actividad": "Visita a central telefónica", "Trimestre": "1T", "Entidad": "Telefónica S.A.", "Evaluacion": "Cuestionario post-visita" },
+      { "ID": "ACE02", "Tipo": "Extraescolar", "RA_Vinculados": "RA06", "Actividad": "Asistencia a feria de telecomunicaciones", "Trimestre": "2T", "Entidad": "Feria de Zaragoza", "Evaluacion": "Memoria resumen de tecnologías vistas" }
+    ],
     "calendar_notes": {
       "f_2025-10-12": "Fiesta Nacional de España",
       "f_2025-11-01": "Todos los Santos",
@@ -2570,6 +2644,381 @@ export const demoSeed = {
       "2026-01-19": ["UD05"],
       "2026-01-26": ["UD06"],
       "2026-02-02": ["UD06"]
-    }
+    },
+    "crm_empresas": [
+      {
+        "id": "EMP01", "nombre": "Instalaciones Eléctricas 3000, S.L.",
+        "contacto_nombre": "María García López", "contacto_cargo": "Responsable de RRHH",
+        "telefono": "976 123 456", "email": "maria.garcia@ie3000.com",
+        "direccion": "Pol. Ind. Malpica, C/ A, nave 14", "ciudad": "Zaragoza", "codigo_postal": "50016", "provincia": "Zaragoza",
+        "sector": "Instalaciones eléctricas", "notas": "Empresa habitual en FCT. Muy buena disposición.", "estado": "activo",
+        "interacciones": [
+          {"id":"INT01","fecha":"15/05/2026","tipo":"llamada","descripcion":"Confirmada disponibilidad para 2 alumnos de FCT","contacto":"María García"},
+          {"id":"INT02","fecha":"22/05/2026","tipo":"email","descripcion":"Enviada ficha de la empresa y datos del tutor","contacto":"María García"},
+          {"id":"INT03","fecha":"01/06/2026","tipo":"visita","descripcion":"Visita al centro para conocer las instalaciones","contacto":"María García"}
+        ],
+        "alumnos_asignados": ["AN01", "AN05"]
+      },
+      {
+        "id": "EMP02", "nombre": "InstalMan Servicios Técnicos",
+        "contacto_nombre": "Ahmed El Mansouri", "contacto_cargo": "Gerente",
+        "telefono": "976 234 567", "email": "a.elmansouri@instalman.es",
+        "direccion": "Pol. Ind. Cogullada, C/ B, nave 22", "ciudad": "Zaragoza", "codigo_postal": "50014", "provincia": "Zaragoza",
+        "sector": "Mantenimiento integral", "notas": "Buena experiencia con alumnos de mantenimiento", "estado": "activo",
+        "interacciones": [
+          {"id":"INT04","fecha":"18/05/2026","tipo":"email","descripcion":"Enviada documentación convenio","contacto":"Ahmed El Mansouri"},
+          {"id":"INT05","fecha":"25/05/2026","tipo":"llamada","descripcion":"Confirmado interés. Quedamos en enviar alumno en septiembre.","contacto":"Ahmed El Mansouri"}
+        ],
+        "alumnos_asignados": ["AN09"]
+      },
+      {
+        "id": "EMP03", "nombre": "InstaElec Hermanos, S.L.",
+        "contacto_nombre": "Ion Popescu", "contacto_cargo": "Jefe de Taller",
+        "telefono": "976 345 678", "email": "i.popescu@instaelec.es",
+        "direccion": "Pol. Ind. Plaza, Avda. de la Innovación, 45", "ciudad": "Zaragoza", "codigo_postal": "50197", "provincia": "Zaragoza",
+        "sector": "Instalaciones eléctricas y domótica", "notas": "Prefieren alumnos de 2º curso. Taller muy bien equipado.", "estado": "activo",
+        "interacciones": [
+          {"id":"INT06","fecha":"20/05/2026","tipo":"visita","descripcion":"Visita a taller. Muy buen ambiente.","contacto":"Ion Popescu"},
+          {"id":"INT07","fecha":"28/05/2026","tipo":"llamada","descripcion":"Confirman que necesitan 2 alumnos para domótica","contacto":"Ion Popescu"},
+          {"id":"INT08","fecha":"05/06/2026","tipo":"email","descripcion":"Enviado el plan formativo individualizado","contacto":"Ion Popescu"}
+        ],
+        "alumnos_asignados": ["AN08"]
+      },
+      {
+        "id": "EMP04", "nombre": "ElectroServe ZGZ, S.A.",
+        "contacto_nombre": "Laura Martínez Gracia", "contacto_cargo": "Responsable de Formación",
+        "telefono": "976 456 789", "email": "lmartinez@electroserve.es",
+        "direccion": "Pol. Ind. Empresarium, C/ Roma, 12", "ciudad": "Zaragoza", "codigo_postal": "50720", "provincia": "Zaragoza",
+        "sector": "Mantenimiento electro-mecánico", "notas": "Empresa certificada ISO. Muy organizada.", "estado": "activo",
+        "interacciones": [
+          {"id":"INT09","fecha":"10/05/2026","tipo":"llamada","descripcion":"Primer contacto. Solicitan perfil de alumno.","contacto":"Laura Martínez"},
+          {"id":"INT10","fecha":"17/05/2026","tipo":"email","descripcion":"Enviados currículos de candidatos","contacto":"Laura Martínez"}
+        ],
+        "alumnos_asignados": ["AN03", "AN07"]
+      },
+      {
+        "id": "EMP05", "nombre": "Técnicas del Cable, S.A.",
+        "contacto_nombre": "Francisco Javier Ruiz", "contacto_cargo": "Director Técnico",
+        "telefono": "976 567 890", "email": "fjruiz@tecnicascable.com",
+        "direccion": "Pol. Ind. San Miguel, C/ Industria, 8", "ciudad": "Zaragoza", "codigo_postal": "50018", "provincia": "Zaragoza",
+        "sector": "Redes de datos y fibra óptica", "notas": "Colaboran con el centro desde 2020", "estado": "activo",
+        "interacciones": [
+          {"id":"INT11","fecha":"12/05/2026","tipo":"email","descripcion":"Renovación del convenio de colaboración","contacto":"Francisco Javier Ruiz"},
+          {"id":"INT12","fecha":"26/05/2026","tipo":"visita","descripcion":"Visita a sus instalaciones. Técnología puntera.","contacto":"Francisco Javier Ruiz"}
+        ],
+        "alumnos_asignados": ["AN14", "AN22"]
+      },
+      {
+        "id": "EMP06", "nombre": "Iluminación y Eficiencia Energética, S.L.",
+        "contacto_nombre": "Fatima Zhora El Haddad", "contacto_cargo": "CEO",
+        "telefono": "976 678 901", "email": "fatima@iee-sl.com",
+        "direccion": "Pol. Ind. Los Leones, C/ Mercurio, 3", "ciudad": "Zaragoza", "codigo_postal": "50011", "provincia": "Zaragoza",
+        "sector": "Iluminación LED y eficiencia", "notas": "Empresa en expansión. Premio a la innovación 2025.", "estado": "activo",
+        "interacciones": [
+          {"id":"INT13","fecha":"08/05/2026","tipo":"llamada","descripcion":"Interesados en proyecto de eficiencia energética","contacto":"Fatima El Haddad"},
+          {"id":"INT14","fecha":"15/05/2026","tipo":"email","descripcion":"Enviada propuesta de colaboración","contacto":"Fatima El Haddad"},
+          {"id":"INT15","fecha":"22/05/2026","tipo":"visita","descripcion":"Reunión en sus oficinas. Muy profesionales.","contacto":"Fatima El Haddad"}
+        ],
+        "alumnos_asignados": ["AN06", "AN24"]
+      },
+      {
+        "id": "EMP07", "nombre": "Conexión Eléctrica del Ebro",
+        "contacto_nombre": "Mihai Radulescu", "contacto_cargo": "Encargado de Obra",
+        "telefono": "976 789 012", "email": "mradulescu@ceebro.es",
+        "direccion": "Pol. Ind. El Polígono, C/ Ebro, 27", "ciudad": "Utebo", "codigo_postal": "50180", "provincia": "Zaragoza",
+        "sector": "Instalaciones eléctricas", "notas": "Hacen obra nueva en polígonos industriales", "estado": "activo",
+        "interacciones": [
+          {"id":"INT16","fecha":"14/05/2026","tipo":"llamada","descripcion":"Contacto inicial. Necesitan 1 alumno.","contacto":"Mihai Radulescu"},
+          {"id":"INT17","fecha":"21/05/2026","tipo":"email","descripcion":"Enviado cuestionario de la empresa","contacto":"Mihai Radulescu"}
+        ],
+        "alumnos_asignados": ["AN04"]
+      },
+      {
+        "id": "EMP08", "nombre": "Voltaje y Control Industrial",
+        "contacto_nombre": "Isabel Sanz Prades", "contacto_cargo": "Técnica de Prevención",
+        "telefono": "976 890 123", "email": "isanz@vyci.es",
+        "direccion": "Pol. Ind. Malpica, C/ D, nave 5", "ciudad": "Zaragoza", "codigo_postal": "50016", "provincia": "Zaragoza",
+        "sector": "Cuadros eléctricos y automatización", "notas": "Tienen convenio firmado. Muy buen trato.", "estado": "activo",
+        "interacciones": [
+          {"id":"INT18","fecha":"22/05/2026","tipo":"llamada","descripcion":"Interesados en recibir alumno para prácticas","contacto":"Isabel Sanz"},
+          {"id":"INT19","fecha":"29/05/2026","tipo":"email","descripcion":"Ficha de la empresa cumplimentada","contacto":"Isabel Sanz"},
+          {"id":"INT20","fecha":"05/06/2026","tipo":"visita","descripcion":"Entrega de documentación y recorrido por la planta","contacto":"Isabel Sanz"}
+        ],
+        "alumnos_asignados": ["AN11"]
+      },
+      {
+        "id": "EMP09", "nombre": "Energía Solar Aragón, S.L.",
+        "contacto_nombre": "Rachid Benali", "contacto_cargo": "Director Comercial",
+        "telefono": "976 901 234", "email": "rbenali@energiasolararagon.es",
+        "direccion": "C/ Monte Carmelo, 34", "ciudad": "Zaragoza", "codigo_postal": "50008", "provincia": "Zaragoza",
+        "sector": "Energías renovables", "notas": "Muy demandados. Solicitar con antelación mínima de 2 meses.", "estado": "activo",
+        "interacciones": [
+          {"id":"INT21","fecha":"10/05/2026","tipo":"email","descripcion":"Solicitud de alumnado en prácticas. Responden que ok.","contacto":"Rachid Benali"},
+          {"id":"INT22","fecha":"24/05/2026","tipo":"llamada","descripcion":"Confirman 2 plazas para instalaciones fotovoltaicas","contacto":"Rachid Benali"}
+        ],
+        "alumnos_asignados": ["AN13", "AN16"]
+      },
+      {
+        "id": "EMP10", "nombre": "Cableado y Comunicaciones Zeta",
+        "contacto_nombre": "Elena Dumitrescu", "contacto_cargo": "Responsable de Proyectos",
+        "telefono": "976 012 345", "email": "edumitrescu@cczeta.com",
+        "direccion": "Pol. Ind. Centrovía, C/ Gamma, 19", "ciudad": "La Muela", "codigo_postal": "50196", "provincia": "Zaragoza",
+        "sector": "Telecomunicaciones", "notas": "Trabajan con operadores nacionales", "estado": "pendiente",
+        "interacciones": [
+          {"id":"INT23","fecha":"25/05/2026","tipo":"email","descripcion":"Pendiente de respuesta. Reenviado correo.","contacto":"Elena Dumitrescu"},
+          {"id":"INT24","fecha":"01/06/2026","tipo":"llamada","descripcion":"Dejamos mensaje en el contestador","contacto":"Elena Dumitrescu"}
+        ],
+        "alumnos_asignados": []
+      },
+      {
+        "id": "EMP11", "nombre": "Electricidad Montañesa, S.L.",
+        "contacto_nombre": "Jorge Pueyo", "contacto_cargo": "Gerente",
+        "telefono": "974 123 456", "email": "jpueyo@electricidadmontanesa.es",
+        "direccion": "Pol. Ind. La Sarda, C/ Única, 2", "ciudad": "Huesca", "codigo_postal": "22004", "provincia": "Huesca",
+        "sector": "Instalaciones eléctricas", "notas": "Cubren toda la provincia de Huesca", "estado": "activo",
+        "interacciones": [
+          {"id":"INT25","fecha":"09/05/2026","tipo":"llamada","descripcion":"Buscan alumno con manejo de AutoCAD","contacto":"Jorge Pueyo"},
+          {"id":"INT26","fecha":"16/05/2026","tipo":"visita","descripcion":"Visita a obra en Sabiñánigo","contacto":"Jorge Pueyo"},
+          {"id":"INT27","fecha":"30/05/2026","tipo":"email","descripcion":"Enviado el acuerdo de prácticas firmado","contacto":"Jorge Pueyo"}
+        ],
+        "alumnos_asignados": ["AN23"]
+      },
+      {
+        "id": "EMP12", "nombre": "Sistemas de Seguridad y Alarmas Pro",
+        "contacto_nombre": "Cristina Oprea", "contacto_cargo": "Jefa de Recursos Humanos",
+        "telefono": "976 234 568", "email": "coprea@seguridadpro.es",
+        "direccion": "Pol. Ind. El Portillo, C/ Albaricoque, 7", "ciudad": "Zaragoza", "codigo_postal": "50003", "provincia": "Zaragoza",
+        "sector": "Seguridad electrónica", "notas": "Solicitan alumnos con carnet de conducir", "estado": "activo",
+        "interacciones": [
+          {"id":"INT28","fecha":"11/05/2026","tipo":"email","descripcion":"Enviamos información del ciclo formativo","contacto":"Cristina Oprea"},
+          {"id":"INT29","fecha":"18/05/2026","tipo":"llamada","descripcion":"Confirman que aceptan 1 alumno en prácticas","contacto":"Cristina Oprea"}
+        ],
+        "alumnos_asignados": ["AN17"]
+      },
+      {
+        "id": "EMP13", "nombre": "Climatización y Electricidad General",
+        "contacto_nombre": "Mohamed Ouahidi", "contacto_cargo": "Director Técnico",
+        "telefono": "976 345 679", "email": "mohamed.ouahidi@cegeneral.com",
+        "direccion": "Pol. Ind. La Cartuja, C/ Gamma, 11", "ciudad": "Zaragoza", "codigo_postal": "50013", "provincia": "Zaragoza",
+        "sector": "Climatización y electricidad", "notas": "Empresa en crecimiento. Nuevas oficinas.", "estado": "activo",
+        "interacciones": [
+          {"id":"INT30","fecha":"13/05/2026","tipo":"visita","descripcion":"Visita a obra de climatización en centro comercial","contacto":"Mohamed Ouahidi"},
+          {"id":"INT31","fecha":"20/05/2026","tipo":"email","descripcion":"Enviada hoja de ruta para la acogida del alumno","contacto":"Mohamed Ouahidi"}
+        ],
+        "alumnos_asignados": ["AN19"]
+      },
+      {
+        "id": "EMP14", "nombre": "Fibra Óptica del Norte, S.A.",
+        "contacto_nombre": "Ana Belén Lázaro", "contacto_cargo": "Coordinadora de FCT",
+        "telefono": "974 234 567", "email": "ablazaro@fibranorte.es",
+        "direccion": "Avda. de la Industria, 56", "ciudad": "Huesca", "codigo_postal": "22005", "provincia": "Huesca",
+        "sector": "Fibra óptica y telecomunicaciones", "notas": "Tienen bolsa de empleo propia. Contratan al 60%.", "estado": "activo",
+        "interacciones": [
+          {"id":"INT32","fecha":"28/05/2026","tipo":"visita","descripcion":"Visita concertada para conocer las instalaciones","contacto":"Ana Belén Lázaro"},
+          {"id":"INT33","fecha":"04/06/2026","tipo":"llamada","descripcion":"Confirman disponibilidad para 2 alumnos","contacto":"Ana Belén Lázaro"}
+        ],
+        "alumnos_asignados": ["AN25"]
+      },
+      {
+        "id": "EMP15", "nombre": "Automatismos y Cuadros Eléctricos, S.L.",
+        "contacto_nombre": "Vasile Matei", "contacto_cargo": "Jefe de Producción",
+        "telefono": "978 123 456", "email": "vmatei@automatismosce.es",
+        "direccion": "Pol. Ind. El Palomer, C/ Roble, 5", "ciudad": "Teruel", "codigo_postal": "44002", "provincia": "Teruel",
+        "sector": "Automatismos industriales", "notas": "PLCs y robótica. Esperando respuesta del convenio.", "estado": "pendiente",
+        "interacciones": [
+          {"id":"INT34","fecha":"12/05/2026","tipo":"email","descripcion":"Contacto inicial. Solicitan información del ciclo.","contacto":"Vasile Matei"},
+          {"id":"INT35","fecha":"26/05/2026","tipo":"llamada","descripcion":"Interesados pero pendientes de aprobación dirección","contacto":"Vasile Matei"}
+        ],
+        "alumnos_asignados": []
+      },
+      {
+        "id": "EMP16", "nombre": "Mantenimiento Integral de Instalaciones, S.A.",
+        "contacto_nombre": "Rosa María Valero", "contacto_cargo": "Directora de Operaciones",
+        "telefono": "976 456 790", "email": "rmvalero@mii-sa.es",
+        "direccion": "Pol. Ind. Los Enlaces, Avda. de la Técnica, 33", "ciudad": "Zaragoza", "codigo_postal": "50015", "provincia": "Zaragoza",
+        "sector": "Mantenimiento integral", "notas": "Empresa grande. Pueden acoger hasta 4 alumnos.", "estado": "activo",
+        "interacciones": [
+          {"id":"INT36","fecha":"30/05/2026","tipo":"llamada","descripcion":"Confirmada plaza para 3 alumnos","contacto":"Rosa María Valero"},
+          {"id":"INT37","fecha":"06/06/2026","tipo":"email","descripcion":"Enviados perfiles de los alumnos seleccionados","contacto":"Rosa María Valero"},
+          {"id":"INT38","fecha":"10/06/2026","tipo":"visita","descripcion":"Firma de convenios. Recorrido por las instalaciones.","contacto":"Rosa María Valero"}
+        ],
+        "alumnos_asignados": ["AN02", "AN15"]
+      },
+      {
+        "id": "EMP17", "nombre": "Redes y Telecomunicaciones del Sur",
+        "contacto_nombre": "Khalid El Mouden", "contacto_cargo": "Socio Fundador",
+        "telefono": "978 234 567", "email": "kelmouden@rtcsur.es",
+        "direccion": "Pol. Ind. La Paz, C/ Tramuntana, 8", "ciudad": "Teruel", "codigo_postal": "44003", "provincia": "Teruel",
+        "sector": "Redes de datos", "notas": "Startup. Buscan alumnos con conocimientos de networking.", "estado": "pendiente",
+        "interacciones": [
+          {"id":"INT39","fecha":"15/05/2026","tipo":"email","descripcion":"Primer contacto. Muy interesados.","contacto":"Khalid El Mouden"},
+          {"id":"INT40","fecha":"29/05/2026","tipo":"llamada","descripcion":"Pendiente de definir número de alumnos","contacto":"Khalid El Mouden"}
+        ],
+        "alumnos_asignados": []
+      },
+      {
+        "id": "EMP18", "nombre": "Eficiencia Energética 360, S.L.",
+        "contacto_nombre": "Nadia Stanciu", "contacto_cargo": "Responsable de Calidad",
+        "telefono": "976 567 891", "email": "nstanciu@ee360.es",
+        "direccion": "Pol. Ind. Ciudad del Transporte, C/ Logroño, 5", "ciudad": "Zaragoza", "codigo_postal": "50011", "provincia": "Zaragoza",
+        "sector": "Eficiencia energética", "notas": "Certificados ISO 50001. Auditorías energéticas.", "estado": "activo",
+        "interacciones": [
+          {"id":"INT41","fecha":"17/05/2026","tipo":"llamada","descripcion":"Solicitan 1 alumno para auditorías","contacto":"Nadia Stanciu"},
+          {"id":"INT42","fecha":"24/05/2026","tipo":"email","descripcion":"Enviado perfil del alumno candidato","contacto":"Nadia Stanciu"},
+          {"id":"INT43","fecha":"31/05/2026","tipo":"visita","descripcion":"Reunión de coordinación del plan de prácticas","contacto":"Nadia Stanciu"}
+        ],
+        "alumnos_asignados": ["AN20"]
+      },
+      {
+        "id": "EMP19", "nombre": "Instalaciones Deportivas y Eléctricas, S.L.",
+        "contacto_nombre": "David Sos", "contacto_cargo": "Administrador",
+        "telefono": "976 678 902", "email": "dsos@idesportivas.es",
+        "direccion": "C/ Deporte, 12, local 4", "ciudad": "Zaragoza", "codigo_postal": "50006", "provincia": "Zaragoza",
+        "sector": "Instalaciones deportivas", "notas": "Temporada alta en verano. Prefieren prácticas en sept-oct.", "estado": "activo",
+        "interacciones": [
+          {"id":"INT44","fecha":"09/05/2026","tipo":"email","descripcion":"Contactan interesados en recibir alumnado","contacto":"David Sos"},
+          {"id":"INT45","fecha":"23/05/2026","tipo":"llamada","descripcion":"Confirman 1 plaza para instalaciones eléctricas","contacto":"David Sos"}
+        ],
+        "alumnos_asignados": []
+      },
+      {
+        "id": "EMP20", "nombre": "Energías Renovables del Pirineo, S.A.",
+        "contacto_nombre": "Sara Buil", "contacto_cargo": "Directora de RRHH",
+        "telefono": "974 345 678", "email": "sbuil@erenovablespirineo.es",
+        "direccion": "Pol. Ind. Pirineos, C/ Solar, 1", "ciudad": "Jaca", "codigo_postal": "22700", "provincia": "Huesca",
+        "sector": "Energías renovables", "notas": "Cobertura en todo el Pirineo aragonés", "estado": "activo",
+        "interacciones": [
+          {"id":"INT46","fecha":"01/06/2026","tipo":"email","descripcion":"Enviado convenio para firma","contacto":"Sara Buil"},
+          {"id":"INT47","fecha":"08/06/2026","tipo":"visita","descripcion":"Visita a planta solar en Sabiñánigo","contacto":"Sara Buil"}
+        ],
+        "alumnos_asignados": ["AN18"]
+      },
+      {
+        "id": "EMP21", "nombre": "Domótica e Inmótica Avanzada",
+        "contacto_nombre": "Andrei Cojocaru", "contacto_cargo": "Ingeniero de Proyectos",
+        "telefono": "976 789 012", "email": "acojocaru@domotica-avanzada.es",
+        "direccion": "Pol. Ind. Santa Isabel, C/ Silicon, 20", "ciudad": "Zaragoza", "codigo_postal": "50016", "provincia": "Zaragoza",
+        "sector": "Domótica", "notas": "Utilizan tecnología KNX y sistemas Loxone.", "estado": "activo",
+        "interacciones": [
+          {"id":"INT48","fecha":"14/05/2026","tipo":"visita","descripcion":"Demostración de sistema KNX en showroom","contacto":"Andrei Cojocaru"},
+          {"id":"INT49","fecha":"28/05/2026","tipo":"email","descripcion":"Envían catálogo de productos para el ciclo","contacto":"Andrei Cojocaru"},
+          {"id":"INT50","fecha":"04/06/2026","tipo":"llamada","descripcion":"Interesados en 2 alumnos para proyectos de smart homes","contacto":"Andrei Cojocaru"}
+        ],
+        "alumnos_asignados": []
+      },
+      {
+        "id": "EMP22", "nombre": "Taller Eléctrico San Jorge, S.L.",
+        "contacto_nombre": "Pilar Abadía", "contacto_cargo": "Titular",
+        "telefono": "976 890 123", "email": "pabadia@tallersanjorge.es",
+        "direccion": "C/ San Jorge, 45, bajo", "ciudad": "Zaragoza", "codigo_postal": "50001", "provincia": "Zaragoza",
+        "sector": "Reparaciones eléctricas", "notas": "Pequeña empresa. 1 alumno máximo. Trato familiar.", "estado": "activo",
+        "interacciones": [
+          {"id":"INT51","fecha":"16/05/2026","tipo":"llamada","descripcion":"Contacto telefónico. Les viene bien 1 alumno.","contacto":"Pilar Abadía"},
+          {"id":"INT52","fecha":"30/05/2026","tipo":"email","descripcion":"Enviado y firmado el documento de compromiso","contacto":"Pilar Abadía"}
+        ],
+        "alumnos_asignados": ["AN21"]
+      },
+      {
+        "id": "EMP23", "nombre": "Centro de Formación y Prácticas Eléctricas",
+        "contacto_nombre": "Youssef Bouazzaoui", "contacto_cargo": "Coordinador",
+        "telefono": "976 901 235", "email": "ybouazzaoui@cfpe.es",
+        "direccion": "Pol. Ind. El Pilar, C/ Sabina, 3", "ciudad": "Zaragoza", "codigo_postal": "50012", "provincia": "Zaragoza",
+        "sector": "Formación profesional", "notas": "Centro colaborador. Imparten cursos de especialización.", "estado": "activo",
+        "interacciones": [
+          {"id":"INT53","fecha":"07/05/2026","tipo":"email","descripcion":"Propuesta de colaboración mutua","contacto":"Youssef Bouazzaoui"},
+          {"id":"INT54","fecha":"21/05/2026","tipo":"visita","descripcion":"Reunión para organizar jornada técnica conjunta","contacto":"Youssef Bouazzaoui"}
+        ],
+        "alumnos_asignados": []
+      },
+      {
+        "id": "EMP24", "nombre": "Ingeniería Eléctrica Técnica, S.L.",
+        "contacto_nombre": "Carmen Ainoza", "contacto_cargo": "Directora Técnica",
+        "telefono": "976 012 345", "email": "cainoza@iet-sl.es",
+        "direccion": "Pol. Ind. Las Navas, C/ Ingeniero, 9", "ciudad": "Zaragoza", "codigo_postal": "50017", "provincia": "Zaragoza",
+        "sector": "Ingeniería eléctrica", "notas": "Proyectos de alta tensión. Esperando firma convenio.", "estado": "pendiente",
+        "interacciones": [
+          {"id":"INT55","fecha":"10/05/2026","tipo":"email","descripcion":"Solicitan información sobre el ciclo formativo","contacto":"Carmen Ainoza"},
+          {"id":"INT56","fecha":"24/05/2026","tipo":"llamada","descripcion":"Pendiente de aprobación por su comité de formación","contacto":"Carmen Ainoza"}
+        ],
+        "alumnos_asignados": []
+      },
+      {
+        "id": "EMP25", "nombre": "Suministros Industriales Eléctricos, S.A.",
+        "contacto_nombre": "Mohssin Ait Lhaj", "contacto_cargo": "Jefe de Ventas",
+        "telefono": "976 123 457", "email": "maitlhaj@sies-sa.es",
+        "direccion": "Pol. Ind. Malpica, C/ F, nave 30", "ciudad": "Zaragoza", "codigo_postal": "50016", "provincia": "Zaragoza",
+        "sector": "Suministros eléctricos", "notas": "Distribuidores oficiales de material eléctrico", "estado": "activo",
+        "interacciones": [
+          {"id":"INT57","fecha":"19/05/2026","tipo":"llamada","descripcion":"Contacto iniciado por la empresa. Buscan 2 alumnos.","contacto":"Mohssin Ait Lhaj"},
+          {"id":"INT58","fecha":"02/06/2026","tipo":"email","descripcion":"Enviada documentación del departamento de ventas","contacto":"Mohssin Ait Lhaj"},
+          {"id":"INT59","fecha":"09/06/2026","tipo":"visita","descripcion":"Visita al almacén. Instalaciones excelentes.","contacto":"Mohssin Ait Lhaj"}
+        ],
+        "alumnos_asignados": []
+      },
+      {
+        "id": "EMP26", "nombre": "Alumbrado Público y Decorativo, S.L.",
+        "contacto_nombre": "Elena Stan", "contacto_cargo": "Responsable de Contratación",
+        "telefono": "974 456 789", "email": "estan@alumbradopublico.es",
+        "direccion": "Pol. Ind. La Portalada, C/ Luz, 4", "ciudad": "Huesca", "codigo_postal": "22006", "provincia": "Huesca",
+        "sector": "Alumbrado público", "notas": "Proyectos de iluminación municipal", "estado": "activo",
+        "interacciones": [
+          {"id":"INT60","fecha":"08/05/2026","tipo":"email","descripcion":"Contactan ofreciendo plazas para FCT","contacto":"Elena Stan"},
+          {"id":"INT61","fecha":"22/05/2026","tipo":"llamada","descripcion":"Confirmado 1 alumno para alumbrado público","contacto":"Elena Stan"},
+          {"id":"INT62","fecha":"05/06/2026","tipo":"visita","descripcion":"Visita a proyecto de iluminación en Huesca capital","contacto":"Elena Stan"}
+        ],
+        "alumnos_asignados": []
+      },
+      {
+        "id": "EMP27", "nombre": "Fontanería y Electricidad Hermanos, S.L.",
+        "contacto_nombre": "Joaquín Romeo", "contacto_cargo": "Encargado",
+        "telefono": "976 234 568", "email": "jromeo@fyehermanos.es",
+        "direccion": "C/ Río Ebro, 23, local 2", "ciudad": "Zaragoza", "codigo_postal": "50009", "provincia": "Zaragoza",
+        "sector": "Fontanería y electricidad", "notas": "Hacen obra nueva y reformas. Equipo joven.", "estado": "activo",
+        "interacciones": [
+          {"id":"INT63","fecha":"11/05/2026","tipo":"llamada","descripcion":"Buscan alumno para reforma de viviendas","contacto":"Joaquín Romeo"},
+          {"id":"INT64","fecha":"25/05/2026","tipo":"email","descripcion":"Envían relación de proyectos para el curso","contacto":"Joaquín Romeo"}
+        ],
+        "alumnos_asignados": []
+      },
+      {
+        "id": "EMP28", "nombre": "Instalaciones Agropecuarias Eléctricas",
+        "contacto_nombre": "Larisa Munteanu", "contacto_cargo": "Gerente",
+        "telefono": "978 345 678", "email": "lmunteanu@iaelectricas.es",
+        "direccion": "Ctra. de Alcañiz, km 5", "ciudad": "Alcañiz", "codigo_postal": "44600", "provincia": "Teruel",
+        "sector": "Instalaciones agropecuarias", "notas": "Especialistas en granjas y explotaciones. Zona Teruel.", "estado": "activo",
+        "interacciones": [
+          {"id":"INT65","fecha":"13/05/2026","tipo":"email","descripcion":"Interesados en recibir alumnado de la zona","contacto":"Larisa Munteanu"},
+          {"id":"INT66","fecha":"27/05/2026","tipo":"visita","descripcion":"Visita a explotación agrícola. Muy didáctico.","contacto":"Larisa Munteanu"},
+          {"id":"INT67","fecha":"03/06/2026","tipo":"llamada","descripcion":"Confirman 1 plaza para alumno de la zona","contacto":"Larisa Munteanu"}
+        ],
+        "alumnos_asignados": []
+      },
+      {
+        "id": "EMP29", "nombre": "Grupo Electro Aragón, S.A.",
+        "contacto_nombre": "Rafael Sanz", "contacto_cargo": "Director General",
+        "telefono": "976 345 679", "email": "rsanz@grupoelectroaragon.es",
+        "direccion": "Pol. Ind. La Torre, Avda. de la Electricidad, 10", "ciudad": "Zaragoza", "codigo_postal": "50018", "provincia": "Zaragoza",
+        "sector": "Grupo empresarial eléctrico", "notas": "Varias filiales. Preferencia por alumnos del centro.", "estado": "activo",
+        "interacciones": [
+          {"id":"INT68","fecha":"02/06/2026","tipo":"visita","descripcion":"Reunión anual de colaboración. Confirmadas 5 plazas.","contacto":"Rafael Sanz"},
+          {"id":"INT69","fecha":"09/06/2026","tipo":"email","descripcion":"Enviados datos de los tutores de empresa","contacto":"Rafael Sanz"},
+          {"id":"INT70","fecha":"12/06/2026","tipo":"llamada","descripcion":"Ajustamos fechas de incorporación de los alumnos","contacto":"Rafael Sanz"}
+        ],
+        "alumnos_asignados": ["AN01", "AN04", "AN13", "AN18", "AN25"]
+      },
+      {
+        "id": "EMP30", "nombre": "Electricidad y Climatización Moderna, S.L.",
+        "contacto_nombre": "Amina Chaib", "contacto_cargo": "Administradora",
+        "telefono": "976 456 780", "email": "achaib@eclimoderna.es",
+        "direccion": "Pol. Ind. El Polígono, C/ Avance, 15", "ciudad": "Utebo", "codigo_postal": "50180", "provincia": "Zaragoza",
+        "sector": "Climatización", "notas": "Trabajan con bombas de calor y aerotermia.", "estado": "activo",
+        "interacciones": [
+          {"id":"INT71","fecha":"20/05/2026","tipo":"llamada","descripcion":"Contacto inicial a través de antiguo alumno","contacto":"Amina Chaib"},
+          {"id":"INT72","fecha":"03/06/2026","tipo":"email","descripcion":"Enviada propuesta de colaboración educativa","contacto":"Amina Chaib"},
+          {"id":"INT73","fecha":"10/06/2026","tipo":"visita","descripcion":"Visita a sus instalaciones. Certificado aerotermia.","contacto":"Amina Chaib"}
+        ],
+        "alumnos_asignados": []
+      }
+    ]
   }
 };

@@ -47,7 +47,7 @@ def list_families(db: Session = Depends(get_db)):
                 "name": f.name,
                 "icon_url": f.icon_url,
                 "color_hex": f.color_hex,
-                "degrees": [{"id": d.id, "name": d.name, "level": d.level.value if hasattr(d.level, 'value') else d.level} for d in degrees]
+                "degrees": [{"id": d.id, "name": d.name, "code": d.code, "level": d.level.value if hasattr(d.level, 'value') else d.level, "boa_articles": d.boa_articles} for d in degrees]
             })
         return {"status": "success", "data": result}
     except Exception as e:

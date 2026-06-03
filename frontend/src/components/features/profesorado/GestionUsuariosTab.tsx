@@ -99,7 +99,7 @@ export function GestionUsuariosTab() {
       {/* Cabecera */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
         <div>
-          <h2 className="text-2xl font-bold flex items-center gap-3">
+          <h2 className="text-[1.1rem] font-bold flex items-center gap-3">
             <span className="text-2xl">👥</span> Gestión de usuarios
           </h2>
           <p className="text-muted mt-2">Administra el claustro, asigna perfiles RBAC y define los contextos de actuación de cada docente.</p>
@@ -249,7 +249,7 @@ export function GestionUsuariosTab() {
             >
               <div className="flex-1 overflow-y-auto">
                 <div className="flex items-center justify-between p-6 border-b border-[var(--glass-border)]">
-                  <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
+                  <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground">
                     <UserPlus className="w-5 h-5 text-accent" />
                     Añadir Profesorado
                   </h2>

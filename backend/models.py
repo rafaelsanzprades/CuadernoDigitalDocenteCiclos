@@ -58,6 +58,8 @@ class Degree(Base):
     level = Column(Enum(NivelFP), nullable=False)
     name = Column(String, nullable=False)
     hours = Column(Integer)
+    code = Column(String, index=True)  # código del currículo, ej: ELE203
+    boa_articles = Column(JSON, default={})
     
     family = relationship("ProfessionalFamily", back_populates="degrees")
     modules = relationship("Module", back_populates="degree")

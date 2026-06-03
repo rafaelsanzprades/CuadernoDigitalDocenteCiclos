@@ -29,7 +29,7 @@ export default function ProgresoPage() {
   const [saveMessage, setSaveMessage] = useState("");
   const [activeTab, setActiveTab] = useState("resumen");
   const [activeTabByStudent, setActiveTabByStudent] = useState<Record<string, string>>({});
-  const [allStudentsOpen, setAllStudentsOpen] = useState(true);
+  const [allStudentsOpen, setAllStudentsOpen] = useState(false);
   const [openStudents, setOpenStudents] = useState<Set<string>>(new Set());
 
   useEffect(() => {
@@ -294,7 +294,7 @@ export default function ProgresoPage() {
         <main className="flex-1 p-8 content-area space-y-6">
           <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
+              <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
                 📈 Progreso académico
               </h1>
               <p className="text-muted mt-2 text-lg">Panel integrado de calificaciones numéricas, evaluación por resultados de aprendizaje (RA) y analíticas.</p>

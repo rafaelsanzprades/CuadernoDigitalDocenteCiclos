@@ -1,28 +1,39 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
-import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Save, Plus, CheckCircle2, BookOpen, ChevronDown, ChevronUp, Filter } from "lucide-react";
-import { useAppStore } from "@/store/useAppStore";
-import { useUsers, useFamilies, useLearningOutcomes } from "@/hooks/useApi";
-import { CourseGroup, ModuleAssignment } from "@/types";
+import {
+  ChevronDown,
+  ChevronUp,
+  BookOpen,
+  GraduationCap,
+  Clock,
+  ListChecks,
+  Layers,
+  FolderTree,
+} from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { Select } from "@/components/ui/Select";
 import { Badge } from "@/components/ui/Badge";
-import { GroupList } from "@/components/features/asignaciones/GroupList";
-import { AddGroupModal } from "@/components/features/asignaciones/AddGroupModal";
+import {
+  curriculos,
+  type CurriculumTitulo,
+  type CurriculumModulo,
+  type CurriculumRA,
+  type CurriculumCE,
+} from "@/data/curriculos";
 
-type Tab = "familias" | "titulos" | "modulos";
+type Tab = "familias" | "titulo" | "cursos" | "modulos";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
-type Degree = { id: number; name: string; level: string };
-type Family = { id: number; code: string; name: string; icon_url: string; color_hex: string; degrees: Degree[] };
+const familias = Array.from(new Set(Object.values(curriculos).map((t) => t.familia))).sort();
+const titulosPorFamilia: Record<string, CurriculumTitulo[]> = {};
+for (const t of Object.values(curriculos)) {
+  if (!titulosPorFamilia[t.familia]) titulosPorFamilia[t.familia] = [];
+  titulosPorFamilia[t.familia].push(t);
+}
 
-// ─── Root export wraps in Suspense for useSearchParams ────────────────────────
 export default function CiclosPage() {
   return (
     <React.Suspense
@@ -37,20 +48,46 @@ export default function CiclosPage() {
   );
 }
 
-// ─── Main content ─────────────────────────────────────────────────────────────
 function CiclosContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // Resolve initial tab from URL ?tab=
   const tabParam = searchParams.get("tab") as Tab | null;
   const [activeTab, setActiveTab] = useState<Tab>(
-    tabParam && ["familias", "titulos", "modulos"].includes(tabParam) ? tabParam : "familias"
+    tabParam && ["familias", "titulo", "cursos", "modulos"].includes(tabParam) ? tabParam : "familias"
   );
+
+  const [globalSelection, setGlobalSelection] = useState({
+    familia: "Electricidad y Electrónica",
+    tituloCodigo: "ELE203",
+    moduloCodigo: "0237"
+  });
+
+  const updateGlobalSelection = (updates: Partial<typeof globalSelection>) => {
+    setGlobalSelection((prev) => ({ ...prev, ...updates }));
+  };
 
   const handleTabChange = (tab: Tab) => {
     setActiveTab(tab);
     router.replace(`/ciclos?tab=${tab}`, { scroll: false });
+  };
+
+  const handleSelectTitulo = (familiaName: string, tituloCodigo: string) => {
+    updateGlobalSelection({ familia: familiaName, tituloCodigo });
+    setActiveTab("cursos");
+    router.replace(`/ciclos?tab=cursos`, { scroll: false });
+  };
+
+  const handleSelectFamiliaToTitulo = (familiaName: string, tituloCodigo: string) => {
+    updateGlobalSelection({ familia: familiaName, tituloCodigo });
+    setActiveTab("titulo");
+    router.replace(`/ciclos?tab=titulo`, { scroll: false });
+  };
+
+  const handleSelectModulo = (familia: string, tituloCodigo: string, moduloCodigo: string) => {
+    updateGlobalSelection({ familia, tituloCodigo, moduloCodigo });
+    setActiveTab("modulos");
+    router.replace(`/ciclos?tab=modulos`, { scroll: false });
   };
 
   return (
@@ -61,25 +98,23 @@ function CiclosContent() {
 
         <div className="flex-1 p-8 overflow-y-auto scrollbar-hide">
           <div className="w-full space-y-6 animate-in fade-in duration-500">
-
-            {/* Cabecera */}
             <div>
-              <h1 className="text-4xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                🏫 Ciclos formativos
+              <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
+                Ciclos formativos
               </h1>
               <p className="text-muted mt-2 text-lg">
                 Catálogo oficial de Familias profesionales, Títulos y desglose de módulos del BOE/BOA.
               </p>
             </div>
 
-            {/* Tab bar */}
             <div className="flex border-b border-[var(--glass-border)] overflow-x-auto scrollbar-hide">
               {(
                 [
-                  { id: "familias", label: "🗂️ Familias", desc: "Familias profesionales" },
-                  { id: "titulos", label: "📋 Títulos", desc: "Asignación de módulos" },
-                  { id: "modulos", label: "📦 Módulos", desc: "Desglose BOA/BOE" },
-                ] as { id: Tab; label: string; desc: string }[]
+                  { id: "familias" as Tab, label: "Familias profesionales" },
+                  { id: "titulo" as Tab, label: "Título" },
+                  { id: "cursos" as Tab, label: "Cursos" },
+                  { id: "modulos" as Tab, label: "Módulos RA\u2192CE" },
+                ]
               ).map((t) => (
                 <button
                   key={t.id}
@@ -95,20 +130,10 @@ function CiclosContent() {
               ))}
             </div>
 
-            {/* ── Tab: Familias ─────────────────────────────────────────────── */}
-            {activeTab === "familias" && <TabFamilias onGoToTitulos={() => handleTabChange("titulos")} />}
-
-            {/* ── Tab: Títulos ──────────────────────────────────────────────── */}
-            {activeTab === "titulos" && (
-              <TabTitulos
-                initialFamilyId={searchParams.get("familyId")}
-                initialDegreeId={searchParams.get("degreeId")}
-              />
-            )}
-
-            {/* ── Tab: Módulos ──────────────────────────────────────────────── */}
-            {activeTab === "modulos" && <TabModulos />}
-
+            {activeTab === "familias" && <TabFamilias onSelectTitulo={handleSelectFamiliaToTitulo} />}
+            {activeTab === "titulo" && <TabTitulo onSelectTitulo={handleSelectTitulo} globalSelection={globalSelection} updateGlobalSelection={updateGlobalSelection} />}
+            {activeTab === "cursos" && <TabCursos globalSelection={globalSelection} updateGlobalSelection={updateGlobalSelection} onSelectModulo={handleSelectModulo} />}
+            {activeTab === "modulos" && <TabModulos globalSelection={globalSelection} updateGlobalSelection={updateGlobalSelection} />}
           </div>
         </div>
       </main>
@@ -116,8 +141,12 @@ function CiclosContent() {
   );
 }
 
-// ─── TAB: Familias ────────────────────────────────────────────────────────────
-function TabFamilias({ onGoToTitulos }: { onGoToTitulos: () => void }) {
+// ─── TAB 1: Familias profesionales ─────────────────────────────────────────────
+
+type Degree = { id: number; name: string; code: string | null; level: string; boa_articles?: Record<string, string> | null };
+type Family = { id: number; code: string; name: string; icon_url: string; color_hex: string; degrees: Degree[] };
+
+function TabFamilias({ onSelectTitulo }: { onSelectTitulo: (familiaName: string, tituloCodigo: string) => void }) {
   const [families, setFamilies] = useState<Family[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -126,10 +155,11 @@ function TabFamilias({ onGoToTitulos }: { onGoToTitulos: () => void }) {
       .then((res) => res.json())
       .then((json) => {
         if (json.status === "success") {
-          const sorted = json.data.map((f: Family) => {
-            const order: Record<string, number> = { BASICA: 1, MEDIO: 2, SUPERIOR: 3, ESPECIALIZACION: 4 };
-            return { ...f, degrees: f.degrees.sort((a, b) => (order[a.level] || 99) - (order[b.level] || 99)) };
-          });
+          const order: Record<string, number> = { BASICA: 1, MEDIO: 2, SUPERIOR: 3, ESPECIALIZACION: 4 };
+          const sorted = json.data.map((f: Family) => ({
+            ...f,
+            degrees: [...f.degrees].sort((a, b) => (order[a.level] || 99) - (order[b.level] || 99)),
+          }));
           setFamilies(sorted);
         }
         setLoading(false);
@@ -153,7 +183,6 @@ function TabFamilias({ onGoToTitulos }: { onGoToTitulos: () => void }) {
             key={family.id}
             className="glass-card overflow-hidden hover:-translate-y-1 transition-transform duration-300"
           >
-            {/* Card header */}
             <div
               className="p-6 flex flex-col items-center text-center relative border-b border-white/5"
               style={{ background: `linear-gradient(to bottom, ${family.color_hex}15, transparent)` }}
@@ -180,7 +209,6 @@ function TabFamilias({ onGoToTitulos }: { onGoToTitulos: () => void }) {
               <h2 className="text-lg font-bold text-foreground leading-tight">{family.name}</h2>
             </div>
 
-            {/* Degrees list */}
             <div className="p-5 bg-foreground/10">
               <h3 className="text-xs font-semibold text-muted uppercase tracking-wider mb-3">
                 Ciclos Formativos ({family.degrees.length})
@@ -193,14 +221,17 @@ function TabFamilias({ onGoToTitulos }: { onGoToTitulos: () => void }) {
                     return (
                       <button
                         key={degree.id}
-                        onClick={onGoToTitulos}
+                        onClick={() => onSelectTitulo(family.name, degree.code ?? degree.name)}
                         className="w-full text-left text-sm bg-foreground/5 rounded-lg p-2.5 border border-[var(--glass-border)] hover:bg-foreground/10 transition-all flex items-center justify-between gap-3 group cursor-pointer"
                       >
                         <div className="text-foreground/80 font-medium leading-tight flex-1 group-hover:text-foreground transition-colors">
                           {degree.name}
                         </div>
-                        <div className="text-[10px] font-bold text-foreground bg-foreground/20 border border-[var(--glass-border)] px-2 py-1 rounded shadow-inner tracking-wider">
-                          {badge}
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] font-bold text-foreground bg-foreground/20 border border-[var(--glass-border)] px-2 py-1 rounded shadow-inner tracking-wider">
+                            {badge}
+                          </span>
+                          <ChevronDown className="w-3 h-3 -rotate-90 text-muted group-hover:text-foreground transition-colors" />
                         </div>
                       </button>
                     );
@@ -217,380 +248,475 @@ function TabFamilias({ onGoToTitulos }: { onGoToTitulos: () => void }) {
   );
 }
 
-// ─── TAB: Títulos (Asignaciones) ──────────────────────────────────────────────
-function TabTitulos({
-  initialFamilyId,
-  initialDegreeId,
-}: {
-  initialFamilyId: string | null;
-  initialDegreeId: string | null;
-}) {
-  const { groups, setGroups } = useAppStore();
-  const [hasChanges, setHasChanges] = useState(false);
-  const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved">("idle");
+// ─── TAB 2: Título ─────────────────────────────────────────────────────────────
 
-  const { data: usersData } = useUsers();
-  const { data: familiesData } = useFamilies();
-  const { data: rasData } = useLearningOutcomes();
-
-  const teachers = usersData?.map((u: any) => ({ id: u.id, name: u.name })) || [];
-  const families = familiesData || [];
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newGroupName, setNewGroupName] = useState("");
-  const [selectedFamilyId, setSelectedFamilyId] = useState("");
-  const [selectedDegreeId, setSelectedDegreeId] = useState("");
-
-  const [viewFamilyId, setViewFamilyId] = useState(initialFamilyId || "");
-  const [viewDegreeId, setViewDegreeId] = useState(initialDegreeId || "");
-  const [collapsedGroups, setCollapsedGroups] = useState<Set<number>>(new Set());
-
-  const toggleGroup = (groupId: number) => {
-    setCollapsedGroups((prev) => {
-      const next = new Set(prev);
-      if (next.has(groupId)) next.delete(groupId);
-      else next.add(groupId);
-      return next;
-    });
-  };
-
-  useEffect(() => {
-    if (rasData) {
-      setGroups((prevGroups: CourseGroup[]) =>
-        prevGroups.map((g: CourseGroup) => ({
-          ...g,
-          modules: g.modules.map((m: ModuleAssignment) => ({
-            ...m,
-            ras: rasData[m.code] || m.ras || [],
-          })),
-        }))
-      );
-    }
-  }, [rasData, setGroups]);
-
-  const handleAssignTeacher = (groupId: number, moduleId: number, teacherId: string) => {
-    setGroups((prev: CourseGroup[]) =>
-      prev.map((g: CourseGroup) => {
-        if (g.id !== groupId) return g;
-        return {
-          ...g,
-          modules: g.modules.map((m: ModuleAssignment) => {
-            if (m.id !== moduleId) return m;
-            return { ...m, assignedTeacherId: teacherId ? Number(teacherId) : null };
-          }),
-        };
-      })
-    );
-    setHasChanges(true);
-  };
-
-  const handleSave = () => {
-    setSaveStatus("saving");
-    setTimeout(() => {
-      setSaveStatus("saved");
-      setHasChanges(false);
-      setTimeout(() => setSaveStatus("idle"), 3000);
-    }, 1000);
-  };
-
-  const handleAddGroup = () => {
-    if (!newGroupName || !selectedDegreeId) return;
-    const family = families.find((f: any) => f.id.toString() === selectedFamilyId);
-    const degree = family?.degrees.find((d: any) => d.id.toString() === selectedDegreeId);
-    const newGroup: CourseGroup = {
-      id: Date.now(),
-      name: newGroupName,
-      degreeName: degree ? degree.name : "Desconocido",
-      level: degree ? degree.level : "Grado",
-      modules: [],
-    };
-    setGroups([...groups, newGroup]);
-    setIsModalOpen(false);
-    setNewGroupName("");
-    setSelectedFamilyId("");
-    setSelectedDegreeId("");
-    setHasChanges(true);
-  };
-
-  const viewFamily = families.find((f: any) => f.id.toString() === viewFamilyId);
-  const viewDegree = viewFamily?.degrees.find((d: any) => d.id.toString() === viewDegreeId);
-
-  const displayedGroups = viewDegree
-    ? groups.filter((g: CourseGroup) => {
-        const clean = (str: string) =>
-          str.toLowerCase().replace(/^[a-z0-9]+\s*-\s*/i, "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
-        return clean(g.degreeName) === clean(viewDegree.name);
-      })
-    : [];
-
-  return (
-    <div className="space-y-6 animate-in fade-in duration-300">
-      {/* Toolbar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <p className="text-muted text-sm">Jefatura de Estudios: Asigna el profesorado a los módulos de cada ciclo formativo.</p>
-        <div className="flex gap-3 shrink-0">
-          <Button
-            onClick={handleSave}
-            disabled={!hasChanges && saveStatus !== "saved"}
-            variant={saveStatus === "saved" ? "success" : hasChanges ? "primary" : "ghost"}
-            className={saveStatus === "saved" ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30" : ""}
-          >
-            {saveStatus === "saving" ? (
-              <div className="w-5 h-5 border-2 border-accent border-t-transparent rounded-full animate-spin" />
-            ) : saveStatus === "saved" ? (
-              <CheckCircle2 className="w-5 h-5" />
-            ) : (
-              <Save className="w-5 h-5" />
-            )}
-            <span>
-              {saveStatus === "saving" ? "Guardando..." : saveStatus === "saved" ? "¡Guardado!" : "Guardar cambios"}
-            </span>
-          </Button>
-          <Button onClick={() => setIsModalOpen(true)} variant="secondary">
-            <Plus className="w-5 h-5" />
-            <span>Añadir Grupo</span>
-          </Button>
-        </div>
-      </div>
-
-      {/* Filters */}
-      <Card className="p-5 flex flex-col md:flex-row gap-4">
-        <Select
-          label="Familia Profesional"
-          value={viewFamilyId}
-          onChange={(e) => { setViewFamilyId(e.target.value); setViewDegreeId(""); }}
-        >
-          <option value="">-- Selecciona Familia --</option>
-          {families.map((f: any) => (
-            <option key={f.id} value={f.id}>{f.name}</option>
-          ))}
-        </Select>
-        <Select
-          label="Grado y Título"
-          value={viewDegreeId}
-          onChange={(e) => setViewDegreeId(e.target.value)}
-          disabled={!viewFamilyId}
-        >
-          <option value="">-- Selecciona Título --</option>
-          {viewFamily?.degrees.map((d: any) => (
-            <option key={d.id} value={d.id}>{d.level} - {d.name}</option>
-          ))}
-        </Select>
-      </Card>
-
-      <GroupList
-        viewDegreeId={viewDegreeId}
-        displayedGroups={displayedGroups}
-        collapsedGroups={collapsedGroups}
-        toggleGroup={toggleGroup}
-        teachers={teachers}
-        handleAssignTeacher={handleAssignTeacher}
-        onOpenModal={() => setIsModalOpen(true)}
-      />
-
-      <AddGroupModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        families={families}
-        selectedFamilyId={selectedFamilyId}
-        setSelectedFamilyId={setSelectedFamilyId}
-        selectedDegreeId={selectedDegreeId}
-        setSelectedDegreeId={setSelectedDegreeId}
-        newGroupName={newGroupName}
-        setNewGroupName={setNewGroupName}
-        handleAddGroup={handleAddGroup}
-      />
-    </div>
-  );
-}
-
-// ─── TAB: Módulos ─────────────────────────────────────────────────────────────
-function TabModulos() {
+function TabTitulo({ onSelectTitulo, globalSelection, updateGlobalSelection }: { onSelectTitulo: (familiaName: string, tituloCodigo: string) => void; globalSelection: { familia: string; tituloCodigo: string; moduloCodigo: string }; updateGlobalSelection: (updates: Partial<{ familia: string; tituloCodigo: string; moduloCodigo: string }>) => void }) {
   const [families, setFamilies] = useState<Family[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedFamilyId, setSelectedFamilyId] = useState<number | null>(null);
-  const [selectedDegreeId, setSelectedDegreeId] = useState<number | null>(null);
-  const [modulesData, setModulesData] = useState<any[]>([]);
-  const [loadingModules, setLoadingModules] = useState(false);
-  const [expandedModules, setExpandedModules] = useState<Set<string>>(new Set());
+  const [famLoading, setFamLoading] = useState(true);
 
   useEffect(() => {
     fetch("/api/families")
       .then((res) => res.json())
       .then((json) => {
-        if (json.status === "success") {
-          const order: Record<string, number> = { BASICA: 1, MEDIO: 2, SUPERIOR: 3, ESPECIALIZACION: 4 };
-          const sorted = json.data.map((f: Family) => ({
-            ...f,
-            degrees: f.degrees.sort((a, b) => (order[a.level] || 99) - (order[b.level] || 99)),
-          }));
-          setFamilies(sorted);
-        }
-        setLoading(false);
+        if (json.status === "success") setFamilies(json.data);
+        setFamLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(() => setFamLoading(false));
   }, []);
 
-  // Load modules when a degree is selected
-  useEffect(() => {
-    if (!selectedDegreeId) { setModulesData([]); return; }
-    setLoadingModules(true);
-    fetch(`/api/modules?degree_id=${selectedDegreeId}`)
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.status === "success") setModulesData(json.data || []);
-        else setModulesData([]);
-        setLoadingModules(false);
-      })
-      .catch(() => { setModulesData([]); setLoadingModules(false); });
-  }, [selectedDegreeId]);
+  const selectedFamilia = globalSelection.familia;
+  const selectedTituloCodigo = globalSelection.tituloCodigo;
 
-  const toggleModule = (code: string) => {
-    setExpandedModules((prev) => {
-      const next = new Set(prev);
-      if (next.has(code)) next.delete(code);
-      else next.add(code);
-      return next;
-    });
-  };
+  const familyNames = families.map((f) => f.name).sort();
+  const selectedFamilyObj = families.find((f) => f.name === selectedFamilia);
+  const degreesFromApi = selectedFamilyObj?.degrees ?? [];
+  const selectedTituloObj = degreesFromApi.find((d) => (d.code ?? d.name) === selectedTituloCodigo);
 
-  const selectedFamily = families.find((f) => f.id === selectedFamilyId) || null;
-  const selectedDegree = selectedFamily?.degrees.find((d) => d.id === selectedDegreeId) || null;
+  if (famLoading) {
+    return (
+      <div className="flex items-center justify-center p-12">
+        <div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
-  const levelColor: Record<string, string> = {
-    BASICA: "text-yellow-400 bg-yellow-500/10 border-yellow-500/30",
-    MEDIO: "text-blue-400 bg-blue-500/10 border-blue-500/30",
-    SUPERIOR: "text-purple-400 bg-purple-500/10 border-purple-500/30",
-    ESPECIALIZACION: "text-emerald-400 bg-emerald-500/10 border-emerald-500/30",
-  };
-  const levelLabel: Record<string, string> = {
-    BASICA: "Grado Básico",
-    MEDIO: "Grado Medio",
-    SUPERIOR: "Grado Superior",
-    ESPECIALIZACION: "Especialización",
+  const articleTitles: Record<string, string> = {
+    article_2: "Artículo 2. Identificación del título.",
+    article_3: "Artículo 3. Perfil profesional del título.",
+    article_4: "Artículo 4. Competencia general.",
+    article_5: "Artículo 5. Competencias profesionales, personales y sociales.",
+    article_6: "Artículo 6. Relación de cualificaciones y unidades de competencia del Catálogo Nacional de Cualificaciones Profesionales incluidas en el título.",
+    article_7: "Artículo 7. Entorno profesional en el que el profesional va a ejercer su actividad.",
+    article_8: "Artículo 8. Prospectiva del título en el sector o sectores."
   };
 
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
-
-      {/* Selectors */}
       <Card className="p-5 flex flex-col md:flex-row gap-4">
-        {loading ? (
-          <div className="flex items-center gap-2 text-muted text-sm">
-            <div className="w-4 h-4 border-2 border-accent border-t-transparent rounded-full animate-spin" />
-            Cargando familias...
-          </div>
-        ) : (
-          <>
-            <div className="flex flex-col gap-1.5 flex-1">
-              <label className="text-xs font-semibold text-muted uppercase tracking-wider">Familia Profesional</label>
-              <select
-                value={selectedFamilyId ?? ""}
-                onChange={(e) => {
-                  const id = Number(e.target.value) || null;
-                  setSelectedFamilyId(id);
-                  setSelectedDegreeId(null);
-                  setModulesData([]);
-                }}
-                className="w-full bg-background border border-[var(--glass-border)] rounded-xl px-4 py-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-all cursor-pointer"
-              >
-                <option value="">-- Selecciona Familia --</option>
-                {families.map((f) => (
-                  <option key={f.id} value={f.id}>{f.name}</option>
-                ))}
-              </select>
-            </div>
+        <div className="flex flex-col gap-1.5 flex-1">
+          <label className="text-xs font-semibold text-muted uppercase tracking-wider">Familia Profesional</label>
+          <select
+            value={selectedFamilia}
+            onChange={(e) => {
+              updateGlobalSelection({ familia: e.target.value, tituloCodigo: "" });
+            }}
+            className="w-full bg-background border border-[var(--glass-border)] rounded-xl px-4 py-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-all cursor-pointer"
+          >
+            <option value="">-- Selecciona Familia --</option>
+            {familyNames.map((f) => (
+              <option key={f} value={f}>{f}</option>
+            ))}
+          </select>
+        </div>
 
-            <div className="flex flex-col gap-1.5 flex-1">
-              <label className="text-xs font-semibold text-muted uppercase tracking-wider">Grado y Título</label>
-              <select
-                value={selectedDegreeId ?? ""}
-                disabled={!selectedFamilyId}
-                onChange={(e) => setSelectedDegreeId(Number(e.target.value) || null)}
-                className="w-full bg-background border border-[var(--glass-border)] rounded-xl px-4 py-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
-              >
-                <option value="">-- Selecciona Título --</option>
-                {selectedFamily?.degrees.map((d) => (
-                  <option key={d.id} value={d.id}>{levelLabel[d.level] || d.level} — {d.name}</option>
-                ))}
-              </select>
-            </div>
-          </>
-        )}
+        <div className="flex flex-col gap-1.5 flex-1">
+          <label className="text-xs font-semibold text-muted uppercase tracking-wider">Título</label>
+          <select
+            value={selectedTituloCodigo}
+            disabled={!selectedFamilia}
+            onChange={(e) => updateGlobalSelection({ tituloCodigo: e.target.value })}
+            className="w-full bg-background border border-[var(--glass-border)] rounded-xl px-4 py-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            <option value="">-- Selecciona Título --</option>
+            {degreesFromApi.map((d) => (
+              <option key={d.id} value={d.code ?? d.name}>{d.name}</option>
+            ))}
+          </select>
+        </div>
       </Card>
 
-      {/* Empty states */}
-      {!selectedDegreeId && (
-        <Card className="p-12 text-center text-muted flex flex-col items-center justify-center gap-4">
-          <span className="text-5xl">📦</span>
-          <p className="text-lg">Selecciona una Familia y un Título para ver el desglose de módulos.</p>
-        </Card>
-      )}
 
-      {selectedDegreeId && loadingModules && (
-        <div className="flex items-center justify-center p-12">
-          <div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin" />
+      {selectedTituloObj && (
+        <div className="space-y-6 mt-6">
+          <div className="flex items-center justify-between bg-foreground/5 p-4 rounded-xl border border-[var(--glass-border)]">
+             <div>
+               <h2 className="text-xl font-bold text-foreground flex items-center gap-3">
+                 {selectedTituloObj.name}
+                 {selectedTituloObj.code && <Badge variant="default" className="font-mono">{selectedTituloObj.code}</Badge>}
+               </h2>
+               <p className="text-sm text-muted mt-1">Detalles del currículo del BOA</p>
+             </div>
+             <Button variant="primary" onClick={() => onSelectTitulo(selectedFamilia, selectedTituloObj.code ?? selectedTituloObj.name)}>
+               <BookOpen className="w-4 h-4 mr-2" />
+               Ver Módulos
+             </Button>
+          </div>
+
+          {selectedTituloObj.boa_articles && Object.keys(selectedTituloObj.boa_articles).length > 0 ? (
+            <div className="grid grid-cols-1 gap-6">
+              {['article_2', 'article_3', 'article_4', 'article_5', 'article_6', 'article_7', 'article_8'].map((artKey) => {
+                const content = selectedTituloObj.boa_articles?.[artKey];
+                if (!content) return null;
+                return (
+                  <Card key={artKey} className="overflow-hidden">
+                    <div className="bg-foreground/5 px-6 py-4 border-b border-[var(--glass-border)]">
+                      <h3 className="text-base font-bold text-foreground">{articleTitles[artKey] || artKey}</h3>
+                    </div>
+                    <div className="p-6 text-sm text-foreground/80 whitespace-pre-wrap leading-relaxed">
+                      {content}
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
+          ) : (
+            <Card className="p-12 text-center text-muted flex flex-col items-center justify-center gap-4">
+              <Layers className="w-12 h-12" />
+              <p className="text-lg">Este título aún no tiene los artículos del currículo cargados en la base de datos.</p>
+            </Card>
+          )}
         </div>
       )}
 
-      {selectedDegreeId && !loadingModules && modulesData.length === 0 && (
-        <Card className="p-12 text-center text-muted flex flex-col items-center justify-center gap-4">
-          <span className="text-5xl">🔍</span>
-          <p className="text-lg">No se encontraron módulos para este título en la base de datos.</p>
+      {selectedFamilia && selectedFamilyObj?.degrees.length === 0 && (
+        <Card className="p-12 text-center text-muted flex flex-col items-center justify-center gap-4 mt-6">
+          <Layers className="w-12 h-12" />
+          <p className="text-lg">No hay títulos registrados para esta familia.</p>
         </Card>
       )}
 
-      {/* Modules list */}
-      {selectedDegreeId && !loadingModules && modulesData.length > 0 && (
-        <div className="space-y-4">
-          {/* Header summary */}
+      {!selectedFamilia && (
+        <Card className="p-12 text-center text-muted flex flex-col items-center justify-center gap-4 mt-6">
+          <GraduationCap className="w-12 h-12" />
+          <p className="text-lg">Selecciona una familia profesional para ver sus títulos.</p>
+        </Card>
+      )}
+    </div>
+  );
+}
+
+// ─── TAB 3: Cursos ────────────────────────────────────────────────────────────
+
+function TabCursos({ globalSelection, updateGlobalSelection, onSelectModulo }: { globalSelection: { familia: string; tituloCodigo: string; moduloCodigo: string }; updateGlobalSelection: (updates: Partial<{ familia: string; tituloCodigo: string; moduloCodigo: string }>) => void; onSelectModulo: (familia: string, tituloCodigo: string, moduloCodigo: string) => void }) {
+  const [families, setFamilies] = useState<Family[]>([]);
+  const [famLoading, setFamLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/families")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.status === "success") setFamilies(json.data);
+        setFamLoading(false);
+      })
+      .catch(() => setFamLoading(false));
+  }, []);
+
+  const selectedFamilia = globalSelection.familia;
+  const selectedTitulo = globalSelection.tituloCodigo; // value for <select>, matches option value
+  const curriculoCodigo = selectedTitulo; // curriculum code for data lookup
+
+  const familyNames = families.map((f) => f.name).sort();
+  const selectedFamilyObj = families.find((f) => f.name === selectedFamilia);
+  const degreesFromApi = selectedFamilyObj?.degrees ?? [];
+  const titulo = curriculoCodigo ? curriculos[curriculoCodigo] : undefined;
+
+  const modulosPrimero = titulo ? titulo.modulos.filter((m) => m.curso === "1º") : [];
+  const modulosSegundo = titulo ? titulo.modulos.filter((m) => m.curso === "2º") : [];
+
+  const [cursosAbiertos, setCursosAbiertos] = useState<Set<string>>(new Set(["1º", "2º"]));
+
+  const toggleCurso = (curso: string) => {
+    setCursosAbiertos((prev) => {
+      const next = new Set(prev);
+      if (next.has(curso)) next.delete(curso);
+      else next.add(curso);
+      return next;
+    });
+  };
+
+  const renderCursoBlock = (mods: CurriculumModulo[], cursoLabel: string) => {
+    if (mods.length === 0) return null;
+    const abierto = cursosAbiertos.has(cursoLabel);
+    const totalHoras = mods.reduce((s, m) => s + m.horas, 0);
+
+    return (
+      <Card key={cursoLabel} className="overflow-hidden">
+        <button
+          onClick={() => toggleCurso(cursoLabel)}
+          className="w-full p-5 flex items-center justify-between gap-4 hover:bg-foreground/5 transition-colors text-left"
+        >
+          <div className="flex items-center gap-3">
+            <GraduationCap className="w-5 h-5 text-accent" />
+            <h2 className="text-lg font-bold text-foreground">{cursoLabel} Curso</h2>
+            <Badge variant="info">{mods.length} módulos</Badge>
+            <span className="text-xs text-muted flex items-center gap-1">
+              <Clock className="w-3 h-3" />{totalHoras}h
+            </span>
+          </div>
+          {abierto ? <ChevronUp className="w-5 h-5 text-muted" /> : <ChevronDown className="w-5 h-5 text-muted" />}
+        </button>
+
+        {abierto && (
+          <div className="border-t border-[var(--glass-border)] animate-in slide-in-from-top-1 duration-200">
+            {mods.map((mod) => (
+              <button
+                key={mod.codigo}
+                onClick={() => onSelectModulo(titulo!.familia, curriculoCodigo, mod.codigo)}
+                className="w-full p-5 border-b border-[var(--glass-border)] last:border-b-0 hover:bg-foreground/5 transition-colors text-left"
+              >
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-3 min-w-0 flex-1">
+                    <span className="font-mono text-xs font-bold text-accent bg-accent/10 border border-accent/20 px-2 py-1 rounded shrink-0">
+                      {mod.codigo}
+                    </span>
+                    <div className="min-w-0">
+                      <h3 className="text-sm font-semibold text-foreground">{mod.nombre}</h3>
+                      <span className="flex items-center gap-1 text-xs text-muted mt-1">
+                        <Clock className="w-3 h-3" />
+                        {mod.horas}h
+                      </span>
+                    </div>
+                  </div>
+                  <ChevronDown className="w-4 h-4 -rotate-90 text-muted shrink-0" />
+                </div>
+
+                {mod.unidades_formativas && mod.unidades_formativas.length > 0 && (
+                  <div className="mt-4 pt-4 border-t border-[var(--glass-border)]">
+                    <p className="text-xs font-semibold text-muted uppercase tracking-wider mb-3 flex items-center gap-1">
+                      <FolderTree className="w-3 h-3" />
+                      Unidades Formativas ({mod.unidades_formativas.length})
+                    </p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                      {mod.unidades_formativas.map((uf, i) => (
+                        <div key={i} className="bg-foreground/5 rounded-lg p-3 border border-[var(--glass-border)]">
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="text-xs font-mono text-accent">{uf.codigo}</span>
+                            <span className="text-xs font-semibold text-foreground/70">{uf.horas}h</span>
+                          </div>
+                          <p className="text-xs text-foreground/70 mt-1">{uf.nombre}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </button>
+            ))}
+          </div>
+        )}
+      </Card>
+    );
+  };
+
+  if (famLoading) {
+    return (
+      <div className="flex items-center justify-center p-12">
+        <div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6 animate-in fade-in duration-300">
+      <Card className="p-5 flex flex-col md:flex-row gap-4">
+        <div className="flex flex-col gap-1.5 flex-1">
+          <label className="text-xs font-semibold text-muted uppercase tracking-wider">Familia Profesional</label>
+          <select
+            value={selectedFamilia}
+            onChange={(e) => { updateGlobalSelection({ familia: e.target.value, tituloCodigo: "", moduloCodigo: "" }); }}
+            className="w-full bg-background border border-[var(--glass-border)] rounded-xl px-4 py-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-all cursor-pointer"
+          >
+            <option value="">-- Selecciona Familia --</option>
+            {familyNames.map((f) => (
+              <option key={f} value={f}>{f}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="flex flex-col gap-1.5 flex-1">
+          <label className="text-xs font-semibold text-muted uppercase tracking-wider">Título</label>
+          <select
+            value={selectedTitulo}
+            disabled={!selectedFamilia}
+            onChange={(e) => {
+              const val = e.target.value;
+              updateGlobalSelection({ tituloCodigo: val, moduloCodigo: "" });
+            }}
+            className="w-full bg-background border border-[var(--glass-border)] rounded-xl px-4 py-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            <option value="">-- Selecciona Título --</option>
+            {degreesFromApi.map((d) => (
+              <option key={d.id} value={d.code ?? d.name}>{d.name}</option>
+            ))}
+          </select>
+        </div>
+      </Card>
+
+      {!selectedTitulo && (
+        <Card className="p-12 text-center text-muted flex flex-col items-center justify-center gap-4">
+          <BookOpen className="w-12 h-12" />
+          <p className="text-lg">Selecciona una Familia y un Título para ver los módulos organizados por curso.</p>
+        </Card>
+      )}
+
+      {selectedTitulo && !titulo && (
+        <Card className="p-12 text-center text-muted flex flex-col items-center justify-center gap-4">
+          <Layers className="w-12 h-12" />
+          <p className="text-lg">Este título aún no tiene datos curriculares cargados.</p>
+          <p className="text-sm">Los módulos se mostrarán cuando esté disponible el currículo oficial.</p>
+        </Card>
+      )}
+
+      {selectedTitulo && titulo && (
+        <div className="space-y-10">
+          {renderCursoBlock(modulosPrimero, "1º")}
+          {renderCursoBlock(modulosSegundo, "2º")}
+          {modulosPrimero.length === 0 && modulosSegundo.length === 0 && (
+            <Card className="p-12 text-center text-muted flex flex-col items-center justify-center gap-4">
+              <Layers className="w-12 h-12" />
+              <p className="text-lg">No hay módulos para este título.</p>
+            </Card>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── TAB 3: Módulos RA->CE ────────────────────────────────────────────────────
+
+function TabModulos({ globalSelection, updateGlobalSelection }: { globalSelection: { familia: string; tituloCodigo: string; moduloCodigo: string }; updateGlobalSelection: (updates: Partial<{ familia: string; tituloCodigo: string; moduloCodigo: string }>) => void }) {
+  const [families, setFamilies] = useState<Family[]>([]);
+  const [famLoading, setFamLoading] = useState(true);
+  const [expandedRAs, setExpandedRAs] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    fetch("/api/families")
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.status === "success") setFamilies(json.data);
+        setFamLoading(false);
+      })
+      .catch(() => setFamLoading(false));
+  }, []);
+
+  const selectedFamilia = globalSelection.familia;
+  const selectedTitulo = globalSelection.tituloCodigo;
+  const curriculoCodigo = selectedTitulo;
+  const selectedModuloCodigo = globalSelection.moduloCodigo;
+
+  const familyNames = families.map((f) => f.name).sort();
+  const selectedFamilyObj = families.find((f) => f.name === selectedFamilia);
+  const degreesFromApi = selectedFamilyObj?.degrees ?? [];
+  const titulo = curriculoCodigo ? curriculos[curriculoCodigo] : undefined;
+  const modulo = titulo
+    ? titulo.modulos.find((m) => m.codigo === selectedModuloCodigo)
+    : undefined;
+
+  const toggleRA = (id: string) => {
+    setExpandedRAs((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  if (famLoading) {
+    return (
+      <div className="flex items-center justify-center p-12">
+        <div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6 animate-in fade-in duration-300">
+      <Card className="p-5 flex flex-col md:flex-row gap-4">
+        <div className="flex flex-col gap-1.5 flex-1">
+          <label className="text-xs font-semibold text-muted uppercase tracking-wider">Familia Profesional</label>
+          <select
+            value={selectedFamilia}
+            onChange={(e) => { updateGlobalSelection({ familia: e.target.value, tituloCodigo: "", moduloCodigo: "" }); }}
+            className="w-full bg-background border border-[var(--glass-border)] rounded-xl px-4 py-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-all cursor-pointer"
+          >
+            <option value="">-- Selecciona Familia --</option>
+            {familyNames.map((f) => (
+              <option key={f} value={f}>{f}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="flex flex-col gap-1.5 flex-1">
+          <label className="text-xs font-semibold text-muted uppercase tracking-wider">Título</label>
+          <select
+            value={selectedTitulo}
+            disabled={!selectedFamilia}
+            onChange={(e) => {
+              const val = e.target.value;
+              updateGlobalSelection({ tituloCodigo: val, moduloCodigo: "" });
+            }}
+            className="w-full bg-background border border-[var(--glass-border)] rounded-xl px-4 py-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            <option value="">-- Selecciona Título --</option>
+            {degreesFromApi.map((d) => (
+              <option key={d.id} value={d.code ?? d.name}>{d.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="flex flex-col gap-1.5 flex-1">
+          <label className="text-xs font-semibold text-muted uppercase tracking-wider">Módulo</label>
+          <select
+            value={selectedModuloCodigo}
+            disabled={!selectedTitulo || !titulo}
+            onChange={(e) => updateGlobalSelection({ moduloCodigo: e.target.value })}
+            className="w-full bg-background border border-[var(--glass-border)] rounded-xl px-4 py-3 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-accent transition-all cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            <option value="">-- Selecciona Módulo --</option>
+            {titulo?.modulos.map((m) => (
+              <option key={m.codigo} value={m.codigo}>
+                {m.codigo} — {m.nombre} ({m.curso})
+              </option>
+            ))}
+          </select>
+        </div>
+      </Card>
+
+      {selectedTitulo && !titulo && (
+        <Card className="p-12 text-center text-muted flex flex-col items-center justify-center gap-4">
+          <Layers className="w-12 h-12" />
+          <p className="text-lg">Este título aún no tiene datos curriculares cargados.</p>
+          <p className="text-sm">Los módulos se mostrarán cuando esté disponible el currículo oficial.</p>
+        </Card>
+      )}
+
+      {!selectedModuloCodigo && titulo && (
+        <Card className="p-12 text-center text-muted flex flex-col items-center justify-center gap-4">
+          <ListChecks className="w-12 h-12" />
+          <p className="text-lg">Selecciona un módulo para ver los resultados de aprendizaje.</p>
+        </Card>
+      )}
+
+      {modulo && (
+        <>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              {selectedDegree && (
-                <span className={`text-xs font-bold px-3 py-1 rounded-full border ${levelColor[selectedDegree.level] || "text-muted border-white/10"}`}>
-                  {levelLabel[selectedDegree.level] || selectedDegree.level}
-                </span>
-              )}
-              <h2 className="text-lg font-bold text-foreground">{selectedDegree?.name}</h2>
+              <span className="font-mono text-xs font-bold text-accent bg-accent/10 border border-accent/20 px-2 py-1 rounded">
+                {modulo.codigo}
+              </span>
+              <h2 className="text-lg font-bold text-foreground">{modulo.nombre}</h2>
+              <Badge variant="info">{modulo.horas}h</Badge>
+              <Badge>{modulo.curso} Curso</Badge>
             </div>
-            <span className="text-sm text-muted">{modulesData.length} módulos</span>
           </div>
 
-          {/* Modules table-like cards */}
           <div className="space-y-3">
-            {modulesData.map((mod: any) => {
-              const isExpanded = expandedModules.has(mod.code);
-              const hasRas = mod.learning_outcomes && mod.learning_outcomes.length > 0;
+            {modulo.resultados_aprendizaje.map((ra) => {
+              const isExpanded = expandedRAs.has(ra.id);
               return (
-                <Card key={mod.code} className="overflow-hidden">
+                <Card key={ra.id} className="overflow-hidden">
                   <button
-                    onClick={() => toggleModule(mod.code)}
+                    onClick={() => toggleRA(ra.id)}
                     className="w-full p-4 flex items-center justify-between gap-4 hover:bg-foreground/5 transition-colors text-left"
                   >
-                    <div className="flex items-center gap-4 min-w-0">
-                      <span className="font-mono text-xs font-bold text-accent bg-accent/10 border border-accent/20 px-2 py-1 rounded shrink-0">
-                        {mod.code}
+                    <div className="flex items-center gap-3 min-w-0 flex-1">
+                      <span className="text-xs font-bold text-accent bg-accent/10 border border-accent/20 px-2 py-0.5 rounded shrink-0">
+                        {ra.id}
                       </span>
-                      <div className="min-w-0">
-                        <h3 className="text-sm font-semibold text-foreground truncate">{mod.name}</h3>
-                        {mod.specialization && (
-                          <p className="text-xs text-muted truncate">{mod.specialization}</p>
-                        )}
-                      </div>
+                      <p className="text-sm text-foreground leading-snug">{ra.descripcion}</p>
                     </div>
-                    <div className="flex items-center gap-4 shrink-0">
-                      {mod.hours_boa != null && (
-                        <div className="text-right">
-                          <div className="text-xs text-muted">Horas BOA</div>
-                          <div className="text-base font-bold text-foreground">{mod.hours_boa}h</div>
-                        </div>
-                      )}
-                      {hasRas && (
-                        <div className="text-right">
-                          <div className="text-xs text-muted">RA</div>
-                          <div className="text-base font-bold text-accent">{mod.learning_outcomes.length}</div>
-                        </div>
-                      )}
+                    <div className="flex items-center gap-3 shrink-0">
+                      <span className="text-xs text-muted">{ra.criterios_evaluacion.length} CE</span>
                       {isExpanded ? (
                         <ChevronUp className="w-4 h-4 text-muted" />
                       ) : (
@@ -600,73 +726,31 @@ function TabModulos() {
                   </button>
 
                   {isExpanded && (
-                    <div className="border-t border-[var(--glass-border)] p-4 space-y-4 animate-in slide-in-from-top-1 duration-200">
-                      {/* Module details */}
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                        {mod.hours_boa != null && (
-                          <div className="bg-foreground/5 rounded-xl p-3 text-center">
-                            <div className="text-xs text-muted mb-1">Horas BOA</div>
-                            <div className="text-2xl font-extrabold text-foreground">{mod.hours_boa}</div>
-                          </div>
-                        )}
-                        {mod.hours_week != null && (
-                          <div className="bg-foreground/5 rounded-xl p-3 text-center">
-                            <div className="text-xs text-muted mb-1">Horas/semana</div>
-                            <div className="text-2xl font-extrabold text-foreground">{mod.hours_week}</div>
-                          </div>
-                        )}
-                        {mod.credits != null && (
-                          <div className="bg-foreground/5 rounded-xl p-3 text-center">
-                            <div className="text-xs text-muted mb-1">Créditos ECTS</div>
-                            <div className="text-2xl font-extrabold text-foreground">{mod.credits}</div>
-                          </div>
-                        )}
-                        {hasRas && (
-                          <div className="bg-accent/5 border border-accent/20 rounded-xl p-3 text-center">
-                            <div className="text-xs text-muted mb-1">Resultados Aprendizaje</div>
-                            <div className="text-2xl font-extrabold text-accent">{mod.learning_outcomes.length}</div>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Learning outcomes */}
-                      {hasRas && (
-                        <div className="space-y-2">
-                          <h4 className="text-xs font-bold text-muted uppercase tracking-wider">Resultados de Aprendizaje (RA)</h4>
-                          {mod.learning_outcomes.map((ra: any, idx: number) => (
-                            <div key={idx} className="bg-foreground/5 rounded-lg p-3 border border-white/5">
-                              <div className="flex items-start gap-3">
-                                <span className="text-xs font-bold text-accent bg-accent/10 border border-accent/20 px-2 py-0.5 rounded shrink-0 mt-0.5">
-                                  RA{ra.raNumber ?? idx + 1}
-                                </span>
-                                <div className="min-w-0">
-                                  <p className="text-sm text-foreground leading-snug">{ra.description}</p>
-                                  {ra.criteria && ra.criteria.length > 0 && (
-                                    <div className="mt-2 space-y-1">
-                                      <p className="text-xs font-semibold text-muted uppercase tracking-wider">Criterios de evaluación:</p>
-                                      <ul className="space-y-0.5">
-                                        {ra.criteria.map((ce: string, cidx: number) => (
-                                          <li key={cidx} className="text-xs text-muted flex gap-2">
-                                            <span className="text-accent shrink-0">CE{cidx + 1}.</span>
-                                            <span>{ce}</span>
-                                          </li>
-                                        ))}
-                                      </ul>
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          ))}
+                    <div className="border-t border-[var(--glass-border)] p-4 space-y-2 animate-in slide-in-from-top-1 duration-200">
+                      <p className="text-xs font-semibold text-muted uppercase tracking-wider">Criterios de Evaluación</p>
+                      {ra.criterios_evaluacion.map((ce) => (
+                        <div key={ce.id} className="flex items-start gap-2 text-sm bg-foreground/5 rounded-lg p-3 border border-[var(--glass-border)]">
+                          <span className="text-xs font-bold text-accent shrink-0 mt-0.5">{ce.id}</span>
+                          <span className="text-foreground/80">{ce.descripcion}</span>
                         </div>
-                      )}
+                      ))}
                     </div>
                   )}
                 </Card>
               );
             })}
           </div>
-        </div>
+
+          <div className="flex justify-center pt-2">
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => console.log("Cargar módulo en programación:", modulo.codigo, modulo.nombre)}
+            >
+              Cargar en mi programación
+            </Button>
+          </div>
+        </>
       )}
     </div>
   );
