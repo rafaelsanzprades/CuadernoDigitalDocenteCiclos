@@ -17,9 +17,31 @@ import { PlanificacionMensualTab } from "@/components/features/dashboard/Planifi
 import { WeeklyClasses } from "@/components/features/dashboard/WeeklyClasses";
 
 export default function HoyPage() {
-  const { moduleData, cursoData, isWizardOpen, setWizardOpen, activeModuleId, setActiveModuleId, setActiveCursoId } = useAppStore();
+  const { moduleData, cursoData, setModuleData, setCursoData, isWizardOpen, setWizardOpen, activeModuleId, setActiveModuleId, activeCursoId, setActiveCursoId } = useAppStore();
   const [activeTab, setActiveTab] = useState("actual");
   const { data: modulesList, mutate: fetchModules } = useModulesList();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (activeModuleId && !moduleData) {
+          const res = await fetch(`/api/module/${activeModuleId}`);
+          const data = await res.json();
+          if (data.status === "success") setModuleData(data.data);
+        }
+        if (activeCursoId && !cursoData) {
+          const res = await fetch(`/api/module/${activeCursoId}`);
+          const data = await res.json();
+          if (data.status === "success") setCursoData(data.data);
+        }
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+    if ((activeModuleId && !moduleData) || (activeCursoId && !cursoData)) {
+      fetchData();
+    }
+  }, [activeModuleId, moduleData, activeCursoId, cursoData, setModuleData, setCursoData]);
 
   useEffect(() => {
     if (modulesList) {

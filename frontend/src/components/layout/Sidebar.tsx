@@ -36,7 +36,7 @@ export default function Sidebar() {
     <>
       <div className={`px-4 pt-4 pb-2 flex ${isSidebarOpen ? 'justify-between' : 'justify-center'} items-center`}>
         {isSidebarOpen && (
-          <Link href="/" onClick={() => { if (window.innerWidth < 1024) toggleSidebar(); }}>
+          <Link href="/inicio" onClick={() => { if (window.innerWidth < 1024) toggleSidebar(); }}>
             <h1 className="text-[1.3rem] font-extrabold leading-tight text-foreground hover:text-blue-400 transition-colors mb-4 tracking-tight whitespace-nowrap cursor-pointer">
               Cuaderno Ciclos FP
             </h1>
