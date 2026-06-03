@@ -23,11 +23,11 @@ export const navGroups = [
   },
   {
     title: "Curso",
-    sectionDescription: "Herramientas de seguimiento para el aula viva. Administra el listado de alumnado, coordina la orientación profesional y FEOE, anota el progreso diario y evalúa mediante calificaciones analíticas.",
+    sectionDescription: "Herramientas de seguimiento para el aula viva. Administra el listado de alumnadodo, coordina la orientación profesional y FEOE, anota el progreso diario y evalúa mediante calificaciones analíticas.",
     items: [
-      { href: "/alumnado", label: "Alumnado y tutoría", icon: "👥", description: "Gestión oficial de estudiantes, ficha individual de orientación y matriz de tutoría." },
+      { href: "/alumnadodo", label: "Alumnadodo y tutoría", icon: "👥", description: "Gestión oficial de estudiantes, ficha individual de orientación y matriz de tutoría." },
       { href: "/profesional", label: "Orientación profesional", icon: "🧭", description: "Diseño del Plan de Orientación Profesional del módulo o ciclo." },
-      { href: "/feoe", label: "Prácticas FEOE", icon: "🏢", description: "Gestión de empresas colaboradoras, asignación de alumnado y seguimiento de prácticas duales y FCT." },
+      { href: "/feoe", label: "Prácticas FEOE", icon: "🏢", description: "Gestión de empresas colaboradoras, asignación de alumnadodo y seguimiento de prácticas duales y FCT." },
       { href: "/seguimiento", label: "Seguimiento diario", icon: "📍", description: "Registro detallado del desarrollo diario de las clases y contingencias." },
       { href: "/progreso", label: "Progreso académico", icon: "📈", description: "Panel integrado de calificaciones numéricas, evaluación por resultados de aprendizaje (RA) y analíticas." }
     ]

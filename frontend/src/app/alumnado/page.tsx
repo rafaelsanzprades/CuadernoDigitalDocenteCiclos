@@ -5,25 +5,25 @@ import Header from "@/components/layout/Header";
 import { useAppStore } from "@/store/useAppStore";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { TutoriaTab } from "@/components/features/alumnado/TutoriaTab";
-import { TutoriaMatrixTab } from "@/components/features/alumnado/TutoriaMatrixTab";
-import { PlanoClaseTab } from "@/components/features/alumnado/PlanoClaseTab";
+import { TutoriaTab } from "@/components/features/alumnadodo/TutoriaTab";
+import { TutoriaMatrixTab } from "@/components/features/alumnadodo/TutoriaMatrixTab";
+import { PlanoClaseTab } from "@/components/features/alumnadodo/PlanoClaseTab";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 
-export default function AlumnadoPage() {
+export default function AlumnadodoPage() {
   const { activeCursoId, cursoData, setCursoData, updateCursoData, saveCursoData } = useAppStore();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
 
   const TABS = [
-    { id: "alumnado", label: "👥 Alumnado", cleanLabel: "Alumnado" },
+    { id: "alumnadodo", label: "👥 Alumnadodo", cleanLabel: "Alumnadodo" },
     { id: "plano", label: "🪑 Plano de clase", cleanLabel: "Plano de clase" },
     { id: "tutoria", label: "🎯 Ficha de Tutoría", cleanLabel: "Ficha de Tutoría" },
     { id: "matriz", label: "📊 Matriz de Tutoría", cleanLabel: "Matriz de Tutoría" }
   ];
 
-  const [activeTab, setActiveTab] = useState("alumnado");
+  const [activeTab, setActiveTab] = useState("alumnadodo");
   const activeTabCleanLabel = TABS.find(t => t.id === activeTab)?.cleanLabel;
 
   useEffect(() => {
@@ -79,12 +79,12 @@ export default function AlumnadoPage() {
   }
 
   if (loading || !cursoData) {
-    return <LoadingSpinner text="Cargando datos de alumnado..." />;
+    return <LoadingSpinner text="Cargando datos de alumnadodo..." />;
   }
 
   const df_al = cursoData?.df_al || [];
 
-  const handleAddAlumno = () => {
+  const handleAddAlumnado = () => {
     const newAl = [...df_al];
     const newId = `AN${(newAl.length + 1).toString().padStart(2, '0')}`;
     (newAl as any[]).push({
@@ -103,13 +103,13 @@ export default function AlumnadoPage() {
     updateCursoData("df_al", newAl);
   };
 
-  const handleUpdateAlumno = (idx: number, field: string, value: any) => {
+  const handleUpdateAlumnado = (idx: number, field: string, value: any) => {
     const newAl = [...df_al];
     (newAl[idx] as any)[field] = value;
     updateCursoData("df_al", newAl);
   };
 
-  const handleRemoveAlumno = (idx: number) => {
+  const handleRemoveAlumnado = (idx: number) => {
     const newAl = [...df_al];
     // Also clean up their tutoring data from the ledger if it exists
     const studentId = newAl[idx].ID;
@@ -134,7 +134,7 @@ export default function AlumnadoPage() {
           <div className="flex justify-between items-start">
             <div>
               <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                👥 Alumnado y tutoría
+                👥 Alumnadodo y tutoría
               </h1>
               <p className="text-muted mt-2 text-lg">Gestión oficial de estudiantes, ficha individual de orientación y matriz de tutoría.</p>
             </div>
@@ -169,16 +169,16 @@ export default function AlumnadoPage() {
             ))}
           </div>
 
-          {/* Tab 1: Alumnado */}
-          {activeTab === "alumnado" && (
+          {/* Tab 1: Alumnadodo */}
+          {activeTab === "alumnadodo" && (
             <Card className="p-6 border-t-4 border-t-blue-500">
               <div className="flex justify-between items-end mb-6">
                 <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
                   <span>Lista oficial</span>
-                  <span className="text-sm font-normal text-muted bg-foreground/5 px-3 py-1 rounded-full">{df_al.length} alumnado</span>
+                  <span className="text-sm font-normal text-muted bg-foreground/5 px-3 py-1 rounded-full">{df_al.length} alumnadodo</span>
                 </h2>
                 {n_menores > 0 && (
-                  <span className="text-pink-400 text-sm font-semibold">🌸 {n_menores} alumnado(s) menor(es) de 18 años</span>
+                  <span className="text-pink-400 text-sm font-semibold">🌸 {n_menores} alumnadodo(s) menor(es) de 18 años</span>
                 )}
               </div>
               
@@ -213,7 +213,7 @@ export default function AlumnadoPage() {
                           <td className="p-2 pr-2">
                             <select 
                               value={al.Estado || "Alta"}
-                              onChange={(e) => handleUpdateAlumno(idx, "Estado", e.target.value)}
+                              onChange={(e) => handleUpdateAlumnado(idx, "Estado", e.target.value)}
                               className={`w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 focus:outline-none appearance-none font-semibold ${al.Estado === 'Baja' ? 'text-red-400' : 'text-green-400'}`}
                             >
                               <option value="Alta">Alta</option>
@@ -224,7 +224,7 @@ export default function AlumnadoPage() {
                             <input 
                               type="text"
                               value={al.Apellidos || ""}
-                              onChange={(e) => handleUpdateAlumno(idx, "Apellidos", e.target.value)}
+                              onChange={(e) => handleUpdateAlumnado(idx, "Apellidos", e.target.value)}
                               className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-blue-500 focus:outline-none"
                             />
                           </td>
@@ -232,7 +232,7 @@ export default function AlumnadoPage() {
                             <input 
                               type="text"
                               value={al.Nombre || ""}
-                              onChange={(e) => handleUpdateAlumno(idx, "Nombre", e.target.value)}
+                              onChange={(e) => handleUpdateAlumnado(idx, "Nombre", e.target.value)}
                               className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-blue-500 focus:outline-none"
                             />
                           </td>
@@ -240,7 +240,7 @@ export default function AlumnadoPage() {
                             <input 
                               type="number"
                               value={al.Edad || ""}
-                              onChange={(e) => handleUpdateAlumno(idx, "Edad", e.target.value)}
+                              onChange={(e) => handleUpdateAlumnado(idx, "Edad", e.target.value)}
                               className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-blue-500 focus:outline-none"
                             />
                           </td>
@@ -248,7 +248,7 @@ export default function AlumnadoPage() {
                             <input 
                               type="text"
                               value={al.Nacimiento || ""}
-                              onChange={(e) => handleUpdateAlumno(idx, "Nacimiento", e.target.value)}
+                              onChange={(e) => handleUpdateAlumnado(idx, "Nacimiento", e.target.value)}
                               placeholder="DD/MM/YYYY"
                               className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-blue-500 focus:outline-none text-sm"
                             />
@@ -257,7 +257,7 @@ export default function AlumnadoPage() {
                             <input 
                               type="checkbox"
                               checked={al.Repite === true || al.Repite === "true"}
-                              onChange={(e) => handleUpdateAlumno(idx, "Repite", e.target.checked)}
+                              onChange={(e) => handleUpdateAlumnado(idx, "Repite", e.target.checked)}
                               className="accent-blue-500"
                             />
                           </td>
@@ -265,7 +265,7 @@ export default function AlumnadoPage() {
                             <input 
                               type="email"
                               value={al.email || ""}
-                              onChange={(e) => handleUpdateAlumno(idx, "email", e.target.value)}
+                              onChange={(e) => handleUpdateAlumnado(idx, "email", e.target.value)}
                               className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-blue-500 focus:outline-none"
                             />
                           </td>
@@ -273,15 +273,15 @@ export default function AlumnadoPage() {
                             <input 
                               type="text"
                               value={al.Movil || ""}
-                              onChange={(e) => handleUpdateAlumno(idx, "Movil", e.target.value)}
+                              onChange={(e) => handleUpdateAlumnado(idx, "Movil", e.target.value)}
                               className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-blue-500 focus:outline-none"
                             />
                           </td>
                           <td className="p-2 text-center">
                             <button
-                              onClick={() => handleRemoveAlumno(idx)}
+                              onClick={() => handleRemoveAlumnado(idx)}
                               className="text-red-400 hover:text-red-300 font-bold"
-                              title="Eliminar Alumnado"
+                              title="Eliminar Alumnadodo"
                             >
                               &times;
                             </button>
@@ -294,10 +294,10 @@ export default function AlumnadoPage() {
                 <div className="mt-4">
                   <Button 
                     variant="ghost"
-                    onClick={handleAddAlumno}
+                    onClick={handleAddAlumnado}
                     className="text-blue-400 hover:text-blue-300 font-semibold flex items-center gap-1"
                   >
-                    <span>+</span> Añadir Alumnado
+                    <span>+</span> Añadir Alumnadodo
                   </Button>
                 </div>
               </div>

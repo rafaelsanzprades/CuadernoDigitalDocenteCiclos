@@ -279,7 +279,7 @@ export default function ProgresoPage() {
 
   const TABS = [
     { id: "resumen", label: "📊 Resumen" },
-    { id: "detalle", label: "👥 Detalle por alumnado" },
+    { id: "detalle", label: "👥 Detalle por alumnadodo" },
     { id: "grupal", label: "📋 Grupal" },
     { id: "individual", label: "👤 Individual" },
     { id: "feoe", label: "🏢 Calificación FEOE" }
@@ -465,7 +465,7 @@ export default function ProgresoPage() {
                     const tris = r_data.tris;
 
                     // Compute nota per student for this RA
-                    const notasAlumnos: number[] = [];
+                    const notasAlumnado: number[] = [];
                     df_evaluable.forEach((al: any) => {
                       const evalData = df_eval.find((e: any) => e.ID === al.ID);
                       if (!evalData) return;
@@ -480,12 +480,12 @@ export default function ProgresoPage() {
                       } else {
                         avg = Number(evalData["Nota_Final"]) || 0;
                       }
-                      notasAlumnos.push(avg);
+                      notasAlumnado.push(avg);
                     });
 
-                    const minN = notasAlumnos.length > 0 ? Math.min(...notasAlumnos) : 0;
-                    const maxN = notasAlumnos.length > 0 ? Math.max(...notasAlumnos) : 0;
-                    const avgN = notasAlumnos.length > 0 ? notasAlumnos.reduce((a, b) => a + b, 0) / notasAlumnos.length : 0;
+                    const minN = notasAlumnado.length > 0 ? Math.min(...notasAlumnado) : 0;
+                    const maxN = notasAlumnado.length > 0 ? Math.max(...notasAlumnado) : 0;
+                    const avgN = notasAlumnado.length > 0 ? notasAlumnado.reduce((a, b) => a + b, 0) / notasAlumnado.length : 0;
 
                     const getColor = (v: number) => v >= 9 ? '#1abc9c' : v >= 7 ? '#2ecc71' : v >= 5 ? '#f39c12' : '#e74c3c';
 
@@ -592,15 +592,15 @@ export default function ProgresoPage() {
             </div>
           )}
 
-          {/* TAB 2: DETALLE POR ALUMNADO (Con ambos bloques desplegables uno detrás de otro) */}
+          {/* TAB 2: DETALLE POR ALUMNADODO (Con ambos bloques desplegables uno detrás de otro) */}
           {activeTab === "detalle" && (
             <div className="space-y-6 animate-in fade-in duration-500">
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-2xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                    👥 Detalle por alumnado
+                    👥 Detalle por alumnadodo
                   </h2>
-                  <p className="text-muted mt-1">Notas individuales por alumnado, instrumento de evaluación y nivel de adquisición de RA.</p>
+                  <p className="text-muted mt-1">Notas individuales por alumnadodo, instrumento de evaluación y nivel de adquisición de RA.</p>
                 </div>
                 <Button
                   variant="secondary"
@@ -627,7 +627,7 @@ export default function ProgresoPage() {
                   const sigad = getSigadInfo(nota_prev);
                   const activeStudentTab = activeTabByStudent[al_id] || "1T";
 
-                  // Calcular RAs para el alumnado individual
+                  // Calcular RAs para el alumnadodo individual
                   const notas_student: Record<string, number> = {
                     "1T": Number(evRow["1T_Nota"]) || 0.0,
                     "2T": Number(evRow["2T_Nota"]) || 0.0,
@@ -803,7 +803,7 @@ export default function ProgresoPage() {
                                 </div>
                               </div>
 
-                              {/* BLOQUE 2: Grado de consecución de los RA por alumnado */}
+                              {/* BLOQUE 2: Grado de consecución de los RA por alumnadodo */}
                               <div className="pt-6 border-t border-[var(--glass-border)] space-y-4">
                                 <h3 className="font-bold text-foreground flex items-center gap-2">
                                   <span>🎯</span> Consecución de Resultados de Aprendizaje (RA)

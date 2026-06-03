@@ -16,8 +16,8 @@ export const AttendanceAccumulated = () => {
   const [attendanceData, setAttendanceData] = useState<AttendanceRecord[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const alumnado = cursoData?.df_al || [];
-  const menores = alumnado.filter((a: any) => parseInt(a.Edad || '18') < 18).length;
+  const alumnadodo = cursoData?.df_al || [];
+  const menores = alumnadodo.filter((a: any) => parseInt(a.Edad || '18') < 18).length;
   const info_fechas = moduleData?.info_fechas || {};
   const info_modulo = moduleData?.info_modulo || {};
 
@@ -103,7 +103,7 @@ export const AttendanceAccumulated = () => {
       {menores > 0 && (
         <div className="flex justify-end">
           <span className="text-pink-400 font-semibold text-sm flex items-center gap-1 bg-pink-400/10 px-3 py-1 rounded-full border border-pink-400/20">
-            🌸 {menores} alumnado(s) menor(es) de 18 años
+            🌸 {menores} alumnadodo(s) menor(es) de 18 años
           </span>
         </div>
       )}
@@ -131,7 +131,7 @@ export const AttendanceAccumulated = () => {
               <tr className="bg-foreground/5 text-muted border-b border-[var(--glass-border)]">
                 <th className="p-4 font-semibold w-16 text-center">Nº</th>
                 <th className="p-4 font-semibold w-12 text-center" title="Menor de edad">🌸</th>
-                <th className="p-4 font-semibold">Alumnado</th>
+                <th className="p-4 font-semibold">Alumnadodo</th>
                 <th className="p-4 font-semibold text-center w-24">1T</th>
                 <th className="p-4 font-semibold text-center w-24">2T</th>
                 <th className="p-4 font-semibold text-center w-24">3T</th>
@@ -141,8 +141,8 @@ export const AttendanceAccumulated = () => {
               </tr>
             </thead>
             <tbody className={loading ? 'opacity-50' : ''}>
-              {alumnado.map((alumnado, index) => {
-                const studentId = alumnado.student_id || alumnado.ID || String(index);
+              {alumnadodo.map((alumnadodo, index) => {
+                const studentId = alumnadodo.student_id || alumnadodo.ID || String(index);
                 const studentRecords = attendanceData.filter(r => r.student_id === studentId && r.status === 'falta');
                 
                 const faltas1T = studentRecords.filter(r => isDateInPeriod(r.date_str, info_fechas.ini_1t, info_fechas.fin_1t)).length;
@@ -158,9 +158,9 @@ export const AttendanceAccumulated = () => {
                 return (
                   <tr key={studentId} className="border-b border-[var(--glass-border)]/50 hover:bg-foreground/5 transition-colors">
                     <td className="p-4 text-center text-muted font-mono">{index + 1}</td>
-                    <td className="p-4 text-center text-sm">{parseInt(alumnado.Edad || '18') < 18 ? '🌸' : ''}</td>
+                    <td className="p-4 text-center text-sm">{parseInt(alumnadodo.Edad || '18') < 18 ? '🌸' : ''}</td>
                     <td className="p-4 font-medium">
-                      {alumnado.Apellidos}, {alumnado.Nombre}
+                      {alumnadodo.Apellidos}, {alumnadodo.Nombre}
                     </td>
                     <td className="p-4 text-center font-mono text-muted">{faltas1T > 0 ? faltas1T : '-'}</td>
                     <td className="p-4 text-center font-mono text-muted">{faltas2T > 0 ? faltas2T : '-'}</td>
@@ -183,10 +183,10 @@ export const AttendanceAccumulated = () => {
                   </tr>
                 );
               })}
-              {alumnado.length === 0 && (
+              {alumnadodo.length === 0 && (
                 <tr>
                   <td colSpan={8} className="p-8 text-center text-muted">
-                    No hay alumnado matriculados en este curso.
+                    No hay alumnadodo matriculados en este curso.
                   </td>
                 </tr>
               )}

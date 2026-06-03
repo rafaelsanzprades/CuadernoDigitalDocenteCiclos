@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { useAppStore } from "@/store/useAppStore";
 import { Card } from "@/components/ui/Card";
-import { Alumnado } from "@/types";
+import { Alumnadodo } from "@/types";
 
 // ─── Badge de intención ───────────────────────────────────────────────────────
 
@@ -44,7 +44,7 @@ export const ResumenTab = () => {
 
   const df_al = cursoData?.df_al || [];
   const allStudents = df_al; // include all (Alta + Baja for reference)
-  const activeStudents = df_al.filter((al: Alumnado) => al.Estado !== "Baja");
+  const activeStudents = df_al.filter((al: Alumnadodo) => al.Estado !== "Baja");
   const profesionalLedger = cursoData?.profesional_ledger || {};
 
   // Filters
@@ -58,7 +58,7 @@ export const ResumenTab = () => {
 
   const students = filterEstado === "todos" ? allStudents
     : filterEstado === "Alta" ? activeStudents
-    : allStudents.filter((al: Alumnado) => al.Estado === "Baja");
+    : allStudents.filter((al: Alumnadodo) => al.Estado === "Baja");
 
   const uniqueIntenciones = useMemo(() => {
     const set = new Set<string>();
@@ -80,18 +80,18 @@ export const ResumenTab = () => {
     let list = [...students];
 
     if (filterIntencion) {
-      list = list.filter((al: Alumnado) =>
+      list = list.filter((al: Alumnadodo) =>
         profesionalLedger[al.ID!]?.intencion_al_terminar === filterIntencion
       );
     }
     if (filterAptitud) {
-      list = list.filter((al: Alumnado) =>
+      list = list.filter((al: Alumnadodo) =>
         profesionalLedger[al.ID!]?.aptitud_principal === filterAptitud
       );
     }
     if (searchText.trim()) {
       const q = searchText.toLowerCase();
-      list = list.filter((al: Alumnado) =>
+      list = list.filter((al: Alumnadodo) =>
         `${al.Apellidos} ${al.Nombre} ${al.ID}`.toLowerCase().includes(q)
       );
     }
@@ -125,7 +125,7 @@ export const ResumenTab = () => {
     return <span className="text-accent ml-1">{sortDir === "asc" ? "↑" : "↓"}</span>;
   };
 
-  const nConFicha = filtered.filter((al: Alumnado) =>
+  const nConFicha = filtered.filter((al: Alumnadodo) =>
     profesionalLedger[al.ID!] && Object.keys(profesionalLedger[al.ID!]).length > 0
   ).length;
 
@@ -141,7 +141,7 @@ export const ResumenTab = () => {
             type="text"
             value={searchText}
             onChange={e => setSearchText(e.target.value)}
-            placeholder="Buscar alumnado/a..."
+            placeholder="Buscar alumnadodo/a..."
             className="w-full bg-foreground/10 border border-[var(--glass-border)] rounded-xl px-4 py-2 pl-9 text-sm text-foreground focus:border-accent focus:outline-none"
           />
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted text-sm">🔍</span>
@@ -196,7 +196,7 @@ export const ResumenTab = () => {
                   className="text-left p-4 font-semibold cursor-pointer hover:text-foreground select-none whitespace-nowrap"
                   onClick={() => toggleSort("apellidos")}
                 >
-                  Alumnado/a <SortIcon field="apellidos" />
+                  Alumnadodo/a <SortIcon field="apellidos" />
                 </th>
                 <th className="p-4 text-left font-semibold whitespace-nowrap">Vía acceso</th>
                 <th
@@ -229,10 +229,10 @@ export const ResumenTab = () => {
               {filtered.length === 0 ? (
                 <tr>
                   <td colSpan={11} className="p-12 text-center text-muted">
-                    No hay alumnado que coincidan con los filtros.
+                    No hay alumnadodo que coincidan con los filtros.
                   </td>
                 </tr>
-              ) : filtered.map((al: Alumnado) => {
+              ) : filtered.map((al: Alumnadodo) => {
                 const d = profesionalLedger[al.ID!] || {};
                 const hasFicha = Object.keys(d).length > 0;
                 const isExpanded = expandedId === al.ID;
@@ -410,13 +410,13 @@ export const ResumenTab = () => {
         {/* Footer count */}
         <div className="px-4 py-3 border-t border-white/5 bg-foreground/3 flex items-center justify-between">
           <span className="text-xs text-muted">
-            Mostrando <strong className="text-foreground">{filtered.length}</strong> alumnado/as
+            Mostrando <strong className="text-foreground">{filtered.length}</strong> alumnadodo/as
           </span>
           <div className="flex gap-4 text-xs text-muted">
-            <span>🌍 Erasmus: <strong className="text-foreground">{filtered.filter((al: Alumnado) => profesionalLedger[al.ID!]?.interes_erasmus === "X").length}</strong></span>
-            <span>🚀 Emprender: <strong className="text-foreground">{filtered.filter((al: Alumnado) => profesionalLedger[al.ID!]?.interes_emprender === "X").length}</strong></span>
-            <span>🎓 Universidad: <strong className="text-foreground">{filtered.filter((al: Alumnado) => profesionalLedger[al.ID!]?.interes_universidad === "X").length}</strong></span>
-            <span>⚠️ Derivados: <strong className="text-amber-400">{filtered.filter((al: Alumnado) => profesionalLedger[al.ID!]?.derivado_orientador === "X").length}</strong></span>
+            <span>🌍 Erasmus: <strong className="text-foreground">{filtered.filter((al: Alumnadodo) => profesionalLedger[al.ID!]?.interes_erasmus === "X").length}</strong></span>
+            <span>🚀 Emprender: <strong className="text-foreground">{filtered.filter((al: Alumnadodo) => profesionalLedger[al.ID!]?.interes_emprender === "X").length}</strong></span>
+            <span>🎓 Universidad: <strong className="text-foreground">{filtered.filter((al: Alumnadodo) => profesionalLedger[al.ID!]?.interes_universidad === "X").length}</strong></span>
+            <span>⚠️ Derivados: <strong className="text-amber-400">{filtered.filter((al: Alumnadodo) => profesionalLedger[al.ID!]?.derivado_orientador === "X").length}</strong></span>
           </div>
         </div>
       </Card>

@@ -382,7 +382,7 @@ export default function EntornoTrabajoPage() {
                       )}
                     </div>
                     <p className="text-sm text-muted max-w-xl">
-                      Permite explorar la aplicación usando datos ficticios y preconfigurados de alumnado y asignaciones sin afectar tu información real.
+                      Permite explorar la aplicación usando datos ficticios y preconfigurados de alumnadodo y asignaciones sin afectar tu información real.
                     </p>
                   </div>
 
@@ -431,8 +431,8 @@ export default function EntornoTrabajoPage() {
                       <li className="flex items-start gap-3">
                         <span className="text-amber-400 font-bold shrink-0">✓</span>
                         <div>
-                          <strong className="text-foreground block">Alumnado y Asistencia Completa</strong>
-                          Fichas de alumnado de prueba cargadas con fotos simuladas, datos de contacto y registros históricos de asistencia.
+                          <strong className="text-foreground block">Alumnadodo y Asistencia Completa</strong>
+                          Fichas de alumnadodo de prueba cargadas con fotos simuladas, datos de contacto y registros históricos de asistencia.
                         </div>
                       </li>
                       <li className="flex items-start gap-3">
@@ -478,7 +478,7 @@ export default function EntornoTrabajoPage() {
                       )}
                     </div>
                     <p className="text-sm text-muted max-w-xl">
-                      Trabaja de forma totalmente segura con datos reales de tu centro, alumnado y evaluaciones cargados en local o respaldados en la nube.
+                      Trabaja de forma totalmente segura con datos reales de tu centro, alumnadodo y evaluaciones cargados en local o respaldados en la nube.
                     </p>
                   </div>
 
@@ -663,7 +663,7 @@ export default function EntornoTrabajoPage() {
                   <h3 className="text-xl font-extrabold text-foreground">Seguridad y RGPD garantizados</h3>
                   <div className="text-base text-muted space-y-2">
                     <p>Esta aplicación procesa toda la información confidencial en tu propio entorno.</p>
-                    <p>Ningún dato de tu alumnado se envía a servidores externos ni es accesible por el administrador.</p>
+                    <p>Ningún dato de tu alumnadodo se envía a servidores externos ni es accesible por el administrador.</p>
                     <p className="font-semibold text-blue-300">Asegúrate de hacer backup de tu programación didáctica y cursos para no perderlos al hacer cambios.</p>
                   </div>
                 </div>
@@ -751,7 +751,7 @@ export default function EntornoTrabajoPage() {
                   <h3 className="text-xl font-extrabold text-foreground">Seguridad y RGPD garantizados</h3>
                   <div className="text-base text-muted space-y-2">
                     <p>Esta aplicación procesa toda la información confidencial en tu propio entorno.</p>
-                    <p>Ningún dato de tu alumnado se envía a servidores externos ni es accesible por el administrador.</p>
+                    <p>Ningún dato de tu alumnadodo se envía a servidores externos ni es accesible por el administrador.</p>
                     <p className="font-semibold text-blue-300">Asegúrate de hacer backup de tu programación didáctica y cursos para no perderlos al hacer cambios.</p>
                   </div>
                 </div>

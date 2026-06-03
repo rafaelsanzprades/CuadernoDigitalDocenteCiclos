@@ -120,7 +120,7 @@ def generar_pdf_boletin_grupal(
         if cuaderno_col not in actividades_por_tipo["Tareas"]:
             actividades_por_tipo["Tareas"].append(cuaderno_col)
 
-    # ── Alumnado ──────────────────────────────────────────────────────────────
+    # ── Alumnadodo ──────────────────────────────────────────────────────────────
     if not df_al.empty:
         if "Estado" in df_al.columns:
             df_al_act = df_al[df_al["Estado"] != "Baja"].copy()
@@ -132,14 +132,14 @@ def generar_pdf_boletin_grupal(
 
     # ── Anchuras: tabla con anchos forzados a 18cm total ─────────────────────
     W_NUM    = 1.0 * cm               # Número de lista
-    W_ALUMNO = 5.0 * cm               # Apellidos, Nombre
+    W_ALUMNADO = 5.0 * cm               # Apellidos, Nombre
     W_EDAD   = 1.0 * cm
     W_REP    = 1.0 * cm
     W_ACT    = 2.0 * cm               # x4 instrumentos
     W_NOTA   = 2.0 * cm
 
     col_widths = (
-        [W_NUM, W_ALUMNO, W_EDAD, W_REP]
+        [W_NUM, W_ALUMNADO, W_EDAD, W_REP]
         + [W_ACT] * len(TIPOS_ORDEN)
         + [W_NOTA]
     )
@@ -158,7 +158,7 @@ def generar_pdf_boletin_grupal(
     row_header.append(Paragraph(f"<b>Nota<br/>Media {trimestre}</b>", smlB))
     table_data = [row_header]
 
-    # ── Filas de alumnado ──────────────────────────────────────────────────────
+    # ── Filas de alumnadodo ──────────────────────────────────────────────────────
     for idx_lista, (_, al) in enumerate(df_al_sorted.iterrows(), start=1):
         al_id  = al["ID"]
         apells = str(al.get("Apellidos", ""))
@@ -204,10 +204,10 @@ def generar_pdf_boletin_grupal(
         if suma_pesos_usados > 0:
             nota_media = nota_media * (100.0 / suma_pesos_usados)
 
-        alumnado = f"{apells}, {nombre}" if nombre else apells
+        alumnadodo = f"{apells}, {nombre}" if nombre else apells
         row = (
             [Paragraph(str(idx_lista), sml),
-             Paragraph(alumnado, norm),
+             Paragraph(alumnadodo, norm),
              Paragraph(edad, sml), Paragraph(repite, sml)]
             + row_acts
             + [Paragraph(f"<b>{nota_media:.1f}</b>", normB)]
@@ -334,7 +334,7 @@ def generar_pdf_boletin_grupal_final(
                 
         acts_por_tri[tri] = acts_por_tipo
 
-    # ── Alumnado
+    # ── Alumnadodo
     if not df_al.empty:
         df_al_act = df_al[df_al["Estado"] != "Baja"].copy() if "Estado" in df_al.columns else df_al.copy()
         df_al_sorted = df_al_act.sort_values("Apellidos").reset_index(drop=True)
@@ -343,14 +343,14 @@ def generar_pdf_boletin_grupal_final(
 
     # ── Anchuras: tabla con anchos forzados a 18cm total ─────────────────────
     W_NUM    = 1.0 * cm               
-    W_ALUMNO = 5.0 * cm               
+    W_ALUMNADO = 5.0 * cm               
     W_EDAD   = 1.0 * cm
     W_REP    = 1.0 * cm
     W_TRI    = 2.0 * cm               
     W_FINALO = 2.0 * cm
     W_FINALE = 2.0 * cm
     # 1 + 5 + 1 + 1 + 2x3 + 2x2 = 18.0 cm
-    col_widths = [W_NUM, W_ALUMNO, W_EDAD, W_REP, W_TRI, W_TRI, W_TRI, W_FINALO, W_FINALE]
+    col_widths = [W_NUM, W_ALUMNADO, W_EDAD, W_REP, W_TRI, W_TRI, W_TRI, W_FINALO, W_FINALE]
 
     # ── Fila de cabecera
     row_header = [
@@ -366,7 +366,7 @@ def generar_pdf_boletin_grupal_final(
     ]
     table_data = [row_header]
 
-    # ── Filas de alumnado
+    # ── Filas de alumnadodo
     for idx_lista, (_, al) in enumerate(df_al_sorted.iterrows(), start=1):
         al_id  = al["ID"]
         apells = str(al.get("Apellidos", ""))
@@ -412,10 +412,10 @@ def generar_pdf_boletin_grupal_final(
             notas_medias_tri["3T"] * (pond_3t / total_pond)
         )
 
-        alumnado = f"{apells}, {nombre}" if nombre else apells
+        alumnadodo = f"{apells}, {nombre}" if nombre else apells
         row = [
             Paragraph(str(idx_lista), sml),
-            Paragraph(alumnado, norm),
+            Paragraph(alumnadodo, norm),
             Paragraph(edad, sml),
             Paragraph(repite, sml),
             Paragraph(f"{notas_medias_tri['1T']:.1f}", sml),

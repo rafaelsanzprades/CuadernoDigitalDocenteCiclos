@@ -14,7 +14,7 @@ import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 
 const TABS = [
   { id: "perfil",     label: "🧭 Perfil individual",    cleanLabel: "Perfil individual" },
-  { id: "resumen",    label: "📋 Resumen del alumnado",  cleanLabel: "Resumen del alumnado" },
+  { id: "resumen",    label: "📋 Resumen del alumnadodo",  cleanLabel: "Resumen del alumnadodo" },
   { id: "tendencias", label: "📊 Mapa de tendencias",    cleanLabel: "Mapa de tendencias" },
   { id: "panorama",   label: "🗺️ Panorama profesional", cleanLabel: "Panorama profesional" },
 ];
@@ -114,7 +114,7 @@ export default function ProfesionalPage() {
                 🧭 Orientación profesional
               </h1>
               <p className="text-muted mt-2 text-lg">
-                Ficha individual de orientación, intereses, aspiraciones e inserción laboral por alumnado.
+                Ficha individual de orientación, intereses, aspiraciones e inserción laboral por alumnadodo.
               </p>
             </div>
             <div className="flex items-center gap-4 shrink-0">

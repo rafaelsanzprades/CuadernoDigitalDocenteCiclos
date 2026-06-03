@@ -32,7 +32,7 @@ export const TareaSchema = z.object({
 });
 export type Tarea = z.infer<typeof TareaSchema>;
 
-export const AlumnoSchema = z.object({
+export const AlumnadoSchema = z.object({
   ID: z.string().optional(),
   student_id: z.string().optional(),
   Nombre: z.string().optional(),
@@ -46,7 +46,7 @@ export const AlumnoSchema = z.object({
   Email: z.string().optional().nullable(),
   Movil: z.string().optional().nullable(),
 });
-export type Alumnado = z.infer<typeof AlumnoSchema>;
+export type Alumnadodo = z.infer<typeof AlumnadoSchema>;
 
 export const ResultadoAprendizajeSchema = z.object({
   id_ra: z.string(),
@@ -120,12 +120,12 @@ export const CrmEmpresaSchema = z.object({
   notas: z.string(),
   estado: z.enum(["activo", "inactivo", "pendiente"]),
   interacciones: z.array(CrmInteraccionSchema),
-  alumnos_asignados: z.array(z.string()),
+  alumnado_asignados: z.array(z.string()),
 });
 export type CrmEmpresa = z.infer<typeof CrmEmpresaSchema>;
 
 export const CursoDataSchema = z.object({
-  df_al: z.array(AlumnoSchema).optional(),
+  df_al: z.array(AlumnadoSchema).optional(),
   df_sgmt: z.array(SeguimientoUDSchema).optional(),
   df_feoe: z.array(z.any()).optional(),
   df_eval: z.array(z.any()).optional(),

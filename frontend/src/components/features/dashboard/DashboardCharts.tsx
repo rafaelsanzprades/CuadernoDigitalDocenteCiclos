@@ -14,13 +14,13 @@ export function DashboardCharts({ cursoData }: DashboardChartsProps) {
   }));
 
   const COLORS = ['#14a085', '#3b82f6', '#8b5cf6', '#f59e0b', '#ef4444'];
-  const estadoAlumnado: Record<string, number> = {};
+  const estadoAlumnadodo: Record<string, number> = {};
   (cursoData?.df_al || []).forEach((al: any) => {
     const estado = al.Estado || "Desconocido";
-    estadoAlumnado[estado] = (estadoAlumnado[estado] || 0) + 1;
+    estadoAlumnadodo[estado] = (estadoAlumnadodo[estado] || 0) + 1;
   });
   
-  const pieData = Object.keys(estadoAlumnado).map(key => ({ name: key, value: estadoAlumnado[key] }));
+  const pieData = Object.keys(estadoAlumnadodo).map(key => ({ name: key, value: estadoAlumnadodo[key] }));
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
@@ -46,7 +46,7 @@ export function DashboardCharts({ cursoData }: DashboardChartsProps) {
 
       {/* Pie Chart */}
       <Card className="p-6 flex flex-col h-[400px]">
-        <h3 className="text-lg font-bold text-foreground mb-4">Alta y baja de alumnado</h3>
+        <h3 className="text-lg font-bold text-foreground mb-4">Alta y baja de alumnadodo</h3>
         <div className="flex-1">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>

@@ -6,7 +6,7 @@ import {
   User, ShieldAlert, Award, Stethoscope, FileText, Compass, 
   ChevronDown, ChevronUp, CheckSquare, Square, Save, HelpCircle 
 } from 'lucide-react';
-import { Alumnado } from '@/types';
+import { Alumnadodo } from '@/types';
 
 export const TutoriaTab = () => {
   const { cursoData, updateCursoData } = useAppStore();
@@ -21,7 +21,7 @@ export const TutoriaTab = () => {
   });
 
   const df_al = cursoData?.df_al || [];
-  const activeStudents = df_al.filter((al: Alumnado) => al.Estado !== 'Baja');
+  const activeStudents = df_al.filter((al: Alumnadodo) => al.Estado !== 'Baja');
   // Sort alphabetically
   activeStudents.sort((a, b) => (a.Apellidos || '').localeCompare(b.Apellidos || ''));
 
@@ -112,9 +112,9 @@ export const TutoriaTab = () => {
   if (activeStudents.length === 0) {
     return (
       <Card className="p-8 text-center border-l-4 border-l-yellow-500 mt-6">
-        <h2 className="text-xl font-bold text-yellow-400 mb-2">Falta Alumnado</h2>
+        <h2 className="text-xl font-bold text-yellow-400 mb-2">Falta Alumnadodo</h2>
         <p className="text-foreground/80">
-          Primero debes registrar alumnado en la pestaña 👥 Registro de Alumnado.
+          Primero debes registrar alumnadodo en la pestaña 👥 Registro de Alumnadodo.
         </p>
       </Card>
     );
@@ -126,7 +126,7 @@ export const TutoriaTab = () => {
       <div className="w-80 bg-foreground/5 border border-white/5 rounded-2xl flex flex-col overflow-hidden">
         <div className="p-4 border-b border-white/5 bg-foreground/10">
           <div className="text-xs font-bold text-muted uppercase tracking-wider">
-            Alumnado Activos ({activeStudents.length})
+            Alumnadodo Activos ({activeStudents.length})
           </div>
         </div>
         <div className="flex-1 overflow-y-auto p-2 space-y-1">
@@ -417,8 +417,8 @@ export const TutoriaTab = () => {
         ) : (
           <div className="flex-1 flex flex-col justify-center items-center text-center p-8 text-muted">
             <HelpCircle className="w-12 h-12 text-muted/50 mb-3" />
-            <p className="font-semibold text-lg">No hay alumnado seleccionado</p>
-            <p className="text-sm opacity-80">Por favor, selecciona un alumnado de la lista de la izquierda.</p>
+            <p className="font-semibold text-lg">No hay alumnadodo seleccionado</p>
+            <p className="text-sm opacity-80">Por favor, selecciona un alumnadodo de la lista de la izquierda.</p>
           </div>
         )}
       </div>

@@ -3,7 +3,7 @@
 import React from "react";
 import { useAppStore } from "@/store/useAppStore";
 import { Card } from "@/components/ui/Card";
-import { Alumnado } from "@/types";
+import { Alumnadodo } from "@/types";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -41,11 +41,11 @@ export const TendenciasTab = () => {
   const { cursoData } = useAppStore();
 
   const df_al = cursoData?.df_al || [];
-  const activeStudents = df_al.filter((al: Alumnado) => al.Estado !== "Baja");
+  const activeStudents = df_al.filter((al: Alumnadodo) => al.Estado !== "Baja");
   const profesionalLedger = cursoData?.profesional_ledger || {};
 
   // Only students with orientation data
-  const withData = activeStudents.filter((al: Alumnado) => {
+  const withData = activeStudents.filter((al: Alumnadodo) => {
     const d = profesionalLedger[al.ID!];
     return d && Object.keys(d).length > 0;
   });
@@ -85,7 +85,7 @@ export const TendenciasTab = () => {
     return (
       <Card className="p-12 text-center text-muted flex flex-col items-center gap-4">
         <span className="text-5xl">👥</span>
-        <p className="text-lg">No hay alumnado registrado en este curso.</p>
+        <p className="text-lg">No hay alumnadodo registrado en este curso.</p>
       </Card>
     );
   }
@@ -98,7 +98,7 @@ export const TendenciasTab = () => {
         <div>
           <h2 className="text-lg font-bold text-foreground">Cobertura de fichas de orientación</h2>
           <p className="text-sm text-muted mt-0.5">
-            {withDataCount} de {total} alumnado tienen ficha completada
+            {withDataCount} de {total} alumnadodo tienen ficha completada
           </p>
         </div>
         <div className="flex items-center gap-4">
@@ -242,13 +242,13 @@ export const TendenciasTab = () => {
           {/* Per-student summary table */}
           <Card className="border border-white/5 bg-foreground/5 overflow-hidden">
             <div className="p-5 border-b border-white/5">
-              <h3 className="text-base font-bold text-foreground">📋 Resumen por alumnado/a</h3>
+              <h3 className="text-base font-bold text-foreground">📋 Resumen por alumnadodo/a</h3>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/5 text-muted bg-foreground/5">
-                    <th className="text-left p-3 font-semibold">Alumnado/a</th>
+                    <th className="text-left p-3 font-semibold">Alumnadodo/a</th>
                     <th className="text-left p-3 font-semibold">Aptitud</th>
                     <th className="text-left p-3 font-semibold">Área interés</th>
                     <th className="text-left p-3 font-semibold">Intención al terminar</th>

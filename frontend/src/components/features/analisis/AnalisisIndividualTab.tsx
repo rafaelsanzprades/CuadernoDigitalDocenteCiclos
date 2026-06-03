@@ -16,8 +16,8 @@ export const AnalisisIndividualTab = () => {
   }, [cursoData, selectedAlId]);
 
   const df_al = cursoData?.df_al || [];
-  const activeAlumnos = df_al.filter((al: any) => al.Estado !== "Baja");
-  activeAlumnos.sort((a: any, b: any) => String(a.Apellidos || "").localeCompare(String(b.Apellidos || "")));
+  const activeAlumnado = df_al.filter((al: any) => al.Estado !== "Baja");
+  activeAlumnado.sort((a: any, b: any) => String(a.Apellidos || "").localeCompare(String(b.Apellidos || "")));
 
   const df_eval = cursoData?.df_eval || [];
   const df_act = moduleData?.df_act || [];
@@ -25,11 +25,11 @@ export const AnalisisIndividualTab = () => {
   const df_ra = moduleData?.df_ra || [];
   const df_feoe = cursoData?.df_feoe || [];
 
-  if (activeAlumnos.length === 0) {
+  if (activeAlumnado.length === 0) {
     return (
       <Card className="p-8 text-center border-l-4 border-l-yellow-500 mt-6">
         <h2 className="text-xl font-bold text-yellow-400 mb-2">Faltan Datos</h2>
-        <p className="text-foreground/80">No hay alumnado activos para analizar.</p>
+        <p className="text-foreground/80">No hay alumnadodo activos para analizar.</p>
       </Card>
     );
   }
@@ -103,7 +103,7 @@ export const AnalisisIndividualTab = () => {
     return { notas_ra, nota_final, notas_ce };
   };
 
-  const currentAl = activeAlumnos.find((al: any) => al.ID === selectedAlId) || {};
+  const currentAl = activeAlumnado.find((al: any) => al.ID === selectedAlId) || {};
   const currentEv = df_eval.find((e: any) => e.ID === selectedAlId) || {};
   
   // Real Note
@@ -137,7 +137,7 @@ export const AnalisisIndividualTab = () => {
             className="bg-transparent border-none p-0 text-foreground focus:outline-none font-bold text-lg cursor-pointer hover:text-teal-400 transition-colors pr-8"
             style={{ appearance: 'auto' }}
           >
-            {activeAlumnos.map((al: any) => (
+            {activeAlumnado.map((al: any) => (
               <option key={al.ID} value={al.ID} className="bg-[#0d1726]">
                 {al.Nombre} {al.Apellidos}
               </option>

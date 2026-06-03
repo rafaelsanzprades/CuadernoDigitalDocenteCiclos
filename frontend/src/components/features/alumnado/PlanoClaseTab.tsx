@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/Button';
 import { Select } from '@/components/ui/Select';
 import { Badge } from '@/components/ui/Badge';
 import { Trash2, Grid, Users, User, RefreshCw, HelpCircle } from 'lucide-react';
-import { Alumnado } from '@/types';
+import { Alumnadodo } from '@/types';
 
 export const PlanoClaseTab = () => {
   const { cursoData, updateCursoData } = useAppStore();
@@ -21,8 +21,8 @@ export const PlanoClaseTab = () => {
   // Filter active students and sort alphabetically
   const activeStudents = useMemo(() => {
     return df_al
-      .filter((al: Alumnado) => al.Estado !== 'Baja')
-      .sort((a: Alumnado, b: Alumnado) => {
+      .filter((al: Alumnadodo) => al.Estado !== 'Baja')
+      .sort((a: Alumnadodo, b: Alumnadodo) => {
         const nameA = `${a.Apellidos || ''}, ${a.Nombre || ''}`.toLowerCase();
         const nameB = `${b.Apellidos || ''}, ${b.Nombre || ''}`.toLowerCase();
         return nameA.localeCompare(nameB);
@@ -31,7 +31,7 @@ export const PlanoClaseTab = () => {
 
   // Create a map for quick access
   const activeStudentMap = useMemo(() => {
-    const map = new Map<string, Alumnado>();
+    const map = new Map<string, Alumnadodo>();
     activeStudents.forEach((al) => {
       if (al.ID) map.set(al.ID, al);
     });
@@ -110,7 +110,7 @@ export const PlanoClaseTab = () => {
   const handleAutoFill = () => {
     if (
       window.confirm(
-        '¿Deseas asignar automáticamente a todos los alumnado en orden alfabético? Esto sobrescribirá la distribución actual.'
+        '¿Deseas asignar automáticamente a todos los alumnadodo en orden alfabético? Esto sobrescribirá la distribución actual.'
       )
     ) {
       const newSeats: Record<string, string> = {};
@@ -183,7 +183,7 @@ export const PlanoClaseTab = () => {
         <div className="flex items-center gap-4 text-xs text-muted">
           <div className="flex items-center gap-1">
             <Users className="w-4 h-4 text-blue-400" />
-            <span>Alumnado activos: <strong>{activeStudents.length}</strong></span>
+            <span>Alumnadodo activos: <strong>{activeStudents.length}</strong></span>
           </div>
           <div className="flex items-center gap-1">
             <User className="w-4 h-4 text-green-400" />
@@ -307,7 +307,7 @@ export const PlanoClaseTab = () => {
       <Card className="border border-white/5 rounded-2xl p-6 bg-foreground/5 shadow-lg">
         <div className="flex items-center justify-between mb-4 border-b border-[var(--glass-border)] pb-3">
           <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
-            <Users className="w-5 h-5 text-accent" /> Alumnado sin asignar en el plano ({unassignedStudents.length})
+            <Users className="w-5 h-5 text-accent" /> Alumnadodo sin asignar en el plano ({unassignedStudents.length})
           </h3>
           {unassignedStudents.length > 0 && (
             <span className="text-[10px] text-muted italic">
@@ -318,7 +318,7 @@ export const PlanoClaseTab = () => {
 
         {unassignedStudents.length === 0 ? (
           <div className="text-center py-6 text-sm text-green-400 font-semibold">
-            🎉 ¡Todos los alumnado activos han sido colocados en el plano!
+            🎉 ¡Todos los alumnadodo activos han sido colocados en el plano!
           </div>
         ) : (
           <div className="flex flex-wrap gap-2">

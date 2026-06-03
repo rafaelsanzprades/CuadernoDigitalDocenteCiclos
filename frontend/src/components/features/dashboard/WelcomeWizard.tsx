@@ -104,7 +104,7 @@ export function WelcomeWizard({ onComplete, fetchModules, setActiveModuleId, set
                 <span className="text-6xl group-hover:scale-110 transition-transform">🎁</span>
                 <h3 className="text-[1.1rem] font-bold text-foreground">Cargar Demo</h3>
                 <p className="text-sm text-muted">
-                  Inyecta un entorno ficticio completo con Resultados de Aprendizaje, Unidades y Alumnado para ver cómo funciona todo al instante.
+                  Inyecta un entorno ficticio completo con Resultados de Aprendizaje, Unidades y Alumnadodo para ver cómo funciona todo al instante.
                 </p>
                 <Button className="w-full mt-auto bg-purple-600 hover:bg-purple-500">
                   Explorar Demo
@@ -118,7 +118,7 @@ export function WelcomeWizard({ onComplete, fetchModules, setActiveModuleId, set
                 <span className="text-6xl group-hover:scale-110 transition-transform">🚀</span>
                 <h3 className="text-[1.1rem] font-bold text-foreground">Empezar de Cero</h3>
                 <p className="text-sm text-muted">
-                  Crea tu propio Módulo vacío y empieza a introducir tus rúbricas y alumnado desde cero.
+                  Crea tu propio Módulo vacío y empieza a introducir tus rúbricas y alumnadodo desde cero.
                 </p>
                 <Button className="w-full mt-auto bg-accent hover:bg-accent/80 text-background">
                   Crear mi Módulo
@@ -156,7 +156,7 @@ export function WelcomeWizard({ onComplete, fetchModules, setActiveModuleId, set
                     className="text-lg py-6 pl-[180px]"
                   />
                 </div>
-                <p className="text-xs text-muted">Aquí matricularás a tus alumnado reales para este año.</p>
+                <p className="text-xs text-muted">Aquí matricularás a tus alumnadodo reales para este año.</p>
               </div>
 
               <div className="flex gap-4 pt-6">

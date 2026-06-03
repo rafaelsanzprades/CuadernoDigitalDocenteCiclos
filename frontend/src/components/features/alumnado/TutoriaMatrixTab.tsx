@@ -3,7 +3,7 @@ import { useAppStore } from '@/store/useAppStore';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Search, Download, Table, Layers, ArrowRight } from 'lucide-react';
-import { Alumnado } from '@/types';
+import { Alumnadodo } from '@/types';
 
 export const TutoriaMatrixTab = () => {
   const { cursoData, moduleData } = useAppStore();
@@ -11,7 +11,7 @@ export const TutoriaMatrixTab = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('todos');
 
   const df_al = cursoData?.df_al || [];
-  const activeStudents = df_al.filter((al: Alumnado) => al.Estado !== 'Baja');
+  const activeStudents = df_al.filter((al: Alumnadodo) => al.Estado !== 'Baja');
   // Sort alphabetically
   activeStudents.sort((a, b) => (a.Apellidos || '').localeCompare(b.Apellidos || ''));
 
@@ -212,7 +212,7 @@ export const TutoriaMatrixTab = () => {
           <table className="w-full text-left text-xs whitespace-nowrap border-collapse">
             <thead>
               <tr className="bg-foreground/10 text-muted border-b border-[var(--glass-border)] sticky top-0 z-20">
-                <th className="p-3 font-bold border-r border-[var(--glass-border)] bg-[#0d1525] sticky left-0 z-30">Alumnado</th>
+                <th className="p-3 font-bold border-r border-[var(--glass-border)] bg-[#0d1525] sticky left-0 z-30">Alumnadodo</th>
                 <th className="p-3 font-bold border-r border-[var(--glass-border)] bg-[#0d1525] sticky left-[150px] z-30">ID</th>
                 {activeColumns.map((col, idx) => (
                   <th key={idx} className="p-3 font-bold border-r border-white/5 text-center min-w-[100px]" title={col.key}>
@@ -252,7 +252,7 @@ export const TutoriaMatrixTab = () => {
               {filteredStudents.length === 0 && (
                 <tr>
                   <td colSpan={2 + activeColumns.length} className="p-8 text-center text-muted">
-                    No se encontraron alumnado que coincidan con la búsqueda.
+                    No se encontraron alumnadodo que coincidan con la búsqueda.
                   </td>
                 </tr>
               )}

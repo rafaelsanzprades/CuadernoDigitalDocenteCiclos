@@ -6,7 +6,7 @@ import Header from "@/components/layout/Header";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { useAppStore } from "@/store/useAppStore";
-import { Alumnado } from "@/types";
+import { Alumnadodo } from "@/types";
 
 export default function DescargasPage() {
   const [activeTab, setActiveTab] = useState<"inicio" | "seguimiento" | "evaluacion">("inicio");
@@ -70,8 +70,8 @@ export default function DescargasPage() {
   };
 
   const df_al = cursoData?.df_al || [];
-  const activeAlumnos = df_al.filter((al: Alumnado) => al.Estado !== "Baja");
-  activeAlumnos.sort((a: Alumnado, b: Alumnado) => String(a.Apellidos || "").localeCompare(String(b.Apellidos || "")));
+  const activeAlumnado = df_al.filter((al: Alumnadodo) => al.Estado !== "Baja");
+  activeAlumnado.sort((a: Alumnadodo, b: Alumnadodo) => String(a.Apellidos || "").localeCompare(String(b.Apellidos || "")));
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -239,19 +239,19 @@ export default function DescargasPage() {
 
                       <Card className="p-6 border-t-4 border-t-blue-500">
                         <h2 className="text-2xl font-bold mb-6">👤 Boletines individuales</h2>
-                        {activeAlumnos.length > 0 ? (
+                        {activeAlumnado.length > 0 ? (
                           <div className="flex flex-col md:flex-row md:items-end gap-6 bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6">
                             <div className="flex-1">
-                              <h3 className="text-lg font-bold mb-2">📄 Boletín de alumnado</h3>
-                              <p className="text-sm text-muted mb-4">Genera un boletín detallado de un alumnado específico.</p>
-                              <select id="alumno_select" className="w-full bg-foreground/25 border border-[var(--glass-border)] rounded-lg p-3 text-[var(--foreground)] focus:border-blue-500 focus:outline-none font-bold">
-                                {activeAlumnos.map((al: Alumnado) => (
+                              <h3 className="text-lg font-bold mb-2">📄 Boletín de alumnadodo</h3>
+                              <p className="text-sm text-muted mb-4">Genera un boletín detallado de un alumnadodo específico.</p>
+                              <select id="alumnado_select" className="w-full bg-foreground/25 border border-[var(--glass-border)] rounded-lg p-3 text-[var(--foreground)] focus:border-blue-500 focus:outline-none font-bold">
+                                {activeAlumnado.map((al: Alumnadodo) => (
                                   <option key={al.ID} value={al.ID}>{al.Apellidos}, {al.Nombre} ({al.ID})</option>
                                 ))}
                               </select>
                             </div>
                             <Button variant="secondary" onClick={() => {
-                                const sel = document.getElementById('alumno_select') as HTMLSelectElement;
+                                const sel = document.getElementById('alumnado_select') as HTMLSelectElement;
                                 if (sel && sel.value) handleDownloadPdf('individual', sel.value);
                               }}
                               disabled={downloadingStr === 'individual'} className="px-8 py-3 h-[50px] w-full md:w-auto"

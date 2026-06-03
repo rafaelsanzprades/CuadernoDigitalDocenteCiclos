@@ -13,8 +13,8 @@ export const AttendanceGrid = () => {
   const [attendanceData, setAttendanceData] = useState<Record<string, AttendanceStatus>>({});
   const [loading, setLoading] = useState(false);
 
-  const alumnado = cursoData?.df_al || [];
-  const menores = alumnado.filter(a => parseInt(a.Edad || '18') < 18).length;
+  const alumnadodo = cursoData?.df_al || [];
+  const menores = alumnadodo.filter(a => parseInt(a.Edad || '18') < 18).length;
 
   const dateStr = format(currentDate, 'yyyy-MM-dd');
 
@@ -102,7 +102,7 @@ export const AttendanceGrid = () => {
           </h2>
           {menores > 0 && (
             <span className="text-pink-400 font-semibold text-sm flex items-center gap-1 bg-pink-400/10 px-3 py-1 rounded-full border border-pink-400/20">
-              🌸 {menores} alumnado(s) menor(es) de 18 años
+              🌸 {menores} alumnadodo(s) menor(es) de 18 años
             </span>
           )}
         </div>
@@ -118,21 +118,21 @@ export const AttendanceGrid = () => {
               <tr className="bg-foreground/5 text-muted border-b border-[var(--glass-border)]">
                 <th className="p-4 font-semibold w-16 text-center">Nº</th>
                 <th className="p-4 font-semibold w-12 text-center" title="Menor de edad">🌸</th>
-                <th className="p-4 font-semibold">Alumnado</th>
+                <th className="p-4 font-semibold">Alumnadodo</th>
                 <th className="p-4 font-semibold text-center w-48">Estado</th>
               </tr>
             </thead>
             <tbody className={loading ? 'opacity-50' : ''}>
-              {alumnado.map((alumnado, index) => {
-                const status = attendanceData[alumnado.student_id || alumnado.ID || String(index)] || null;
-                const studentId = alumnado.student_id || alumnado.ID || String(index);
+              {alumnadodo.map((alumnadodo, index) => {
+                const status = attendanceData[alumnadodo.student_id || alumnadodo.ID || String(index)] || null;
+                const studentId = alumnadodo.student_id || alumnadodo.ID || String(index);
                 
                 return (
                   <tr key={studentId} className="border-b border-[var(--glass-border)]/50 hover:bg-foreground/5 transition-colors">
                     <td className="p-4 text-center text-muted font-mono">{index + 1}</td>
-                    <td className="p-4 text-center text-sm">{parseInt(alumnado.Edad || '18') < 18 ? '🌸' : ''}</td>
+                    <td className="p-4 text-center text-sm">{parseInt(alumnadodo.Edad || '18') < 18 ? '🌸' : ''}</td>
                     <td className="p-4 font-medium">
-                      {alumnado.Apellidos}, {alumnado.Nombre}
+                      {alumnadodo.Apellidos}, {alumnadodo.Nombre}
                     </td>
                     <td className="p-4 text-center">
                       <button 
@@ -146,10 +146,10 @@ export const AttendanceGrid = () => {
                   </tr>
                 );
               })}
-              {alumnado.length === 0 && (
+              {alumnadodo.length === 0 && (
                 <tr>
                   <td colSpan={3} className="p-8 text-center text-muted">
-                    No hay alumnado matriculados en este curso.
+                    No hay alumnadodo matriculados en este curso.
                   </td>
                 </tr>
               )}

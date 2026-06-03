@@ -41,7 +41,7 @@ export function PlanesTab() {
             <thead>
               <tr className="border-b border-[var(--glass-border)] text-muted">
                 <th className="p-2 w-16">ID</th>
-                <th className="p-2 w-48">Alumnado / Aula</th>
+                <th className="p-2 w-48">Alumnadodo / Aula</th>
                 <th className="p-2 w-48">Barrera detectada</th>
                 <th className="p-2 min-w-[200px]">Medida metodológica</th>
                 <th className="p-2 w-48">Medida de acceso</th>
@@ -54,7 +54,7 @@ export function PlanesTab() {
                 <tr key={idx} className="border-b border-white/5 hover:bg-foreground/5">
                   <td className="p-2 font-mono text-xs">{row.ID}</td>
                   <td className="p-2 pr-2">
-                    <input type="text" value={row.Alumnado_Aula || ""} onChange={e => updateRow(df_dua, "df_dua", idx, "Alumnado_Aula", e.target.value)} className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 focus:border-emerald-500 focus:outline-none" />
+                    <input type="text" value={row.Alumnadodo_Aula || ""} onChange={e => updateRow(df_dua, "df_dua", idx, "Alumnadodo_Aula", e.target.value)} className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 focus:border-emerald-500 focus:outline-none" />
                   </td>
                   <td className="p-2 pr-2">
                     <input type="text" value={row.Barrera || ""} onChange={e => updateRow(df_dua, "df_dua", idx, "Barrera", e.target.value)} className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 focus:border-emerald-500 focus:outline-none" />
@@ -76,7 +76,7 @@ export function PlanesTab() {
             </tbody>
           </table>
         </div>
-        <button onClick={() => addRow(df_dua, "df_dua", "DUA", { Alumnado_Aula: "", Barrera: "", Medida_Metodologica: "", Medida_Acceso: "", Medida_Evaluacion: "" })} className="text-sm text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1">
+        <button onClick={() => addRow(df_dua, "df_dua", "DUA", { Alumnadodo_Aula: "", Barrera: "", Medida_Metodologica: "", Medida_Acceso: "", Medida_Evaluacion: "" })} className="text-sm text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1">
           <span>+</span> Añadir Medida de Diversidad
         </button>
       </section>
@@ -105,7 +105,7 @@ export function PlanesTab() {
                   <td className="p-2 pr-2">
                     <select value={row.Escenario || "Otros"} onChange={e => updateRow(df_contingencia, "df_contingencia", idx, "Escenario", e.target.value)} className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 focus:border-orange-500 focus:outline-none">
                       <option value="Ausencia de Profesorado">Ausencia de profesorado</option>
-                      <option value="Ausencia de Alumnado">Ausencia de alumnado</option>
+                      <option value="Ausencia de Alumnadodo">Ausencia de alumnadodo</option>
                       <option value="Interrupción Generalizada">Interrupción generalizada</option>
                       <option value="Otros">Otros</option>
                     </select>

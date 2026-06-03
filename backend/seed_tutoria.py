@@ -6,7 +6,7 @@ import os
 from datetime import datetime
 
 db_path = "c:/GD-rsp/APP/backend/cdd_pro.db"
-excel_path = "c:/GD-rsp/APP/RF Tutoría-Orientación/Orientación-ModeloSinAlumnado.xlsx"
+excel_path = "c:/GD-rsp/APP/RF Tutoría-Orientación/Orientación-ModeloSinAlumnadodo.xlsx"
 
 if not os.path.exists(db_path):
     print(f"Error: Database not found at {db_path}")
@@ -22,7 +22,7 @@ xl = pd.ExcelFile(excel_path)
 df = xl.parse('2025-26')
 
 # Exclude columns we don't want to seed in tutoring ledger
-exclude_cols = {'ALUMNADO', 'CURSO', 'GRUPO', 'FECHA DE NACIMIENTO'}
+exclude_cols = {'ALUMNADODO', 'CURSO', 'GRUPO', 'FECHA DE NACIMIENTO'}
 seed_cols = [col for col in df.columns if col not in exclude_cols]
 
 # Clean up rows that are completely empty

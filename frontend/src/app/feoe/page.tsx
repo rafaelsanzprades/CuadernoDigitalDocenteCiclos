@@ -16,7 +16,7 @@ import type { CrmEmpresa, CrmInteraccion, CursoData } from "@/types";
 const TIPO_INTERACCION: Record<string, string> = { llamada: "📞 Llamada", email: "📧 Email", visita: "🏢 Visita", otro: "📌 Otro" };
 
 function emptyEmpresa(): CrmEmpresa {
-  return { id: "", nombre: "", contacto_nombre: "", contacto_cargo: "", telefono: "", email: "", direccion: "", ciudad: "Zaragoza", codigo_postal: "50001", provincia: "Zaragoza", sector: "", notas: "", estado: "pendiente", interacciones: [], alumnos_asignados: [] };
+  return { id: "", nombre: "", contacto_nombre: "", contacto_cargo: "", telefono: "", email: "", direccion: "", ciudad: "Zaragoza", codigo_postal: "50001", provincia: "Zaragoza", sector: "", notas: "", estado: "pendiente", interacciones: [], alumnado_asignados: [] };
 }
 
 function formatDate(d: Date): string {
@@ -71,7 +71,7 @@ export default function FeoePage() {
 
   const TABS = [
     { id: "empresas", label: "🏢 Empresas FEOE", cleanLabel: "Empresas FEOE" },
-    { id: "alumnado", label: "👥 Asignación Alumnado", cleanLabel: "Asignación Alumnado" },
+    { id: "alumnadodo", label: "👥 Asignación Alumnadodo", cleanLabel: "Asignación Alumnadodo" },
     { id: "seguimiento", label: "📋 Seguimiento Dual/FCT", cleanLabel: "Seguimiento Dual/FCT" },
   ];
 
@@ -79,7 +79,7 @@ export default function FeoePage() {
 
   const [search, setSearch] = useState("");
   const [filterSector, setFilterSector] = useState("");
-  const [filterAlumno, setFilterAlumno] = useState("");
+  const [filterAlumnado, setFilterAlumnado] = useState("");
   const [expandId, setExpandId] = useState<string | null>(null);
 
   const [showForm, setShowForm] = useState(false);
@@ -93,7 +93,7 @@ export default function FeoePage() {
   const [asignEmpresa, setAsignEmpresa] = useState<string | null>(null);
 
   const empresas = (cursoData?.crm_empresas || []) as CrmEmpresa[];
-  const alumnado = (cursoData?.df_al || []).filter((a: any) => a.Estado !== "Baja");
+  const alumnadodo = (cursoData?.df_al || []).filter((a: any) => a.Estado !== "Baja");
 
   const nextId = () => {
     const nums = empresas.map((e: CrmEmpresa) => parseInt(e.id.replace("EMP", ""), 10) || 0);
@@ -112,10 +112,10 @@ export default function FeoePage() {
     return empresas.filter((e: CrmEmpresa) => {
       if (search && !e.nombre.toLowerCase().includes(search.toLowerCase()) && !e.contacto_nombre.toLowerCase().includes(search.toLowerCase()) && !e.ciudad.toLowerCase().includes(search.toLowerCase())) return false;
       if (filterSector && e.sector !== filterSector) return false;
-      if (filterAlumno && !e.alumnos_asignados.includes(filterAlumno)) return false;
+      if (filterAlumnado && !e.alumnado_asignados.includes(filterAlumnado)) return false;
       return true;
     });
-  }, [empresas, search, filterSector, filterAlumno]);
+  }, [empresas, search, filterSector, filterAlumnado]);
 
   const sectores = useMemo(() => Array.from(new Set(empresas.map((e: CrmEmpresa) => e.sector))).sort(), [empresas]);
 
@@ -165,8 +165,8 @@ export default function FeoePage() {
   function toggleStudent(empId: string, studentId: string) {
     setEmpresas(empresas.map((e: CrmEmpresa) => {
       if (e.id !== empId) return e;
-      const has = e.alumnos_asignados.includes(studentId);
-      return { ...e, alumnos_asignados: has ? e.alumnos_asignados.filter((s: string) => s !== studentId) : [...e.alumnos_asignados, studentId] };
+      const has = e.alumnado_asignados.includes(studentId);
+      return { ...e, alumnado_asignados: has ? e.alumnado_asignados.filter((s: string) => s !== studentId) : [...e.alumnado_asignados, studentId] };
     }));
   }
 
@@ -188,7 +188,7 @@ export default function FeoePage() {
           <MotionWrapper className="space-y-8 pb-12">
             <div>
               <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">🏢 Prácticas FEOE</h1>
-              <p className="text-muted mt-2 text-lg">Gestión de empresas colaboradoras, asignación de alumnado y seguimiento de prácticas duales y FCT.</p>
+              <p className="text-muted mt-2 text-lg">Gestión de empresas colaboradoras, asignación de alumnadodo y seguimiento de prácticas duales y FCT.</p>
             </div>
 
             <div className="flex border-b border-[var(--glass-border)] overflow-x-auto scrollbar-hide">
@@ -241,12 +241,12 @@ export default function FeoePage() {
                     <option value="">Todos</option>
                     {sectores.map(s => <option key={s} value={s}>{s}</option>)}
                   </Select>
-                  <Select label="Alumnado" value={filterAlumno} onChange={e => setFilterAlumno(e.target.value)}>
+                  <Select label="Alumnadodo" value={filterAlumnado} onChange={e => setFilterAlumnado(e.target.value)}>
                     <option value="">Todos</option>
-                    {alumnado.map((a: any) => <option key={a.ID} value={a.ID}>{a.Apellidos}, {a.Nombre}</option>)}
+                    {alumnadodo.map((a: any) => <option key={a.ID} value={a.ID}>{a.Apellidos}, {a.Nombre}</option>)}
                   </Select>
                   <div className="mb-1">
-                    <Button variant="ghost" onClick={() => { setSearch(""); setFilterSector(""); setFilterAlumno(""); }} className="text-xs">Limpiar</Button>
+                    <Button variant="ghost" onClick={() => { setSearch(""); setFilterSector(""); setFilterAlumnado(""); }} className="text-xs">Limpiar</Button>
                   </div>
                 </div>
 
@@ -266,17 +266,17 @@ export default function FeoePage() {
                             </div>
                             <p className="text-sm text-muted">{emp.contacto_nombre} · {emp.telefono} · {emp.email}</p>
                             <p className="text-xs text-muted/70 mt-0.5">{emp.sector} · {emp.ciudad}</p>
-                            {emp.alumnos_asignados.length > 0 && (
+                            {emp.alumnado_asignados.length > 0 && (
                               <div className="flex flex-wrap gap-1 mt-2">
-                                {emp.alumnos_asignados.map((sid: string) => {
-                                  const al = alumnado.find((a: any) => a.ID === sid);
+                                {emp.alumnado_asignados.map((sid: string) => {
+                                  const al = alumnadodo.find((a: any) => a.ID === sid);
                                   return <span key={sid} className="text-[10px] bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2 py-0.5 rounded-full">{al ? `${al.Apellidos}, ${al.Nombre}` : sid}</span>;
                                 })}
                               </div>
                             )}
                           </div>
                           <div className="flex items-center gap-2 shrink-0">
-                            <span className="text-xs text-muted">{emp.interacciones.length} int. · {emp.alumnos_asignados.length} al.</span>
+                            <span className="text-xs text-muted">{emp.interacciones.length} int. · {emp.alumnado_asignados.length} al.</span>
                             <span className="text-muted">{isOpen ? "▲" : "▼"}</span>
                           </div>
                         </div>
@@ -294,17 +294,17 @@ export default function FeoePage() {
                             {/* Student assignment inline */}
                             <div>
                               <div className="flex items-center justify-between mb-2">
-                                <h4 className="text-xs font-bold text-muted uppercase">Alumnado asignados</h4>
+                                <h4 className="text-xs font-bold text-muted uppercase">Alumnadodo asignados</h4>
                                 <Button variant="ghost" className="text-xs" onClick={() => setAsignEmpresa(asignEmpresa === emp.id ? null : emp.id)}>
                                   {asignEmpresa === emp.id ? "Cerrar" : "👤 Asignar / desasignar"}
                                 </Button>
                               </div>
                               {asignEmpresa === emp.id && (
                                 <div className="bg-foreground/5 rounded-xl p-4 border border-[var(--glass-border)] mb-3 space-y-2 max-h-48 overflow-y-auto">
-                                  {alumnado.length === 0 && <p className="text-muted text-sm italic">No hay alumnado activos.</p>}
-                                  {alumnado.map((al: any) => {
-                                    const selected = emp.alumnos_asignados.includes(al.ID);
-                                    const assignedTo = empresas.filter((e: CrmEmpresa) => e.id !== emp.id && e.alumnos_asignados.includes(al.ID));
+                                  {alumnadodo.length === 0 && <p className="text-muted text-sm italic">No hay alumnadodo activos.</p>}
+                                  {alumnadodo.map((al: any) => {
+                                    const selected = emp.alumnado_asignados.includes(al.ID);
+                                    const assignedTo = empresas.filter((e: CrmEmpresa) => e.id !== emp.id && e.alumnado_asignados.includes(al.ID));
                                     return (
                                       <div key={al.ID} className={`flex items-center justify-between p-2 rounded-lg border cursor-pointer transition-colors ${selected ? "bg-blue-500/20 border-blue-500/40" : "bg-transparent border-[var(--glass-border)] hover:bg-foreground/10"}`} onClick={() => toggleStudent(emp.id, al.ID)}>
                                         <span className="text-sm text-foreground">{al.Apellidos}, {al.Nombre}{assignedTo.length > 0 ? <span className="text-[10px] text-yellow-400 ml-2">(también en {assignedTo.map((e: CrmEmpresa) => e.nombre).join(", ")})</span> : ""}</span>
@@ -314,10 +314,10 @@ export default function FeoePage() {
                                   })}
                                 </div>
                               )}
-                              {emp.alumnos_asignados.length > 0 && (
+                              {emp.alumnado_asignados.length > 0 && (
                                 <div className="flex flex-wrap gap-2">
-                                  {emp.alumnos_asignados.map((sid: string) => {
-                                    const al = alumnado.find((a: any) => a.ID === sid);
+                                  {emp.alumnado_asignados.map((sid: string) => {
+                                    const al = alumnadodo.find((a: any) => a.ID === sid);
                                     return (
                                       <span key={sid} className="flex items-center gap-1 text-xs bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2 py-1 rounded-full">
                                         {al ? `${al.Apellidos}, ${al.Nombre}` : sid}
@@ -399,27 +399,27 @@ export default function FeoePage() {
               </div>
             )}
 
-            {/* Tab 2: Asignación Alumnado */}
-            {activeTab === "alumnado" && (
+            {/* Tab 2: Asignación Alumnadodo */}
+            {activeTab === "alumnadodo" && (
               <div className="space-y-6">
-                <h2 className="text-2xl font-bold text-foreground">Asignación de alumnado a empresas</h2>
+                <h2 className="text-2xl font-bold text-foreground">Asignación de alumnadodo a empresas</h2>
                 {empresas.length === 0 ? (
                   <Card className="p-12 text-center text-muted border border-[var(--glass-border)] rounded-xl bg-foreground/5">
                     <p>No hay empresas registradas. Añade empresas en la pestaña "Empresas FEOE".</p>
                   </Card>
                 ) : (
                   <div className="space-y-4">
-                    {empresas.filter((e: CrmEmpresa) => e.alumnos_asignados.length > 0).length === 0 && (
+                    {empresas.filter((e: CrmEmpresa) => e.alumnado_asignados.length > 0).length === 0 && (
                       <Card className="p-8 text-center text-muted border border-[var(--glass-border)] rounded-xl bg-foreground/5">
-                        <p>Aún no hay alumnado asignados a ninguna empresa. Usa el panel de cada empresa para asignarlos.</p>
+                        <p>Aún no hay alumnadodo asignados a ninguna empresa. Usa el panel de cada empresa para asignarlos.</p>
                       </Card>
                     )}
-                    {empresas.filter((e: CrmEmpresa) => e.alumnos_asignados.length > 0).map((emp: CrmEmpresa) => (
+                    {empresas.filter((e: CrmEmpresa) => e.alumnado_asignados.length > 0).map((emp: CrmEmpresa) => (
                       <Card key={emp.id} className="p-5 border border-[var(--glass-border)]">
                         <h3 className="text-lg font-bold text-foreground mb-3">{emp.nombre}</h3>
                         <div className="flex flex-wrap gap-2">
-                          {emp.alumnos_asignados.map((sid: string) => {
-                            const al = alumnado.find((a: any) => a.ID === sid);
+                          {emp.alumnado_asignados.map((sid: string) => {
+                            const al = alumnadodo.find((a: any) => a.ID === sid);
                             return (
                               <span key={sid} className="text-sm bg-blue-500/20 text-blue-300 border border-blue-500/30 px-3 py-1 rounded-full">
                                 {al ? `${al.Apellidos}, ${al.Nombre}` : sid}
@@ -429,13 +429,13 @@ export default function FeoePage() {
                         </div>
                       </Card>
                     ))}
-                    {alumnado.length > 0 && (
+                    {alumnadodo.length > 0 && (
                       <Card className="p-5 border border-[var(--glass-border)]">
-                        <h3 className="text-lg font-bold text-foreground mb-3">Alumnado sin asignar</h3>
+                        <h3 className="text-lg font-bold text-foreground mb-3">Alumnadodo sin asignar</h3>
                         <div className="flex flex-wrap gap-2">
                           {(() => {
-                            const asignados = new Set(empresas.flatMap((e: CrmEmpresa) => e.alumnos_asignados));
-                            return alumnado.filter((a: any) => !asignados.has(a.ID)).map((al: any) => (
+                            const asignados = new Set(empresas.flatMap((e: CrmEmpresa) => e.alumnado_asignados));
+                            return alumnadodo.filter((a: any) => !asignados.has(a.ID)).map((al: any) => (
                               <span key={al.ID} className="text-sm bg-yellow-500/10 text-yellow-300 border border-yellow-500/30 px-3 py-1 rounded-full">
                                 {al.Apellidos}, {al.Nombre}
                               </span>
@@ -454,7 +454,7 @@ export default function FeoePage() {
               <Card className="p-12 text-center text-muted border border-[var(--glass-border)] rounded-xl bg-foreground/5">
                 <h2 className="text-2xl font-bold mb-4 text-foreground">Seguimiento FCT / Dual</h2>
                 <p className="max-w-xl mx-auto">
-                  Esta sección estará disponible próximamente para registrar las horas realizadas por los alumnado, las visitas de seguimiento y la valoración final de las prácticas.
+                  Esta sección estará disponible próximamente para registrar las horas realizadas por los alumnadodo, las visitas de seguimiento y la valoración final de las prácticas.
                 </p>
               </Card>
             )}

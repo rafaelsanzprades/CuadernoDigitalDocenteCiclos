@@ -46,7 +46,7 @@ export function AsistenciaTab() {
           title="Ningún curso activo"
           description={
             <>
-              Para pasar lista necesitas tener un Curso activo con alumnado matriculados.
+              Para pasar lista necesitas tener un Curso activo con alumnadodo matriculados.
             </>
           }
           action={

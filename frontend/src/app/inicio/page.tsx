@@ -23,7 +23,7 @@ export default function InicioPage() {
                 Bienvenido al Cuaderno Ciclos FP
               </h1>
               <p className="text-xl text-muted max-w-3xl mx-auto">
-                Accede rápidamente a todas las herramientas para la gestión de tus módulos, alumnado y evaluación.
+                Accede rápidamente a todas las herramientas para la gestión de tus módulos, alumnadodo y evaluación.
               </p>
             </div>
 

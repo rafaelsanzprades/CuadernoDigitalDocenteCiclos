@@ -165,7 +165,7 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
               }
               badgeText = friendlyName;
               badgeColor = "text-[#14a085] bg-[#14a085]/10 border-[#14a085]/30";
-            } else if (group.title === "Curso y alumnado" || group.title === "Curso") {
+            } else if (group.title === "Curso y alumnadodo" || group.title === "Curso") {
               let friendlyName = "—";
               if (activeCursoId) {
                 const parts = activeCursoId.split('-');
