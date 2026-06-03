@@ -10,13 +10,22 @@ type ModuleSlice = Pick<AppState,
   | 'saveModuleData' | 'saveCursoData'
 >;
 
-async function saveToApi(id: string, data: ModuleData | CursoData): Promise<boolean> {
+async function saveToApi(id: string, data: ModuleData | CursoData): Promise<boolean | "conflict"> {
   try {
+    // Increment version before sending
+    const currentVersion = data.__version__ || 0;
+    const payload = { ...data, __version__: currentVersion };
+    
     const res = await fetch(`/api/module/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     });
+    
+    if (res.status === 409) {
+      return "conflict";
+    }
+    
     const result = await res.json();
     return result.status === "success";
   } catch {
@@ -71,12 +80,20 @@ export const createModuleSlice: StateCreator<AppState, [], [], ModuleSlice> = (s
   saveModuleData: async () => {
     const { activeModuleId, moduleData } = get();
     if (!activeModuleId || !moduleData) return false;
-    return saveToApi(activeModuleId, moduleData);
+    const ok = await saveToApi(activeModuleId, moduleData);
+    if (ok === true) {
+      set({ moduleData: { ...moduleData, __version__: (moduleData.__version__ || 0) + 1 } });
+    }
+    return ok;
   },
 
   saveCursoData: async () => {
     const { activeCursoId, cursoData } = get();
     if (!activeCursoId || !cursoData) return false;
-    return saveToApi(activeCursoId, cursoData);
+    const ok = await saveToApi(activeCursoId, cursoData);
+    if (ok === true) {
+      set({ cursoData: { ...cursoData, __version__: (cursoData.__version__ || 0) + 1 } });
+    }
+    return ok;
   },
 });

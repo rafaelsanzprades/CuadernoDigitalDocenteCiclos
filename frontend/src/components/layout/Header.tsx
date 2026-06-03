@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useAppStore } from "@/store/useAppStore";
+import { useAppStore, useTemporalStore } from "@/store/useAppStore";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import toast from "react-hot-toast";
-import { Sun, Moon, ChevronRight } from "lucide-react";
+import { Sun, Moon, ChevronRight, Undo2, Redo2 } from "lucide-react";
 import { navGroups } from "@/config/navigation";
 import { initialGroups } from "@/store/initialData";
 import { showRichToast } from "@/utils/toast";
@@ -25,6 +25,24 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const cursoSaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const initialLoadRef = useRef<boolean>(true);
+
+  const { undo, redo, pastStates, futureStates } = useTemporalStore((state) => state);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
+        if (e.shiftKey) {
+          if (futureStates.length > 0) redo();
+        } else {
+          if (pastStates.length > 0) undo();
+        }
+      } else if ((e.ctrlKey || e.metaKey) && e.key === 'y') {
+        if (futureStates.length > 0) redo();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [undo, redo, pastStates.length, futureStates.length]);
 
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -114,15 +132,20 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
 
   const handleSave = async () => {
     setIsSaving(true);
-    let ok = false;
+    let ok: boolean | "conflict" = false;
+    let cursoOk: boolean | "conflict" = false;
+    
     if (moduleData && activeModuleId) {
       ok = await saveModuleData();
     }
     if (cursoData && activeCursoId) {
-      const cursoOk = await saveCursoData();
-      ok = ok || cursoOk;
+      cursoOk = await saveCursoData();
+      ok = (ok === true || cursoOk === true) ? true : (ok === "conflict" || cursoOk === "conflict" ? "conflict" : false);
     }
-    if (ok) {
+    
+    if (ok === "conflict") {
+      showRichToast.error("Conflicto de versiones", "Los datos están obsoletos. Por favor, recarga la página.");
+    } else if (ok === true) {
       showRichToast.success(`Guardado con éxito`, `Datos actualizados.`);
     } else {
       showRichToast.error("Error al guardar", "Revisa la conexión o los datos.");
@@ -227,8 +250,27 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
           })}
         </div>
 
-        {/* Botón Guardar + Login/Logout + Tema (Derecha) */}
+        {/* Botón Guardar + Undo/Redo + Tema (Derecha) */}
         <div className="flex-1 flex justify-end items-center gap-3">
+          <div className="flex items-center gap-1 mr-2 bg-foreground/5 p-1 rounded-lg">
+            <button
+              onClick={() => undo()}
+              disabled={pastStates.length === 0}
+              className={`p-2 rounded-md transition-colors ${pastStates.length > 0 ? 'text-foreground hover:bg-foreground/10 cursor-pointer' : 'text-muted opacity-50 cursor-not-allowed'}`}
+              title="Deshacer (Ctrl+Z)"
+            >
+              <Undo2 size={16} />
+            </button>
+            <button
+              onClick={() => redo()}
+              disabled={futureStates.length === 0}
+              className={`p-2 rounded-md transition-colors ${futureStates.length > 0 ? 'text-foreground hover:bg-foreground/10 cursor-pointer' : 'text-muted opacity-50 cursor-not-allowed'}`}
+              title="Rehacer (Ctrl+Y)"
+            >
+              <Redo2 size={16} />
+            </button>
+          </div>
+
           <div className="mr-1">
             <Link href="/entorno" className="inline-block transition-transform hover:scale-105">
               {sourceType === 'demo' ? (

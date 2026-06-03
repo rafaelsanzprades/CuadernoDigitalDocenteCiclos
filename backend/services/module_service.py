@@ -205,11 +205,22 @@ def update_module_data(module_id: str, body: dict, db: Session):
     pd_id = module_id
     if doc and getattr(doc, "doc_type", "pd") == "curso" and getattr(doc, "parent_id", None):
         pd_id = doc.parent_id
+        
+    # Optimistic Locking Check
+    incoming_version = body.pop("__version__", None)
     
     # 2. Update JSON Blob (always save base to active module)
     if doc:
+        current_data = doc.data if isinstance(doc.data, dict) else {}
+        current_version = current_data.get("__version__", 0)
+        
+        if incoming_version is not None and incoming_version < current_version:
+            raise HTTPException(status_code=409, detail=f"Conflict: Data is stale. Server version is {current_version}, but client sent {incoming_version}.")
+            
+        body["__version__"] = current_version + 1
         doc.data = body
     else:
+        body["__version__"] = 1
         is_curso = "-curso-" in module_id
         new_doc_type = "curso" if is_curso else "pd"
         new_parent_id = None

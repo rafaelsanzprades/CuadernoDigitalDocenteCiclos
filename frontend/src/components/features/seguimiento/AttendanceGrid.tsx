@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useAppStore } from '@/store/useAppStore';
 import { MotionWrapper } from '@/components/ui/MotionWrapper';
 import { format, subDays, addDays } from 'date-fns';
 import { es } from 'date-fns/locale';
 import toast from 'react-hot-toast';
+import { useVirtualizer } from '@tanstack/react-virtual';
 
 type AttendanceStatus = 'presente' | 'falta' | 'retraso' | null;
 
@@ -12,6 +13,7 @@ export const AttendanceGrid = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [attendanceData, setAttendanceData] = useState<Record<string, AttendanceStatus>>({});
   const [loading, setLoading] = useState(false);
+  const parentRef = useRef<HTMLDivElement>(null);
 
   const alumnadodo = cursoData?.df_al || [];
   const menores = alumnadodo.filter(a => parseInt(a.Edad || '18') < 18).length;
@@ -55,16 +57,17 @@ export const AttendanceGrid = () => {
     setAttendanceData(prev => ({ ...prev, [studentId]: nextStatus }));
 
     try {
-      await fetch('/api/attendance/', {
+      const res = await fetch('/api/attendance/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           module_document_id: activeModuleId,
           student_id: studentId,
           date_str: dateStr,
-          status: nextStatus || '' // Handle null removal on backend if needed, or just send empty string
+          status: nextStatus || '' 
         })
       });
+      if (!res.ok) throw new Error("Failed to save");
     } catch (err) {
       toast.error("Error guardando asistencia");
       // Rollback
@@ -90,6 +93,13 @@ export const AttendanceGrid = () => {
     }
   };
 
+  const rowVirtualizer = useVirtualizer({
+    count: alumnadodo.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 73,
+    overscan: 5,
+  });
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between glass-panel p-4">
@@ -112,9 +122,13 @@ export const AttendanceGrid = () => {
       </div>
 
       <MotionWrapper className="glass-panel overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
+        <div 
+          ref={parentRef}
+          className="overflow-x-auto overflow-y-auto"
+          style={{ maxHeight: '600px' }}
+        >
+          <table className="w-full text-left border-collapse relative">
+            <thead className="sticky top-0 z-10 bg-[#0d1726]">
               <tr className="bg-foreground/5 text-muted border-b border-[var(--glass-border)]">
                 <th className="p-4 font-semibold w-16 text-center">Nº</th>
                 <th className="p-4 font-semibold w-12 text-center" title="Menor de edad">🌸</th>
@@ -122,22 +136,49 @@ export const AttendanceGrid = () => {
                 <th className="p-4 font-semibold text-center w-48">Estado</th>
               </tr>
             </thead>
-            <tbody className={loading ? 'opacity-50' : ''}>
-              {alumnadodo.map((alumnadodo, index) => {
-                const status = attendanceData[alumnadodo.student_id || alumnadodo.ID || String(index)] || null;
-                const studentId = alumnadodo.student_id || alumnadodo.ID || String(index);
+            <tbody 
+              className={loading ? 'opacity-50' : ''}
+              style={{
+                height: `${rowVirtualizer.getTotalSize()}px`,
+                position: 'relative',
+              }}
+            >
+              {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+                const index = virtualRow.index;
+                const al = alumnadodo[index];
+                const studentId = al.student_id || al.ID || String(index);
+                const status = attendanceData[studentId] || null;
                 
                 return (
-                  <tr key={studentId} className="border-b border-[var(--glass-border)]/50 hover:bg-foreground/5 transition-colors">
-                    <td className="p-4 text-center text-muted font-mono">{index + 1}</td>
-                    <td className="p-4 text-center text-sm">{parseInt(alumnadodo.Edad || '18') < 18 ? '🌸' : ''}</td>
-                    <td className="p-4 font-medium">
-                      {alumnadodo.Apellidos}, {alumnadodo.Nombre}
+                  <tr 
+                    key={virtualRow.key} 
+                    data-index={index}
+                    ref={rowVirtualizer.measureElement}
+                    className="border-b border-[var(--glass-border)]/50 hover:bg-foreground/5 transition-colors absolute top-0 left-0 w-full flex"
+                    style={{
+                      transform: `translateY(${virtualRow.start}px)`,
+                    }}
+                  >
+                    <td className="p-4 text-center text-muted font-mono w-16 flex items-center justify-center shrink-0">{index + 1}</td>
+                    <td className="p-4 text-center text-sm w-12 flex items-center justify-center shrink-0">{parseInt(al.Edad || '18') < 18 ? '🌸' : ''}</td>
+                    <td className="p-4 font-medium flex-1 flex items-center">
+                      {al.Apellidos}, {al.Nombre}
                     </td>
-                    <td className="p-4 text-center">
+                    <td className="p-4 text-center w-48 flex items-center justify-center shrink-0">
                       <button 
+                        id={`attendance-btn-${index}`}
+                        data-row-index={index}
                         onClick={() => toggleAttendance(studentId, status)}
-                        className={`w-full py-2 px-4 rounded-md border font-bold flex items-center justify-center gap-2 transition-all ${getStatusColor(status)}`}
+                        onKeyDown={(e) => {
+                          if (e.key === 'ArrowDown') {
+                            e.preventDefault();
+                            document.getElementById(`attendance-btn-${index + 1}`)?.focus();
+                          } else if (e.key === 'ArrowUp') {
+                            e.preventDefault();
+                            document.getElementById(`attendance-btn-${index - 1}`)?.focus();
+                          }
+                        }}
+                        className={`w-full py-2 px-4 rounded-md border font-bold flex items-center justify-center gap-2 transition-all ${getStatusColor(status)} focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
                       >
                         <span>{getStatusIcon(status)}</span>
                         <span className="capitalize">{status || 'Sin registrar'}</span>
@@ -147,8 +188,8 @@ export const AttendanceGrid = () => {
                 );
               })}
               {alumnadodo.length === 0 && (
-                <tr>
-                  <td colSpan={3} className="p-8 text-center text-muted">
+                <tr className="w-full flex">
+                  <td className="p-8 text-center text-muted w-full">
                     No hay alumnadodo matriculados en este curso.
                   </td>
                 </tr>

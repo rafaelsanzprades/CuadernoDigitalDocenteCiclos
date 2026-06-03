@@ -6,29 +6,7 @@ from services.module_service import get_module_data, update_module_data
 
 router = APIRouter(prefix="/api/module", tags=["Modules"])
 
-class ModuleUpdateBody(BaseModel):
-    df_ra: list | None = None
-    df_ce: list | None = None
-    df_ud: list | None = None
-    df_sesiones: list | None = None
-    df_al: list | None = None
-    df_act: list | None = None
-    df_eval: list | None = None
-    df_feoe: list | None = None
-    df_tareas: list | None = None
-    df_sgmt: list | None = None
-    df_pr: list | None = None
-    info_modulo: dict | None = None
-    info_fechas: dict | None = None
-    horario: dict | None = None
-    planning_ledger: dict | None = None
-    calendar_notes: dict | None = None
-    tutoria_ledger: dict | None = None
-    plano_clase: dict | None = None
-    daily_ledger: dict | None = None
-    attendance_records: list | None = None
-
-    model_config = {"extra": "allow"}
+from schemas import ModuleUpdateBody
 
 
 @router.get("/{module_id}")

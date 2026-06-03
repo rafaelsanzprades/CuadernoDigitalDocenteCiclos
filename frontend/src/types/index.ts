@@ -93,6 +93,7 @@ export const ModuleDataSchema = z.object({
   planning_ledger: z.record(z.string(), z.any()).optional(),
   config_contexto: z.record(z.string(), z.any()).optional(),
   config_aula: z.record(z.string(), z.any()).optional(),
+  __version__: z.number().optional(),
 });
 export type ModuleData = z.infer<typeof ModuleDataSchema>;
 
@@ -137,6 +138,7 @@ export const CursoDataSchema = z.object({
   plano_clase: z.any().optional(),
   crm_empresas: z.array(CrmEmpresaSchema).optional(),
   competencias_cpps: z.array(z.string()).optional(),
+  __version__: z.number().optional(),
 });
 export type CursoData = z.infer<typeof CursoDataSchema>;
 

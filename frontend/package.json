@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "@hello-pangea/dnd": "^18.0.1",
+    "@tanstack/react-virtual": "^3.14.2",
     "date-fns": "^4.3.0",
     "framer-motion": "^12.40.0",
+    "idb-keyval": "^6.2.5",
     "lucide-react": "^1.14.0",
     "next": "16.2.6",
     "next-auth": "^4.24.14",
@@ -23,6 +25,7 @@
     "recharts": "^3.8.1",
     "swr": "^2.4.1",
     "zod": "^4.4.3",
+    "zundo": "^2.3.0",
     "zustand": "^5.0.13"
   },
   "devDependencies": {
