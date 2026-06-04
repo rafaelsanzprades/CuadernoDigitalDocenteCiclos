@@ -239,11 +239,11 @@ export default function SeguimientoPage() {
                                   <div className="flex items-center justify-between mb-4">
                                     <div className="flex items-center gap-3">
                                       <span className="font-mono text-lg font-bold text-foreground tracking-widest">{dateStr.substring(0,5)}</span>
-                                      <span className="text-xs font-bold text-muted uppercase tracking-wider bg-foreground/5 px-2 py-1 rounded">{diaSemana}</span>
+                                      <span className="text-xs font-bold text-muted tracking-wider bg-foreground/5 px-2 py-1 rounded">{diaSemana}</span>
                                       {udPrev && <span className="bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded text-xs font-bold shadow-sm">UD: {udPrev}</span>}
                                     </div>
                                     <div className="flex items-center gap-5">
-                                      <label className="flex items-center gap-2 text-xs font-bold text-muted cursor-pointer hover:text-orange-400 transition-colors uppercase tracking-wider">
+                                      <label className="flex items-center gap-2 text-xs font-bold text-muted cursor-pointer hover:text-orange-400 transition-colors tracking-wider">
                                         <input
                                           type="checkbox"
                                           checked={ledgerEntry.sin_docencia}
@@ -252,7 +252,7 @@ export default function SeguimientoPage() {
                                         />
                                         Sin Docencia
                                       </label>
-                                      <label className="flex items-center gap-2 text-xs font-bold text-muted cursor-pointer hover:text-green-400 transition-colors uppercase tracking-wider">
+                                      <label className="flex items-center gap-2 text-xs font-bold text-muted cursor-pointer hover:text-green-400 transition-colors tracking-wider">
                                         <input
                                           type="checkbox"
                                           checked={ledgerEntry.publico}

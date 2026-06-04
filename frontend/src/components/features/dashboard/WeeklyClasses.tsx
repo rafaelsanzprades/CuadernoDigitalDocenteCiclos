@@ -65,7 +65,7 @@ export const WeeklyClasses = () => {
         {days.map((day) => {
           const schedule = getDaySchedule(day);
           const isToday = isSameDay(day, now);
-          const formattedDayName = capitalize(format(day, "EEEE", { locale: es }));
+          const formattedDayName = (format(day, "EEEE", { locale: es }));
           const formattedDateNum = format(day, "d 'de' MMM", { locale: es });
 
           let cardStyle = "bg-background/20 border-white/5";
@@ -74,7 +74,7 @@ export const WeeklyClasses = () => {
           if (isToday) {
             cardStyle = "bg-accent/10 border-accent/40 ring-1 ring-accent/30 shadow-[0_0_15px_rgba(20,160,133,0.15)]";
             badge = (
-              <span className="bg-accent text-background text-[10px] font-extrabold px-1.5 py-0.5 rounded tracking-wider uppercase">
+              <span className="bg-accent text-background text-[10px] font-extrabold px-1.5 py-0.5 rounded tracking-wider ">
                 Hoy
               </span>
             );
@@ -157,7 +157,7 @@ export const WeeklyClasses = () => {
                   <span className="font-semibold">{schedule.hours} horas lectivas</span>
                   {schedule.isEvent && (
                     <span
-                      className="bg-blue-500/20 text-blue-400 border border-blue-500/25 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider"
+                      className="bg-blue-500/20 text-blue-400 border border-blue-500/25 px-1.5 py-0.5 rounded font-bold tracking-wider"
                       title={schedule.eventName}
                     >
                       Evento
@@ -219,14 +219,14 @@ export const WeeklyClasses = () => {
       {/* Week Contents */}
       {activeWeekTab === 'current' ? (
         <div className="animate-in fade-in duration-300">
-          <div className="text-xs font-bold text-muted uppercase tracking-wider mb-3">
+          <div className="text-xs font-bold text-muted tracking-wider mb-3">
             Semana del {format(currentWeekDays[0], "d 'de' MMMM", { locale: es })} al {format(currentWeekDays[4], "d 'de' MMMM", { locale: es })}
           </div>
           {renderWeekDays(currentWeekDays)}
         </div>
       ) : (
         <div className="animate-in fade-in duration-300">
-          <div className="text-xs font-bold text-muted uppercase tracking-wider mb-3">
+          <div className="text-xs font-bold text-muted tracking-wider mb-3">
             Semana del {format(nextWeekDays[0], "d 'de' MMMM", { locale: es })} al {format(nextWeekDays[4], "d 'de' MMMM", { locale: es })}
           </div>
           {renderWeekDays(nextWeekDays)}

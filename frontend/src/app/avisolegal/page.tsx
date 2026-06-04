@@ -48,7 +48,7 @@ export default function LegalNoticePage() {
                 <span className="text-lg">🛡️</span>
                 <div>
                   <strong className="block mb-1">Modelo de Privacidad Local-First</strong>
-                  Esta aplicación ha sido diseñada bajo el principio de <strong>privacidad absoluta</strong>. Los datos personales de tus alumnadodo (nombres, calificaciones, tutorías) no se envían, transmiten ni almacenan en ningún servidor ajeno al control del docente.
+                  Esta aplicación ha sido diseñada bajo el principio de <strong>privacidad absoluta</strong>. Los datos personales de tus alumnado (nombres, calificaciones, tutorías) no se envían, transmiten ni almacenan en ningún servidor ajeno al control del docente.
                 </div>
               </div>
 
@@ -59,7 +59,7 @@ export default function LegalNoticePage() {
                     Dado que la aplicación web es estática y el procesamiento de datos se realiza de manera interna en tu navegador web:
                   </p>
                   <ul className="list-disc list-inside ml-2 mt-2 space-y-1 text-muted">
-                    <li>El <strong>Docente</strong> o su <strong>Centro Educativo</strong> actúa como el único <strong>Responsable del Tratamiento</strong> de los datos personales de los alumnadodo.</li>
+                    <li>El <strong>Docente</strong> o su <strong>Centro Educativo</strong> actúa como el único <strong>Responsable del Tratamiento</strong> de los datos personales de los alumnado.</li>
                     <li>El desarrollador de esta herramienta (Rafael Sanz Prades) <strong>no actúa como Encargado del Tratamiento</strong>, ya que carece de acceso técnico a los datos introducidos en la aplicación.</li>
                   </ul>
                 </div>

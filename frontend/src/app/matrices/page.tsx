@@ -122,9 +122,9 @@ export default function MatricesPage() {
               <table className="w-full text-left text-sm">
                 <thead>
                   <tr className="text-muted border-b border-[var(--glass-border)]">
-                    <th className="pb-2 w-24">RA</th>
+                    <th className="pb-2 w-24">Ra</th>
                     <th className="pb-2 w-24">% RA</th>
-                    <th className="pb-2 w-16 text-center">FEOE</th>
+                    <th className="pb-2 w-16 text-center">Feoe</th>
                     <th className="pb-2">Resultados de aprendizaje</th>
                   </tr>
                 </thead>
@@ -277,7 +277,7 @@ export default function MatricesPage() {
                             <table className="w-full text-left text-sm">
                               <thead>
                                 <tr className="text-muted border-b border-[var(--glass-border)]">
-                                  <th className="pb-2 w-24">CE</th>
+                                  <th className="pb-2 w-24">Ce</th>
                                   <th className="pb-2 w-24">% CE</th>
                                   <th className="pb-2">Criterio de Evaluación</th>
                                   <th className="pb-2 w-10"></th>
@@ -418,7 +418,7 @@ export default function MatricesPage() {
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="border-b border-[var(--glass-border)] text-sm text-muted">
-                    <th className="p-3 sticky left-0 bg-background z-10">ID-UD</th>
+                    <th className="p-3 sticky left-0 bg-background z-10">Id-UD</th>
                     <th className="p-3 sticky left-[80px] bg-background z-10">Horas</th>
                     <th className="p-3 sticky left-[160px] bg-background z-10 w-64">Unidad Didáctica</th>
                     {df_ra.map((ra: any, i: number) => (
@@ -477,18 +477,40 @@ export default function MatricesPage() {
               </table>
             </div>
             <div className="mt-4 flex justify-between items-center text-sm">
-              <Button
-                variant="ghost"
-                onClick={() => {
-                  const newUd = [...df_ud];
-                  const newId = `UD${(newUd.length + 1).toString().padStart(2, '0')}`;
-                  newUd.push({ id_ud: newId, horas_ud: 0, desc_ud: "" });
-                  updateDataFrame("df_ud", newUd);
-                }}
-                className="text-purple-400 hover:text-purple-300"
-              >
-                <span>+</span> Añadir nueva UD
-              </Button>
+              <div className="flex items-center gap-4">
+                <Button
+                  variant="ghost"
+                  onClick={() => {
+                    const newUd = [...df_ud];
+                    const newId = `UD${(newUd.length + 1).toString().padStart(2, '0')}`;
+                    newUd.push({ id_ud: newId, horas_ud: 0, desc_ud: "" });
+                    updateDataFrame("df_ud", newUd);
+                  }}
+                  className="text-purple-400 hover:text-purple-300"
+                >
+                  <span>+</span> Añadir nueva UD
+                </Button>
+                
+                {df_ud.length === 0 && (
+                  <Button
+                    variant="secondary"
+                    onClick={() => {
+                      const demoUds = [
+                        { "id_ud": "UD01", "desc_ud": "ICT en viviendas y edificios: elementos, normativa y diseño", "horas_ud": 30, "ra_mappings": { "RA01": "RA01", "RA06": "RA06" }, "RA01": 50, "RA02": 0, "RA03": 0, "RA04": 0, "RA05": 0, "RA06": 10 },
+                        { "id_ud": "UD02", "desc_ud": "Instalaciones de antenas y televisión satélite", "horas_ud": 30, "ra_mappings": { "RA01": "RA01", "RA02": "RA02" }, "RA01": 30, "RA02": 40, "RA03": 0, "RA04": 0, "RA05": 0, "RA06": 0 },
+                        { "id_ud": "UD03", "desc_ud": "Infraestructuras de telecomunicaciones de banda ancha", "horas_ud": 28, "ra_mappings": { "RA02": "RA02", "RA03": "RA03" }, "RA01": 20, "RA02": 40, "RA03": 30, "RA04": 0, "RA05": 0, "RA06": 0 },
+                        { "id_ud": "UD04", "desc_ud": "Instalaciones de telefonía y redes de datos", "horas_ud": 30, "ra_mappings": { "RA03": "RA03" }, "RA01": 0, "RA02": 20, "RA03": 40, "RA04": 0, "RA05": 0, "RA06": 0 },
+                        { "id_ud": "UD05", "desc_ud": "Seguridad y verificación de instalaciones de telecomunicaciones", "horas_ud": 25, "ra_mappings": { "RA04": "RA04" }, "RA01": 0, "RA02": 0, "RA03": 10, "RA04": 60, "RA05": 0, "RA06": 0 },
+                        { "id_ud": "UD06", "desc_ud": "Mantenimiento y reparación de instalaciones ICT", "horas_ud": 24, "ra_mappings": { "RA05": "RA05" }, "RA01": 0, "RA02": 0, "RA03": 20, "RA04": 40, "RA05": 10, "RA06": 0 }
+                      ];
+                      updateDataFrame("df_ud", demoUds);
+                    }}
+                    className="text-amber-500 border-amber-500 hover:bg-amber-500/10"
+                  >
+                    Restaurar UDs de ejemplo
+                  </Button>
+                )}
+              </div>
 
               <Card className="px-4 py-2 inline-flex items-center gap-2 border-l-4 border-l-purple-500">
                 <span className="text-muted">Total horas UD:</span>

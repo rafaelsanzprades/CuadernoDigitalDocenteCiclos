@@ -29,7 +29,7 @@ export const AnalisisGrupalTab = () => {
     return (
       <Card className="p-8 text-center border-l-4 border-l-yellow-500 mt-6">
         <h2 className="text-xl font-bold text-yellow-400 mb-2">Faltan Datos</h2>
-        <p className="text-foreground/80">No hay datos de evaluación para alumnadodo activos. Ve a Evaluación Competencial primero.</p>
+        <p className="text-foreground/80">No hay datos de evaluación para alumnado activos. Ve a Evaluación Competencial primero.</p>
       </Card>
     );
   }
@@ -55,7 +55,7 @@ export const AnalisisGrupalTab = () => {
   
   const distributionData = bins.map((val, idx) => ({
     rango: `${idx}-${idx + 1}`,
-    alumnadodo: val,
+    alumnado: val,
   }));
 
   // Trend Data (Trimestres)
@@ -94,7 +94,7 @@ export const AnalisisGrupalTab = () => {
       
       return {
         id: e.ID,
-        alumnadodo: `${al?.Apellidos || ""}, ${al?.Nombre || ""}`,
+        alumnado: `${al?.Apellidos || ""}, ${al?.Nombre || ""}`,
         nota,
         riskLevel,
         riskColor
@@ -126,19 +126,19 @@ export const AnalisisGrupalTab = () => {
 
       <section className="grid grid-cols-4 gap-6">
         <Card className="p-6 border-l-4 border-l-blue-500 flex flex-col justify-center items-center hover:scale-105 transition-transform">
-          <span className="text-muted text-sm uppercase font-bold tracking-wider mb-2">Media Grupal</span>
+          <span className="text-muted text-sm font-bold tracking-wider mb-2">Media Grupal</span>
           <span className="text-4xl font-black text-blue-400">{media_grupal.toFixed(2)}</span>
         </Card>
         <Card className="p-6 border-l-4 border-l-emerald-500 flex flex-col justify-center items-center hover:scale-105 transition-transform">
-          <span className="text-muted text-sm uppercase font-bold tracking-wider mb-2">% Aprobados</span>
+          <span className="text-muted text-sm font-bold tracking-wider mb-2">% Aprobados</span>
           <span className="text-4xl font-black text-emerald-400">{tasa_aprobado.toFixed(1)}%</span>
         </Card>
         <Card className="p-6 border-l-4 border-l-purple-500 flex flex-col justify-center items-center hover:scale-105 transition-transform">
-          <span className="text-muted text-sm uppercase font-bold tracking-wider mb-2">Nº Alumnadodo</span>
+          <span className="text-muted text-sm font-bold tracking-wider mb-2">Nº Alumnado</span>
           <span className="text-4xl font-black text-purple-400">{total}</span>
         </Card>
         <Card className="p-6 border-l-4 border-l-pink-500 flex flex-col justify-center items-center hover:scale-105 transition-transform">
-          <span className="text-muted text-sm uppercase font-bold tracking-wider mb-2">Cohesión (Desv.)</span>
+          <span className="text-muted text-sm font-bold tracking-wider mb-2">Cohesión (Desv.)</span>
           <span className="text-4xl font-black text-pink-400">{desv_tipica.toFixed(2)}</span>
         </Card>
       </section>
@@ -155,7 +155,7 @@ export const AnalisisGrupalTab = () => {
                 <XAxis dataKey="rango" stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} />
                 <YAxis stroke="#94a3b8" fontSize={12} tickLine={false} axisLine={false} allowDecimals={false} />
                 <RechartsTooltip content={<CustomTooltip />} cursor={{ fill: 'rgba(255,255,255,0.05)' }} />
-                <Bar dataKey="alumnadodo" name="Alumnadodo" radius={[4, 4, 0, 0]}>
+                <Bar dataKey="alumnado" name="Alumnado" radius={[4, 4, 0, 0]}>
                   {distributionData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={index >= 5 ? '#10b981' : '#ef4444'} />
                   ))}
@@ -259,12 +259,12 @@ export const AnalisisGrupalTab = () => {
           <>
             <div className="bg-red-500/10 border border-red-500/30 text-red-300 px-4 py-3 rounded-lg mb-4 text-sm font-semibold flex items-center gap-2">
               <span className="text-xl">⚠️</span>
-              Se han detectado {risks.length} alumnadodo(s) con rendimiento insuficiente.
+              Se han detectado {risks.length} alumnado(s) con rendimiento insuficiente.
             </div>
             <table className="w-full text-left text-sm whitespace-nowrap">
               <thead>
                 <tr className="text-muted border-b border-[var(--glass-border)]">
-                  <th className="pb-2">Alumnadodo</th>
+                  <th className="pb-2">Alumnado</th>
                   <th className="pb-2 text-center">Nota</th>
                   <th className="pb-2">Nivel de Riesgo</th>
                 </tr>
@@ -272,7 +272,7 @@ export const AnalisisGrupalTab = () => {
               <tbody>
                 {risks.map((r: any, i: number) => (
                   <tr key={i} className="border-b border-white/5 hover:bg-foreground/5 transition-colors">
-                    <td className="py-3 font-medium text-foreground/90">{r.alumnadodo}</td>
+                    <td className="py-3 font-medium text-foreground/90">{r.alumnado}</td>
                     <td className="py-3 font-mono text-center font-bold text-foreground/80">{r.nota.toFixed(2)}</td>
                     <td className={`py-3 font-bold ${r.riskColor}`}>
                       <span className="bg-foreground/5 px-2 py-1 rounded-md">{r.riskLevel}</span>
@@ -286,7 +286,7 @@ export const AnalisisGrupalTab = () => {
           <div className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 px-4 py-8 rounded-lg flex flex-col items-center justify-center gap-3 text-center">
             <span className="text-4xl">🎉</span>
             <span className="font-bold text-lg">¡Excelente rendimiento!</span>
-            <span className="text-sm opacity-80">No hay alumnadodo en riesgo según la proyección actual.</span>
+            <span className="text-sm opacity-80">No hay alumnado en riesgo según la proyección actual.</span>
           </div>
         )}
       </Card>

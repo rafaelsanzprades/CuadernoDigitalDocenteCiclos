@@ -3,7 +3,7 @@ import { useAppStore } from '@/store/useAppStore';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Search, Download, Table, Layers, ArrowRight } from 'lucide-react';
-import { Alumnadodo } from '@/types';
+import { Alumnado } from '@/types';
 
 export const TutoriaMatrixTab = () => {
   const { cursoData, moduleData } = useAppStore();
@@ -11,7 +11,7 @@ export const TutoriaMatrixTab = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('todos');
 
   const df_al = cursoData?.df_al || [];
-  const activeStudents = df_al.filter((al: Alumnadodo) => al.Estado !== 'Baja');
+  const activeStudents = df_al.filter((al: Alumnado) => al.Estado !== 'Baja');
   // Sort alphabetically
   activeStudents.sort((a, b) => (a.Apellidos || '').localeCompare(b.Apellidos || ''));
 
@@ -38,23 +38,23 @@ export const TutoriaMatrixTab = () => {
       { key: 'SEXO', label: 'Sexo' },
       { key: 'ORIGEN FAMILIAR. Nacionalidad', label: 'Nacionalidad' },
       { key: 'REPETICIONES', label: 'Repeticiones' },
-      { key: 'TOTAL VULNERABILIDAD', label: 'Vuln. Gral' },
-      { key: 'REPITE CURSO', label: 'Repite' },
-      { key: 'MATERIAS PENDIENTES', label: 'Pendientes' },
-      { key: 'BECA MATERIALES', label: 'Beca Mat.' },
-      { key: 'BECA AMPA MATERIALES BANCO LIBROS', label: 'Bco Libros' },
-      { key: 'BECA ACNEAES', label: 'Beca ACNEAE' },
-      { key: 'BECA GENERAL MEC', label: 'Beca MEC' },
-      { key: 'SOCIOECONÓMICO, SS', label: 'SS / Soc.Econ' },
-      { key: 'DIFICULTADES FAMILIARES', label: 'Dif. Fam' },
-      { key: 'AUNA, OZANAM, YMCA', label: 'Apoyo Ext' }
+      { key: 'Total vulnerabilidad', label: 'Vuln. Gral' },
+      { key: 'Repite curso', label: 'Repite' },
+      { key: 'Materias pendientes', label: 'Pendientes' },
+      { key: 'Beca materiales', label: 'Beca Mat.' },
+      { key: 'Beca ampa materiales banco libros', label: 'Bco Libros' },
+      { key: 'Beca acneaes', label: 'Beca ACNEAE' },
+      { key: 'Beca general mec', label: 'Beca MEC' },
+      { key: 'Socioeconómico, ss', label: 'SS / Soc.Econ' },
+      { key: 'Dificultades familiares', label: 'Dif. Fam' },
+      { key: 'Auna, ozanam, ymca', label: 'Apoyo Ext' }
     ],
     acneae: [
       { key: 'ACNEAE', label: 'ACNEAE' },
       { key: 'TIPO', label: 'Tipo' },
-      { key: 'OTRAS DIFICULTADES APRENDIZAJE', label: 'Otras Dif. Aprend.' },
+      { key: 'Otras dificultades aprendizaje', label: 'Otras Dif. Aprend.' },
       { key: 'ABSENTISMO', label: 'Absentismo' },
-      { key: 'ABSENTISMO 10%', label: 'Absentismo >10%' },
+      { key: 'Absentismo 10%', label: 'Absentismo >10%' },
       { key: 'SALUD', label: 'Salud' },
       { key: 'ACS', label: 'Tiene ACS' },
       { key: 'Lengua', label: 'ACS Lengua' },
@@ -65,60 +65,60 @@ export const TutoriaMatrixTab = () => {
       { key: 'Otras', label: 'ACS Otras' }
     ],
     intervenciones: [
-      { key: 'INTERVENCIÓN EDUCATIVA', label: 'Interv. Educativa' },
-      { key: 'CERTIF DISCAP', label: 'Discapacidad' },
-      { key: 'FECHA INFORME', label: 'F. Informe' },
-      { key: 'FECHA RESOLUCIÓN', label: 'F. Resolución' },
+      { key: 'Intervención educativa', label: 'Interv. Educativa' },
+      { key: 'Certif discap', label: 'Discapacidad' },
+      { key: 'Fecha informe', label: 'F. Informe' },
+      { key: 'Fecha resolución', label: 'F. Resolución' },
       { key: 'AEE', label: 'AEE' },
       { key: 'MENTORÍA', label: 'Mentoría' },
-      { key: 'REFUERZO AUNA PROA+', label: 'AUNA PROA+' },
-      { key: 'REFUERZO ESPAÑOL PROA+', label: 'Español PROA+' },
-      { key: 'REFUERZO CORRESPONSABLES', label: 'Corresponsables' },
-      { key: 'REFUERZO OZANAM/YMCA', label: 'Ozanam/YMCA' },
+      { key: 'Refuerzo auna proa+', label: 'Auna proa+' },
+      { key: 'Refuerzo español proa+', label: 'Español PROA+' },
+      { key: 'Refuerzo corresponsables', label: 'Corresponsables' },
+      { key: 'Refuerzo ozanam/ymca', label: 'Ozanam/YMCA' },
       { key: 'FISIO', label: 'Fisio' },
       { key: 'Observaciones', label: 'Observaciones' }
     ],
     historial: [
-      { key: 'CENTRO EDUCATIVO EP', label: 'Colegio EP' },
-      { key: 'PROMOCIONA A 1º ESO CON SUSPENSOS', label: 'Promoc. Susp.' },
-      { key: 'NOTA MEDIA 6º PRIMARIA', label: 'N.Med 6º EP' },
-      { key: 'NOTA MEDIA 1º ESO', label: 'N.Med 1º ESO' },
-      { key: 'NOTA MEDIA 2º ESO', label: 'N.Med 2º' },
-      { key: 'NOTA MEDIA 3º ESO', label: 'N.Med 3º' },
-      { key: 'NOTA MEDIA 4º ESO', label: 'N.Med 4º' },
-      { key: 'NOTA MEDIA 1º BACH', label: 'N.Med 1ºBach' },
-      { key: 'NOTA MEDIA 2º BACH', label: 'N.Med 2ºBach' },
-      { key: 'SUSPENSOS 1º ESO', label: 'Susp. 1ºESO' },
-      { key: 'SUSPENSOS 2º ESO', label: 'Susp. 2º' },
-      { key: 'SUSPENSOS 3º ESO', label: 'Susp. 3º' },
-      { key: 'SUSPENSOS 4º ESO', label: 'Susp. 4º' },
-      { key: 'SUSPENSOS 1º BACH', label: 'Susp. 1ºBach' },
-      { key: 'SUSPENSOS 2º BACH', label: 'Susp. 2ºBach' },
-      { key: 'NOTA LENGUA 6º EP', label: 'Len 6ºEP' },
-      { key: 'NOTA LENGUA 1º ESO', label: 'Len 1º' },
-      { key: 'NOTA LENGUA 2º ESO', label: 'Len 2º' },
-      { key: 'NOTA MATES 6º EP', label: 'Mat 6ºEP' },
-      { key: 'NOTA MATES 1º ESO', label: 'Mat 1º' },
-      { key: 'NOTA MATES 2º ESO', label: 'Mat 2º' }
+      { key: 'Centro educativo ep', label: 'Colegio EP' },
+      { key: 'Promociona a 1º eso con suspensos', label: 'Promoc. Susp.' },
+      { key: 'Nota media 6º primaria', label: 'N.Med 6º EP' },
+      { key: 'Nota media 1º eso', label: 'N.Med 1º ESO' },
+      { key: 'Nota media 2º eso', label: 'N.Med 2º' },
+      { key: 'Nota media 3º eso', label: 'N.Med 3º' },
+      { key: 'Nota media 4º eso', label: 'N.Med 4º' },
+      { key: 'Nota media 1º bach', label: 'N.Med 1ºBach' },
+      { key: 'Nota media 2º bach', label: 'N.Med 2ºBach' },
+      { key: 'Suspensos 1º eso', label: 'Susp. 1ºESO' },
+      { key: 'Suspensos 2º eso', label: 'Susp. 2º' },
+      { key: 'Suspensos 3º eso', label: 'Susp. 3º' },
+      { key: 'Suspensos 4º eso', label: 'Susp. 4º' },
+      { key: 'Suspensos 1º bach', label: 'Susp. 1ºBach' },
+      { key: 'Suspensos 2º bach', label: 'Susp. 2ºBach' },
+      { key: 'Nota lengua 6º ep', label: 'Len 6ºEP' },
+      { key: 'Nota lengua 1º eso', label: 'Len 1º' },
+      { key: 'Nota lengua 2º eso', label: 'Len 2º' },
+      { key: 'Nota mates 6º ep', label: 'Mat 6ºEP' },
+      { key: 'Nota mates 1º eso', label: 'Mat 1º' },
+      { key: 'Nota mates 2º eso', label: 'Mat 2º' }
     ],
     orientacion: [
-      { key: 'ERASMUS+ Y OTROS VIAJES', label: 'Erasmus+' },
-      { key: 'ENGLISH WEEK 1º ESO', label: 'English W.' },
-      { key: 'ENTORNO ARAGÓN', label: 'Aragón' },
-      { key: '2º ESO ESLOVAQUIA/FRANCIA', label: 'Eslovaquia/Fr.' },
-      { key: '3º ESO MUNICH', label: 'Munich' },
-      { key: 'PORTUGAL AULA ABIERTA-DO', label: 'Portugal' },
-      { key: 'VIAJE FIN DE CURSO 4º ESO', label: 'Fin C. 4º' },
+      { key: 'Erasmus+ y otros viajes', label: 'Erasmus+' },
+      { key: 'English week 1º eso', label: 'English W.' },
+      { key: 'Entorno aragón', label: 'Aragón' },
+      { key: '2º eso eslovaquia/francia', label: 'Eslovaquia/Fr.' },
+      { key: '3º eso munich', label: 'Munich' },
+      { key: 'Portugal aula abierta-do', label: 'Portugal' },
+      { key: 'Viaje fin de curso 4º eso', label: 'Fin C. 4º' },
       { key: 'PROPUESTAS', label: 'Propuestas' },
       { key: 'PROMOCIÓN', label: 'Promoción' },
       { key: 'REPETICIÓNDECURSO', label: 'Repite' },
-      { key: 'PROMOCIÓN CON ACS', label: 'Promo ACS' },
-      { key: 'ORGANIZACIÓN 2º ESO', label: 'Org 2ºESO' },
-      { key: 'FPGB/CSL', label: 'FPGB / CSL' },
-      { key: '3º DIVERSIFICACIÓN', label: '3º Diver' },
-      { key: '4º DIVERSIFICACIÓN', label: '4º Diver' },
+      { key: 'Promoción con ACS', label: 'Promo ACS' },
+      { key: 'Organización 2º eso', label: 'Org 2ºESO' },
+      { key: 'FPGB/CSL', label: 'Fpgb / csl' },
+      { key: '3º diversificación', label: '3º Diver' },
+      { key: '4º diversificación', label: '4º Diver' },
       { key: 'BACHILLERATO', label: 'Bachillerato' },
-      { key: 'FP GRADO MEDIO', label: 'FP Grado Medio' }
+      { key: 'Fp grado medio', label: 'FP Grado Medio' }
     ]
   };
 
@@ -212,8 +212,8 @@ export const TutoriaMatrixTab = () => {
           <table className="w-full text-left text-xs whitespace-nowrap border-collapse">
             <thead>
               <tr className="bg-foreground/10 text-muted border-b border-[var(--glass-border)] sticky top-0 z-20">
-                <th className="p-3 font-bold border-r border-[var(--glass-border)] bg-[#0d1525] sticky left-0 z-30">Alumnadodo</th>
-                <th className="p-3 font-bold border-r border-[var(--glass-border)] bg-[#0d1525] sticky left-[150px] z-30">ID</th>
+                <th className="p-3 font-bold border-r border-[var(--glass-border)] bg-[#0d1525] sticky left-0 z-30">Alumnado</th>
+                <th className="p-3 font-bold border-r border-[var(--glass-border)] bg-[#0d1525] sticky left-[150px] z-30">Id</th>
                 {activeColumns.map((col, idx) => (
                   <th key={idx} className="p-3 font-bold border-r border-white/5 text-center min-w-[100px]" title={col.key}>
                     {col.label}
@@ -252,7 +252,7 @@ export const TutoriaMatrixTab = () => {
               {filteredStudents.length === 0 && (
                 <tr>
                   <td colSpan={2 + activeColumns.length} className="p-8 text-center text-muted">
-                    No se encontraron alumnadodo que coincidan con la búsqueda.
+                    No se encontraron alumnado que coincidan con la búsqueda.
                   </td>
                 </tr>
               )}

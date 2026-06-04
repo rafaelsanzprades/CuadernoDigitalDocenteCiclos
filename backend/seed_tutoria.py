@@ -22,7 +22,7 @@ xl = pd.ExcelFile(excel_path)
 df = xl.parse('2025-26')
 
 # Exclude columns we don't want to seed in tutoring ledger
-exclude_cols = {'ALUMNADODO', 'CURSO', 'GRUPO', 'FECHA DE NACIMIENTO'}
+exclude_cols = {'ALUMNADO', 'CURSO', 'GRUPO', 'FECHA DE NACIMIENTO'}
 seed_cols = [col for col in df.columns if col not in exclude_cols]
 
 # Clean up rows that are completely empty

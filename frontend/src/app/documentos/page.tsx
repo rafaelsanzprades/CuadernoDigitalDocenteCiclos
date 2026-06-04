@@ -7,7 +7,7 @@ import { Folder, FileText, File, Download, ChevronRight, CornerLeftUp, FileSprea
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { useAppStore } from "@/store/useAppStore";
-import { Alumnadodo } from "@/types";
+import { Alumnado } from "@/types";
 
 type DocumentItem = {
   name: string;
@@ -17,7 +17,7 @@ type DocumentItem = {
 };
 
 export default function DocumentosPage() {
-  const [activeTab, setActiveTab] = useState<"legislacion" | "varios">("legislacion");
+  const [activeTab, setActiveTab] = useState<"legislacion" | "varios" | "inicio" | "seguimiento" | "evaluacion">("legislacion");
 
   // State for Explorador
   const [currentPath, setCurrentPath] = useState<string>("");
@@ -58,7 +58,9 @@ export default function DocumentosPage() {
   };
 
   useEffect(() => {
-    fetchDocuments(activeTab === "legislacion" ? "Legislación general" : "Varios");
+    if (activeTab === "legislacion" || activeTab === "varios") {
+      fetchDocuments(activeTab === "legislacion" ? "Legislación general" : "Varios");
+    }
   }, [activeTab]);
 
   useEffect(() => {
@@ -186,8 +188,8 @@ export default function DocumentosPage() {
   const filteredItems = items.filter(item => item.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
   const df_al = cursoData?.df_al || [];
-  const activeAlumnado = df_al.filter((al: Alumnadodo) => al.Estado !== "Baja");
-  activeAlumnado.sort((a: Alumnadodo, b: Alumnadodo) => String(a.Apellidos || "").localeCompare(String(b.Apellidos || "")));
+  const activeAlumnado = df_al.filter((al: Alumnado) => al.Estado !== "Baja");
+  activeAlumnado.sort((a: Alumnado, b: Alumnado) => String(a.Apellidos || "").localeCompare(String(b.Apellidos || "")));
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -201,9 +203,9 @@ export default function DocumentosPage() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
               <div>
                 <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                  <span className="text-3xl">📄</span> Documentos
+                  <span className="text-3xl">📄</span> Documentos y descargas
                 </h1>
-                <p className="text-muted mt-2 text-lg">Explorador de archivos oficiales, legislación y otros documentos.</p>
+                <p className="text-muted mt-2 text-lg">Explorador de archivos oficiales, legislación, otros documentos y generación de PDFs.</p>
               </div>
             </div>
 
@@ -220,9 +222,29 @@ export default function DocumentosPage() {
               >
                 📂 Varios
               </button>
+              <div className="w-px h-8 bg-white/10 mx-2 self-center shrink-0"></div>
+              <button
+                className={`py-3 px-6 font-bold text-sm transition-all border-b-2 whitespace-nowrap ${activeTab === 'inicio' ? 'border-blue-500 text-blue-400' : 'border-transparent text-muted hover:text-foreground'}`}
+                onClick={() => setActiveTab('inicio')}
+              >
+                🏁 PDF Inicio
+              </button>
+              <button
+                className={`py-3 px-6 font-bold text-sm transition-all border-b-2 whitespace-nowrap ${activeTab === 'seguimiento' ? 'border-blue-500 text-blue-400' : 'border-transparent text-muted hover:text-foreground'}`}
+                onClick={() => setActiveTab('seguimiento')}
+              >
+                📍 PDF Seguimiento
+              </button>
+              <button
+                className={`py-3 px-6 font-bold text-sm transition-all border-b-2 whitespace-nowrap ${activeTab === 'evaluacion' ? 'border-blue-500 text-blue-400' : 'border-transparent text-muted hover:text-foreground'}`}
+                onClick={() => setActiveTab('evaluacion')}
+              >
+                🎓 PDF Evaluación
+              </button>
             </div>
 
-            <div className="space-y-6 animate-in fade-in duration-500">
+            {(activeTab === 'legislacion' || activeTab === 'varios') && (
+              <div className="space-y-6 animate-in fade-in duration-500">
                 <div className="flex flex-col md:flex-row justify-between gap-4">
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
@@ -336,6 +358,166 @@ export default function DocumentosPage() {
                   )}
                 </div>
               </div>
+            )}
+
+            {['inicio', 'seguimiento', 'evaluacion'].includes(activeTab) && (
+              <div className="space-y-8 animate-in fade-in duration-500">
+                {(!activeCursoId || !activeModuleId) ? (
+                  <Card className="p-8 text-center">
+                    <h2 className="text-2xl font-bold mb-4">No hay Curso o Módulo seleccionado</h2>
+                    <p className="text-muted">Por favor, ve a la sección de Datos y asegúrate de cargar ambos para generar PDFs.</p>
+                  </Card>
+                ) : (loadingData || !cursoData || !moduleData) ? (
+                  <div className="text-xl text-muted animate-pulse flex items-center justify-center gap-3 p-12">
+                    <span className="text-2xl">⏳</span> Cargando datos del módulo y curso...
+                  </div>
+                ) : (
+                  <>
+                    {activeTab === 'inicio' && (
+                      <div className="space-y-8 animate-in fade-in duration-500">
+                        <Card className="p-6 border-t-4 border-t-purple-500">
+                          <h2 className="text-2xl font-bold mb-1">📅 Gestión temporal global</h2>
+                          <p className="text-sm text-muted mb-6">Planificación del módulo</p>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between">
+                              <div>
+                                <h3 className="text-lg font-bold mb-2">📆 Calendario académico</h3>
+                                <p className="text-sm text-muted mb-6">Vista global del curso con fechas, sesiones y eventos.</p>
+                              </div>
+                              <Button onClick={() => handleDownloadPdf('calendario')} disabled={downloadingStr === 'calendario'} className="w-full">
+                                {downloadingStr === 'calendario' ? '⏳ Generando PDF...' : 'PDF Calendario'}
+                              </Button>
+                            </div>
+                            <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between">
+                              <div>
+                                <h3 className="text-lg font-bold mb-2">📊 Planificación mensual</h3>
+                                <p className="text-sm text-muted mb-6">Horas previstas frente a impartidas por UD y mes.</p>
+                              </div>
+                              <Button onClick={() => handleDownloadPdf('planificacion')} disabled={downloadingStr === 'planificacion'} className="w-full">
+                                {downloadingStr === 'planificacion' ? '⏳ Generando PDF...' : 'PDF Planificación'}
+                              </Button>
+                            </div>
+                          </div>
+                        </Card>
+                        <Card className="p-6 border-t-4 border-t-accent">
+                          <h2 className="text-2xl font-bold mb-1">⚙️ Gestión del aprendizaje</h2>
+                          <p className="text-sm text-muted mb-6">Matrices y programación del módulo</p>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between">
+                              <div>
+                                <h3 className="text-lg font-bold mb-2">🧮 Matrices RA → UD</h3>
+                                <p className="text-sm text-muted mb-6">Relación y ponderación entre RA y UD del módulo.</p>
+                              </div>
+                              <Button onClick={() => handleDownloadPdf('matrices')} disabled={downloadingStr === 'matrices'} className="w-full">
+                                {downloadingStr === 'matrices' ? '⏳ Generando PDF...' : 'PDF Matrices'}
+                              </Button>
+                            </div>
+                          </div>
+                        </Card>
+                      </div>
+                    )}
+
+                    {activeTab === 'seguimiento' && (
+                      <div className="space-y-8 animate-in fade-in duration-500">
+                        <Card className="p-6 border-t-4 border-t-emerald-500">
+                          <h2 className="text-2xl font-bold mb-1">📝 Clases mensual - por UD</h2>
+                          <p className="text-sm text-muted mb-6">Registro detallado de clases impartidas y secuenciación por unidad didáctica.</p>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between">
+                              <div>
+                                <h3 className="text-lg font-bold mb-2">📝 Seguimiento diario</h3>
+                                <p className="text-sm text-muted mb-6">Registro detallado de la planificación del día a día.</p>
+                              </div>
+                              <Button onClick={() => handleDownloadPdf('seguimiento')} disabled={downloadingStr === 'seguimiento'} className="w-full">
+                                {downloadingStr === 'seguimiento' ? '⏳ Generando PDF...' : 'PDF Seguimiento'}
+                              </Button>
+                            </div>
+                            <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between">
+                              <div>
+                                <h3 className="text-lg font-bold mb-2">📚 Clases por UD</h3>
+                                <p className="text-sm text-muted mb-6">Secuenciación de sesiones de cada Unidad Didáctica.</p>
+                              </div>
+                              <Button onClick={() => handleDownloadPdf('clases_ud')} disabled={downloadingStr === 'clases_ud'} className="w-full">
+                                {downloadingStr === 'clases_ud' ? '⏳ Generando PDF...' : 'PDF Clases por UD'}
+                              </Button>
+                            </div>
+                          </div>
+                        </Card>
+                      </div>
+                    )}
+
+                    {activeTab === 'evaluacion' && (
+                      <div className="space-y-8 animate-in fade-in duration-500">
+                        <Card className="p-6 border-t-4 border-t-blue-500">
+                          <h2 className="text-2xl font-bold mb-6">📊 Boletines de calificaciones grupales</h2>
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between text-center">
+                              <div>
+                                <h3 className="text-lg font-bold mb-2">👥 1er trimestre</h3>
+                              </div>
+                              <Button variant="secondary" onClick={() => handleDownloadPdf('grupal_1t')} disabled={downloadingStr === 'grupal_1t'} className="w-full">
+                                {downloadingStr === 'grupal_1t' ? '⏳' : 'PDF Boletín grupal 1T'}
+                              </Button>
+                            </div>
+                            <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between text-center">
+                              <div>
+                                <h3 className="text-lg font-bold mb-2">👥 2º trimestre</h3>
+                              </div>
+                              <Button variant="secondary" onClick={() => handleDownloadPdf('grupal_2t')} disabled={downloadingStr === 'grupal_2t'} className="w-full">
+                                {downloadingStr === 'grupal_2t' ? '⏳' : 'PDF Boletín grupal 2T'}
+                              </Button>
+                            </div>
+                            <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between text-center">
+                              <div>
+                                <h3 className="text-lg font-bold mb-2">👥 3er trimestre</h3>
+                              </div>
+                              <Button variant="secondary" onClick={() => handleDownloadPdf('grupal_3t')} disabled={downloadingStr === 'grupal_3t'} className="w-full">
+                                {downloadingStr === 'grupal_3t' ? '⏳' : 'PDF Boletín grupal 3T'}
+                              </Button>
+                            </div>
+                            <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between text-center border-l-4 border-l-yellow-400">
+                              <div>
+                                <h3 className="text-lg font-bold mb-2">🎓 Eval. Final</h3>
+                              </div>
+                              <Button variant="secondary" onClick={() => handleDownloadPdf('grupal_final')} disabled={downloadingStr === 'grupal_final'} className="w-full">
+                                {downloadingStr === 'grupal_final' ? '⏳' : 'PDF Boletín Final'}
+                              </Button>
+                            </div>
+                          </div>
+                        </Card>
+
+                        <Card className="p-6 border-t-4 border-t-blue-500">
+                          <h2 className="text-2xl font-bold mb-6">👤 Boletines individuales</h2>
+                          {activeAlumnado.length > 0 ? (
+                            <div className="flex flex-col md:flex-row md:items-end gap-6 bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6">
+                              <div className="flex-1">
+                                <h3 className="text-lg font-bold mb-2">📄 Boletín de alumnado</h3>
+                                <p className="text-sm text-muted mb-4">Genera un boletín detallado de un alumnado específico.</p>
+                                <select id="alumnado_select" className="w-full bg-foreground/25 border border-[var(--glass-border)] rounded-lg p-3 text-[var(--foreground)] focus:border-blue-500 focus:outline-none font-bold">
+                                  {activeAlumnado.map((al: Alumnado) => (
+                                    <option key={al.ID} value={al.ID}>{al.Apellidos}, {al.Nombre} ({al.ID})</option>
+                                  ))}
+                                </select>
+                              </div>
+                              <Button variant="secondary" onClick={() => {
+                                  const sel = document.getElementById('alumnado_select') as HTMLSelectElement;
+                                  if (sel && sel.value) handleDownloadPdf('individual', sel.value);
+                                }}
+                                disabled={downloadingStr === 'individual'} className="px-8 py-3 h-[50px] w-full md:w-auto"
+                              >
+                                {downloadingStr === 'individual' ? '⏳ Generando boletín...' : 'PDF Boletín individual'}
+                              </Button>
+                            </div>
+                          ) : (
+                            <p className="text-muted italic">No hay estudiantes activos para generar boletines individuales.</p>
+                          )}
+                        </Card>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            )}
 
 
           </div>

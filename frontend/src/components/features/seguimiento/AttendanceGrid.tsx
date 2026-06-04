@@ -15,8 +15,8 @@ export const AttendanceGrid = () => {
   const [loading, setLoading] = useState(false);
   const parentRef = useRef<HTMLDivElement>(null);
 
-  const alumnadodo = cursoData?.df_al || [];
-  const menores = alumnadodo.filter(a => parseInt(a.Edad || '18') < 18).length;
+  const alumnado = cursoData?.df_al || [];
+  const menores = alumnado.filter(a => parseInt(a.Edad || '18') < 18).length;
 
   const dateStr = format(currentDate, 'yyyy-MM-dd');
 
@@ -94,7 +94,7 @@ export const AttendanceGrid = () => {
   };
 
   const rowVirtualizer = useVirtualizer({
-    count: alumnadodo.length,
+    count: alumnado.length,
     getScrollElement: () => parentRef.current,
     estimateSize: () => 73,
     overscan: 5,
@@ -112,7 +112,7 @@ export const AttendanceGrid = () => {
           </h2>
           {menores > 0 && (
             <span className="text-pink-400 font-semibold text-sm flex items-center gap-1 bg-pink-400/10 px-3 py-1 rounded-full border border-pink-400/20">
-              🌸 {menores} alumnadodo(s) menor(es) de 18 años
+              🌸 {menores} alumnado(s) menor(es) de 18 años
             </span>
           )}
         </div>
@@ -132,7 +132,7 @@ export const AttendanceGrid = () => {
               <tr className="bg-foreground/5 text-muted border-b border-[var(--glass-border)]">
                 <th className="p-4 font-semibold w-16 text-center">Nº</th>
                 <th className="p-4 font-semibold w-12 text-center" title="Menor de edad">🌸</th>
-                <th className="p-4 font-semibold">Alumnadodo</th>
+                <th className="p-4 font-semibold">Alumnado</th>
                 <th className="p-4 font-semibold text-center w-48">Estado</th>
               </tr>
             </thead>
@@ -145,7 +145,7 @@ export const AttendanceGrid = () => {
             >
               {rowVirtualizer.getVirtualItems().map((virtualRow) => {
                 const index = virtualRow.index;
-                const al = alumnadodo[index];
+                const al = alumnado[index];
                 const studentId = al.student_id || al.ID || String(index);
                 const status = attendanceData[studentId] || null;
                 
@@ -181,16 +181,16 @@ export const AttendanceGrid = () => {
                         className={`w-full py-2 px-4 rounded-md border font-bold flex items-center justify-center gap-2 transition-all ${getStatusColor(status)} focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
                       >
                         <span>{getStatusIcon(status)}</span>
-                        <span className="capitalize">{status || 'Sin registrar'}</span>
+                        <span className="">{status || 'Sin registrar'}</span>
                       </button>
                     </td>
                   </tr>
                 );
               })}
-              {alumnadodo.length === 0 && (
+              {alumnado.length === 0 && (
                 <tr className="w-full flex">
                   <td className="p-8 text-center text-muted w-full">
-                    No hay alumnadodo matriculados en este curso.
+                    No hay alumnado matriculados en este curso.
                   </td>
                 </tr>
               )}

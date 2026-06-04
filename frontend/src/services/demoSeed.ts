@@ -1,4 +1,4 @@
-export const CRM_SEED_VERSION = 11;
+export const CRM_SEED_VERSION = 16;
 
 export const demoSeed = {
   "0237-ictve-curso-2025-26": {
@@ -1826,7 +1826,7 @@ export const demoSeed = {
         "idioma_espanol": "X",
         "idioma_ingles": "X",
         "idioma_rumano": "X",
-        "obs_aptitudes": "Elena es la mejor alumnadodo del grupo. Sistemática, rigurosa. Aspiraciones muy altas.",
+        "obs_aptitudes": "Elena es la mejor alumnado del grupo. Sistemática, rigurosa. Aspiraciones muy altas.",
         "intencion_al_terminar": "Universidad",
         "empresa_objetivo": "",
         "ciclo_superior_interes": "Ingeniería de Telecomunicaciones o Informática",
@@ -2353,21 +2353,21 @@ export const demoSeed = {
         "SEXO": "H",
         "ORIGEN FAMILIAR. Nacionalidad": "Española/Marruecos",
         "REPETICIONES": "0",
-        "TOTAL VULNERABILIDAD": "0",
-        "REPITE CURSO": "No",
-        "MATERIAS PENDIENTES": "0",
-        "BECA MATERIALES": "",
-        "BECA AMPA MATERIALES BANCO LIBROS": "",
-        "BECA ACNEAES": "",
-        "BECA GENERAL MEC": "",
-        "SOCIOECONÓMICO, SS": "",
-        "DIFICULTADES FAMILIARES": "",
-        "AUNA, OZANAM, YMCA": "",
+        "Total vulnerabilidad": "0",
+        "Repite curso": "No",
+        "Materias pendientes": "0",
+        "Beca materiales": "",
+        "Beca ampa materiales banco libros": "",
+        "Beca acneaes": "",
+        "Beca general mec": "",
+        "Socioeconómico, ss": "",
+        "Dificultades familiares": "",
+        "Auna, ozanam, ymca": "",
         "ACNEAE": "",
         "TIPO": "",
-        "OTRAS DIFICULTADES APRENDIZAJE": "",
+        "Otras dificultades aprendizaje": "",
         "ABSENTISMO": "",
-        "ABSENTISMO 10%": "",
+        "Absentismo 10%": "",
         "SALUD": "",
         "ACS": "",
         "Lengua": "",
@@ -2378,44 +2378,44 @@ export const demoSeed = {
         "Orientacion": "",
         "Refuerzo": "",
         "PROA": "",
-        "TOTAL INTERVENCIONES": "0"
+        "Total intervenciones": "0"
       },
       "AN02": {
         "SEXO": "M",
         "ORIGEN FAMILIAR. Nacionalidad": "Española",
         "REPETICIONES": "0",
-        "TOTAL VULNERABILIDAD": "0",
-        "BECA MATERIALES": "X",
-        "BECA ACNEAES": ""
+        "Total vulnerabilidad": "0",
+        "Beca materiales": "X",
+        "Beca acneaes": ""
       },
       "AN03": {
         "SEXO": "M",
         "ORIGEN FAMILIAR. Nacionalidad": "Española",
         "REPETICIONES": "2",
-        "TOTAL VULNERABILIDAD": "3",
-        "REPITE CURSO": "Sí",
-        "MATERIAS PENDIENTES": "4",
-        "BECA GENERAL MEC": "X",
-        "SOCIOECONÓMICO, SS": "X",
-        "DIFICULTADES FAMILIARES": "X",
+        "Total vulnerabilidad": "3",
+        "Repite curso": "Sí",
+        "Materias pendientes": "4",
+        "Beca general mec": "X",
+        "Socioeconómico, ss": "X",
+        "Dificultades familiares": "X",
         "ACNEAE": "X",
         "TIPO": "ACNEE",
         "ABSENTISMO": "10%",
         "PT": "X",
-        "TOTAL INTERVENCIONES": "3"
+        "Total intervenciones": "3"
       },
       "AN07": {
         "SEXO": "H",
         "ORIGEN FAMILIAR. Nacionalidad": "Española",
         "REPETICIONES": "1",
-        "TOTAL VULNERABILIDAD": "2",
-        "REPITE CURSO": "Sí",
-        "MATERIAS PENDIENTES": "3",
-        "BECA MATERIALES": "X",
-        "DIFICULTADES FAMILIARES": "X",
+        "Total vulnerabilidad": "2",
+        "Repite curso": "Sí",
+        "Materias pendientes": "3",
+        "Beca materiales": "X",
+        "Dificultades familiares": "X",
         "TIPO": "COMPENSATORIA",
         "COMPENSATORIA": "X",
-        "TOTAL INTERVENCIONES": "1"
+        "Total intervenciones": "1"
       }
     },
     "plano_clase": {
@@ -2468,35 +2468,35 @@ export const demoSeed = {
         "Identificar y marcar la posición de los elementos de la instalación o equipo y el trazado de los circuitos, relacionando los planos de la documentación técnica con su ubicación real, para replantear la instalación."
       ],
       "ra_og_mapping": {
-        "0": ["RA01", "RA02"],
-        "1": ["RA02", "RA03"],
-        "2": ["RA04", "RA05"],
-        "3": ["RA06"],
-        "4": ["RA03", "RA07"],
-        "5": ["RA01", "RA04"]
+        "0": ["RA1", "RA2"],
+        "1": ["RA2", "RA3"],
+        "2": ["RA4", "RA5"],
+        "3": ["RA6"],
+        "4": ["RA3", "RA07"],
+        "5": ["RA1", "RA4"]
       }
     },
     "config_contexto": {
       "curso_escolar": "2025-2026",
-      "grupo": "1º I.T.",
+      "grupo": "1º i.t.",
       "aula": "Taller 3",
       "centro": "IES Andalán",
       "instalaciones": "Taller de Electrónica General 3. Equipado con puestos dobles, instrumentación básica y entrenadores de telecomunicaciones.",
       "horario_lectivo": "Turno de mañana, de 8:30 a 14:30. 5 horas semanales asignadas al módulo.",
       "equipo_docente": "Profesorado técnico de FP de la especialidad de Equipos Electrónicos.",
       "entorno_socioeconomico": "Centro situado en entorno urbano/industrial con gran presencia de empresas del sector servicios y mantenimiento.",
-      "inclusion": "Adaptaciones curriculares de acceso para un alumnadodo con discapacidad motriz leve.",
-      "elenco_situaciones": "Diversidad de ritmos de aprendizaje. Un grupo de 5 alumnadodo con formación profesional básica previa.",
-      "circunstancias_ocultas": "Posibles problemas de brecha digital en un 10% del alumnadodo.",
+      "inclusion": "Adaptaciones curriculares de acceso para un alumnado con discapacidad motriz leve.",
+      "elenco_situaciones": "Diversidad de ritmos de aprendizaje. Un grupo de 5 alumnado con formación profesional básica previa.",
+      "circunstancias_ocultas": "Posibles problemas de brecha digital en un 10% del alumnado.",
       "metodologia": "Aprendizaje Basado en Retos (ABR). Talleres eminentemente prácticos combinados con píldoras teóricas."
     },
     "config_aula": {
       "Metodología": "Trabajo cooperativo en pequeños grupos (2-3 personas). Uso de maquetas de simulación de viviendas.",
-      "Atención a la diversidad": "Ampliación de prácticas para alumnadodo de ritmo rápido. Refuerzo personalizado en horas de desdoble."
+      "Atención a la diversidad": "Ampliación de prácticas para alumnado de ritmo rápido. Refuerzo personalizado en horas de desdoble."
     },
     "horario": {
       "Lun": 2,
-      "Mar": 0,
+      "Mar": 1,
       "Mié": 1,
       "Jue": 1,
       "Vie": 0
@@ -2515,66 +2515,66 @@ export const demoSeed = {
       "h_sem_feoe": 8
     },
     "df_ra": [
-      { "id_ra": "RA01", "desc_ra": "Identifica los elementos de las instalaciones de telecomunicaciones en viviendas y edificios, reconociendo su funcionalidad y características técnicas.", "peso_ra": 15, "is_dual": "No" },
-      { "id_ra": "RA02", "desc_ra": "Configura pequeñas instalaciones de infraestructuras comunes de telecomunicaciones, realizando los cálculos y ajustes necesarios.", "peso_ra": 20, "is_dual": "No" },
-      { "id_ra": "RA03", "desc_ra": "Monta instalaciones de infraestructuras comunes de telecomunicaciones, interpretando planos y esquemas.", "peso_ra": 25, "is_dual": "Sí" },
-      { "id_ra": "RA04", "desc_ra": "Verifica el funcionamiento de las instalaciones de telecomunicaciones, realizando las pruebas y mediciones reglamentarias.", "peso_ra": 15, "is_dual": "No" },
-      { "id_ra": "RA05", "desc_ra": "Mantiene y repara instalaciones de telecomunicaciones, diagnosticando averías y aplicando técnicas de mantenimiento.", "peso_ra": 15, "is_dual": "Sí" },
-      { "id_ra": "RA06", "desc_ra": "Cumple las normas de prevención de riesgos laborales y protección ambiental, evaluando los riesgos asociados.", "peso_ra": 10, "is_dual": "No" }
+      { "id_ra": "RA1", "desc_ra": "Identifica los elementos de las instalaciones de telecomunicaciones en viviendas y edificios, reconociendo su funcionalidad y características técnicas.", "peso_ra": 15, "is_dual": "No" },
+      { "id_ra": "RA2", "desc_ra": "Configura pequeñas instalaciones de infraestructuras comunes de telecomunicaciones, realizando los cálculos y ajustes necesarios.", "peso_ra": 20, "is_dual": "No" },
+      { "id_ra": "RA3", "desc_ra": "Monta instalaciones de infraestructuras comunes de telecomunicaciones, interpretando planos y esquemas.", "peso_ra": 25, "is_dual": "Sí" },
+      { "id_ra": "RA4", "desc_ra": "Verifica el funcionamiento de las instalaciones de telecomunicaciones, realizando las pruebas y mediciones reglamentarias.", "peso_ra": 15, "is_dual": "No" },
+      { "id_ra": "RA5", "desc_ra": "Mantiene y repara instalaciones de telecomunicaciones, diagnosticando averías y aplicando técnicas de mantenimiento.", "peso_ra": 15, "is_dual": "Sí" },
+      { "id_ra": "RA6", "desc_ra": "Cumple las normas de prevención de riesgos laborales y protección ambiental, evaluando los riesgos asociados.", "peso_ra": 10, "is_dual": "No" }
     ],
     "df_ce": [
-      { "id_ce": "CE01", "id_ra": "RA01", "id_ud": "UD01", "desc_ce": "Se han identificado los elementos que componen la ICT de una vivienda o edificio.", "peso_ce": 25 },
-      { "id_ce": "CE02", "id_ra": "RA01", "id_ud": "UD01", "desc_ce": "Se ha descrito la funcionalidad de cada elemento de la instalación.", "peso_ce": 25 },
-      { "id_ce": "CE03", "id_ra": "RA01", "id_ud": "UD01", "desc_ce": "Se han reconocido las características técnicas de los equipos y materiales.", "peso_ce": 25 },
-      { "id_ce": "CE04", "id_ra": "RA01", "id_ud": "UD02", "desc_ce": "Se ha interpretado la normativa vigente aplicable a las ICT.", "peso_ce": 25 },
-      { "id_ce": "CE05", "id_ra": "RA02", "id_ud": "UD02", "desc_ce": "Se han seleccionado los equipos y materiales adecuados para cada instalación.", "peso_ce": 30 },
-      { "id_ce": "CE06", "id_ra": "RA02", "id_ud": "UD02", "desc_ce": "Se han realizado los cálculos necesarios para la configuración de la instalación.", "peso_ce": 35 },
-      { "id_ce": "CE07", "id_ra": "RA02", "id_ud": "UD03", "desc_ce": "Se han elaborado esquemas y croquis de la instalación.", "peso_ce": 35 },
-      { "id_ce": "CE08", "id_ra": "RA03", "id_ud": "UD03", "desc_ce": "Se han interpretado planos técnicos de instalaciones de telecomunicaciones.", "peso_ce": 20 },
-      { "id_ce": "CE09", "id_ra": "RA03", "id_ud": "UD03", "desc_ce": "Se han montado los elementos de la instalación siguiendo las especificaciones técnicas.", "peso_ce": 30 },
-      { "id_ce": "CE10", "id_ra": "RA03", "id_ud": "UD04", "desc_ce": "Se han realizado las conexiones entre equipos siguiendo los esquemas.", "peso_ce": 25 },
-      { "id_ce": "CE11", "id_ra": "RA03", "id_ud": "UD04", "desc_ce": "Se han aplicado las técnicas de montaje y fijación adecuadas.", "peso_ce": 25 },
-      { "id_ce": "CE12", "id_ra": "RA04", "id_ud": "UD05", "desc_ce": "Se han realizado las pruebas funcionales de la instalación.", "peso_ce": 30 },
-      { "id_ce": "CE13", "id_ra": "RA04", "id_ud": "UD05", "desc_ce": "Se han efectuado las mediciones reglamentarias con los instrumentos adecuados.", "peso_ce": 35 },
-      { "id_ce": "CE14", "id_ra": "RA04", "id_ud": "UD05", "desc_ce": "Se ha verificado el cumplimiento de la normativa vigente.", "peso_ce": 35 },
-      { "id_ce": "CE15", "id_ra": "RA05", "id_ud": "UD06", "desc_ce": "Se han diagnosticado averías típicas en instalaciones de ICT.", "peso_ce": 35 },
-      { "id_ce": "CE16", "id_ra": "RA05", "id_ud": "UD06", "desc_ce": "Se han aplicado técnicas de mantenimiento preventivo.", "peso_ce": 30 },
-      { "id_ce": "CE17", "id_ra": "RA05", "id_ud": "UD06", "desc_ce": "Se han reparado las averías detectadas utilizando las herramientas adecuadas.", "peso_ce": 35 },
-      { "id_ce": "CE18", "id_ra": "RA06", "id_ud": "UD01", "desc_ce": "Se han identificado los riesgos laborales asociados a las instalaciones de ICT.", "peso_ce": 30 },
-      { "id_ce": "CE19", "id_ra": "RA06", "id_ud": "UD01", "desc_ce": "Se han aplicado las medidas de prevención y protección adecuadas.", "peso_ce": 35 },
-      { "id_ce": "CE20", "id_ra": "RA06", "id_ud": "UD01", "desc_ce": "Se ha cumplido la normativa de protección ambiental en la gestión de residuos.", "peso_ce": 35 }
+      { "id_ce": "CE01", "id_ra": "RA1", "id_ud": "UD01", "desc_ce": "Se han identificado los elementos que componen la ICT de una vivienda o edificio.", "peso_ce": 25 },
+      { "id_ce": "CE02", "id_ra": "RA1", "id_ud": "UD01", "desc_ce": "Se ha descrito la funcionalidad de cada elemento de la instalación.", "peso_ce": 25 },
+      { "id_ce": "CE03", "id_ra": "RA1", "id_ud": "UD01", "desc_ce": "Se han reconocido las características técnicas de los equipos y materiales.", "peso_ce": 25 },
+      { "id_ce": "CE04", "id_ra": "RA1", "id_ud": "UD02", "desc_ce": "Se ha interpretado la normativa vigente aplicable a las ICT.", "peso_ce": 25 },
+      { "id_ce": "CE05", "id_ra": "RA2", "id_ud": "UD02", "desc_ce": "Se han seleccionado los equipos y materiales adecuados para cada instalación.", "peso_ce": 30 },
+      { "id_ce": "CE06", "id_ra": "RA2", "id_ud": "UD02", "desc_ce": "Se han realizado los cálculos necesarios para la configuración de la instalación.", "peso_ce": 35 },
+      { "id_ce": "CE07", "id_ra": "RA2", "id_ud": "UD03", "desc_ce": "Se han elaborado esquemas y croquis de la instalación.", "peso_ce": 35 },
+      { "id_ce": "CE08", "id_ra": "RA3", "id_ud": "UD03", "desc_ce": "Se han interpretado planos técnicos de instalaciones de telecomunicaciones.", "peso_ce": 20 },
+      { "id_ce": "CE09", "id_ra": "RA3", "id_ud": "UD03", "desc_ce": "Se han montado los elementos de la instalación siguiendo las especificaciones técnicas.", "peso_ce": 30 },
+      { "id_ce": "CE10", "id_ra": "RA3", "id_ud": "UD04", "desc_ce": "Se han realizado las conexiones entre equipos siguiendo los esquemas.", "peso_ce": 25 },
+      { "id_ce": "CE11", "id_ra": "RA3", "id_ud": "UD04", "desc_ce": "Se han aplicado las técnicas de montaje y fijación adecuadas.", "peso_ce": 25 },
+      { "id_ce": "CE12", "id_ra": "RA4", "id_ud": "UD05", "desc_ce": "Se han realizado las pruebas funcionales de la instalación.", "peso_ce": 30 },
+      { "id_ce": "CE13", "id_ra": "RA4", "id_ud": "UD05", "desc_ce": "Se han efectuado las mediciones reglamentarias con los instrumentos adecuados.", "peso_ce": 35 },
+      { "id_ce": "CE14", "id_ra": "RA4", "id_ud": "UD05", "desc_ce": "Se ha verificado el cumplimiento de la normativa vigente.", "peso_ce": 35 },
+      { "id_ce": "CE15", "id_ra": "RA5", "id_ud": "UD06", "desc_ce": "Se han diagnosticado averías típicas en instalaciones de ICT.", "peso_ce": 35 },
+      { "id_ce": "CE16", "id_ra": "RA5", "id_ud": "UD06", "desc_ce": "Se han aplicado técnicas de mantenimiento preventivo.", "peso_ce": 30 },
+      { "id_ce": "CE17", "id_ra": "RA5", "id_ud": "UD06", "desc_ce": "Se han reparado las averías detectadas utilizando las herramientas adecuadas.", "peso_ce": 35 },
+      { "id_ce": "CE18", "id_ra": "RA6", "id_ud": "UD01", "desc_ce": "Se han identificado los riesgos laborales asociados a las instalaciones de ICT.", "peso_ce": 30 },
+      { "id_ce": "CE19", "id_ra": "RA6", "id_ud": "UD01", "desc_ce": "Se han aplicado las medidas de prevención y protección adecuadas.", "peso_ce": 35 },
+      { "id_ce": "CE20", "id_ra": "RA6", "id_ud": "UD01", "desc_ce": "Se ha cumplido la normativa de protección ambiental en la gestión de residuos.", "peso_ce": 35 }
     ],
     "df_ud": [
-      { "id_ud": "UD01", "desc_ud": "ICT en viviendas y edificios: elementos, normativa y diseño", "horas_ud": 30, "ra_mappings": { "RA01": "RA01", "RA06": "RA06" }, "RA01": 50, "RA02": 0, "RA03": 0, "RA04": 0, "RA05": 0, "RA06": 100 },
-      { "id_ud": "UD02", "desc_ud": "Instalaciones de antenas y televisión satélite", "horas_ud": 30, "ra_mappings": { "RA01": "RA01", "RA02": "RA02" }, "RA01": 30, "RA02": 40, "RA03": 0, "RA04": 0, "RA05": 0, "RA06": 0 },
-      { "id_ud": "UD03", "desc_ud": "Infraestructuras de telecomunicaciones de banda ancha", "horas_ud": 28, "ra_mappings": { "RA02": "RA02", "RA03": "RA03" }, "RA01": 20, "RA02": 40, "RA03": 30, "RA04": 0, "RA05": 0, "RA06": 0 },
-      { "id_ud": "UD04", "desc_ud": "Instalaciones de telefonía y redes de datos", "horas_ud": 30, "ra_mappings": { "RA03": "RA03" }, "RA01": 0, "RA02": 20, "RA03": 40, "RA04": 0, "RA05": 0, "RA06": 0 },
-      { "id_ud": "UD05", "desc_ud": "Seguridad y verificación de instalaciones de telecomunicaciones", "horas_ud": 25, "ra_mappings": { "RA04": "RA04" }, "RA01": 0, "RA02": 0, "RA03": 10, "RA04": 60, "RA05": 0, "RA06": 0 },
-      { "id_ud": "UD06", "desc_ud": "Mantenimiento y reparación de instalaciones ICT", "horas_ud": 24, "ra_mappings": { "RA05": "RA05" }, "RA01": 0, "RA02": 0, "RA03": 20, "RA04": 40, "RA05": 100, "RA06": 0 }
+      { "id_ud": "UD01", "desc_ud": "ICT en viviendas y edificios: elementos, normativa y diseño", "horas_ud": 30, "ra_mappings": { "RA1": "RA1", "RA6": "RA6" }, "RA1": 50, "RA2": 0, "RA3": 0, "RA4": 0, "RA5": 0, "RA6": 10 },
+      { "id_ud": "UD02", "desc_ud": "Instalaciones de antenas y televisión satélite", "horas_ud": 30, "ra_mappings": { "RA1": "RA1", "RA2": "RA2" }, "RA1": 30, "RA2": 40, "RA3": 0, "RA4": 0, "RA5": 0, "RA6": 0 },
+      { "id_ud": "UD03", "desc_ud": "Infraestructuras de telecomunicaciones de banda ancha", "horas_ud": 28, "ra_mappings": { "RA2": "RA2", "RA3": "RA3" }, "RA1": 20, "RA2": 40, "RA3": 30, "RA4": 0, "RA5": 0, "RA6": 0 },
+      { "id_ud": "UD04", "desc_ud": "Instalaciones de telefonía y redes de datos", "horas_ud": 30, "ra_mappings": { "RA3": "RA3" }, "RA1": 0, "RA2": 20, "RA3": 40, "RA4": 0, "RA5": 0, "RA6": 0 },
+      { "id_ud": "UD05", "desc_ud": "Seguridad y verificación de instalaciones de telecomunicaciones", "horas_ud": 25, "ra_mappings": { "RA4": "RA4" }, "RA1": 0, "RA2": 0, "RA3": 10, "RA4": 60, "RA5": 0, "RA6": 0 },
+      { "id_ud": "UD06", "desc_ud": "Mantenimiento y reparación de instalaciones ICT", "horas_ud": 24, "ra_mappings": { "RA5": "RA5" }, "RA1": 0, "RA2": 0, "RA3": 20, "RA4": 40, "RA5": 10, "RA6": 0 }
     ],
     "df_sesiones": [
-      { "ID": "S001", "id_ud": "UD01", "Num_Orden": 1, "Horas": 2, "Tipo_Actividad": "Teoría", "RA_CE": "RA01 / CE01-CE02", "Contenidos": "Introducción a las ICT. Elementos básicos de una instalación.", "Aspectos_Clave": "Identificar los componentes principales", "Recursos": "Presentación digital, muestras físicas de materiales" },
-      { "ID": "S002", "id_ud": "UD01", "Num_Orden": 2, "Horas": 2, "Tipo_Actividad": "Práctica", "RA_CE": "RA01 / CE03", "Contenidos": "Reconocimiento de materiales y equipos en maqueta didáctica.", "Aspectos_Clave": "Manipulación correcta de materiales", "Recursos": "Maqueta didáctica, catálogos técnicos" },
-      { "ID": "S003", "id_ud": "UD01", "Num_Orden": 3, "Horas": 2, "Tipo_Actividad": "Teoría", "RA_CE": "RA01 / CE04", "Contenidos": "Normativa ICT: Real Decreto 346/2011, UNE 133100.", "Aspectos_Clave": "Interpretación de normativa", "Recursos": "Documentación normativa, esquemas" },
-      { "ID": "S004", "id_ud": "UD02", "Num_Orden": 4, "Horas": 2, "Tipo_Actividad": "Teoría", "RA_CE": "RA01 / CE01-CE02", "Contenidos": "Instalaciones de antenas: tipos, elementos, características.", "Aspectos_Clave": "Comprensión del sistema de antenas", "Recursos": "Esquemas, vídeos demostrativos" },
-      { "ID": "S005", "id_ud": "UD02", "Num_Orden": 5, "Horas": 2, "Tipo_Actividad": "Práctica", "RA_CE": "RA02 / CE05-CE06", "Contenidos": "Cálculo de instalaciones de antenas: niveles de señal, pérdidas.", "Aspectos_Clave": "Realizar cálculos correctamente", "Recursos": "Calculadora, tablas de datos, software de simulación" },
-      { "ID": "S006", "id_ud": "UD02", "Num_Orden": 6, "Horas": 2, "Tipo_Actividad": "Taller", "RA_CE": "RA02 / CE07", "Contenidos": "Montaje de antena parabólica y soporte.", "Aspectos_Clave": "Orientación y fijación correcta", "Recursos": "Antena parabólica, soporte, herramientas" },
-      { "ID": "S007", "id_ud": "UD03", "Num_Orden": 7, "Horas": 2, "Tipo_Actividad": "Teoría", "RA_CE": "RA02 / CE05", "Contenidos": "Infraestructuras de banda ancha: fibra óptica, cable coaxial, par trenzado.", "Aspectos_Clave": "Diferencias entre medios de transmisión", "Recursos": "Muestras de cables, presentación" },
-      { "ID": "S008", "id_ud": "UD03", "Num_Orden": 8, "Horas": 2, "Tipo_Actividad": "Práctica", "RA_CE": "RA02 / CE06-CE07", "Contenidos": "Elaboración de esquemas de instalación de banda ancha.", "Aspectos_Clave": "Cumplir simbología normalizada", "Recursos": "Software de diseño, plantillas" },
-      { "ID": "S009", "id_ud": "UD03", "Num_Orden": 9, "Horas": 2, "Tipo_Actividad": "Taller", "RA_CE": "RA03 / CE08-CE09", "Contenidos": "Montaje de toma de fibra óptica y cableado interior.", "Aspectos_Clave": "Técnicas de conexión y fijación", "Recursos": "Fibra óptica, conectorizadora, herramientas" },
-      { "ID": "S010", "id_ud": "UD04", "Num_Orden": 10, "Horas": 2, "Tipo_Actividad": "Teoría", "RA_CE": "RA03 / CE10", "Contenidos": "Instalaciones de telefonía: centralización, distribución, puntos de acceso.", "Aspectos_Clave": "Arquitectura de la red telefónica", "Recursos": "Planos, esquemas" },
-      { "ID": "S011", "id_ud": "UD04", "Num_Orden": 11, "Horas": 2, "Tipo_Actividad": "Taller", "RA_CE": "RA03 / CE10-CE11", "Contenidos": "Montaje de rosetas telefónicas y conexionado de red de datos.", "Aspectos_Clave": "Conexionado correcto según norma", "Recursos": "Rosetas, cable FTP, crimpadora, comprobador" },
-      { "ID": "S012", "id_ud": "UD05", "Num_Orden": 12, "Horas": 2, "Tipo_Actividad": "Práctica", "RA_CE": "RA04 / CE12-CE13", "Contenidos": "Mediciones en instalaciones: nivel de señal, impedancia, continuidad.", "Aspectos_Clave": "Uso correcto de instrumentos de medida", "Recursos": "Medidor de campo, polímetro, analizador" },
-      { "ID": "S013", "id_ud": "UD05", "Num_Orden": 13, "Horas": 2, "Tipo_Actividad": "Teoría", "RA_CE": "RA04 / CE14", "Contenidos": "Verificación reglamentaria de instalaciones. Certificados.", "Aspectos_Clave": "Cumplimiento de normativa", "Recursos": "Modelos de certificados, checklist" },
-      { "ID": "S014", "id_ud": "UD06", "Num_Orden": 14, "Horas": 2, "Tipo_Actividad": "Práctica", "RA_CE": "RA05 / CE15-CE16", "Contenidos": "Diagnóstico de averías típicas en ICT.", "Aspectos_Clave": "Método sistemático de diagnóstico", "Recursos": "Maqueta con averías simuladas, documentación técnica" },
-      { "ID": "S015", "id_ud": "UD06", "Num_Orden": 15, "Horas": 2, "Tipo_Actividad": "Taller", "RA_CE": "RA05 / CE17", "Contenidos": "Reparación de averías: sustitución de elementos, ajustes.", "Aspectos_Clave": "Técnicas de reparación", "Recursos": "Herramientas, repuestos, maqueta" }
+      { "ID": "S001", "id_ud": "UD01", "Num_Orden": 1, "Horas": 2, "Tipo_Actividad": "Teoría", "RA_CE": "RA1 / CE01-CE02", "Contenidos": "Introducción a las ICT. Elementos básicos de una instalación.", "Aspectos_Clave": "Identificar los componentes principales", "Recursos": "Presentación digital, muestras físicas de materiales" },
+      { "ID": "S002", "id_ud": "UD01", "Num_Orden": 2, "Horas": 2, "Tipo_Actividad": "Práctica", "RA_CE": "RA1 / CE03", "Contenidos": "Reconocimiento de materiales y equipos en maqueta didáctica.", "Aspectos_Clave": "Manipulación correcta de materiales", "Recursos": "Maqueta didáctica, catálogos técnicos" },
+      { "ID": "S003", "id_ud": "UD01", "Num_Orden": 3, "Horas": 2, "Tipo_Actividad": "Teoría", "RA_CE": "RA1 / CE04", "Contenidos": "Normativa ICT: Real Decreto 346/2011, UNE 133100.", "Aspectos_Clave": "Interpretación de normativa", "Recursos": "Documentación normativa, esquemas" },
+      { "ID": "S004", "id_ud": "UD02", "Num_Orden": 4, "Horas": 2, "Tipo_Actividad": "Teoría", "RA_CE": "RA1 / CE01-CE02", "Contenidos": "Instalaciones de antenas: tipos, elementos, características.", "Aspectos_Clave": "Comprensión del sistema de antenas", "Recursos": "Esquemas, vídeos demostrativos" },
+      { "ID": "S005", "id_ud": "UD02", "Num_Orden": 5, "Horas": 2, "Tipo_Actividad": "Práctica", "RA_CE": "RA2 / CE05-CE06", "Contenidos": "Cálculo de instalaciones de antenas: niveles de señal, pérdidas.", "Aspectos_Clave": "Realizar cálculos correctamente", "Recursos": "Calculadora, tablas de datos, software de simulación" },
+      { "ID": "S006", "id_ud": "UD02", "Num_Orden": 6, "Horas": 2, "Tipo_Actividad": "Taller", "RA_CE": "RA2 / CE07", "Contenidos": "Montaje de antena parabólica y soporte.", "Aspectos_Clave": "Orientación y fijación correcta", "Recursos": "Antena parabólica, soporte, herramientas" },
+      { "ID": "S007", "id_ud": "UD03", "Num_Orden": 7, "Horas": 2, "Tipo_Actividad": "Teoría", "RA_CE": "RA2 / CE05", "Contenidos": "Infraestructuras de banda ancha: fibra óptica, cable coaxial, par trenzado.", "Aspectos_Clave": "Diferencias entre medios de transmisión", "Recursos": "Muestras de cables, presentación" },
+      { "ID": "S008", "id_ud": "UD03", "Num_Orden": 8, "Horas": 2, "Tipo_Actividad": "Práctica", "RA_CE": "RA2 / CE06-CE07", "Contenidos": "Elaboración de esquemas de instalación de banda ancha.", "Aspectos_Clave": "Cumplir simbología normalizada", "Recursos": "Software de diseño, plantillas" },
+      { "ID": "S009", "id_ud": "UD03", "Num_Orden": 9, "Horas": 2, "Tipo_Actividad": "Taller", "RA_CE": "Ra03 / CE08-CE09", "Contenidos": "Montaje de toma de fibra óptica y cableado interior.", "Aspectos_Clave": "Técnicas de conexión y fijación", "Recursos": "Fibra óptica, conectorizadora, herramientas" },
+      { "ID": "S010", "id_ud": "UD04", "Num_Orden": 10, "Horas": 2, "Tipo_Actividad": "Teoría", "RA_CE": "Ra03 / CE10", "Contenidos": "Instalaciones de telefonía: centralización, distribución, puntos de acceso.", "Aspectos_Clave": "Arquitectura de la red telefónica", "Recursos": "Planos, esquemas" },
+      { "ID": "S011", "id_ud": "UD04", "Num_Orden": 11, "Horas": 2, "Tipo_Actividad": "Taller", "RA_CE": "Ra03 / CE10-CE11", "Contenidos": "Montaje de rosetas telefónicas y conexionado de red de datos.", "Aspectos_Clave": "Conexionado correcto según norma", "Recursos": "Rosetas, cable FTP, crimpadora, comprobador" },
+      { "ID": "S012", "id_ud": "UD05", "Num_Orden": 12, "Horas": 2, "Tipo_Actividad": "Práctica", "RA_CE": "Ra04 / CE12-CE13", "Contenidos": "Mediciones en instalaciones: nivel de señal, impedancia, continuidad.", "Aspectos_Clave": "Uso correcto de instrumentos de medida", "Recursos": "Medidor de campo, polímetro, analizador" },
+      { "ID": "S013", "id_ud": "UD05", "Num_Orden": 13, "Horas": 2, "Tipo_Actividad": "Teoría", "RA_CE": "Ra04 / CE14", "Contenidos": "Verificación reglamentaria de instalaciones. Certificados.", "Aspectos_Clave": "Cumplimiento de normativa", "Recursos": "Modelos de certificados, checklist" },
+      { "ID": "S014", "id_ud": "UD06", "Num_Orden": 14, "Horas": 2, "Tipo_Actividad": "Práctica", "RA_CE": "Ra05 / CE15-CE16", "Contenidos": "Diagnóstico de averías típicas en ICT.", "Aspectos_Clave": "Método sistemático de diagnóstico", "Recursos": "Maqueta con averías simuladas, documentación técnica" },
+      { "ID": "S015", "id_ud": "UD06", "Num_Orden": 15, "Horas": 2, "Tipo_Actividad": "Taller", "RA_CE": "Ra05 / CE17", "Contenidos": "Reparación de averías: sustitución de elementos, ajustes.", "Aspectos_Clave": "Técnicas de reparación", "Recursos": "Herramientas, repuestos, maqueta" }
     ],
     "df_tareas": [
-      { "ID": "T01", "id_act": "ACT01", "Nombre_Tarea": "Diseño de ICT para vivienda unifamiliar", "Reto": "Diseñar y presupuestar la instalación completa de ICT para una vivienda de 100m²", "RA_Asociados": "RA01, RA02", "Instrumento": "Rúbrica de proyecto", "desc_act": "Los alumnadodo deberán diseñar la ICT completa de una vivienda unifamiliar, incluyendo antenas, telefonía y banda ancha, elaborando planos, lista de materiales y presupuesto." },
-      { "ID": "T02", "id_act": "ACT02", "Nombre_Tarea": "Montaje de instalación de antena colectiva", "Reto": "Montar y poner en marcha una instalación de antena colectiva para 4 viviendas", "RA_Asociados": "RA03", "Instrumento": "Lista de verificación", "desc_act": "Montaje de una instalación de antena colectiva con amplificador, derivadores y tomas, siguiendo el esquema proporcionado." },
-      { "ID": "T03", "id_act": "ACT03", "Nombre_Tarea": "Verificación y medidas de instalación ICT", "Reto": "Realizar el informe de verificación de una instalación ICT existente", "RA_Asociados": "RA04", "Instrumento": "Informe técnico", "desc_act": "Los alumnadodo realizarán mediciones de nivel de señal, pérdidas y continuidad en una instalación existente, elaborando el informe técnico correspondiente." },
-      { "ID": "T04", "id_act": "ACT04", "Nombre_Tarea": "Diagnóstico y reparación de averías en ICT", "Reto": "Diagnosticar y reparar 3 averías simuladas en una instalación ICT", "RA_Asociados": "RA05", "Instrumento": "Rúbrica de práctica", "desc_act": "Los alumnadodo deberán identificar y reparar averías en una maqueta de ICT, documentando el proceso seguido." },
-      { "ID": "T05", "id_act": "ACT05", "Nombre_Tarea": "Evaluación de riesgos en instalaciones ICT", "Reto": "Elaborar un plan de prevención para el montaje de una ICT", "RA_Asociados": "RA06", "Instrumento": "Checklist de PRL", "desc_act": "Identificar los riesgos laborales asociados al montaje de ICT y proponer medidas preventivas." }
+      { "ID": "T01", "id_act": "ACT01", "Nombre_Tarea": "Diseño de ICT para vivienda unifamiliar", "Reto": "Diseñar y presupuestar la instalación completa de ICT para una vivienda de 100m²", "RA_Asociados": "RA1, RA02", "Instrumento": "Rúbrica de proyecto", "desc_act": "Los alumnado deberán diseñar la ICT completa de una vivienda unifamiliar, incluyendo antenas, telefonía y banda ancha, elaborando planos, lista de materiales y presupuesto." },
+      { "ID": "T02", "id_act": "ACT02", "Nombre_Tarea": "Montaje de instalación de antena colectiva", "Reto": "Montar y poner en marcha una instalación de antena colectiva para 4 viviendas", "RA_Asociados": "RA3", "Instrumento": "Lista de verificación", "desc_act": "Montaje de una instalación de antena colectiva con amplificador, derivadores y tomas, siguiendo el esquema proporcionado." },
+      { "ID": "T03", "id_act": "ACT03", "Nombre_Tarea": "Verificación y medidas de instalación ICT", "Reto": "Realizar el informe de verificación de una instalación ICT existente", "RA_Asociados": "RA4", "Instrumento": "Informe técnico", "desc_act": "Los alumnado realizarán mediciones de nivel de señal, pérdidas y continuidad en una instalación existente, elaborando el informe técnico correspondiente." },
+      { "ID": "T04", "id_act": "ACT04", "Nombre_Tarea": "Diagnóstico y reparación de averías en ICT", "Reto": "Diagnosticar y reparar 3 averías simuladas en una instalación ICT", "RA_Asociados": "RA5", "Instrumento": "Rúbrica de práctica", "desc_act": "Los alumnado deberán identificar y reparar averías en una maqueta de ICT, documentando el proceso seguido." },
+      { "ID": "T05", "id_act": "ACT05", "Nombre_Tarea": "Evaluación de riesgos en instalaciones ICT", "Reto": "Elaborar un plan de prevención para el montaje de una ICT", "RA_Asociados": "RA6", "Instrumento": "Checklist de PRL", "desc_act": "Identificar los riesgos laborales asociados al montaje de ICT y proponer medidas preventivas." }
     ],
     "df_act": [
       { "id_act": "ACT01", "tri_act": "1T", "Tipo": "Teoria", "desc_act": "Examen teórico 1T", "peso_act": 40, "is_active": true },
@@ -2602,16 +2602,16 @@ export const demoSeed = {
     "df_instr": [],
     "df_pr": [],
     "df_dua": [
-      { "ID": "DUA01", "Alumnadodo_Aula": "Alumnadodo A", "Barrera": "Dificultad motriz leve", "Medida_Metodologica": "Uso de herramientas ergonómicas", "Medida_Acceso": "Mesa adaptada en primera fila", "Medida_Evaluacion": "Tiempo adicional en pruebas prácticas" },
-      { "ID": "DUA02", "Alumnadodo_Aula": "Grupo clase", "Barrera": "Desmotivación teórica", "Medida_Metodologica": "Aprendizaje Basado en Retos (ABR)", "Medida_Acceso": "Materiales audiovisuales interactivos", "Medida_Evaluacion": "Evaluación mediante rúbricas de proyecto" }
+      { "ID": "DUA01", "Alumnado_Aula": "Alumnado A", "Barrera": "Dificultad motriz leve", "Medida_Metodologica": "Uso de herramientas ergonómicas", "Medida_Acceso": "Mesa adaptada en primera fila", "Medida_Evaluacion": "Tiempo adicional en pruebas prácticas" },
+      { "ID": "DUA02", "Alumnado_Aula": "Grupo clase", "Barrera": "Desmotivación teórica", "Medida_Metodologica": "Aprendizaje Basado en Retos (ABR)", "Medida_Acceso": "Materiales audiovisuales interactivos", "Medida_Evaluacion": "Evaluación mediante rúbricas de proyecto" }
     ],
     "df_contingencia": [
       { "ID": "PC01", "Escenario": "Ausencia de Profesorado", "Organizacion": "Profesor de guardia con material preparado", "Actividades": "Realización de ejercicios de cálculo en aula de informática", "Seguimiento": "Entrega al final de la sesión vía Moodle" },
       { "ID": "PC02", "Escenario": "Interrupción Generalizada", "Organizacion": "Paso a docencia online síncrona", "Actividades": "Simulación de circuitos con software especializado", "Seguimiento": "Revisión de proyectos simulados compartidos en la nube" }
     ],
     "df_ace": [
-      { "ID": "ACE01", "Tipo": "Complementaria", "RA_Vinculados": "RA01", "Actividad": "Visita a central telefónica", "Trimestre": "1T", "Entidad": "Telefónica S.A.", "Evaluacion": "Cuestionario post-visita" },
-      { "ID": "ACE02", "Tipo": "Extraescolar", "RA_Vinculados": "RA06", "Actividad": "Asistencia a feria de telecomunicaciones", "Trimestre": "2T", "Entidad": "Feria de Zaragoza", "Evaluacion": "Memoria resumen de tecnologías vistas" }
+      { "ID": "ACE01", "Tipo": "Complementaria", "RA_Vinculados": "RA1", "Actividad": "Visita a central telefónica", "Trimestre": "1T", "Entidad": "Telefónica S.A.", "Evaluacion": "Cuestionario post-visita" },
+      { "ID": "ACE02", "Tipo": "Extraescolar", "RA_Vinculados": "RA6", "Actividad": "Asistencia a feria de telecomunicaciones", "Trimestre": "2T", "Entidad": "Feria de Zaragoza", "Evaluacion": "Memoria resumen de tecnologías vistas" }
     ],
     "calendar_notes": {
       "f_2025-10-12": "Fiesta Nacional de España",
@@ -2653,7 +2653,7 @@ export const demoSeed = {
         "direccion": "Pol. Ind. Malpica, C/ A, nave 14", "ciudad": "Zaragoza", "codigo_postal": "50016", "provincia": "Zaragoza",
         "sector": "Instalaciones eléctricas", "notas": "Empresa habitual en FCT. Muy buena disposición.", "estado": "activo",
         "interacciones": [
-          {"id":"INT01","fecha":"15/05/2026","tipo":"llamada","descripcion":"Confirmada disponibilidad para 2 alumnadodo de FCT","contacto":"María García"},
+          {"id":"INT01","fecha":"15/05/2026","tipo":"llamada","descripcion":"Confirmada disponibilidad para 2 alumnado de FCT","contacto":"María García"},
           {"id":"INT02","fecha":"22/05/2026","tipo":"email","descripcion":"Enviada ficha de la empresa y datos del tutor","contacto":"María García"},
           {"id":"INT03","fecha":"01/06/2026","tipo":"visita","descripcion":"Visita al centro para conocer las instalaciones","contacto":"María García"}
         ],
@@ -2664,10 +2664,10 @@ export const demoSeed = {
         "contacto_nombre": "Ahmed El Mansouri", "contacto_cargo": "Gerente",
         "telefono": "976 234 567", "email": "a.elmansouri@instalman.es",
         "direccion": "Pol. Ind. Cogullada, C/ B, nave 22", "ciudad": "Zaragoza", "codigo_postal": "50014", "provincia": "Zaragoza",
-        "sector": "Mantenimiento integral", "notas": "Buena experiencia con alumnadodo de mantenimiento", "estado": "activo",
+        "sector": "Mantenimiento integral", "notas": "Buena experiencia con alumnado de mantenimiento", "estado": "activo",
         "interacciones": [
           {"id":"INT04","fecha":"18/05/2026","tipo":"email","descripcion":"Enviada documentación convenio","contacto":"Ahmed El Mansouri"},
-          {"id":"INT05","fecha":"25/05/2026","tipo":"llamada","descripcion":"Confirmado interés. Quedamos en enviar alumnadodo en septiembre.","contacto":"Ahmed El Mansouri"}
+          {"id":"INT05","fecha":"25/05/2026","tipo":"llamada","descripcion":"Confirmado interés. Quedamos en enviar alumnado en septiembre.","contacto":"Ahmed El Mansouri"}
         ],
         "alumnado_asignados": ["AN09"]
       },
@@ -2676,10 +2676,10 @@ export const demoSeed = {
         "contacto_nombre": "Ion Popescu", "contacto_cargo": "Jefe de Taller",
         "telefono": "976 345 678", "email": "i.popescu@instaelec.es",
         "direccion": "Pol. Ind. Plaza, Avda. de la Innovación, 45", "ciudad": "Zaragoza", "codigo_postal": "50197", "provincia": "Zaragoza",
-        "sector": "Instalaciones eléctricas y domótica", "notas": "Prefieren alumnadodo de 2º curso. Taller muy bien equipado.", "estado": "activo",
+        "sector": "Instalaciones eléctricas y domótica", "notas": "Prefieren alumnado de 2º curso. Taller muy bien equipado.", "estado": "activo",
         "interacciones": [
           {"id":"INT06","fecha":"20/05/2026","tipo":"visita","descripcion":"Visita a taller. Muy buen ambiente.","contacto":"Ion Popescu"},
-          {"id":"INT07","fecha":"28/05/2026","tipo":"llamada","descripcion":"Confirman que necesitan 2 alumnadodo para domótica","contacto":"Ion Popescu"},
+          {"id":"INT07","fecha":"28/05/2026","tipo":"llamada","descripcion":"Confirman que necesitan 2 alumnado para domótica","contacto":"Ion Popescu"},
           {"id":"INT08","fecha":"05/06/2026","tipo":"email","descripcion":"Enviado el plan formativo individualizado","contacto":"Ion Popescu"}
         ],
         "alumnado_asignados": ["AN08"]
@@ -2691,7 +2691,7 @@ export const demoSeed = {
         "direccion": "Pol. Ind. Empresarium, C/ Roma, 12", "ciudad": "Zaragoza", "codigo_postal": "50720", "provincia": "Zaragoza",
         "sector": "Mantenimiento electro-mecánico", "notas": "Empresa certificada ISO. Muy organizada.", "estado": "activo",
         "interacciones": [
-          {"id":"INT09","fecha":"10/05/2026","tipo":"llamada","descripcion":"Primer contacto. Solicitan perfil de alumnadodo.","contacto":"Laura Martínez"},
+          {"id":"INT09","fecha":"10/05/2026","tipo":"llamada","descripcion":"Primer contacto. Solicitan perfil de alumnado.","contacto":"Laura Martínez"},
           {"id":"INT10","fecha":"17/05/2026","tipo":"email","descripcion":"Enviados currículos de candidatos","contacto":"Laura Martínez"}
         ],
         "alumnado_asignados": ["AN03", "AN07"]
@@ -2728,7 +2728,7 @@ export const demoSeed = {
         "direccion": "Pol. Ind. El Polígono, C/ Ebro, 27", "ciudad": "Utebo", "codigo_postal": "50180", "provincia": "Zaragoza",
         "sector": "Instalaciones eléctricas", "notas": "Hacen obra nueva en polígonos industriales", "estado": "activo",
         "interacciones": [
-          {"id":"INT16","fecha":"14/05/2026","tipo":"llamada","descripcion":"Contacto inicial. Necesitan 1 alumnadodo.","contacto":"Mihai Radulescu"},
+          {"id":"INT16","fecha":"14/05/2026","tipo":"llamada","descripcion":"Contacto inicial. Necesitan 1 alumnado.","contacto":"Mihai Radulescu"},
           {"id":"INT17","fecha":"21/05/2026","tipo":"email","descripcion":"Enviado cuestionario de la empresa","contacto":"Mihai Radulescu"}
         ],
         "alumnado_asignados": ["AN04"]
@@ -2740,7 +2740,7 @@ export const demoSeed = {
         "direccion": "Pol. Ind. Malpica, C/ D, nave 5", "ciudad": "Zaragoza", "codigo_postal": "50016", "provincia": "Zaragoza",
         "sector": "Cuadros eléctricos y automatización", "notas": "Tienen convenio firmado. Muy buen trato.", "estado": "activo",
         "interacciones": [
-          {"id":"INT18","fecha":"22/05/2026","tipo":"llamada","descripcion":"Interesados en recibir alumnadodo para prácticas","contacto":"Isabel Sanz"},
+          {"id":"INT18","fecha":"22/05/2026","tipo":"llamada","descripcion":"Interesados en recibir alumnado para prácticas","contacto":"Isabel Sanz"},
           {"id":"INT19","fecha":"29/05/2026","tipo":"email","descripcion":"Ficha de la empresa cumplimentada","contacto":"Isabel Sanz"},
           {"id":"INT20","fecha":"05/06/2026","tipo":"visita","descripcion":"Entrega de documentación y recorrido por la planta","contacto":"Isabel Sanz"}
         ],
@@ -2753,7 +2753,7 @@ export const demoSeed = {
         "direccion": "C/ Monte Carmelo, 34", "ciudad": "Zaragoza", "codigo_postal": "50008", "provincia": "Zaragoza",
         "sector": "Energías renovables", "notas": "Muy demandados. Solicitar con antelación mínima de 2 meses.", "estado": "activo",
         "interacciones": [
-          {"id":"INT21","fecha":"10/05/2026","tipo":"email","descripcion":"Solicitud de alumnadodo en prácticas. Responden que ok.","contacto":"Rachid Benali"},
+          {"id":"INT21","fecha":"10/05/2026","tipo":"email","descripcion":"Solicitud de alumnado en prácticas. Responden que ok.","contacto":"Rachid Benali"},
           {"id":"INT22","fecha":"24/05/2026","tipo":"llamada","descripcion":"Confirman 2 plazas para instalaciones fotovoltaicas","contacto":"Rachid Benali"}
         ],
         "alumnado_asignados": ["AN13", "AN16"]
@@ -2777,7 +2777,7 @@ export const demoSeed = {
         "direccion": "Pol. Ind. La Sarda, C/ Única, 2", "ciudad": "Huesca", "codigo_postal": "22004", "provincia": "Huesca",
         "sector": "Instalaciones eléctricas", "notas": "Cubren toda la provincia de Huesca", "estado": "activo",
         "interacciones": [
-          {"id":"INT25","fecha":"09/05/2026","tipo":"llamada","descripcion":"Buscan alumnadodo con manejo de AutoCAD","contacto":"Jorge Pueyo"},
+          {"id":"INT25","fecha":"09/05/2026","tipo":"llamada","descripcion":"Buscan alumnado con manejo de AutoCAD","contacto":"Jorge Pueyo"},
           {"id":"INT26","fecha":"16/05/2026","tipo":"visita","descripcion":"Visita a obra en Sabiñánigo","contacto":"Jorge Pueyo"},
           {"id":"INT27","fecha":"30/05/2026","tipo":"email","descripcion":"Enviado el acuerdo de prácticas firmado","contacto":"Jorge Pueyo"}
         ],
@@ -2788,10 +2788,10 @@ export const demoSeed = {
         "contacto_nombre": "Cristina Oprea", "contacto_cargo": "Jefa de Recursos Humanos",
         "telefono": "976 234 568", "email": "coprea@seguridadpro.es",
         "direccion": "Pol. Ind. El Portillo, C/ Albaricoque, 7", "ciudad": "Zaragoza", "codigo_postal": "50003", "provincia": "Zaragoza",
-        "sector": "Seguridad electrónica", "notas": "Solicitan alumnadodo con carnet de conducir", "estado": "activo",
+        "sector": "Seguridad electrónica", "notas": "Solicitan alumnado con carnet de conducir", "estado": "activo",
         "interacciones": [
           {"id":"INT28","fecha":"11/05/2026","tipo":"email","descripcion":"Enviamos información del ciclo formativo","contacto":"Cristina Oprea"},
-          {"id":"INT29","fecha":"18/05/2026","tipo":"llamada","descripcion":"Confirman que aceptan 1 alumnadodo en prácticas","contacto":"Cristina Oprea"}
+          {"id":"INT29","fecha":"18/05/2026","tipo":"llamada","descripcion":"Confirman que aceptan 1 alumnado en prácticas","contacto":"Cristina Oprea"}
         ],
         "alumnado_asignados": ["AN17"]
       },
@@ -2803,7 +2803,7 @@ export const demoSeed = {
         "sector": "Climatización y electricidad", "notas": "Empresa en crecimiento. Nuevas oficinas.", "estado": "activo",
         "interacciones": [
           {"id":"INT30","fecha":"13/05/2026","tipo":"visita","descripcion":"Visita a obra de climatización en centro comercial","contacto":"Mohamed Ouahidi"},
-          {"id":"INT31","fecha":"20/05/2026","tipo":"email","descripcion":"Enviada hoja de ruta para la acogida del alumnadodo","contacto":"Mohamed Ouahidi"}
+          {"id":"INT31","fecha":"20/05/2026","tipo":"email","descripcion":"Enviada hoja de ruta para la acogida del alumnado","contacto":"Mohamed Ouahidi"}
         ],
         "alumnado_asignados": ["AN19"]
       },
@@ -2815,7 +2815,7 @@ export const demoSeed = {
         "sector": "Fibra óptica y telecomunicaciones", "notas": "Tienen bolsa de empleo propia. Contratan al 60%.", "estado": "activo",
         "interacciones": [
           {"id":"INT32","fecha":"28/05/2026","tipo":"visita","descripcion":"Visita concertada para conocer las instalaciones","contacto":"Ana Belén Lázaro"},
-          {"id":"INT33","fecha":"04/06/2026","tipo":"llamada","descripcion":"Confirman disponibilidad para 2 alumnadodo","contacto":"Ana Belén Lázaro"}
+          {"id":"INT33","fecha":"04/06/2026","tipo":"llamada","descripcion":"Confirman disponibilidad para 2 alumnado","contacto":"Ana Belén Lázaro"}
         ],
         "alumnado_asignados": ["AN25"]
       },
@@ -2836,10 +2836,10 @@ export const demoSeed = {
         "contacto_nombre": "Rosa María Valero", "contacto_cargo": "Directora de Operaciones",
         "telefono": "976 456 790", "email": "rmvalero@mii-sa.es",
         "direccion": "Pol. Ind. Los Enlaces, Avda. de la Técnica, 33", "ciudad": "Zaragoza", "codigo_postal": "50015", "provincia": "Zaragoza",
-        "sector": "Mantenimiento integral", "notas": "Empresa grande. Pueden acoger hasta 4 alumnadodo.", "estado": "activo",
+        "sector": "Mantenimiento integral", "notas": "Empresa grande. Pueden acoger hasta 4 alumnado.", "estado": "activo",
         "interacciones": [
-          {"id":"INT36","fecha":"30/05/2026","tipo":"llamada","descripcion":"Confirmada plaza para 3 alumnadodo","contacto":"Rosa María Valero"},
-          {"id":"INT37","fecha":"06/06/2026","tipo":"email","descripcion":"Enviados perfiles de los alumnadodo seleccionados","contacto":"Rosa María Valero"},
+          {"id":"INT36","fecha":"30/05/2026","tipo":"llamada","descripcion":"Confirmada plaza para 3 alumnado","contacto":"Rosa María Valero"},
+          {"id":"INT37","fecha":"06/06/2026","tipo":"email","descripcion":"Enviados perfiles de los alumnado seleccionados","contacto":"Rosa María Valero"},
           {"id":"INT38","fecha":"10/06/2026","tipo":"visita","descripcion":"Firma de convenios. Recorrido por las instalaciones.","contacto":"Rosa María Valero"}
         ],
         "alumnado_asignados": ["AN02", "AN15"]
@@ -2849,10 +2849,10 @@ export const demoSeed = {
         "contacto_nombre": "Khalid El Mouden", "contacto_cargo": "Socio Fundador",
         "telefono": "978 234 567", "email": "kelmouden@rtcsur.es",
         "direccion": "Pol. Ind. La Paz, C/ Tramuntana, 8", "ciudad": "Teruel", "codigo_postal": "44003", "provincia": "Teruel",
-        "sector": "Redes de datos", "notas": "Startup. Buscan alumnadodo con conocimientos de networking.", "estado": "pendiente",
+        "sector": "Redes de datos", "notas": "Startup. Buscan alumnado con conocimientos de networking.", "estado": "pendiente",
         "interacciones": [
           {"id":"INT39","fecha":"15/05/2026","tipo":"email","descripcion":"Primer contacto. Muy interesados.","contacto":"Khalid El Mouden"},
-          {"id":"INT40","fecha":"29/05/2026","tipo":"llamada","descripcion":"Pendiente de definir número de alumnadodo","contacto":"Khalid El Mouden"}
+          {"id":"INT40","fecha":"29/05/2026","tipo":"llamada","descripcion":"Pendiente de definir número de alumnado","contacto":"Khalid El Mouden"}
         ],
         "alumnado_asignados": []
       },
@@ -2863,8 +2863,8 @@ export const demoSeed = {
         "direccion": "Pol. Ind. Ciudad del Transporte, C/ Logroño, 5", "ciudad": "Zaragoza", "codigo_postal": "50011", "provincia": "Zaragoza",
         "sector": "Eficiencia energética", "notas": "Certificados ISO 50001. Auditorías energéticas.", "estado": "activo",
         "interacciones": [
-          {"id":"INT41","fecha":"17/05/2026","tipo":"llamada","descripcion":"Solicitan 1 alumnadodo para auditorías","contacto":"Nadia Stanciu"},
-          {"id":"INT42","fecha":"24/05/2026","tipo":"email","descripcion":"Enviado perfil del alumnadodo candidato","contacto":"Nadia Stanciu"},
+          {"id":"INT41","fecha":"17/05/2026","tipo":"llamada","descripcion":"Solicitan 1 alumnado para auditorías","contacto":"Nadia Stanciu"},
+          {"id":"INT42","fecha":"24/05/2026","tipo":"email","descripcion":"Enviado perfil del alumnado candidato","contacto":"Nadia Stanciu"},
           {"id":"INT43","fecha":"31/05/2026","tipo":"visita","descripcion":"Reunión de coordinación del plan de prácticas","contacto":"Nadia Stanciu"}
         ],
         "alumnado_asignados": ["AN20"]
@@ -2876,7 +2876,7 @@ export const demoSeed = {
         "direccion": "C/ Deporte, 12, local 4", "ciudad": "Zaragoza", "codigo_postal": "50006", "provincia": "Zaragoza",
         "sector": "Instalaciones deportivas", "notas": "Temporada alta en verano. Prefieren prácticas en sept-oct.", "estado": "activo",
         "interacciones": [
-          {"id":"INT44","fecha":"09/05/2026","tipo":"email","descripcion":"Contactan interesados en recibir alumnadodo","contacto":"David Sos"},
+          {"id":"INT44","fecha":"09/05/2026","tipo":"email","descripcion":"Contactan interesados en recibir alumnado","contacto":"David Sos"},
           {"id":"INT45","fecha":"23/05/2026","tipo":"llamada","descripcion":"Confirman 1 plaza para instalaciones eléctricas","contacto":"David Sos"}
         ],
         "alumnado_asignados": []
@@ -2902,7 +2902,7 @@ export const demoSeed = {
         "interacciones": [
           {"id":"INT48","fecha":"14/05/2026","tipo":"visita","descripcion":"Demostración de sistema KNX en showroom","contacto":"Andrei Cojocaru"},
           {"id":"INT49","fecha":"28/05/2026","tipo":"email","descripcion":"Envían catálogo de productos para el ciclo","contacto":"Andrei Cojocaru"},
-          {"id":"INT50","fecha":"04/06/2026","tipo":"llamada","descripcion":"Interesados en 2 alumnadodo para proyectos de smart homes","contacto":"Andrei Cojocaru"}
+          {"id":"INT50","fecha":"04/06/2026","tipo":"llamada","descripcion":"Interesados en 2 alumnado para proyectos de smart homes","contacto":"Andrei Cojocaru"}
         ],
         "alumnado_asignados": []
       },
@@ -2911,9 +2911,9 @@ export const demoSeed = {
         "contacto_nombre": "Pilar Abadía", "contacto_cargo": "Titular",
         "telefono": "976 890 123", "email": "pabadia@tallersanjorge.es",
         "direccion": "C/ San Jorge, 45, bajo", "ciudad": "Zaragoza", "codigo_postal": "50001", "provincia": "Zaragoza",
-        "sector": "Reparaciones eléctricas", "notas": "Pequeña empresa. 1 alumnadodo máximo. Trato familiar.", "estado": "activo",
+        "sector": "Reparaciones eléctricas", "notas": "Pequeña empresa. 1 alumnado máximo. Trato familiar.", "estado": "activo",
         "interacciones": [
-          {"id":"INT51","fecha":"16/05/2026","tipo":"llamada","descripcion":"Contacto telefónico. Les viene bien 1 alumnadodo.","contacto":"Pilar Abadía"},
+          {"id":"INT51","fecha":"16/05/2026","tipo":"llamada","descripcion":"Contacto telefónico. Les viene bien 1 alumnado.","contacto":"Pilar Abadía"},
           {"id":"INT52","fecha":"30/05/2026","tipo":"email","descripcion":"Enviado y firmado el documento de compromiso","contacto":"Pilar Abadía"}
         ],
         "alumnado_asignados": ["AN21"]
@@ -2949,7 +2949,7 @@ export const demoSeed = {
         "direccion": "Pol. Ind. Malpica, C/ F, nave 30", "ciudad": "Zaragoza", "codigo_postal": "50016", "provincia": "Zaragoza",
         "sector": "Suministros eléctricos", "notas": "Distribuidores oficiales de material eléctrico", "estado": "activo",
         "interacciones": [
-          {"id":"INT57","fecha":"19/05/2026","tipo":"llamada","descripcion":"Contacto iniciado por la empresa. Buscan 2 alumnadodo.","contacto":"Mohssin Ait Lhaj"},
+          {"id":"INT57","fecha":"19/05/2026","tipo":"llamada","descripcion":"Contacto iniciado por la empresa. Buscan 2 alumnado.","contacto":"Mohssin Ait Lhaj"},
           {"id":"INT58","fecha":"02/06/2026","tipo":"email","descripcion":"Enviada documentación del departamento de ventas","contacto":"Mohssin Ait Lhaj"},
           {"id":"INT59","fecha":"09/06/2026","tipo":"visita","descripcion":"Visita al almacén. Instalaciones excelentes.","contacto":"Mohssin Ait Lhaj"}
         ],
@@ -2963,7 +2963,7 @@ export const demoSeed = {
         "sector": "Alumbrado público", "notas": "Proyectos de iluminación municipal", "estado": "activo",
         "interacciones": [
           {"id":"INT60","fecha":"08/05/2026","tipo":"email","descripcion":"Contactan ofreciendo plazas para FCT","contacto":"Elena Stan"},
-          {"id":"INT61","fecha":"22/05/2026","tipo":"llamada","descripcion":"Confirmado 1 alumnadodo para alumbrado público","contacto":"Elena Stan"},
+          {"id":"INT61","fecha":"22/05/2026","tipo":"llamada","descripcion":"Confirmado 1 alumnado para alumbrado público","contacto":"Elena Stan"},
           {"id":"INT62","fecha":"05/06/2026","tipo":"visita","descripcion":"Visita a proyecto de iluminación en Huesca capital","contacto":"Elena Stan"}
         ],
         "alumnado_asignados": []
@@ -2975,7 +2975,7 @@ export const demoSeed = {
         "direccion": "C/ Río Ebro, 23, local 2", "ciudad": "Zaragoza", "codigo_postal": "50009", "provincia": "Zaragoza",
         "sector": "Fontanería y electricidad", "notas": "Hacen obra nueva y reformas. Equipo joven.", "estado": "activo",
         "interacciones": [
-          {"id":"INT63","fecha":"11/05/2026","tipo":"llamada","descripcion":"Buscan alumnadodo para reforma de viviendas","contacto":"Joaquín Romeo"},
+          {"id":"INT63","fecha":"11/05/2026","tipo":"llamada","descripcion":"Buscan alumnado para reforma de viviendas","contacto":"Joaquín Romeo"},
           {"id":"INT64","fecha":"25/05/2026","tipo":"email","descripcion":"Envían relación de proyectos para el curso","contacto":"Joaquín Romeo"}
         ],
         "alumnado_asignados": []
@@ -2987,9 +2987,9 @@ export const demoSeed = {
         "direccion": "Ctra. de Alcañiz, km 5", "ciudad": "Alcañiz", "codigo_postal": "44600", "provincia": "Teruel",
         "sector": "Instalaciones agropecuarias", "notas": "Especialistas en granjas y explotaciones. Zona Teruel.", "estado": "activo",
         "interacciones": [
-          {"id":"INT65","fecha":"13/05/2026","tipo":"email","descripcion":"Interesados en recibir alumnadodo de la zona","contacto":"Larisa Munteanu"},
+          {"id":"INT65","fecha":"13/05/2026","tipo":"email","descripcion":"Interesados en recibir alumnado de la zona","contacto":"Larisa Munteanu"},
           {"id":"INT66","fecha":"27/05/2026","tipo":"visita","descripcion":"Visita a explotación agrícola. Muy didáctico.","contacto":"Larisa Munteanu"},
-          {"id":"INT67","fecha":"03/06/2026","tipo":"llamada","descripcion":"Confirman 1 plaza para alumnadodo de la zona","contacto":"Larisa Munteanu"}
+          {"id":"INT67","fecha":"03/06/2026","tipo":"llamada","descripcion":"Confirman 1 plaza para alumnado de la zona","contacto":"Larisa Munteanu"}
         ],
         "alumnado_asignados": []
       },
@@ -2998,11 +2998,11 @@ export const demoSeed = {
         "contacto_nombre": "Rafael Sanz", "contacto_cargo": "Director General",
         "telefono": "976 345 679", "email": "rsanz@grupoelectroaragon.es",
         "direccion": "Pol. Ind. La Torre, Avda. de la Electricidad, 10", "ciudad": "Zaragoza", "codigo_postal": "50018", "provincia": "Zaragoza",
-        "sector": "Grupo empresarial eléctrico", "notas": "Varias filiales. Preferencia por alumnadodo del centro.", "estado": "activo",
+        "sector": "Grupo empresarial eléctrico", "notas": "Varias filiales. Preferencia por alumnado del centro.", "estado": "activo",
         "interacciones": [
           {"id":"INT68","fecha":"02/06/2026","tipo":"visita","descripcion":"Reunión anual de colaboración. Confirmadas 5 plazas.","contacto":"Rafael Sanz"},
           {"id":"INT69","fecha":"09/06/2026","tipo":"email","descripcion":"Enviados datos de los tutores de empresa","contacto":"Rafael Sanz"},
-          {"id":"INT70","fecha":"12/06/2026","tipo":"llamada","descripcion":"Ajustamos fechas de incorporación de los alumnadodo","contacto":"Rafael Sanz"}
+          {"id":"INT70","fecha":"12/06/2026","tipo":"llamada","descripcion":"Ajustamos fechas de incorporación de los alumnado","contacto":"Rafael Sanz"}
         ],
         "alumnado_asignados": ["AN01", "AN04", "AN13", "AN18", "AN25"]
       },
@@ -3013,7 +3013,7 @@ export const demoSeed = {
         "direccion": "Pol. Ind. El Polígono, C/ Avance, 15", "ciudad": "Utebo", "codigo_postal": "50180", "provincia": "Zaragoza",
         "sector": "Climatización", "notas": "Trabajan con bombas de calor y aerotermia.", "estado": "activo",
         "interacciones": [
-          {"id":"INT71","fecha":"20/05/2026","tipo":"llamada","descripcion":"Contacto inicial a través de antiguo alumnadodo","contacto":"Amina Chaib"},
+          {"id":"INT71","fecha":"20/05/2026","tipo":"llamada","descripcion":"Contacto inicial a través de antiguo alumnado","contacto":"Amina Chaib"},
           {"id":"INT72","fecha":"03/06/2026","tipo":"email","descripcion":"Enviada propuesta de colaboración educativa","contacto":"Amina Chaib"},
           {"id":"INT73","fecha":"10/06/2026","tipo":"visita","descripcion":"Visita a sus instalaciones. Certificado aerotermia.","contacto":"Amina Chaib"}
         ],

@@ -6,7 +6,7 @@ import {
   User, ShieldAlert, Award, Stethoscope, FileText, Compass, 
   ChevronDown, ChevronUp, CheckSquare, Square, Save, HelpCircle 
 } from 'lucide-react';
-import { Alumnadodo } from '@/types';
+import { Alumnado } from '@/types';
 
 export const TutoriaTab = () => {
   const { cursoData, updateCursoData } = useAppStore();
@@ -21,7 +21,7 @@ export const TutoriaTab = () => {
   });
 
   const df_al = cursoData?.df_al || [];
-  const activeStudents = df_al.filter((al: Alumnadodo) => al.Estado !== 'Baja');
+  const activeStudents = df_al.filter((al: Alumnado) => al.Estado !== 'Baja');
   // Sort alphabetically
   activeStudents.sort((a, b) => (a.Apellidos || '').localeCompare(b.Apellidos || ''));
 
@@ -80,7 +80,7 @@ export const TutoriaTab = () => {
 
   const renderInput = (field: string, label: string, type = 'text', placeholder = '') => (
     <div className="flex flex-col gap-1.5">
-      <label className="text-xs font-bold text-muted uppercase tracking-wider">{label}</label>
+      <label className="text-xs font-bold text-muted tracking-wider">{label}</label>
       <input
         type={type}
         value={studentData[field] || ''}
@@ -93,7 +93,7 @@ export const TutoriaTab = () => {
 
   const renderSelect = (field: string, label: string, options: { value: string; label: string }[]) => (
     <div className="flex flex-col gap-1.5">
-      <label className="text-xs font-bold text-muted uppercase tracking-wider">{label}</label>
+      <label className="text-xs font-bold text-muted tracking-wider">{label}</label>
       <select
         value={studentData[field] || ''}
         onChange={(e) => updateField(field, e.target.value)}
@@ -112,9 +112,9 @@ export const TutoriaTab = () => {
   if (activeStudents.length === 0) {
     return (
       <Card className="p-8 text-center border-l-4 border-l-yellow-500 mt-6">
-        <h2 className="text-xl font-bold text-yellow-400 mb-2">Falta Alumnadodo</h2>
+        <h2 className="text-xl font-bold text-yellow-400 mb-2">Falta Alumnado</h2>
         <p className="text-foreground/80">
-          Primero debes registrar alumnadodo en la pestaña 👥 Registro de Alumnadodo.
+          Primero debes registrar alumnado en la pestaña 👥 Registro de Alumnado.
         </p>
       </Card>
     );
@@ -125,8 +125,8 @@ export const TutoriaTab = () => {
       {/* Student List Sidebar */}
       <div className="w-80 bg-foreground/5 border border-white/5 rounded-2xl flex flex-col overflow-hidden">
         <div className="p-4 border-b border-white/5 bg-foreground/10">
-          <div className="text-xs font-bold text-muted uppercase tracking-wider">
-            Alumnadodo Activos ({activeStudents.length})
+          <div className="text-xs font-bold text-muted tracking-wider">
+            Alumnado Activos ({activeStudents.length})
           </div>
         </div>
         <div className="flex-1 overflow-y-auto p-2 space-y-1">
@@ -190,20 +190,20 @@ export const TutoriaTab = () => {
                     {renderInput('REPETICIONES', 'Historial de repeticiones', 'text', 'Ej. R1, RP6')}
                     
                     <div className="md:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-3 pt-2 border-t border-white/5">
-                      {renderCheckbox('TOTAL VULNERABILIDAD', 'Vulnerabilidad General')}
-                      {renderCheckbox('REPITE CURSO', 'Repite curso actual')}
-                      {renderCheckbox('MATERIAS PENDIENTES', 'Materias pendientes')}
-                      {renderCheckbox('SOCIOECONÓMICO, SS', 'Riesgo Socioeconómico / SS')}
-                      {renderCheckbox('DIFICULTADES FAMILIARES', 'Dificultades familiares')}
-                      {renderCheckbox('AUNA, OZANAM, YMCA', 'Apoyo externo (AUNA/YMCA)')}
+                      {renderCheckbox('Total vulnerabilidad', 'Vulnerabilidad General')}
+                      {renderCheckbox('Repite curso', 'Repite curso actual')}
+                      {renderCheckbox('Materias pendientes', 'Materias pendientes')}
+                      {renderCheckbox('Socioeconómico, ss', 'Riesgo Socioeconómico / SS')}
+                      {renderCheckbox('Dificultades familiares', 'Dificultades familiares')}
+                      {renderCheckbox('Auna, ozanam, ymca', 'Apoyo externo (AUNA/YMCA)')}
                     </div>
 
                     <div className="md:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-3 pt-2 border-t border-white/5">
-                      <div className="col-span-2 md:col-span-4 text-xs font-bold text-muted uppercase tracking-wider">Becas Concedidas</div>
-                      {renderCheckbox('BECA MATERIALES', 'Beca Materiales')}
-                      {renderCheckbox('BECA AMPA MATERIALES BANCO LIBROS', 'Banco de Libros')}
-                      {renderCheckbox('BECA ACNEAES', 'Beca ACNEAE')}
-                      {renderCheckbox('BECA GENERAL MEC', 'Beca General MEC')}
+                      <div className="col-span-2 md:col-span-4 text-xs font-bold text-muted tracking-wider">Becas Concedidas</div>
+                      {renderCheckbox('Beca materiales', 'Beca Materiales')}
+                      {renderCheckbox('Beca ampa materiales banco libros', 'Banco de Libros')}
+                      {renderCheckbox('Beca acneaes', 'Beca ACNEAE')}
+                      {renderCheckbox('Beca general mec', 'Beca General MEC')}
                     </div>
                   </div>
                 )}
@@ -221,11 +221,11 @@ export const TutoriaTab = () => {
                   <div className="bg-background/20 border border-white/5 rounded-xl p-5 grid grid-cols-1 md:grid-cols-2 gap-4 animate-in slide-in-from-top-2 duration-300">
                     {renderInput('ACNEAE', 'ACNEAE (Código/Categoría)', 'text', 'Ej. IT, DEA, NEE, TDAH')}
                     {renderInput('TIPO', 'Tipo de dificultad', 'text', 'Ej. Discalculia, TEA, Disc. cognitiva')}
-                    {renderInput('OTRAS DIFICULTADES APRENDIZAJE', 'Otras Dificultades de aprendizaje', 'text', 'Ej. Dislexia, Flexibilización')}
+                    {renderInput('Otras dificultades aprendizaje', 'Otras Dificultades de aprendizaje', 'text', 'Ej. Dislexia, Flexibilización')}
                     
                     <div className="grid grid-cols-2 gap-4">
                       {renderCheckbox('ABSENTISMO', 'Problemas absentismo')}
-                      {renderSelect('ABSENTISMO 10%', 'Absentismo > 10%', [{ value: 'Sí', label: 'Sí' }, { value: 'X', label: 'Registrado' }])}
+                      {renderSelect('Absentismo 10%', 'Absentismo > 10%', [{ value: 'Sí', label: 'Sí' }, { value: 'X', label: 'Registrado' }])}
                       {renderCheckbox('SALUD', 'Afección médica/salud')}
                     </div>
                   </div>
@@ -246,7 +246,7 @@ export const TutoriaTab = () => {
                       <span className="text-sm font-bold text-foreground">Adaptaciones Curriculares Significativas (ACS)</span>
                       {renderCheckbox('ACS', 'Tiene ACS')}
                     </div>
-                    <div className="col-span-3 text-xs font-bold text-muted uppercase tracking-wider mb-2">ACS específicas por materia:</div>
+                    <div className="col-span-3 text-xs font-bold text-muted tracking-wider mb-2">ACS específicas por materia:</div>
                     {renderCheckbox('Lengua', 'ACS Lengua')}
                     {renderCheckbox('Matemáticas', 'ACS Matemáticas')}
                     {renderCheckbox('CC Sociales', 'ACS Ciencias Sociales')}
@@ -267,24 +267,24 @@ export const TutoriaTab = () => {
                 )}
                 {openSections.intervencion && (
                   <div className="bg-background/20 border border-white/5 rounded-xl p-5 grid grid-cols-1 md:grid-cols-2 gap-4 animate-in slide-in-from-top-2 duration-300">
-                    {renderInput('INTERVENCIÓN EDUCATIVA', 'Intervención educativa activa', 'text', 'Ej. PSC, PT, AL, DIVER')}
-                    {renderSelect('CERTIF DISCAP', 'Certificado de discapacidad', [{ value: 'Sí', label: 'Sí' }, { value: 'No', label: 'No' }, { value: 'X', label: 'Sí (no verif)' }])}
-                    {renderInput('FECHA INFORME', 'Fecha de informe psicopedagógico', 'date')}
-                    {renderInput('FECHA RESOLUCIÓN', 'Fecha de resolución de apoyos', 'date')}
+                    {renderInput('Intervención educativa', 'Intervención educativa activa', 'text', 'Ej. PSC, PT, AL, DIVER')}
+                    {renderSelect('Certif discap', 'Certificado de discapacidad', [{ value: 'Sí', label: 'Sí' }, { value: 'No', label: 'No' }, { value: 'X', label: 'Sí (no verif)' }])}
+                    {renderInput('Fecha informe', 'Fecha de informe psicopedagógico', 'date')}
+                    {renderInput('Fecha resolución', 'Fecha de resolución de apoyos', 'date')}
                     
                     <div className="md:col-span-2 grid grid-cols-2 md:grid-cols-4 gap-3 pt-3 border-t border-white/5">
-                      <div className="col-span-2 md:col-span-4 text-xs font-bold text-muted uppercase tracking-wider">Reinforcements & Supports</div>
+                      <div className="col-span-2 md:col-span-4 text-xs font-bold text-muted tracking-wider">Reinforcements & Supports</div>
                       {renderCheckbox('AEE', 'Acompañamiento (AEE)')}
                       {renderCheckbox('MENTORÍA', 'Tiene Mentoría')}
-                      {renderCheckbox('REFUERZO AUNA PROA+', 'Refuerzo AUNA PROA+')}
-                      {renderCheckbox('REFUERZO ESPAÑOL PROA+', 'Refuerzo Español PROA+')}
-                      {renderCheckbox('REFUERZO CORRESPONSABLES', 'Refuerzo Corresponsables')}
-                      {renderCheckbox('REFUERZO OZANAM/YMCA', 'Refuerzo Ozanam / YMCA')}
+                      {renderCheckbox('Refuerzo auna proa+', 'Refuerzo AUNA PROA+')}
+                      {renderCheckbox('Refuerzo español proa+', 'Refuerzo Español PROA+')}
+                      {renderCheckbox('Refuerzo corresponsables', 'Refuerzo Corresponsables')}
+                      {renderCheckbox('Refuerzo ozanam/ymca', 'Refuerzo Ozanam / YMCA')}
                       {renderCheckbox('FISIO', 'Fisioterapeuta')}
                     </div>
 
                     <div className="md:col-span-2 flex flex-col gap-1.5 pt-3 border-t border-white/5">
-                      <label className="text-xs font-bold text-muted uppercase tracking-wider">Observaciones de orientación</label>
+                      <label className="text-xs font-bold text-muted tracking-wider">Observaciones de orientación</label>
                       <textarea
                         value={studentData['Observaciones'] || ''}
                         onChange={(e) => updateField('Observaciones', e.target.value)}
@@ -308,61 +308,61 @@ export const TutoriaTab = () => {
                 {openSections.historial && (
                   <div className="bg-background/20 border border-white/5 rounded-xl p-5 space-y-6 animate-in slide-in-from-top-2 duration-300">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      {renderInput('CENTRO EDUCATIVO EP', 'Centro educativo Primaria (EP)', 'text', 'Ej. ALM, PTA S, OTRO')}
-                      {renderInput('PROMOCIONA A 1º ESO CON SUSPENSOS', 'Nº Suspensos promoción a 1º ESO', 'number')}
+                      {renderInput('Centro educativo ep', 'Centro educativo Primaria (EP)', 'text', 'Ej. ALM, PTA S, OTRO')}
+                      {renderInput('Promociona a 1º eso con suspensos', 'Nº Suspensos promoción a 1º ESO', 'number')}
                     </div>
 
                     {/* Notas Medias */}
                     <div className="border-t border-white/5 pt-4">
-                      <div className="text-xs font-bold text-muted uppercase tracking-wider mb-3">Notas Medias del Historial</div>
+                      <div className="text-xs font-bold text-muted tracking-wider mb-3">Notas Medias del Historial</div>
                       <div className="grid grid-cols-2 md:grid-cols-7 gap-3">
-                        {renderInput('NOTA MEDIA 6º PRIMARIA', '6º Prim', 'number')}
-                        {renderInput('NOTA MEDIA 1º ESO', '1º ESO', 'number')}
-                        {renderInput('NOTA MEDIA 2º ESO', '2º ESO', 'number')}
-                        {renderInput('NOTA MEDIA 3º ESO', '3º ESO', 'number')}
-                        {renderInput('NOTA MEDIA 4º ESO', '4º ESO', 'number')}
-                        {renderInput('NOTA MEDIA 1º BACH', '1º Bach', 'number')}
-                        {renderInput('NOTA MEDIA 2º BACH', '2º Bach', 'number')}
+                        {renderInput('Nota media 6º primaria', '6º Prim', 'number')}
+                        {renderInput('Nota media 1º eso', '1º eso', 'number')}
+                        {renderInput('Nota media 2º eso', '2º eso', 'number')}
+                        {renderInput('Nota media 3º eso', '3º eso', 'number')}
+                        {renderInput('Nota media 4º eso', '4º eso', 'number')}
+                        {renderInput('Nota media 1º bach', '1º Bach', 'number')}
+                        {renderInput('Nota media 2º bach', '2º Bach', 'number')}
                       </div>
                     </div>
 
                     {/* Materias Suspensas */}
                     <div className="border-t border-white/5 pt-4">
-                      <div className="text-xs font-bold text-muted uppercase tracking-wider mb-3">Nº Materias Suspensas por Curso</div>
+                      <div className="text-xs font-bold text-muted tracking-wider mb-3">Nº Materias Suspensas por Curso</div>
                       <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
-                        {renderInput('SUSPENSOS 1º ESO', '1º ESO', 'number')}
-                        {renderInput('SUSPENSOS 2º ESO', '2º ESO', 'number')}
-                        {renderInput('SUSPENSOS 3º ESO', '3º ESO', 'number')}
-                        {renderInput('SUSPENSOS 4º ESO', '4º ESO', 'number')}
-                        {renderInput('SUSPENSOS 1º BACH', '1º Bach', 'number')}
-                        {renderInput('SUSPENSOS 2º BACH', '2º Bach', 'number')}
+                        {renderInput('Suspensos 1º eso', '1º eso', 'number')}
+                        {renderInput('Suspensos 2º eso', '2º eso', 'number')}
+                        {renderInput('Suspensos 3º eso', '3º eso', 'number')}
+                        {renderInput('Suspensos 4º eso', '4º eso', 'number')}
+                        {renderInput('Suspensos 1º bach', '1º Bach', 'number')}
+                        {renderInput('Suspensos 2º bach', '2º Bach', 'number')}
                       </div>
                     </div>
 
                     {/* Calificaciones Lengua y Matemáticas */}
                     <div className="border-t border-white/5 pt-4">
-                      <div className="text-xs font-bold text-muted uppercase tracking-wider mb-3">Historial Calificaciones Lengua</div>
+                      <div className="text-xs font-bold text-muted tracking-wider mb-3">Historial Calificaciones Lengua</div>
                       <div className="grid grid-cols-2 md:grid-cols-7 gap-3">
-                        {renderInput('NOTA LENGUA 6º EP', '6º EP', 'text', 'Nº o BI/NT')}
-                        {renderInput('NOTA LENGUA 1º ESO', '1º ESO', 'text', 'Nº o BI/NT')}
-                        {renderInput('NOTA LENGUA 2º ESO', '2º ESO', 'text', 'Nº o BI/NT')}
-                        {renderInput('NOTA LENGUA 3º ESO', '3º ESO', 'text', 'Nº o BI/NT')}
-                        {renderInput('NOTA LENGUA 4º ESO', '4º ESO', 'text', 'Nº o BI/NT')}
-                        {renderInput('NOTA LENGUA 1º BACH', '1º Bach', 'text', 'Nº o BI/NT')}
-                        {renderInput('NOTA LENGUA 2º BACH', '2º Bach', 'text', 'Nº o BI/NT')}
+                        {renderInput('Nota lengua 6º ep', '6º ep', 'text', 'Nº o BI/NT')}
+                        {renderInput('Nota lengua 1º eso', '1º eso', 'text', 'Nº o BI/NT')}
+                        {renderInput('Nota lengua 2º eso', '2º eso', 'text', 'Nº o BI/NT')}
+                        {renderInput('Nota lengua 3º eso', '3º eso', 'text', 'Nº o BI/NT')}
+                        {renderInput('Nota lengua 4º eso', '4º eso', 'text', 'Nº o BI/NT')}
+                        {renderInput('Nota lengua 1º bach', '1º Bach', 'text', 'Nº o BI/NT')}
+                        {renderInput('Nota lengua 2º bach', '2º Bach', 'text', 'Nº o BI/NT')}
                       </div>
                     </div>
 
                     <div className="border-t border-white/5 pt-4">
-                      <div className="text-xs font-bold text-muted uppercase tracking-wider mb-3">Historial Calificaciones Matemáticas</div>
+                      <div className="text-xs font-bold text-muted tracking-wider mb-3">Historial Calificaciones Matemáticas</div>
                       <div className="grid grid-cols-2 md:grid-cols-7 gap-3">
-                        {renderInput('NOTA MATES 6º EP', '6º EP', 'text', 'Nº o BI/NT')}
-                        {renderInput('NOTA MATES 1º ESO', '1º ESO', 'text', 'Nº o BI/NT')}
-                        {renderInput('NOTA MATES 2º ESO', '2º ESO', 'text', 'Nº o BI/NT')}
-                        {renderInput('NOTA MATES 3º ESO', '3º ESO', 'text', 'Nº o BI/NT')}
-                        {renderInput('NOTA MATES 4º ESO', '4º ESO', 'text', 'Nº o BI/NT')}
-                        {renderInput('NOTA MATES 1º BACH', '1º Bach', 'text', 'Nº o BI/NT')}
-                        {renderInput('NOTA MATES 2º BACH', '2º Bach', 'text', 'Nº o BI/NT')}
+                        {renderInput('Nota mates 6º ep', '6º ep', 'text', 'Nº o BI/NT')}
+                        {renderInput('Nota mates 1º eso', '1º eso', 'text', 'Nº o BI/NT')}
+                        {renderInput('Nota mates 2º eso', '2º eso', 'text', 'Nº o BI/NT')}
+                        {renderInput('Nota mates 3º eso', '3º eso', 'text', 'Nº o BI/NT')}
+                        {renderInput('Nota mates 4º eso', '4º eso', 'text', 'Nº o BI/NT')}
+                        {renderInput('Nota mates 1º bach', '1º Bach', 'text', 'Nº o BI/NT')}
+                        {renderInput('Nota mates 2º bach', '2º Bach', 'text', 'Nº o BI/NT')}
                       </div>
                     </div>
                   </div>
@@ -381,31 +381,31 @@ export const TutoriaTab = () => {
                   <div className="bg-background/20 border border-white/5 rounded-xl p-5 space-y-6 animate-in slide-in-from-top-2 duration-300">
                     
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                      <div className="col-span-2 md:col-span-3 text-xs font-bold text-muted uppercase tracking-wider">Actividades y Viajes Escolares</div>
-                      {renderCheckbox('ERASMUS+ Y OTROS VIAJES', 'Erasmus+ / Viajes')}
-                      {renderCheckbox('ENGLISH WEEK 1º ESO', 'English Week 1º ESO')}
-                      {renderCheckbox('ENTORNO ARAGÓN', 'Entorno Aragón')}
-                      {renderCheckbox('2º ESO ESLOVAQUIA/FRANCIA', '2º ESO Eslovaquia/Francia')}
-                      {renderCheckbox('3º ESO MUNICH', '3º ESO Munich')}
-                      {renderCheckbox('PORTUGAL AULA ABIERTA-DO', 'Portugal Aula Abierta')}
-                      {renderCheckbox('VIAJE FIN DE CURSO 4º ESO', 'Viaje Fin Curso 4º ESO')}
-                      {renderCheckbox('MOVIIDADES INDIVIDUALES', 'Movilidades Indiv.')}
-                      {renderCheckbox('MOVILIDAD BACHILLERATO', 'Movilidad Bach.')}
+                      <div className="col-span-2 md:col-span-3 text-xs font-bold text-muted tracking-wider">Actividades y Viajes Escolares</div>
+                      {renderCheckbox('Erasmus+ y otros viajes', 'Erasmus+ / Viajes')}
+                      {renderCheckbox('English week 1º eso', 'English Week 1º ESO')}
+                      {renderCheckbox('Entorno aragón', 'Entorno Aragón')}
+                      {renderCheckbox('2º eso eslovaquia/francia', '2º ESO Eslovaquia/Francia')}
+                      {renderCheckbox('3º eso munich', '3º ESO Munich')}
+                      {renderCheckbox('Portugal aula abierta-do', 'Portugal Aula Abierta')}
+                      {renderCheckbox('Viaje fin de curso 4º eso', 'Viaje Fin Curso 4º ESO')}
+                      {renderCheckbox('Moviidades individuales', 'Movilidades Indiv.')}
+                      {renderCheckbox('Movilidad bachillerato', 'Movilidad Bach.')}
                     </div>
 
                     <div className="border-t border-white/5 pt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div className="col-span-1 md:col-span-3 text-xs font-bold text-muted uppercase tracking-wider">Propuestas de Orientación de Futuro</div>
+                      <div className="col-span-1 md:col-span-3 text-xs font-bold text-muted tracking-wider">Propuestas de Orientación de Futuro</div>
                       {renderInput('PROPUESTAS', 'Propuesta general')}
                       {renderInput('PROMOCIÓN', 'Decisión promoción')}
-                      {renderSelect('REPETICIÓN DE CURSO', 'Repetición de Curso', [{ value: 'Sí', label: 'Sí' }, { value: 'X', label: 'Confirmado' }, { value: '?', label: 'Dudoso' }])}
-                      {renderSelect('PROMOCIÓN CON ACS', 'Promoción con ACS', [{ value: 'Sí', label: 'Sí' }, { value: 'X', label: 'Confirmado' }, { value: '?', label: 'Dudoso' }])}
-                      {renderSelect('ORGANIZACIÓN 2º ESO', 'Organización 2º ESO', [{ value: 'Sí', label: 'Sí' }, { value: 'X', label: 'Confirmado' }, { value: '?', label: 'Dudoso' }])}
-                      {renderSelect('FPGB/CSL', 'FPGB / CSL', [{ value: 'Sí', label: 'Sí' }, { value: 'X', label: 'Confirmado' }, { value: '?', label: 'Dudoso' }])}
-                      {renderSelect('3º DIVERSIFICACIÓN', '3º Diversificación', [{ value: 'Sí', label: 'Sí' }, { value: 'X', label: 'Confirmado' }, { value: '?', label: 'Dudoso' }])}
-                      {renderSelect('4º DIVERSIFICACIÓN', '4º Diversificación', [{ value: 'Sí', label: 'Sí' }, { value: 'X', label: 'Confirmado' }, { value: '?', label: 'Dudoso' }])}
+                      {renderSelect('Repetición de curso', 'Repetición de Curso', [{ value: 'Sí', label: 'Sí' }, { value: 'X', label: 'Confirmado' }, { value: '?', label: 'Dudoso' }])}
+                      {renderSelect('Promoción con ACS', 'Promoción con ACS', [{ value: 'Sí', label: 'Sí' }, { value: 'X', label: 'Confirmado' }, { value: '?', label: 'Dudoso' }])}
+                      {renderSelect('Organización 2º eso', 'Organización 2º ESO', [{ value: 'Sí', label: 'Sí' }, { value: 'X', label: 'Confirmado' }, { value: '?', label: 'Dudoso' }])}
+                      {renderSelect('FPGB/CSL', 'Fpgb / csl', [{ value: 'Sí', label: 'Sí' }, { value: 'X', label: 'Confirmado' }, { value: '?', label: 'Dudoso' }])}
+                      {renderSelect('3º diversificación', '3º Diversificación', [{ value: 'Sí', label: 'Sí' }, { value: 'X', label: 'Confirmado' }, { value: '?', label: 'Dudoso' }])}
+                      {renderSelect('4º diversificación', '4º Diversificación', [{ value: 'Sí', label: 'Sí' }, { value: 'X', label: 'Confirmado' }, { value: '?', label: 'Dudoso' }])}
                       {renderSelect('BACHILLERATO', 'Bachillerato', [{ value: 'Sí', label: 'Sí' }, { value: 'X', label: 'Confirmado' }, { value: '?', label: 'Dudoso' }])}
-                      {renderSelect('ADAPTACIÓN PAU', 'Adaptación PAU', [{ value: 'Sí', label: 'Sí' }, { value: 'X', label: 'Confirmado' }, { value: '?', label: 'Dudoso' }])}
-                      {renderSelect('FP GRADO MEDIO', 'FP Grado Medio', [{ value: 'Sí', label: 'Sí' }, { value: 'X', label: 'Confirmado' }, { value: '?', label: 'Dudoso' }])}
+                      {renderSelect('Adaptación pau', 'Adaptación PAU', [{ value: 'Sí', label: 'Sí' }, { value: 'X', label: 'Confirmado' }, { value: '?', label: 'Dudoso' }])}
+                      {renderSelect('Fp grado medio', 'FP Grado Medio', [{ value: 'Sí', label: 'Sí' }, { value: 'X', label: 'Confirmado' }, { value: '?', label: 'Dudoso' }])}
                     </div>
 
                   </div>
@@ -417,8 +417,8 @@ export const TutoriaTab = () => {
         ) : (
           <div className="flex-1 flex flex-col justify-center items-center text-center p-8 text-muted">
             <HelpCircle className="w-12 h-12 text-muted/50 mb-3" />
-            <p className="font-semibold text-lg">No hay alumnadodo seleccionado</p>
-            <p className="text-sm opacity-80">Por favor, selecciona un alumnadodo de la lista de la izquierda.</p>
+            <p className="font-semibold text-lg">No hay alumnado seleccionado</p>
+            <p className="text-sm opacity-80">Por favor, selecciona un alumnado de la lista de la izquierda.</p>
           </div>
         )}
       </div>

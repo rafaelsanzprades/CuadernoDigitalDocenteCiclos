@@ -29,7 +29,7 @@ export const AnalisisIndividualTab = () => {
     return (
       <Card className="p-8 text-center border-l-4 border-l-yellow-500 mt-6">
         <h2 className="text-xl font-bold text-yellow-400 mb-2">Faltan Datos</h2>
-        <p className="text-foreground/80">No hay alumnadodo activos para analizar.</p>
+        <p className="text-foreground/80">No hay alumnado activos para analizar.</p>
       </Card>
     );
   }
@@ -149,17 +149,17 @@ export const AnalisisIndividualTab = () => {
       <section className="grid grid-cols-3 gap-6">
         <Card className="p-6 border-l-4 border-l-teal-500 flex flex-col justify-center items-center relative overflow-hidden">
           <div className="absolute top-0 right-0 p-4 opacity-10 text-6xl">📊</div>
-          <span className="text-muted text-sm uppercase font-bold tracking-wider mb-2">Nota Media Actual</span>
+          <span className="text-muted text-sm font-bold tracking-wider mb-2">Nota Media Actual</span>
           <span className="text-5xl font-black text-teal-400">{realCalc.nota_final.toFixed(2)}</span>
         </Card>
         <Card className="p-6 border-l-4 border-l-blue-500 flex flex-col justify-center items-center relative overflow-hidden">
           <div className="absolute top-0 right-0 p-4 opacity-10 text-6xl">🎯</div>
-          <span className="text-muted text-sm uppercase font-bold tracking-wider mb-2">Estado</span>
+          <span className="text-muted text-sm font-bold tracking-wider mb-2">Estado</span>
           <span className="text-4xl font-black text-blue-400">{realCalc.nota_final >= 5 ? 'Apto' : 'En Proceso'}</span>
         </Card>
         <Card className="p-6 border-l-4" style={{ borderLeftColor: realSigad.col }}>
           <div className="flex flex-col items-center justify-center h-full">
-            <span className="text-muted text-sm uppercase font-bold tracking-wider mb-2">Calificación Oficial</span>
+            <span className="text-muted text-sm font-bold tracking-wider mb-2">Calificación Oficial</span>
             <div className="text-4xl font-black" style={{ color: realSigad.col }}>{realSigad.n} · {realSigad.cod}</div>
             <div className="text-sm mt-1 text-foreground/80 font-semibold">{realSigad.txt}</div>
           </div>
@@ -250,7 +250,7 @@ export const AnalisisIndividualTab = () => {
                 border: '1px solid rgba(255,255,255,0.2)'
               }}
             >
-              <div className="text-sm uppercase tracking-widest font-bold opacity-80 mb-4">Nota Proyectada</div>
+              <div className="text-sm tracking-widest font-bold opacity-80 mb-4">Nota Proyectada</div>
               <div className="text-7xl font-black mb-4 drop-shadow-lg">{simCalc.nota_final.toFixed(2)}</div>
               <div className="text-[1.1rem] font-bold mb-1">{simSigad.txt}</div>
               <div className="text-lg opacity-80">({simSigad.cod})</div>

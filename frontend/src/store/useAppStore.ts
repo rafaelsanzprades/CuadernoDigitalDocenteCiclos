@@ -32,8 +32,9 @@ export const useAppStore = create<AppState>()(
         ...createGroupsSlice(...a),
       }),
       {
-        name: 'cdd-store-cache',
+        name: 'cdd-store-cache-v3',
         storage: createJSONStorage(() => idbStorage),
+        version: 1, // Change this version to force cache clearing
       }
     ),
     {

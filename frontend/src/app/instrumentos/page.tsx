@@ -156,7 +156,7 @@ export default function InstrumentosPage() {
             <table className="w-full text-left text-sm border-collapse whitespace-nowrap">
               <thead>
                 <tr className="text-muted border-b border-[var(--glass-border)] bg-background">
-                  <th className="p-2 sticky left-0 z-10 border-r border-[var(--glass-border)] bg-background">ID</th>
+                  <th className="p-2 sticky left-0 z-10 border-r border-[var(--glass-border)] bg-background">Id</th>
                   <th className="p-2 sticky left-[60px] z-10 border-r border-[var(--glass-border)] bg-background">Tipo</th>
                   <th className="p-2 sticky left-[160px] z-10 border-r border-[var(--glass-border)] bg-background w-64">Instrumento / Actividad</th>
                   <th className="p-2 sticky left-[416px] z-10 border-r border-[var(--glass-border)] bg-background">% Pond.</th>

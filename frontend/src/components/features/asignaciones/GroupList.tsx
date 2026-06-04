@@ -94,7 +94,7 @@ export function GroupList({
                       <div className="flex items-center gap-2">
                         <span className="text-accent font-mono text-sm font-bold">{module.code}</span>
                         <h3 className="text-base font-medium text-foreground">{module.name}</h3>
-                        {module.isDual && <Badge variant="info">FEOE</Badge>}
+                        {module.isDual && <Badge variant="info">Feoe</Badge>}
                       </div>
                       <div className="text-muted text-sm font-semibold shrink-0">
                         {module.hours}h

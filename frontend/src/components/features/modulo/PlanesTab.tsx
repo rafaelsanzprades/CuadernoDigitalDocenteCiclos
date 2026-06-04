@@ -40,8 +40,8 @@ export function PlanesTab() {
           <table className="w-full text-left text-sm border-collapse whitespace-nowrap">
             <thead>
               <tr className="border-b border-[var(--glass-border)] text-muted">
-                <th className="p-2 w-16">ID</th>
-                <th className="p-2 w-48">Alumnadodo / Aula</th>
+                <th className="p-2 w-16">Id</th>
+                <th className="p-2 w-48">Alumnado / Aula</th>
                 <th className="p-2 w-48">Barrera detectada</th>
                 <th className="p-2 min-w-[200px]">Medida metodológica</th>
                 <th className="p-2 w-48">Medida de acceso</th>
@@ -54,7 +54,7 @@ export function PlanesTab() {
                 <tr key={idx} className="border-b border-white/5 hover:bg-foreground/5">
                   <td className="p-2 font-mono text-xs">{row.ID}</td>
                   <td className="p-2 pr-2">
-                    <input type="text" value={row.Alumnadodo_Aula || ""} onChange={e => updateRow(df_dua, "df_dua", idx, "Alumnadodo_Aula", e.target.value)} className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 focus:border-emerald-500 focus:outline-none" />
+                    <input type="text" value={row.Alumnado_Aula || ""} onChange={e => updateRow(df_dua, "df_dua", idx, "Alumnado_Aula", e.target.value)} className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 focus:border-emerald-500 focus:outline-none" />
                   </td>
                   <td className="p-2 pr-2">
                     <input type="text" value={row.Barrera || ""} onChange={e => updateRow(df_dua, "df_dua", idx, "Barrera", e.target.value)} className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 focus:border-emerald-500 focus:outline-none" />
@@ -76,7 +76,7 @@ export function PlanesTab() {
             </tbody>
           </table>
         </div>
-        <button onClick={() => addRow(df_dua, "df_dua", "DUA", { Alumnadodo_Aula: "", Barrera: "", Medida_Metodologica: "", Medida_Acceso: "", Medida_Evaluacion: "" })} className="text-sm text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1">
+        <button onClick={() => addRow(df_dua, "df_dua", "DUA", { Alumnado_Aula: "", Barrera: "", Medida_Metodologica: "", Medida_Acceso: "", Medida_Evaluacion: "" })} className="text-sm text-emerald-400 hover:text-emerald-300 font-semibold flex items-center gap-1">
           <span>+</span> Añadir Medida de Diversidad
         </button>
       </section>
@@ -90,7 +90,7 @@ export function PlanesTab() {
           <table className="w-full text-left text-sm border-collapse whitespace-nowrap">
             <thead>
               <tr className="border-b border-[var(--glass-border)] text-muted">
-                <th className="p-2 w-16">ID</th>
+                <th className="p-2 w-16">Id</th>
                 <th className="p-2 w-48">Escenario</th>
                 <th className="p-2 min-w-[200px]">Organización y acceso</th>
                 <th className="p-2 min-w-[200px]">Actividades alternativas</th>
@@ -105,7 +105,7 @@ export function PlanesTab() {
                   <td className="p-2 pr-2">
                     <select value={row.Escenario || "Otros"} onChange={e => updateRow(df_contingencia, "df_contingencia", idx, "Escenario", e.target.value)} className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 focus:border-orange-500 focus:outline-none">
                       <option value="Ausencia de Profesorado">Ausencia de profesorado</option>
-                      <option value="Ausencia de Alumnadodo">Ausencia de alumnadodo</option>
+                      <option value="Ausencia de Alumnado">Ausencia de alumnado</option>
                       <option value="Interrupción Generalizada">Interrupción generalizada</option>
                       <option value="Otros">Otros</option>
                     </select>
@@ -132,7 +132,7 @@ export function PlanesTab() {
         </button>
       </section>
 
-      {/* ACE */}
+      {/* ace */}
       <section className="glass-card p-6 border-t-4 border-t-[#14a085]">
         <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-4">
           🚌 Plan de Actividades complementarias
@@ -141,7 +141,7 @@ export function PlanesTab() {
           <table className="w-full text-left text-sm border-collapse whitespace-nowrap">
             <thead>
               <tr className="border-b border-[var(--glass-border)] text-muted">
-                <th className="p-2 w-16">ID</th>
+                <th className="p-2 w-16">Id</th>
                 <th className="p-2 w-32">Tipo</th>
                 <th className="p-2 w-32">RA vinculados</th>
                 <th className="p-2 min-w-[200px]">Descripción</th>
@@ -172,9 +172,9 @@ export function PlanesTab() {
                   </td>
                   <td className="p-2 pr-2">
                     <select value={row.Trimestre || "1T"} onChange={e => updateRow(df_ace, "df_ace", idx, "Trimestre", e.target.value)} className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 focus:border-[#14a085] focus:outline-none">
-                      <option value="1T">1T</option>
-                      <option value="2T">2T</option>
-                      <option value="3T">3T</option>
+                      <option value="1T">1t</option>
+                      <option value="2T">2t</option>
+                      <option value="3T">3t</option>
                     </select>
                   </td>
                   <td className="p-2 pr-2">

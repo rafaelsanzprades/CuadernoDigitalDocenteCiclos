@@ -20,7 +20,7 @@ export const TodayClasses = () => {
   const todaySchedule = simulation[todayStr];
 
   const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
-  const formattedToday = capitalize(format(now, "EEEE d 'de' MMMM", { locale: es }));
+  const formattedToday = (format(now, "EEEE d 'de' MMMM", { locale: es }));
 
   if (!todaySchedule || todaySchedule.isFestivo || !todaySchedule.udId || todaySchedule.sessions.length === 0) {
     const reason = todaySchedule?.isFestivo 
@@ -54,7 +54,7 @@ export const TodayClasses = () => {
         {/* UD Info Card */}
         <div className="bg-background/40 p-5 rounded-xl border border-[var(--glass-border)] flex flex-col justify-between">
           <div>
-            <div className="text-xs text-accent uppercase font-bold tracking-wider mb-2 flex items-center gap-1.5">
+            <div className="text-xs text-accent font-bold tracking-wider mb-2 flex items-center gap-1.5">
               <Layers className="w-3.5 h-3.5" /> Unidad Didáctica
             </div>
             <div className="font-bold text-lg text-foreground">{udDesc || udId}</div>
@@ -66,7 +66,7 @@ export const TodayClasses = () => {
 
         {/* Sessions list */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="text-xs text-accent uppercase font-bold tracking-wider">
+          <div className="text-xs text-accent font-bold tracking-wider">
             Sesiones Planificadas ({sessions.length})
           </div>
           {sessions.map((ses, idx) => (

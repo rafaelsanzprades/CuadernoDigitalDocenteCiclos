@@ -293,7 +293,7 @@ export function GestionUsuariosTab() {
                       <option value="COFOTAP">Administrador de Centro (COFOTAP)</option>
                       <option value="Tutor Dual Coordinador">Tutor/a Dual Coordinador</option>
                       <option value="Tutor Dual General">Tutor/a Dual General (Prospector Empresas)</option>
-                      <option value="Tutor Dual Seguimiento">Tutor/a Dual (Seguimiento alumnadodo)</option>
+                      <option value="Tutor Dual Seguimiento">Tutor/a Dual (Seguimiento alumnado)</option>
                       <option value="Superadmin">Superadmin Plataforma</option>
                     </select>
                   </div>

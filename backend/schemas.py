@@ -13,6 +13,7 @@ class Sesion(BaseModel):
     Recursos: Optional[str] = None
 
 class UnidadDidactica(BaseModel):
+    model_config = ConfigDict(extra='allow')
     id_ud: str
     desc_ud: str
     horas_ud: int | str
@@ -48,6 +49,7 @@ class ResultadoAprendizaje(BaseModel):
     is_dual: Optional[str] = None
 
 class CriterioEvaluacion(BaseModel):
+    model_config = ConfigDict(extra='allow')
     id_ce: str
     id_ra: str
     id_ud: Optional[str] = None

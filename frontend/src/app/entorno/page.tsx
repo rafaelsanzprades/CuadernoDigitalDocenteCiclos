@@ -12,7 +12,8 @@ import { initialGroups } from "@/store/initialData";
 import {
   FileText, Download, Upload,
   Cloud, RefreshCw, CheckCircle, AlertTriangle,
-  ArrowRight, ShieldAlert, Sparkles, LogIn
+  ArrowRight, ShieldAlert, Sparkles, LogIn,
+  PowerOff, Power, Zap
 } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -40,7 +41,6 @@ export default function EntornoTrabajoPage() {
   useEffect(() => {
     const currentDataSource = fileManager.getDataSourceType();
     setDataSource(currentDataSource);
-    setActiveTab(currentDataSource === 'demo' ? 'demo' : 'real');
 
     // Helper to load data from backend when in local mode with empty cache
     const loadFromBackend = async () => {
@@ -97,11 +97,6 @@ export default function EntornoTrabajoPage() {
       const type = fileManager.getDataSourceType();
       const currentDb = fileManager.getDb();
       setDataSource(type);
-      if (type === 'demo') {
-        setActiveTab('demo');
-      } else {
-        setActiveTab(prev => prev === 'demo' ? 'real' : prev);
-      }
       setDb(currentDb);
       setGoogleConnected(fileManager.isGoogleConnected());
       setGoogleUser(fileManager.getGoogleUser());
@@ -345,16 +340,7 @@ export default function EntornoTrabajoPage() {
                   : 'border-transparent text-muted hover:text-foreground'
                   }`}
               >
-                💡 Datos ficticios (demo)
-              </button>
-              <button
-                onClick={() => setActiveTab("real")}
-                className={`px-6 py-4 font-bold text-base border-b-2 transition-colors whitespace-nowrap cursor-pointer ${activeTab === "real"
-                  ? 'border-accent text-accent'
-                  : 'border-transparent text-muted hover:text-foreground'
-                  }`}
-              >
-                🛡️ Datos reales en local
+                💡 Modos de trabajo
               </button>
               <button
                 onClick={() => setActiveTab("backup")}
@@ -370,9 +356,10 @@ export default function EntornoTrabajoPage() {
             {/* Pestaña: Demostración */}
             {activeTab === "demo" && (
               <div className="space-y-8 animate-in fade-in duration-300">
-                {/* Panel de Activación de Modo Demostración */}
-                <Card className="p-8 border border-white/5 rounded-2xl bg-foreground/5 shadow-lg flex flex-col md:flex-row justify-between items-center gap-6">
-                  <div className="space-y-2">
+                {/* Grid 2 columnas: Demo | Local */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Panel Demo */}
+                  <Card className="p-6 border border-white/5 rounded-2xl bg-foreground/5 shadow-lg space-y-4 flex flex-col">
                     <div className="flex items-center gap-3">
                       <h3 className="text-xl font-bold text-foreground">Modo Datos ficticios (demo)</h3>
                       {dataSource === 'demo' ? (
@@ -381,94 +368,30 @@ export default function EntornoTrabajoPage() {
                         <Badge variant="default" className="bg-white/10 text-muted border-white/5">Inactivo</Badge>
                       )}
                     </div>
-                    <p className="text-sm text-muted max-w-xl">
-                      Permite explorar la aplicación usando datos ficticios y preconfigurados de alumnadodo y asignaciones sin afectar tu información real.
-                    </p>
-                  </div>
-
-                  <div className="shrink-0 w-full md:w-auto">
                     {dataSource === 'demo' ? (
                       <Button
                         onClick={() => handleSourceChange('local')}
-                        className="w-full md:w-auto py-3 px-6 rounded-xl font-bold flex items-center justify-center gap-2 border border-red-500/30 bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-all shadow-md"
+                        className="w-full py-3 px-6 rounded-xl font-bold flex items-center gap-3 border border-red-500/30 bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-all shadow-md"
                       >
-                        🛑 Desactivar Datos ficticios (demo) y activar Datos reales en local
+                        <PowerOff className="w-5 h-5 shrink-0" />
+                        Desactivar Datos ficticios (demo) y activar Datos reales en local
                       </Button>
                     ) : (
                       <Button
                         onClick={() => handleSourceChange('demo')}
-                        className="w-full md:w-auto py-3 px-6 rounded-xl font-bold flex items-center justify-center gap-2 border border-amber-500/30 bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 transition-all shadow-md shadow-amber-500/5"
+                        className="w-full py-3 px-6 rounded-xl font-bold flex items-center gap-3 border border-amber-500/30 bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 transition-all shadow-md shadow-amber-500/5"
                       >
-                        💡 Activar Datos ficticios (demo)
+                        <Zap className="w-5 h-5 shrink-0" />
+                        Activar Datos ficticios (demo)
                       </Button>
                     )}
-                  </div>
-                </Card>
-
-                {/* Rejilla de Información del Modo Demo */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                  {/* Qué incluye */}
-                  <Card className="p-8 border border-white/5 rounded-2xl bg-foreground/5 shadow-lg space-y-6">
-                    <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
-                      <Sparkles className="w-5 h-5 text-amber-400" /> ¿Qué incluye el entorno de demostración?
-                    </h3>
-
-                    <ul className="space-y-4 text-sm text-muted">
-                      <li className="flex items-start gap-3">
-                        <span className="text-amber-400 font-bold shrink-0">✓</span>
-                        <div>
-                          <strong className="text-foreground block">Módulo de Telecomunicaciones</strong>
-                          Infraestructuras de telecomunicación en viviendas y edificios (0237).
-                        </div>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <span className="text-amber-400 font-bold shrink-0">✓</span>
-                        <div>
-                          <strong className="text-foreground block">Módulo de Sistemas Informáticos</strong>
-                          Módulo didáctico y curso completo del ciclo de Sistemas Informáticos.
-                        </div>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <span className="text-amber-400 font-bold shrink-0">✓</span>
-                        <div>
-                          <strong className="text-foreground block">Alumnadodo y Asistencia Completa</strong>
-                          Fichas de alumnadodo de prueba cargadas con fotos simuladas, datos de contacto y registros históricos de asistencia.
-                        </div>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <span className="text-amber-400 font-bold shrink-0">✓</span>
-                        <div>
-                          <strong className="text-foreground block">Matriz de Evaluación Completa</strong>
-                          Criterios de evaluación y resultados de aprendizaje (RA) vinculados con unidades didácticas y actividades.
-                        </div>
-                      </li>
-                    </ul>
+                    <p className="text-sm text-muted mt-auto">
+                      Permite explorar la aplicación usando datos ficticios y preconfigurados de alumnado y asignaciones sin afectar tu información real.
+                    </p>
                   </Card>
 
-                  {/* Notas de almacenamiento */}
-                  <Card className="p-8 border border-white/5 rounded-2xl bg-foreground/5 shadow-lg space-y-6">
-                    <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
-                      📝 Información del almacenamiento demo
-                    </h3>
-                    <div className="space-y-4 text-sm text-muted leading-relaxed">
-                      <p>
-                        * En el modo demostración, todos los cambios que realices en el plano de clase, las notas o las programaciones se guardan de forma temporal en la memoria interna de tu navegador.
-                      </p>
-                      <p className="text-amber-400/90 font-semibold">
-                        * Al cambiar de modo, tus datos reales se conservan de forma totalmente intacta y privada, y podrás volver a verlos cuando desees.
-                      </p>
-                    </div>
-                  </Card>
-                </div>
-              </div>
-            )}
-
-            {/* Pestaña: Datos Reales */}
-            {activeTab === "real" && (
-              <div className="space-y-8 animate-in fade-in duration-300">
-                {/* Panel de Activación de Datos Reales */}
-                <Card className="p-8 border border-white/5 rounded-2xl bg-foreground/5 shadow-lg flex flex-col md:flex-row justify-between items-center gap-6">
-                  <div className="space-y-2">
+                  {/* Panel Local */}
+                  <Card className="p-6 border border-white/5 rounded-2xl bg-foreground/5 shadow-lg space-y-4 flex flex-col">
                     <div className="flex items-center gap-3">
                       <h3 className="text-xl font-bold text-foreground">Modo Datos reales en local</h3>
                       {dataSource === 'local' ? (
@@ -477,208 +400,40 @@ export default function EntornoTrabajoPage() {
                         <Badge variant="default" className="bg-white/10 text-muted border-white/5">Inactivo</Badge>
                       )}
                     </div>
-                    <p className="text-sm text-muted max-w-xl">
-                      Trabaja de forma totalmente segura con datos reales de tu centro, alumnadodo y evaluaciones cargados en local o respaldados en la nube.
-                    </p>
-                  </div>
-
-                  <div className="shrink-0 w-full md:w-auto">
                     {dataSource === 'local' ? (
                       <Button
                         onClick={() => handleSourceChange('demo')}
-                        className="w-full md:w-auto py-3 px-6 rounded-xl font-bold flex items-center justify-center gap-2 border border-red-500/30 bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-all shadow-md"
+                        className="w-full py-3 px-6 rounded-xl font-bold flex items-center gap-3 border border-red-500/30 bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-all shadow-md"
                       >
-                        🛑 Desactivar Datos reales en local y activar Datos ficticios (demo)
+                        <PowerOff className="w-5 h-5 shrink-0" />
+                        Desactivar Datos reales en local y activar Datos ficticios (demo)
                       </Button>
                     ) : (
                       <Button
                         onClick={() => handleSourceChange('local')}
-                        className="w-full md:w-auto py-3 px-6 rounded-xl font-bold flex items-center justify-center gap-2 border border-blue-500/30 bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 transition-all shadow-md shadow-blue-500/5"
+                        className="w-full py-3 px-6 rounded-xl font-bold flex items-center gap-3 border border-blue-500/30 bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 transition-all shadow-md shadow-blue-500/5"
                       >
-                        🛡️ Activar Datos reales en local
+                        <Power className="w-5 h-5 shrink-0" />
+                        Activar Datos reales en local
                       </Button>
                     )}
-                  </div>
-                </Card>
-              </div>
-            )}
-
-            {/* Pestaña: Respaldo y sincronización */}
-            {activeTab === "backup" && (
-              <div className="space-y-8 animate-in fade-in duration-300">
-                {/* Rejilla de Copias de seguridad y Nube */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-                  {/* Copias de seguridad */}
-                  <Card
-                    className={`p-8 border border-white/5 rounded-2xl bg-foreground/5 shadow-lg flex flex-col justify-between gap-6 transition-all duration-300 ${dataSource !== 'local' ? 'opacity-40 pointer-events-none select-none' : ''
-                      }`}
-                  >
-                    <div>
-                      <div className="flex justify-between items-center mb-1">
-                        <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
-                          <FileText className="w-5 h-5 text-blue-400" /> Respaldar tus datos reales en local
-                        </h3>
-                        {dataSource !== 'local' && (
-                          <span className="text-[10px] bg-white/10 text-muted px-2.5 py-1 rounded-full font-bold uppercase tracking-wider">
-                            No disponible
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-sm text-muted mt-1">
-                        Descarga tu Base de datos (.cdd) para hacer copias de seguridad o usar tu cuaderno en otro dispositivo.
-                      </p>
-                    </div>
-
-                    <div className="flex flex-col gap-3 pt-2">
-                      <input
-                        type="file"
-                        ref={fileInputRef}
-                        onChange={handleImport}
-                        accept=".cdd"
-                        className="hidden"
-                      />
-
-                      <Button
-                        onClick={triggerImport}
-                        className="text-sm font-bold flex items-center gap-2 bg-foreground/10 hover:bg-foreground/15 text-foreground border border-white/5 px-5 py-3 rounded-xl transition-all w-full justify-center"
-                      >
-                        <Upload className="w-4 h-4 text-blue-400" /> Importar Base de datos (.cdd)
-                      </Button>
-
-                      <Button
-                        onClick={handleExport}
-                        className="text-sm font-bold flex items-center gap-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 border border-blue-500/20 px-5 py-3 rounded-xl transition-all w-full justify-center"
-                      >
-                        <Download className="w-4 h-4 text-blue-400" /> Exportar Base de datos (.cdd)
-                      </Button>
-
-                    </div>
-                  </Card>
-
-                  {/* Sincronización en tu nube */}
-                  <Card
-                    className={`p-8 border rounded-2xl shadow-lg space-y-6 transition-all duration-300 ${dataSource === 'local' && (googleConnected || onedriveConnected)
-                      ? 'border-green-500/50 bg-green-500/5 shadow-md shadow-green-500/5'
-                      : 'border-white/5 bg-foreground/5'
-                      } ${dataSource !== 'local' ? 'opacity-40 pointer-events-none select-none' : ''}`}
-                  >
-                    <div>
-                      <div className="flex justify-between items-center mb-1">
-                        <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
-                          <Cloud className="w-5 h-5 text-accent" /> Sincronizar tus datos locales en tu nube
-                        </h2>
-                        {dataSource === 'local' && (googleConnected || onedriveConnected) && (
-                          <Badge variant="success">Activo</Badge>
-                        )}
-                        {dataSource !== 'local' && (
-                          <span className="text-[10px] bg-white/10 text-muted px-2.5 py-1 rounded-full font-bold uppercase tracking-wider">
-                            No disponible
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-sm text-muted mt-1">
-                        Conecta tus nubes corporativas para guardar tu base de datos directamente en tu almacenamiento de confianza.
-                      </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                      {/* Google Drive Card */}
-                      <div className="border border-white/5 bg-background/30 rounded-2xl p-5 flex flex-col justify-between gap-4">
-                        <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center font-bold text-xl text-foreground">
-                            G
-                          </div>
-                          <div className="min-w-0">
-                            <h3 className="text-base font-bold text-foreground">Google Drive</h3>
-                            {googleConnected ? (
-                              <p className="text-sm text-green-400/90 truncate font-mono mt-0.5">{googleUser}</p>
-                            ) : (
-                              <p className="text-sm text-muted mt-0.5">No conectado</p>
-                            )}
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          {googleConnected ? (
-                            <Badge variant="success">Sincronizado</Badge>
-                          ) : (
-                            <Badge variant="default">Desconectado</Badge>
-                          )}
-
-                          <Button
-                            onClick={handleConnectGoogle}
-                            disabled={syncing}
-                            className={`text-sm font-bold px-4 py-2 rounded-lg flex items-center gap-1 ${googleConnected
-                              ? 'bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20'
-                              : 'bg-accent/10 text-accent hover:bg-accent/20 border border-accent/20'
-                              }`}
-                          >
-                            {syncing ? 'Conectando...' : googleConnected ? 'Desconectar' : 'Conectar'}
-                          </Button>
-                        </div>
-                      </div>
-
-                      {/* OneDrive Card */}
-                      <div className="border border-white/5 bg-background/30 rounded-2xl p-5 flex flex-col justify-between gap-4">
-                        <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center font-bold text-xl text-foreground">
-                            M
-                          </div>
-                          <div className="min-w-0">
-                            <h3 className="text-base font-bold text-foreground">Microsoft OneDrive</h3>
-                            {onedriveConnected ? (
-                              <p className="text-sm text-blue-400/90 truncate font-mono mt-0.5">{onedriveUser}</p>
-                            ) : (
-                              <p className="text-sm text-muted mt-0.5">No conectado</p>
-                            )}
-                          </div>
-                        </div>
-
-                        <div className="flex items-center justify-between">
-                          {onedriveConnected ? (
-                            <Badge variant="info">Sincronizado</Badge>
-                          ) : (
-                            <Badge variant="default">Desconectado</Badge>
-                          )}
-
-                          <Button
-                            onClick={handleConnectOneDrive}
-                            disabled={syncing}
-                            className={`text-sm font-bold px-4 py-2 rounded-lg flex items-center gap-1 ${onedriveConnected
-                              ? 'bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20'
-                              : 'bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 border border-blue-500/20'
-                              }`}
-                          >
-                            {syncing ? 'Conectando...' : onedriveConnected ? 'Desconectar' : 'Conectar'}
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
+                    <p className="text-sm text-muted mt-auto">
+                      Trabaja de forma totalmente segura con datos reales de tu centro, alumnado y evaluaciones cargados en local o respaldados en la nube.
+                    </p>
                   </Card>
                 </div>
 
-                {/* Aviso de Seguridad de RGPD al final (centrado) */}
-                <div className="flex flex-col items-center justify-center text-center space-y-3 pt-4 max-w-2xl mx-auto">
-                  <ShieldAlert className="w-8 h-8 text-blue-400" />
-                  <h3 className="text-xl font-extrabold text-foreground">Seguridad y RGPD garantizados</h3>
-                  <div className="text-base text-muted space-y-2">
-                    <p>Esta aplicación procesa toda la información confidencial en tu propio entorno.</p>
-                    <p>Ningún dato de tu alumnadodo se envía a servidores externos ni es accesible por el administrador.</p>
-                    <p className="font-semibold text-blue-300">Asegúrate de hacer backup de tu programación didáctica y cursos para no perderlos al hacer cambios.</p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Sección: Selección y Aviso de Seguridad (solo visibles en pestaña Datos Reales) */}
-            {activeTab === "real" && (
-              <>
                 {/* Sección: Selección */}
-                <div className="space-y-4">
+                <div className={`space-y-4 transition-all duration-300 ${dataSource === 'demo' ? 'opacity-40 pointer-events-none select-none' : ''}`}>
                   <Card className="p-8 border border-accent/25 rounded-2xl bg-accent/5 shadow-lg space-y-6 flex flex-col justify-between">
                     <div>
                       <h3 className="text-xl font-bold text-foreground flex items-center gap-2">
                         🎯 Selección de Programación y Curso activos
+                        {dataSource === 'demo' && (
+                          <span className="text-[10px] bg-white/10 text-muted px-2.5 py-1 rounded-full font-bold tracking-wider ml-2">
+                            No disponible en modo demo
+                          </span>
+                        )}
                       </h3>
                       <p className="text-sm text-muted mt-1">
                         Elige la Programación didáctica y el Curso académico activo sobre los que deseas trabajar en las distintas secciones del cuaderno.
@@ -751,12 +506,182 @@ export default function EntornoTrabajoPage() {
                   <h3 className="text-xl font-extrabold text-foreground">Seguridad y RGPD garantizados</h3>
                   <div className="text-base text-muted space-y-2">
                     <p>Esta aplicación procesa toda la información confidencial en tu propio entorno.</p>
-                    <p>Ningún dato de tu alumnadodo se envía a servidores externos ni es accesible por el administrador.</p>
+                    <p>Ningún dato de tu alumnado se envía a servidores externos ni es accesible por el administrador.</p>
                     <p className="font-semibold text-blue-300">Asegúrate de hacer backup de tu programación didáctica y cursos para no perderlos al hacer cambios.</p>
                   </div>
                 </div>
-              </>
+
+              </div>
             )}
+
+            {/* Pestaña: Respaldo y sincronización */}
+            {activeTab === "backup" && (
+              <div className="space-y-8 animate-in fade-in duration-300">
+                {/* Rejilla de Copias de seguridad y Nube */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+                  {/* Copias de seguridad */}
+                  <Card
+                    className={`p-8 border border-white/5 rounded-2xl bg-foreground/5 shadow-lg flex flex-col justify-between gap-6 transition-all duration-300 ${dataSource !== 'local' ? 'opacity-40 pointer-events-none select-none' : ''
+                      }`}
+                  >
+                    <div>
+                      <div className="flex justify-between items-center mb-1">
+                        <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
+                          <FileText className="w-5 h-5 text-blue-400" /> Respaldar tus datos reales en local
+                        </h3>
+                        {dataSource !== 'local' && (
+                          <span className="text-[10px] bg-white/10 text-muted px-2.5 py-1 rounded-full font-bold tracking-wider">
+                            No disponible
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-sm text-muted mt-1">
+                        Descarga tu Base de datos (.cdd) para hacer copias de seguridad o usar tu cuaderno en otro dispositivo.
+                      </p>
+                    </div>
+
+                    <div className="flex flex-col gap-3 pt-2">
+                      <input
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handleImport}
+                        accept=".cdd"
+                        className="hidden"
+                      />
+
+                      <Button
+                        onClick={triggerImport}
+                        className="text-sm font-bold flex items-center gap-2 bg-foreground/10 hover:bg-foreground/15 text-foreground border border-white/5 px-5 py-3 rounded-xl transition-all w-full justify-center"
+                      >
+                        <Upload className="w-4 h-4 text-blue-400" /> Importar Base de datos (.cdd)
+                      </Button>
+
+                      <Button
+                        onClick={handleExport}
+                        className="text-sm font-bold flex items-center gap-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 border border-blue-500/20 px-5 py-3 rounded-xl transition-all w-full justify-center"
+                      >
+                        <Download className="w-4 h-4 text-blue-400" /> Exportar Base de datos (.cdd)
+                      </Button>
+
+                    </div>
+                  </Card>
+
+                  {/* Sincronización en tu nube */}
+                  <Card
+                    className={`p-8 border rounded-2xl shadow-lg space-y-6 transition-all duration-300 ${dataSource === 'local' && (googleConnected || onedriveConnected)
+                      ? 'border-green-500/50 bg-green-500/5 shadow-md shadow-green-500/5'
+                      : 'border-white/5 bg-foreground/5'
+                      } ${dataSource !== 'local' ? 'opacity-40 pointer-events-none select-none' : ''}`}
+                  >
+                    <div>
+                      <div className="flex justify-between items-center mb-1">
+                        <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
+                          <Cloud className="w-5 h-5 text-accent" /> Sincronizar tus datos locales en tu nube
+                        </h2>
+                        {dataSource === 'local' && (googleConnected || onedriveConnected) && (
+                          <Badge variant="success">Activo</Badge>
+                        )}
+                        {dataSource !== 'local' && (
+                          <span className="text-[10px] bg-white/10 text-muted px-2.5 py-1 rounded-full font-bold tracking-wider">
+                            No disponible
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-sm text-muted mt-1">
+                        Conecta tus nubes corporativas para guardar tu base de datos directamente en tu almacenamiento de confianza.
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      {/* Google Drive Card */}
+                      <div className="border border-white/5 bg-background/30 rounded-2xl p-5 flex flex-col justify-between gap-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center font-bold text-xl text-foreground">
+                            g
+                          </div>
+                          <div className="min-w-0">
+                            <h3 className="text-base font-bold text-foreground">Google Drive</h3>
+                            {googleConnected ? (
+                              <p className="text-sm text-green-400/90 truncate font-mono mt-0.5">{googleUser}</p>
+                            ) : (
+                              <p className="text-sm text-muted mt-0.5">No conectado</p>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          {googleConnected ? (
+                            <Badge variant="success">Sincronizado</Badge>
+                          ) : (
+                            <Badge variant="default">Desconectado</Badge>
+                          )}
+
+                          <Button
+                            onClick={handleConnectGoogle}
+                            disabled={syncing}
+                            className={`text-sm font-bold px-4 py-2 rounded-lg flex items-center gap-1 ${googleConnected
+                              ? 'bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20'
+                              : 'bg-accent/10 text-accent hover:bg-accent/20 border border-accent/20'
+                              }`}
+                          >
+                            {syncing ? 'Conectando...' : googleConnected ? 'Desconectar' : 'Conectar'}
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* OneDrive Card */}
+                      <div className="border border-white/5 bg-background/30 rounded-2xl p-5 flex flex-col justify-between gap-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center font-bold text-xl text-foreground">
+                            m
+                          </div>
+                          <div className="min-w-0">
+                            <h3 className="text-base font-bold text-foreground">Microsoft OneDrive</h3>
+                            {onedriveConnected ? (
+                              <p className="text-sm text-blue-400/90 truncate font-mono mt-0.5">{onedriveUser}</p>
+                            ) : (
+                              <p className="text-sm text-muted mt-0.5">No conectado</p>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                          {onedriveConnected ? (
+                            <Badge variant="info">Sincronizado</Badge>
+                          ) : (
+                            <Badge variant="default">Desconectado</Badge>
+                          )}
+
+                          <Button
+                            onClick={handleConnectOneDrive}
+                            disabled={syncing}
+                            className={`text-sm font-bold px-4 py-2 rounded-lg flex items-center gap-1 ${onedriveConnected
+                              ? 'bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20'
+                              : 'bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 border border-blue-500/20'
+                              }`}
+                          >
+                            {syncing ? 'Conectando...' : onedriveConnected ? 'Desconectar' : 'Conectar'}
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                </div>
+
+                {/* Aviso de Seguridad de RGPD al final (centrado) */}
+                <div className="flex flex-col items-center justify-center text-center space-y-3 pt-4 max-w-2xl mx-auto">
+                  <ShieldAlert className="w-8 h-8 text-blue-400" />
+                  <h3 className="text-xl font-extrabold text-foreground">Seguridad y RGPD garantizados</h3>
+                  <div className="text-base text-muted space-y-2">
+                    <p>Esta aplicación procesa toda la información confidencial en tu propio entorno.</p>
+                    <p>Ningún dato de tu alumnado se envía a servidores externos ni es accesible por el administrador.</p>
+                    <p className="font-semibold text-blue-300">Asegúrate de hacer backup de tu programación didáctica y cursos para no perderlos al hacer cambios.</p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+ 
 
           </div>
         </div>

@@ -64,7 +64,7 @@ export function SessionTable({
                     <th className="pb-2 w-16">Nº</th>
                     <th className="pb-2 w-16">Horas</th>
                     <th className="pb-2 w-48">Tipo</th>
-                    <th className="pb-2 w-32">RA/CE</th>
+                    <th className="pb-2 w-32">Ra/CE</th>
                     <th className="pb-2 min-w-[200px]">Contenidos</th>
                     <th className="pb-2 w-48">Aspectos Clave</th>
                     <th className="pb-2 w-48">Recursos</th>

@@ -39,7 +39,7 @@ export function PlanificacionMensualTab() {
         <table className="w-full text-left border-collapse text-sm whitespace-nowrap">
           <thead>
             <tr className="border-b border-[var(--glass-border)] text-muted bg-foreground/5">
-              <th className="p-3 sticky left-0 bg-[#111827] z-10 border-r border-[var(--glass-border)]">UD</th>
+              <th className="p-3 sticky left-0 bg-[#111827] z-10 border-r border-[var(--glass-border)]">Ud</th>
               <th className="p-3 sticky left-[60px] bg-[#111827] z-10 text-center">Cls. Prv</th>
               <th className="p-3 sticky left-[130px] bg-[#111827] z-10 text-center border-r border-[var(--glass-border)]">Cls. Imp</th>
               {meses_display.map((m) => (

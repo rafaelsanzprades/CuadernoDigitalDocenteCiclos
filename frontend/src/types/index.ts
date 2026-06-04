@@ -18,7 +18,7 @@ export const UnidadDidacticaSchema = z.object({
   desc_ud: z.string(),
   horas_ud: z.union([z.number(), z.string()]),
   ra_mappings: z.record(z.string(), z.any()).optional().nullable(),
-});
+}).passthrough();
 export type UnidadDidactica = z.infer<typeof UnidadDidacticaSchema>;
 
 export const TareaSchema = z.object({
@@ -46,7 +46,7 @@ export const AlumnadoSchema = z.object({
   Email: z.string().optional().nullable(),
   Movil: z.string().optional().nullable(),
 });
-export type Alumnadodo = z.infer<typeof AlumnadoSchema>;
+export type Alumnado = z.infer<typeof AlumnadoSchema>;
 
 export const ResultadoAprendizajeSchema = z.object({
   id_ra: z.string(),
@@ -188,8 +188,8 @@ export interface AppState {
   setCursoData: (data: CursoData | null) => void;
   updateCursoData: (key: keyof CursoData, data: any) => void;
   
-  saveModuleData: () => Promise<boolean>;
-  saveCursoData: () => Promise<boolean>;
+  saveModuleData: () => Promise<boolean | 'conflict'>;
+  saveCursoData: () => Promise<boolean | 'conflict'>;
   
   isSidebarOpen: boolean;
   toggleSidebar: () => void;

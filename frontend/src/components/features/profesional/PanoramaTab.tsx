@@ -380,7 +380,7 @@ function ProsConsCard({
       </div>
       <div className="p-5 space-y-4">
         <div>
-          <div className="text-[10px] font-bold uppercase tracking-widest text-emerald-400 mb-2">✅ Pros</div>
+          <div className="text-[10px] font-bold tracking-widest text-emerald-400 mb-2">✅ Pros</div>
           <ul className="space-y-1.5">
             {option.pros.map((p, i) => (
               <li key={i} className="text-sm text-foreground/80 flex items-start gap-2">
@@ -391,7 +391,7 @@ function ProsConsCard({
           </ul>
         </div>
         <div className="border-t border-white/5 pt-4">
-          <div className="text-[10px] font-bold uppercase tracking-widest text-red-400 mb-2">⚠️ Contras</div>
+          <div className="text-[10px] font-bold tracking-widest text-red-400 mb-2">⚠️ Contras</div>
           <ul className="space-y-1.5">
             {option.cons.map((c, i) => (
               <li key={i} className="text-sm text-foreground/80 flex items-start gap-2">
@@ -450,7 +450,7 @@ export const PanoramaTab = () => {
                   <div className="p-5 space-y-5 animate-in slide-in-from-top-2 duration-200 bg-background/20">
                     <div className="flex flex-col md:flex-row gap-4">
                       <ProsConsCard option={comp.comparativa.optionA} accentClass="bg-emerald-500/10" />
-                      <div className="flex items-center justify-center text-2xl font-black text-muted shrink-0">VS</div>
+                      <div className="flex items-center justify-center text-2xl font-black text-muted shrink-0">Vs</div>
                       <ProsConsCard option={comp.comparativa.optionB} accentClass="bg-blue-500/10" />
                     </div>
                     {comp.comparativa.tip && (
@@ -469,7 +469,7 @@ export const PanoramaTab = () => {
         {/* Resumen tabla */}
         <Card className="border border-white/5 bg-foreground/5 overflow-hidden">
           <div className="px-6 py-4 border-b border-white/5 bg-foreground/10">
-            <h3 className="text-sm font-bold text-foreground uppercase tracking-wider">📊 Resumen comparativo rápido</h3>
+            <h3 className="text-sm font-bold text-foreground tracking-wider">📊 Resumen comparativo rápido</h3>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -517,7 +517,7 @@ export const PanoramaTab = () => {
                   <div className="flex items-center gap-4">
                     <span className="text-4xl">{sector.emoji}</span>
                     <div>
-                      <div className={`text-xs font-bold uppercase tracking-widest ${sector.color} mb-0.5`}>
+                      <div className={`text-xs font-bold tracking-widest ${sector.color} mb-0.5`}>
                         {sector.subtitulo}
                       </div>
                       <h3 className="text-xl font-extrabold text-foreground">{sector.nombre}</h3>
@@ -552,12 +552,12 @@ export const PanoramaTab = () => {
                           </div>
 
                           <div className="text-xs text-muted leading-relaxed border-l-2 border-white/10 pl-3">
-                            <strong className="text-foreground/70 text-[10px] uppercase tracking-wider">Qué hace el técnico:</strong>
+                            <strong className="text-foreground/70 text-[10px] tracking-wider">Qué hace el técnico:</strong>
                             <p className="mt-0.5">{sub.quéHace}</p>
                           </div>
 
                           <div>
-                            <div className="text-[10px] font-bold text-muted uppercase tracking-wider mb-2">
+                            <div className="text-[10px] font-bold text-muted tracking-wider mb-2">
                               🏢 Empresas y entidades clave en Aragón
                             </div>
                             <ul className="space-y-1.5">

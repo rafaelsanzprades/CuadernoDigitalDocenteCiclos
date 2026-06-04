@@ -5,25 +5,25 @@ import Header from "@/components/layout/Header";
 import { useAppStore } from "@/store/useAppStore";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { TutoriaTab } from "@/components/features/alumnadodo/TutoriaTab";
-import { TutoriaMatrixTab } from "@/components/features/alumnadodo/TutoriaMatrixTab";
-import { PlanoClaseTab } from "@/components/features/alumnadodo/PlanoClaseTab";
+import { TutoriaTab } from "@/components/features/alumnado/TutoriaTab";
+import { TutoriaMatrixTab } from "@/components/features/alumnado/TutoriaMatrixTab";
+import { PlanoClaseTab } from "@/components/features/alumnado/PlanoClaseTab";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 
-export default function AlumnadodoPage() {
+export default function AlumnadoPage() {
   const { activeCursoId, cursoData, setCursoData, updateCursoData, saveCursoData } = useAppStore();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
 
   const TABS = [
-    { id: "alumnadodo", label: "👥 Alumnadodo", cleanLabel: "Alumnadodo" },
+    { id: "alumnado", label: "👥 Alumnado", cleanLabel: "Alumnado" },
     { id: "plano", label: "🪑 Plano de clase", cleanLabel: "Plano de clase" },
     { id: "tutoria", label: "🎯 Ficha de Tutoría", cleanLabel: "Ficha de Tutoría" },
     { id: "matriz", label: "📊 Matriz de Tutoría", cleanLabel: "Matriz de Tutoría" }
   ];
 
-  const [activeTab, setActiveTab] = useState("alumnadodo");
+  const [activeTab, setActiveTab] = useState("alumnado");
   const activeTabCleanLabel = TABS.find(t => t.id === activeTab)?.cleanLabel;
 
   useEffect(() => {
@@ -79,7 +79,7 @@ export default function AlumnadodoPage() {
   }
 
   if (loading || !cursoData) {
-    return <LoadingSpinner text="Cargando datos de alumnadodo..." />;
+    return <LoadingSpinner text="Cargando datos de alumnado..." />;
   }
 
   const df_al = cursoData?.df_al || [];
@@ -134,7 +134,7 @@ export default function AlumnadodoPage() {
           <div className="flex justify-between items-start">
             <div>
               <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                👥 Alumnadodo y tutoría
+                👥 Alumnado y tutoría
               </h1>
               <p className="text-muted mt-2 text-lg">Gestión oficial de estudiantes, ficha individual de orientación y matriz de tutoría.</p>
             </div>
@@ -169,16 +169,16 @@ export default function AlumnadodoPage() {
             ))}
           </div>
 
-          {/* Tab 1: Alumnadodo */}
-          {activeTab === "alumnadodo" && (
+          {/* Tab 1: Alumnado */}
+          {activeTab === "alumnado" && (
             <Card className="p-6 border-t-4 border-t-blue-500">
               <div className="flex justify-between items-end mb-6">
                 <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
                   <span>Lista oficial</span>
-                  <span className="text-sm font-normal text-muted bg-foreground/5 px-3 py-1 rounded-full">{df_al.length} alumnadodo</span>
+                  <span className="text-sm font-normal text-muted bg-foreground/5 px-3 py-1 rounded-full">{df_al.length} alumnado</span>
                 </h2>
                 {n_menores > 0 && (
-                  <span className="text-pink-400 text-sm font-semibold">🌸 {n_menores} alumnadodo(s) menor(es) de 18 años</span>
+                  <span className="text-pink-400 text-sm font-semibold">🌸 {n_menores} alumnado(s) menor(es) de 18 años</span>
                 )}
               </div>
               
@@ -186,7 +186,7 @@ export default function AlumnadodoPage() {
                 <table className="w-full text-left text-sm whitespace-nowrap border-collapse">
                   <thead>
                     <tr className="border-b border-[var(--glass-border)] text-muted bg-background">
-                      <th className="p-2 sticky left-0 z-10 border-r border-[var(--glass-border)] bg-background w-16">ID</th>
+                      <th className="p-2 sticky left-0 z-10 border-r border-[var(--glass-border)] bg-background w-16">Id</th>
                       <th className="p-2 sticky left-[60px] z-10 border-r border-[var(--glass-border)] bg-background w-12 text-center">🌸</th>
                       <th className="p-2 w-32">Estado</th>
                       <th className="p-2 w-48">Apellidos</th>
@@ -281,7 +281,7 @@ export default function AlumnadodoPage() {
                             <button
                               onClick={() => handleRemoveAlumnado(idx)}
                               className="text-red-400 hover:text-red-300 font-bold"
-                              title="Eliminar Alumnadodo"
+                              title="Eliminar Alumnado"
                             >
                               &times;
                             </button>
@@ -297,7 +297,7 @@ export default function AlumnadodoPage() {
                     onClick={handleAddAlumnado}
                     className="text-blue-400 hover:text-blue-300 font-semibold flex items-center gap-1"
                   >
-                    <span>+</span> Añadir Alumnadodo
+                    <span>+</span> Añadir Alumnado
                   </Button>
                 </div>
               </div>

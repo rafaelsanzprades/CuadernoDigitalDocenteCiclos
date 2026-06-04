@@ -101,7 +101,7 @@ def generar_pdf_boletin_individual(
             idx_ev = df_eval[mask_ev].index[0]
 
     # --- 1. FICHA DEL ALUMNADO ---
-    elements.append(Paragraph("Alumnadodo", h2))
+    elements.append(Paragraph("Alumnado", h2))
     
     ficha_data = [
         [Paragraph("<b>Apellidos y Nombre:</b>", sml), Paragraph(f"{apellidos}, {nombre}", sml), Paragraph("<b>NIF / NIE:</b>", sml), Paragraph(al_id, sml)],

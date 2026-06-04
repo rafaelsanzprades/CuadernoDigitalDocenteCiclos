@@ -61,8 +61,8 @@ export const CalificacionFEOETab = () => {
   if (df_evaluable.length === 0) {
     return (
       <Card className="p-6 border-l-4 border-l-yellow-500 mt-6">
-        <h3 className="text-xl font-bold text-yellow-400 mb-2">No hay alumnadodo</h3>
-        <p className="text-foreground/80">Asegúrate de añadir alumnadodo en la Gestión de Matrícula.</p>
+        <h3 className="text-xl font-bold text-yellow-400 mb-2">No hay alumnado</h3>
+        <p className="text-foreground/80">Asegúrate de añadir alumnado en la Gestión de Matrícula.</p>
       </Card>
     );
   }
@@ -73,8 +73,8 @@ export const CalificacionFEOETab = () => {
         <table className="w-full text-left text-sm border-collapse whitespace-nowrap">
           <thead>
             <tr className="border-b border-[var(--glass-border)] text-muted bg-[#0b1120]">
-              <th className="p-3 sticky left-0 z-50 border-r border-[var(--glass-border)] !bg-[#0b1120] w-16 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.3)]">ID</th>
-              <th className="p-3 sticky left-[64px] z-50 border-r border-[var(--glass-border)] !bg-[#0b1120] min-w-[250px] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.3)]">Alumnadodo</th>
+              <th className="p-3 sticky left-0 z-50 border-r border-[var(--glass-border)] !bg-[#0b1120] w-16 shadow-[2px_0_5px_-2px_rgba(0,0,0,0.3)]">Id</th>
+              <th className="p-3 sticky left-[64px] z-50 border-r border-[var(--glass-border)] !bg-[#0b1120] min-w-[250px] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.3)]">Alumnado</th>
               {ras_dualizados.map((ra: string) => (
                 <th key={ra} className="p-3 text-center border-r border-[var(--glass-border)] min-w-[120px] align-top">
                   <div className="font-bold text-purple-400">{ra}</div>
@@ -88,7 +88,7 @@ export const CalificacionFEOETab = () => {
                     }}
                     className="w-[110px] mx-auto block bg-foreground/15 text-muted font-bold border border-[var(--glass-border)] rounded px-2 py-1 text-xs focus:border-purple-500 focus:outline-none cursor-pointer transition-colors hover:bg-foreground/20"
                     defaultValue=""
-                    title={`Valorar todos los alumnadodo para ${ra}`}
+                    title={`Valorar todos los alumnado para ${ra}`}
                   >
                     <option value="" disabled className="bg-background text-muted font-bold">Todos ↓</option>
                     <option value="0" className="bg-background text-muted">0 - Sin evaluar</option>
@@ -123,7 +123,7 @@ export const CalificacionFEOETab = () => {
                         }}
                         className="w-[100px] bg-foreground/15 text-muted font-bold border border-[var(--glass-border)] rounded px-2 py-1 text-xs focus:border-purple-500 focus:outline-none cursor-pointer transition-colors hover:bg-foreground/20"
                         defaultValue=""
-                        title="Valorar todos los RA de este alumnadodo"
+                        title="Valorar todos los RA de este alumnado"
                       >
                         <option value="" disabled className="bg-background text-muted font-bold">Todos →</option>
                         <option value="0" className="bg-background text-muted">0 - Sin</option>

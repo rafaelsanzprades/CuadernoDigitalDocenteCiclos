@@ -105,7 +105,7 @@ export function FileManagementPanel({
 <span>📅</span> Curso
 </h2>
             <p className="text-sm text-muted">
-              Activa el Curso escolar real (Alumnadodo, Notas, Seguimiento diario) de la Programación seleccionada.
+              Activa el Curso escolar real (Alumnado, Notas, Seguimiento diario) de la Programación seleccionada.
             </p>
           </div>
 

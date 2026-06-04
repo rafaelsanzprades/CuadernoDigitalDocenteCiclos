@@ -20,6 +20,12 @@ if (typeof window !== 'undefined') {
     localStorage.removeItem(STORAGE_KEYS.LOCAL_DB);
     localStorage.removeItem('cdd-store-cache');
     localStorage.setItem('cdd_seed_version', String(CRM_SEED_VERSION));
+    
+    // Clear Zustand's IndexedDB cache
+    import('idb-keyval').then(({ del }) => {
+      del('cdd-store-cache-v2').catch(console.error);
+      del('cdd-store-cache').catch(console.error);
+    });
   }
 }
 
@@ -99,7 +105,11 @@ export const fileManager = {
             } else if (typeof seedDoc === 'object' && seedDoc !== null) {
               // Document exists — merge missing top-level keys, always refresh crm_empresas
               for (const [field, value] of Object.entries(seedDoc)) {
-                if (field === 'crm_empresas' || parsed[docId][field] === undefined) {
+                if (
+                  field === 'crm_empresas' || 
+                  parsed[docId][field] === undefined || 
+                  (field === 'df_ud' && Array.isArray(parsed[docId][field]) && parsed[docId][field].length === 0)
+                ) {
                   parsed[docId][field] = clone(value);
                   changed = true;
                 }

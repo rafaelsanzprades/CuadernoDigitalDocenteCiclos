@@ -38,7 +38,7 @@ export function AccesoUsuariosTab() {
       icon: <Building2 className="w-6 h-6 text-blue-400" />,
       title: "Admin de Centro (COFOTAP)",
       scope: "Centro Educativo",
-      description: "Configuración integral del centro. Define el calendario, crea departamentos, importa alumnadodo y gestiona asignaciones del profesorado.",
+      description: "Configuración integral del centro. Define el calendario, crea departamentos, importa alumnado y gestiona asignaciones del profesorado.",
       color: "border-blue-500/30 bg-blue-500/10"
     },
     {
@@ -79,7 +79,7 @@ export function AccesoUsuariosTab() {
     {
       icon: <UserCheck className="w-6 h-6 text-orange-400" />,
       title: "Tutor Dual (Seguimiento)",
-      scope: "Grupo/Alumnadodo + Curso Académico",
+      scope: "Grupo/Alumnado + Curso Académico",
       description: "El docente en la 'trinchera'. Gestiona los planes formativos y evalúa junto con el instructor de la empresa.",
       color: "border-orange-500/30 bg-orange-500/10"
     },
@@ -87,12 +87,12 @@ export function AccesoUsuariosTab() {
       icon: <BookOpen className="w-6 h-6 text-indigo-400" />,
       title: "Profesorado",
       scope: "Módulo + Grupo + Curso Académico",
-      description: "Rol base en el aula. Accede exclusivamente a sus cuadernos docentes para calificar a sus alumnadodo.",
+      description: "Rol base en el aula. Accede exclusivamente a sus cuadernos docentes para calificar a sus alumnado.",
       color: "border-indigo-500/30 bg-indigo-500/10"
     },
     {
       icon: <GraduationCap className="w-6 h-6 text-green-400" />,
-      title: "Alumnadodo",
+      title: "Alumnado",
       scope: "Matrícula (N Módulos + N FEOE)",
       description: "Acceso como estudiante para consultar sus calificaciones por Resultados de Aprendizaje, horarios, y seguimiento Dual.",
       color: "border-green-500/30 bg-green-500/10"
@@ -261,7 +261,7 @@ export function AccesoUsuariosTab() {
               <div className="flex items-center gap-4 bg-foreground/5 p-4 rounded-xl border border-[var(--glass-border)] ml-0 md:ml-16">
                 <div className="p-3 bg-green-500/20 text-green-400 rounded-lg"><GraduationCap className="w-6 h-6" /></div>
                 <div className="flex-1">
-                  <h4 className="font-semibold text-green-300">Nivel Alumnadodo (Estudiante matriculado)</h4>
+                  <h4 className="font-semibold text-green-300">Nivel Alumnado (Estudiante matriculado)</h4>
                   <p className="text-sm text-muted">Sus fechas de evaluación y períodos de FEOE (<code className="text-accent bg-foreground/15 px-1 rounded">Enrollment</code>) se ajustan para reflejar los nuevos festivos, sin que el Tutor Dual tenga que reconfigurar uno por uno.</p>
                 </div>
               </div>
@@ -282,22 +282,22 @@ export function AccesoUsuariosTab() {
                 </li>
                 <li className="flex justify-between border-b border-white/5 pb-2">
                   <span className="font-mono text-accent">Enrollment</span>
-                  <span>Enlaza Alumnadodo ↔ Módulo ↔ Grupo (Matrícula)</span>
+                  <span>Enlaza Alumnado ↔ Módulo ↔ Grupo (Matrícula)</span>
                 </li>
                 <li className="flex justify-between pb-2">
                   <span className="font-mono text-accent">DualAgreement</span>
-                  <span>Enlaza Alumnadodo ↔ Empresa ↔ Tutor ↔ FEOE</span>
+                  <span>Enlaza Alumnado ↔ Empresa ↔ Tutor ↔ FEOE</span>
                 </li>
               </ul>
             </Card>
 
             <Card className="p-6 bg-gradient-to-br from-accent/5 to-transparent border border-accent/20">
-              <h3 className="text-lg font-bold mb-4 text-accent">Integración de Alumnadodo</h3>
+              <h3 className="text-lg font-bold mb-4 text-accent">Integración de Alumnado</h3>
               <p className="text-sm text-foreground/80 mb-4 leading-relaxed">
-                El Alumnadodo requiere su propia tabla o flag en la tabla `User` (ej: <code className="bg-foreground/15 px-1 text-foreground">is_student=True</code>). 
+                El Alumnado requiere su propia tabla o flag en la tabla `User` (ej: <code className="bg-foreground/15 px-1 text-foreground">is_student=True</code>). 
               </p>
               <p className="text-sm text-foreground/80 leading-relaxed">
-                A través de la entidad <strong>Matrícula (Enrollment)</strong>, un alumnadodo se vincula a N Módulos. Esto le da acceso a su propio dashboard ("Mi Cuaderno") donde ve el progreso de sus RA, su horario, y sus anexos de FP Dual, todo sincronizado con lo que introducen sus N profesores.
+                A través de la entidad <strong>Matrícula (Enrollment)</strong>, un alumnado se vincula a N Módulos. Esto le da acceso a su propio dashboard ("Mi Cuaderno") donde ve el progreso de sus RA, su horario, y sus anexos de FP Dual, todo sincronizado con lo que introducen sus N profesores.
               </p>
             </Card>
           </div>

@@ -188,7 +188,7 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
               }
               badgeText = friendlyName;
               badgeColor = "text-[#14a085] bg-[#14a085]/10 border-[#14a085]/30";
-            } else if (group.title === "Curso y alumnadodo" || group.title === "Curso") {
+            } else if (group.title === "Curso y alumnado" || group.title === "Curso") {
               let friendlyName = "—";
               if (activeCursoId) {
                 const parts = activeCursoId.split('-');
@@ -215,11 +215,11 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
                   <div className="flex flex-col items-start gap-1">
                     <span className="text-[0.95rem] font-bold tracking-wide text-foreground leading-none">{group.title}</span>
                     {badgeText ? (
-                      <div className={`px-2 py-0.5 rounded text-[0.65rem] border font-semibold tracking-wider uppercase leading-none ${badgeColor}`}>
+                      <div className={`px-2 py-0.5 rounded text-[0.65rem] border font-semibold tracking-wider leading-none ${badgeColor}`}>
                         {badgeText}
                       </div>
                     ) : (
-                      <div className="px-2 py-0.5 rounded text-[0.65rem] border border-transparent font-semibold tracking-wider uppercase leading-none opacity-0 select-none">
+                      <div className="px-2 py-0.5 rounded text-[0.65rem] border border-transparent font-semibold tracking-wider leading-none opacity-0 select-none">
                         -
                       </div>
                     )}
@@ -274,22 +274,22 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
           <div className="mr-1">
             <Link href="/entorno" className="inline-block transition-transform hover:scale-105">
               {sourceType === 'demo' ? (
-                <span className="px-2.5 py-1 rounded-lg text-[9px] font-extrabold tracking-wider uppercase border border-amber-500/30 text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 cursor-pointer flex items-center gap-1 transition-all" title="Haz clic para configurar tu Entorno de Trabajo">
-                  ⚠️ MODO DEMO
+                <span className="px-2.5 py-1 rounded-lg text-[9px] font-extrabold tracking-wider border border-amber-500/30 text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 cursor-pointer flex items-center gap-1 transition-all" title="Haz clic para configurar tu Entorno de Trabajo">
+                  ⚠️ Datos ficticios (demo)
                 </span>
               ) : cloudSynced ? (
-                <span className="px-2.5 py-1 rounded-lg text-[9px] font-extrabold tracking-wider uppercase border border-green-500/30 text-green-400 bg-green-500/10 hover:bg-green-500/20 cursor-pointer flex items-center gap-1 transition-all" title="Haz clic para configurar tu Entorno de Trabajo">
-                  🛡️ LOCAL + NUBE
+                <span className="px-2.5 py-1 rounded-lg text-[9px] font-extrabold tracking-wider border border-green-500/30 text-green-400 bg-green-500/10 hover:bg-green-500/20 cursor-pointer flex items-center gap-1 transition-all" title="Haz clic para configurar tu Entorno de Trabajo">
+                  🛡️ Local + nube
                 </span>
               ) : (
-                <span className="px-2.5 py-1 rounded-lg text-[9px] font-extrabold tracking-wider uppercase border border-blue-500/30 text-blue-300 bg-blue-500/10 hover:bg-blue-500/20 cursor-pointer flex items-center gap-1 transition-all" title="Haz clic para configurar tu Entorno de Trabajo">
-                  🛡️ DATOS LOCALES
+                <span className="px-2.5 py-1 rounded-lg text-[9px] font-extrabold tracking-wider border border-blue-500/30 text-blue-300 bg-blue-500/10 hover:bg-blue-500/20 cursor-pointer flex items-center gap-1 transition-all" title="Haz clic para configurar tu Entorno de Trabajo">
+                  🛡️ Datos locales
                 </span>
               )}
             </Link>
           </div>
 
-          {moduleData && (
+          {moduleData && sourceType !== 'demo' && (
             <div className="mr-2 flex items-center">
               {autosaveStatus === "saved" && <span className="text-green-500 text-sm font-medium">☁️ Guardado</span>}
               {autosaveStatus === "saving" && <span className="text-amber-500 text-sm font-medium animate-pulse">⏳ Guardando...</span>}
@@ -310,22 +310,24 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
             </motion.button>
           )}
 
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={handleSave}
-            disabled={isSaving}
-            className="glass-button bg-[var(--accent-color)]/10 text-[var(--accent-color)] border-[var(--accent-color)]/30 hover:bg-[var(--accent-color)]/20 font-semibold py-1.5 px-4 text-sm rounded-lg flex items-center gap-2 transition-all"
-          >
-            <span>{isSaving ? "⏳" : "💾"}</span>
-            {isSaving ? "Guardando..." : "Guardar"}
-          </motion.button>
+          {sourceType !== 'demo' && (
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleSave}
+              disabled={isSaving}
+              className="glass-button bg-[var(--accent-color)]/10 text-[var(--accent-color)] border-[var(--accent-color)]/30 hover:bg-[var(--accent-color)]/20 font-semibold py-1.5 px-4 text-sm rounded-lg flex items-center gap-2 transition-all"
+            >
+              <span>{isSaving ? "⏳" : "💾"}</span>
+              {isSaving ? "Guardando..." : "Guardar"}
+            </motion.button>
+          )}
         </div>
       </nav>
 
       {currentGroup && currentItem && (
         <div className="w-full px-6 py-1.5 bg-white/[0.02] border-t border-[var(--glass-border)] flex items-center gap-1.5 text-[0.8rem] text-muted tracking-wide">
-          <span className="font-medium text-muted uppercase text-[0.7rem]">{currentGroup}</span>
+          <span className="font-medium text-muted text-[0.7rem]">{currentGroup}</span>
           <ChevronRight className="w-3 h-3 text-muted/80" />
           <span className="text-foreground/90 font-semibold">{currentItem}</span>
           {breadcrumbSuffix && (

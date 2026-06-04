@@ -60,7 +60,7 @@ export function ContextoTab() {
 
       <div className="glass-card p-6 border-t-4 border-t-purple-500">
         <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-4">
-          👦🏻 Alumnadodo (ACNEAE)
+          👦🏻 Alumnado (ACNEAE)
         </h2>
         <div className="space-y-4">
           <div>

@@ -106,7 +106,7 @@ export default function FamiliasPage() {
                     </div>
 
                     <div className="p-5 bg-foreground/10">
-                      <h3 className="text-xs font-semibold text-muted uppercase tracking-wider mb-3">Ciclos Formativos ({family.degrees.length})</h3>
+                      <h3 className="text-xs font-semibold text-muted tracking-wider mb-3">Ciclos Formativos ({family.degrees.length})</h3>
                       {family.degrees.length > 0 ? (
                         <div className="space-y-2">
                           {family.degrees.map(degree => {

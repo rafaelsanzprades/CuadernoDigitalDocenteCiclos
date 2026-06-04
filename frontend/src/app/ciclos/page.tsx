@@ -210,7 +210,7 @@ function TabFamilias({ onSelectTitulo }: { onSelectTitulo: (familiaName: string,
             </div>
 
             <div className="p-5 bg-foreground/10">
-              <h3 className="text-xs font-semibold text-muted uppercase tracking-wider mb-3">
+              <h3 className="text-xs font-semibold text-muted tracking-wider mb-3">
                 Ciclos Formativos ({family.degrees.length})
               </h3>
               {family.degrees.length > 0 ? (
@@ -294,7 +294,7 @@ function TabTitulo({ onSelectTitulo, globalSelection, updateGlobalSelection }: {
     <div className="space-y-6 animate-in fade-in duration-300">
       <Card className="p-5 flex flex-col md:flex-row gap-4">
         <div className="flex flex-col gap-1.5 flex-1">
-          <label className="text-xs font-semibold text-muted uppercase tracking-wider">Familia Profesional</label>
+          <label className="text-xs font-semibold text-muted tracking-wider">Familia Profesional</label>
           <select
             value={selectedFamilia}
             onChange={(e) => {
@@ -310,7 +310,7 @@ function TabTitulo({ onSelectTitulo, globalSelection, updateGlobalSelection }: {
         </div>
 
         <div className="flex flex-col gap-1.5 flex-1">
-          <label className="text-xs font-semibold text-muted uppercase tracking-wider">Título</label>
+          <label className="text-xs font-semibold text-muted tracking-wider">Título</label>
           <select
             value={selectedTituloCodigo}
             disabled={!selectedFamilia}
@@ -472,7 +472,7 @@ function TabCursos({ globalSelection, updateGlobalSelection, onSelectModulo }: {
 
                 {mod.unidades_formativas && mod.unidades_formativas.length > 0 && (
                   <div className="mt-4 pt-4 border-t border-[var(--glass-border)]">
-                    <p className="text-xs font-semibold text-muted uppercase tracking-wider mb-3 flex items-center gap-1">
+                    <p className="text-xs font-semibold text-muted tracking-wider mb-3 flex items-center gap-1">
                       <FolderTree className="w-3 h-3" />
                       Unidades Formativas ({mod.unidades_formativas.length})
                     </p>
@@ -509,7 +509,7 @@ function TabCursos({ globalSelection, updateGlobalSelection, onSelectModulo }: {
     <div className="space-y-6 animate-in fade-in duration-300">
       <Card className="p-5 flex flex-col md:flex-row gap-4">
         <div className="flex flex-col gap-1.5 flex-1">
-          <label className="text-xs font-semibold text-muted uppercase tracking-wider">Familia Profesional</label>
+          <label className="text-xs font-semibold text-muted tracking-wider">Familia Profesional</label>
           <select
             value={selectedFamilia}
             onChange={(e) => { updateGlobalSelection({ familia: e.target.value, tituloCodigo: "", moduloCodigo: "" }); }}
@@ -523,7 +523,7 @@ function TabCursos({ globalSelection, updateGlobalSelection, onSelectModulo }: {
         </div>
 
         <div className="flex flex-col gap-1.5 flex-1">
-          <label className="text-xs font-semibold text-muted uppercase tracking-wider">Título</label>
+          <label className="text-xs font-semibold text-muted tracking-wider">Título</label>
           <select
             value={selectedTitulo}
             disabled={!selectedFamilia}
@@ -623,7 +623,7 @@ function TabModulos({ globalSelection, updateGlobalSelection }: { globalSelectio
     <div className="space-y-6 animate-in fade-in duration-300">
       <Card className="p-5 flex flex-col md:flex-row gap-4">
         <div className="flex flex-col gap-1.5 flex-1">
-          <label className="text-xs font-semibold text-muted uppercase tracking-wider">Familia Profesional</label>
+          <label className="text-xs font-semibold text-muted tracking-wider">Familia Profesional</label>
           <select
             value={selectedFamilia}
             onChange={(e) => { updateGlobalSelection({ familia: e.target.value, tituloCodigo: "", moduloCodigo: "" }); }}
@@ -637,7 +637,7 @@ function TabModulos({ globalSelection, updateGlobalSelection }: { globalSelectio
         </div>
 
         <div className="flex flex-col gap-1.5 flex-1">
-          <label className="text-xs font-semibold text-muted uppercase tracking-wider">Título</label>
+          <label className="text-xs font-semibold text-muted tracking-wider">Título</label>
           <select
             value={selectedTitulo}
             disabled={!selectedFamilia}
@@ -655,7 +655,7 @@ function TabModulos({ globalSelection, updateGlobalSelection }: { globalSelectio
         </div>
 
         <div className="flex flex-col gap-1.5 flex-1">
-          <label className="text-xs font-semibold text-muted uppercase tracking-wider">Módulo</label>
+          <label className="text-xs font-semibold text-muted tracking-wider">Módulo</label>
           <select
             value={selectedModuloCodigo}
             disabled={!selectedTitulo || !titulo}
@@ -727,7 +727,7 @@ function TabModulos({ globalSelection, updateGlobalSelection }: { globalSelectio
 
                   {isExpanded && (
                     <div className="border-t border-[var(--glass-border)] p-4 space-y-2 animate-in slide-in-from-top-1 duration-200">
-                      <p className="text-xs font-semibold text-muted uppercase tracking-wider">Criterios de Evaluación</p>
+                      <p className="text-xs font-semibold text-muted tracking-wider">Criterios de Evaluación</p>
                       {ra.criterios_evaluacion.map((ce) => (
                         <div key={ce.id} className="flex items-start gap-2 text-sm bg-foreground/5 rounded-lg p-3 border border-[var(--glass-border)]">
                           <span className="text-xs font-bold text-accent shrink-0 mt-0.5">{ce.id}</span>

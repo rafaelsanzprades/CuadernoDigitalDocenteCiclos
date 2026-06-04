@@ -7,7 +7,7 @@ import {
   Target, Briefcase, Brain, Rocket, TrendingUp, NotebookPen,
   ChevronDown, ChevronUp, HelpCircle
 } from "lucide-react";
-import { Alumnadodo } from "@/types";
+import { Alumnado } from "@/types";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -45,7 +45,7 @@ export const OrientacionTab = () => {
   });
 
   const df_al = cursoData?.df_al || [];
-  const activeStudents = [...df_al.filter((al: Alumnadodo) => al.Estado !== "Baja")].sort(
+  const activeStudents = [...df_al.filter((al: Alumnado) => al.Estado !== "Baja")].sort(
     (a, b) => (a.Apellidos || "").localeCompare(b.Apellidos || "")
   );
 
@@ -73,7 +73,7 @@ export const OrientacionTab = () => {
   // Field renderers
   const renderInput = (field: string, label: string, type = "text", placeholder = "") => (
     <div className="flex flex-col gap-1.5">
-      <label className="text-xs font-bold text-muted uppercase tracking-wider">{label}</label>
+      <label className="text-xs font-bold text-muted tracking-wider">{label}</label>
       <input
         type={type}
         value={studentData[field] || ""}
@@ -86,7 +86,7 @@ export const OrientacionTab = () => {
 
   const renderTextarea = (field: string, label: string, placeholder = "") => (
     <div className="flex flex-col gap-1.5">
-      <label className="text-xs font-bold text-muted uppercase tracking-wider">{label}</label>
+      <label className="text-xs font-bold text-muted tracking-wider">{label}</label>
       <textarea
         value={studentData[field] || ""}
         onChange={(e) => updateField(field, e.target.value)}
@@ -99,7 +99,7 @@ export const OrientacionTab = () => {
 
   const renderSelect = (field: string, label: string, options: { value: string; label: string }[]) => (
     <div className="flex flex-col gap-1.5">
-      <label className="text-xs font-bold text-muted uppercase tracking-wider">{label}</label>
+      <label className="text-xs font-bold text-muted tracking-wider">{label}</label>
       <select
         value={studentData[field] || ""}
         onChange={(e) => updateField(field, e.target.value)}
@@ -133,9 +133,9 @@ export const OrientacionTab = () => {
   if (activeStudents.length === 0) {
     return (
       <Card className="p-8 text-center border-l-4 border-l-yellow-500 mt-6">
-        <h2 className="text-xl font-bold text-yellow-400 mb-2">Sin alumnadodo</h2>
+        <h2 className="text-xl font-bold text-yellow-400 mb-2">Sin alumnado</h2>
         <p className="text-foreground/80">
-          Primero registra alumnadodo en la pestaña 👥 Alumnadodo y tutoría.
+          Primero registra alumnado en la pestaña 👥 Alumnado y tutoría.
         </p>
       </Card>
     );
@@ -146,8 +146,8 @@ export const OrientacionTab = () => {
       {/* ── Student list sidebar ─────────────────────────────────── */}
       <div className="w-80 bg-foreground/5 border border-white/5 rounded-2xl flex flex-col overflow-hidden shrink-0">
         <div className="p-4 border-b border-white/5 bg-foreground/10">
-          <div className="text-xs font-bold text-muted uppercase tracking-wider">
-            Alumnadodo activos ({activeStudents.length})
+          <div className="text-xs font-bold text-muted tracking-wider">
+            Alumnado activos ({activeStudents.length})
           </div>
         </div>
         <div className="flex-1 overflow-y-auto p-2 space-y-1 scrollbar-hide">
@@ -316,7 +316,7 @@ export const OrientacionTab = () => {
                     </div>
 
                     <div className="border-t border-white/5 pt-4">
-                      <div className="text-xs font-bold text-muted uppercase tracking-wider mb-3">Idiomas de trabajo</div>
+                      <div className="text-xs font-bold text-muted tracking-wider mb-3">Idiomas de trabajo</div>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                         {renderCheckbox("idioma_espanol", "Español (nativo / fluido)")}
                         {renderCheckbox("idioma_ingles", "Inglés")}
@@ -353,7 +353,7 @@ export const OrientacionTab = () => {
                     </div>
 
                     <div className="border-t border-white/5 pt-4">
-                      <div className="text-xs font-bold text-muted uppercase tracking-wider mb-3">Intereses específicos</div>
+                      <div className="text-xs font-bold text-muted tracking-wider mb-3">Intereses específicos</div>
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                         {renderCheckbox("interes_erasmus", "Interesado en FEOE internacional (Erasmus+)")}
                         {renderCheckbox("interes_bolsa_empleo", "Interesado en bolsa de empleo del centro")}
@@ -431,7 +431,7 @@ export const OrientacionTab = () => {
                     </div>
                     {renderInput("fecha_derivacion", "Fecha de derivación al orientador/a", "date")}
                     <div className="md:col-span-2">
-                      {renderTextarea("resumen_orientacion", "Resumen de orientación (campo libre)", "Escribe aquí el resumen de la orientación: decisiones tomadas, acuerdos con el alumnadodo/a y la familia, próximos pasos...")}
+                      {renderTextarea("resumen_orientacion", "Resumen de orientación (campo libre)", "Escribe aquí el resumen de la orientación: decisiones tomadas, acuerdos con el alumnado/a y la familia, próximos pasos...")}
                     </div>
                   </div>
                 )}
@@ -442,8 +442,8 @@ export const OrientacionTab = () => {
         ) : (
           <div className="flex-1 flex flex-col justify-center items-center text-center p-8 text-muted">
             <HelpCircle className="w-12 h-12 text-muted/50 mb-3" />
-            <p className="font-semibold text-lg">Ningún alumnadodo seleccionado</p>
-            <p className="text-sm opacity-80">Selecciona un alumnadodo de la lista de la izquierda.</p>
+            <p className="font-semibold text-lg">Ningún alumnado seleccionado</p>
+            <p className="text-sm opacity-80">Selecciona un alumnado de la lista de la izquierda.</p>
           </div>
         )}
       </div>

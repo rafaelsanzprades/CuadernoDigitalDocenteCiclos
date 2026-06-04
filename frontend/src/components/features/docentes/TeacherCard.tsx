@@ -87,7 +87,7 @@ export function TeacherCard({ teacher, hours, assignedModules, isExpanded, toggl
                       <span className="text-xs font-semibold text-foreground/80">{m.hours}h</span>
                     </div>
                     <p className="text-sm text-foreground font-medium leading-tight mb-1">{m.moduleName}</p>
-                    <p className="text-[10px] text-muted uppercase tracking-wide">{m.groupName}</p>
+                    <p className="text-[10px] text-muted tracking-wide">{m.groupName}</p>
                   </div>
                 ))}
               </div>

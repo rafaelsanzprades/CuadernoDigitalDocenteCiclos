@@ -279,7 +279,7 @@ export default function ProgresoPage() {
 
   const TABS = [
     { id: "resumen", label: "📊 Resumen" },
-    { id: "detalle", label: "👥 Detalle por alumnadodo" },
+    { id: "detalle", label: "👥 Detalle por alumnado" },
     { id: "grupal", label: "📋 Grupal" },
     { id: "individual", label: "👤 Individual" },
     { id: "feoe", label: "🏢 Calificación FEOE" }
@@ -598,9 +598,9 @@ export default function ProgresoPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-2xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                    👥 Detalle por alumnadodo
+                    👥 Detalle por alumnado
                   </h2>
-                  <p className="text-muted mt-1">Notas individuales por alumnadodo, instrumento de evaluación y nivel de adquisición de RA.</p>
+                  <p className="text-muted mt-1">Notas individuales por alumnado, instrumento de evaluación y nivel de adquisición de RA.</p>
                 </div>
                 <Button
                   variant="secondary"
@@ -627,7 +627,7 @@ export default function ProgresoPage() {
                   const sigad = getSigadInfo(nota_prev);
                   const activeStudentTab = activeTabByStudent[al_id] || "1T";
 
-                  // Calcular RAs para el alumnadodo individual
+                  // Calcular RAs para el alumnado individual
                   const notas_student: Record<string, number> = {
                     "1T": Number(evRow["1T_Nota"]) || 0.0,
                     "2T": Number(evRow["2T_Nota"]) || 0.0,
@@ -756,7 +756,7 @@ export default function ProgresoPage() {
                                         return (
                                           <div key={act_id} className="flex items-center justify-between gap-4">
                                             <label className="text-sm text-foreground/85 flex-1 truncate" title={act.desc_act}>
-                                              <span className="text-muted font-bold text-xs uppercase tracking-wider bg-foreground/5 border border-white/5 px-2 py-0.5 rounded-md mr-2">
+                                              <span className="text-muted font-bold text-xs tracking-wider bg-foreground/5 border border-white/5 px-2 py-0.5 rounded-md mr-2">
                                                 {act.Tipo || "Act"}
                                               </span>
                                               {act.desc_act || act_id}
@@ -783,7 +783,7 @@ export default function ProgresoPage() {
                                   <div>
                                     <h4 className="font-bold text-foreground mb-4">Calificación de Acta</h4>
                                     <div className="mb-4">
-                                      <label className="text-xs text-muted uppercase tracking-wider mb-1.5 block font-bold">Nota Final (Manual / Calc)</label>
+                                      <label className="text-xs text-muted tracking-wider mb-1.5 block font-bold">Nota Final (Manual / Calc)</label>
                                       <input
                                         type="number"
                                         min="1" max="10" step="0.1"
@@ -798,12 +798,12 @@ export default function ProgresoPage() {
                                   <div className="rounded-xl flex flex-col items-center justify-center p-5 border-2 text-center" style={{ borderColor: sigad.col, backgroundColor: `${sigad.col}11` }}>
                                     <div className="text-5xl font-black mb-2" style={{ color: sigad.col, lineHeight: 1 }}>{sigad.n}</div>
                                     <div className="text-lg font-bold" style={{ color: sigad.col }}>{sigad.cod}</div>
-                                    <div className="text-xs text-muted mt-1 uppercase tracking-wider font-semibold">{sigad.txt}</div>
+                                    <div className="text-xs text-muted mt-1 tracking-wider font-semibold">{sigad.txt}</div>
                                   </div>
                                 </div>
                               </div>
 
-                              {/* BLOQUE 2: Grado de consecución de los RA por alumnadodo */}
+                              {/* BLOQUE 2: Grado de consecución de los RA por alumnado */}
                               <div className="pt-6 border-t border-[var(--glass-border)] space-y-4">
                                 <h3 className="font-bold text-foreground flex items-center gap-2">
                                   <span>🎯</span> Consecución de Resultados de Aprendizaje (RA)

@@ -6,7 +6,7 @@ export function TaskTable({ df_tareas, handleUpdateTarea, handleAddTarea, handle
       <table className="w-full text-left text-sm border-collapse whitespace-nowrap">
         <thead>
           <tr className="border-b border-[var(--glass-border)] text-muted">
-            <th className="pb-2 w-16">ID</th>
+            <th className="pb-2 w-16">Id</th>
             <th className="pb-2 w-48">Título de la Tarea</th>
             <th className="pb-2 min-w-[200px]">Contexto Productivo y Reto</th>
             <th className="pb-2 w-48">RA y CE Relacionados</th>
