@@ -1,4 +1,4 @@
-export const CRM_SEED_VERSION = 18;
+export const CRM_SEED_VERSION = 19;
 
 export const demoSeed = {
   "0237-ictve-curso-2025-26": {
