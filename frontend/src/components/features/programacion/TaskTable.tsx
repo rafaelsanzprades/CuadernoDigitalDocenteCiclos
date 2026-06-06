@@ -1,5 +1,5 @@
-import React from "react";
 import { Plus, X } from "lucide-react";
+import React from "react";
 
 export function TaskTable({ df_tareas, handleUpdateTarea, handleAddTarea, handleDeleteTarea }: any) {
   return (
@@ -26,7 +26,7 @@ export function TaskTable({ df_tareas, handleUpdateTarea, handleAddTarea, handle
                     type="text"
                     value={tc.Nombre_Tarea || ""}
                     onChange={(e) => handleUpdateTarea(globalIdx, "Nombre_Tarea", e.target.value)}
-                    className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-blue-500 focus:outline-none"
+                    className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-info focus:outline-none"
                   />
                 </td>
                 <td className="py-2 pr-2">
@@ -34,7 +34,7 @@ export function TaskTable({ df_tareas, handleUpdateTarea, handleAddTarea, handle
                     type="text"
                     value={tc.Reto || ""}
                     onChange={(e) => handleUpdateTarea(globalIdx, "Reto", e.target.value)}
-                    className="w-full min-w-[200px] bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-blue-500 focus:outline-none"
+                    className="w-full min-w-[200px] bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-info focus:outline-none"
                   />
                 </td>
                 <td className="py-2 pr-2">
@@ -42,7 +42,7 @@ export function TaskTable({ df_tareas, handleUpdateTarea, handleAddTarea, handle
                     type="text"
                     value={tc.RA_Asociados || ""}
                     onChange={(e) => handleUpdateTarea(globalIdx, "RA_Asociados", e.target.value)}
-                    className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-blue-500 focus:outline-none"
+                    className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-info focus:outline-none"
                   />
                 </td>
                 <td className="py-2 pr-2">
@@ -50,13 +50,13 @@ export function TaskTable({ df_tareas, handleUpdateTarea, handleAddTarea, handle
                     type="text"
                     value={tc.Instrumento || tc.desc_act || ""}
                     onChange={(e) => handleUpdateTarea(globalIdx, "Instrumento", e.target.value)}
-                    className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-blue-500 focus:outline-none"
+                    className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-info focus:outline-none"
                   />
                 </td>
                 <td className="py-2 text-center">
                   <button
                     onClick={() => handleDeleteTarea(globalIdx)}
-                    className="text-red-400 hover:text-red-300 font-bold"
+                    className="text-danger hover:text-danger font-bold"
                     title="Eliminar Tarea"
                   >
                     <X className="w-5 h-5" />
@@ -70,7 +70,7 @@ export function TaskTable({ df_tareas, handleUpdateTarea, handleAddTarea, handle
       <div className="mt-4">
         <button 
           onClick={handleAddTarea}
-          className="text-sm text-blue-400 hover:text-blue-300 font-semibold flex items-center gap-1"
+          className="text-sm text-info hover:text-info font-semibold flex items-center gap-1"
         >
           <Plus className="w-4 h-4" /> Añadir Nueva Tarea Competencial
         </button>

@@ -1,4 +1,5 @@
 "use client";
+import { BarChart, Save, Target, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
@@ -18,10 +19,10 @@ export default function AlumnadoPage() {
   const [saveMessage, setSaveMessage] = useState("");
 
   const TABS = [
-    { id: "alumnado", label: "👥 Alumnado", cleanLabel: "Alumnado" },
+    { id: "alumnado", label:  <span className="flex items-center gap-2"><Users className="w-4 h-4 shrink-0" /> Alumnado</span>, cleanLabel: "Alumnado" },
     { id: "plano", label: "🪑 Plano de clase", cleanLabel: "Plano de clase" },
-    { id: "tutoria", label: "🎯 Ficha de Tutoría", cleanLabel: "Ficha de Tutoría" },
-    { id: "matriz", label: "📊 Matriz de Tutoría", cleanLabel: "Matriz de Tutoría" }
+    { id: "tutoria", label:  <span className="flex items-center gap-2"><Target className="w-4 h-4 shrink-0" /> Ficha de Tutoría</span>, cleanLabel: "Ficha de Tutoría" },
+    { id: "matriz", label:  <span className="flex items-center gap-2"><BarChart className="w-4 h-4 shrink-0" /> Matriz de Tutoría</span>, cleanLabel: "Matriz de Tutoría" }
   ];
 
   const [activeTab, setActiveTab] = useState("alumnado");
@@ -135,7 +136,7 @@ export default function AlumnadoPage() {
           <div className="flex justify-between items-start">
             <div>
               <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                👥 Alumnado y tutoría
+                <span className="inline-flex"><Users className="w-[1.2em] h-[1.2em] mr-1" /></span> Alumnado y tutoría
               </h1>
               <p className="text-muted mt-2 text-lg">Gestión oficial de estudiantes, ficha individual de orientación y matriz de tutoría.</p>
             </div>
@@ -143,7 +144,7 @@ export default function AlumnadoPage() {
             {/* Save Button */}
             <div className="flex items-center gap-4">
               {saveMessage && (
-                <span className={`text-sm font-semibold ${saveMessage.includes("Error") ? "text-red-400" : "text-green-400"}`}>
+                <span className={`text-sm font-semibold ${saveMessage.includes("Error") ? "text-danger" : "text-success"}`}>
                   {saveMessage}
                 </span>
               )}
@@ -152,7 +153,7 @@ export default function AlumnadoPage() {
                 disabled={saving}
                 className="bg-accent text-background hover:bg-accent/80 font-bold px-6 py-2 rounded-xl flex items-center gap-2"
               >
-                {saving ? "Guardando..." : "Guardar Cambios 💾"}
+                {saving ? "Guardando..." : <>Guardar Cambios <span className="inline-flex"><Save className="w-[1.2em] h-[1.2em] mr-1" /></span></>}
               </Button>
             </div>
           </div>
@@ -177,7 +178,7 @@ export default function AlumnadoPage() {
                   <span className="text-sm font-normal text-muted bg-foreground/5 px-3 py-1 rounded-full">{df_al.length} alumnado</span>
                 </h2>
                 {n_menores > 0 && (
-                  <span className="text-pink-400 text-sm font-semibold">🌸 {n_menores} alumnado(s) menor(es) de 18 años</span>
+                  <span className="text-danger text-sm font-semibold"> {n_menores} alumnado(s) menor(es) de 18 años</span>
                 )}
               </div>
               
@@ -186,7 +187,7 @@ export default function AlumnadoPage() {
                   <thead>
                     <tr className="border-b border-[var(--glass-border)] text-muted bg-background">
                       <th className="p-2 sticky left-0 z-10 border-r border-[var(--glass-border)] bg-background w-16">Id</th>
-                      <th className="p-2 sticky left-[60px] z-10 border-r border-[var(--glass-border)] bg-background w-12 text-center">🌸</th>
+                      <th className="p-2 sticky left-[60px] z-10 border-r border-[var(--glass-border)] bg-background w-12 text-center"></th>
                       <th className="p-2 w-32">Estado</th>
                       <th className="p-2 w-48">Apellidos</th>
                       <th className="p-2 w-48">Nombre</th>
@@ -207,13 +208,13 @@ export default function AlumnadoPage() {
                             {al.ID}
                           </td>
                           <td className="p-2 text-center sticky left-[60px] z-10 border-r border-[var(--glass-border)] bg-background group-hover:bg-[#111827]">
-                            {isMenor ? "🌸" : ""}
+                            {isMenor ? "" : ""}
                           </td>
                           <td className="p-2 pr-2">
                             <select 
                               value={al.Estado || "Alta"}
                               onChange={(e) => handleUpdateAlumnado(idx, "Estado", e.target.value)}
-                              className={`w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 focus:outline-none appearance-none font-semibold ${al.Estado === 'Baja' ? 'text-red-400' : 'text-green-400'}`}
+                              className={`w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 focus:outline-none appearance-none font-semibold ${al.Estado === 'Baja' ? 'text-danger' : 'text-success'}`}
                             >
                               <option value="Alta">Alta</option>
                               <option value="Baja">Baja</option>
@@ -224,7 +225,7 @@ export default function AlumnadoPage() {
                               type="text"
                               value={al.Apellidos || ""}
                               onChange={(e) => handleUpdateAlumnado(idx, "Apellidos", e.target.value)}
-                              className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-blue-500 focus:outline-none"
+                              className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-info focus:outline-none"
                             />
                           </td>
                           <td className="p-2 pr-2">
@@ -232,7 +233,7 @@ export default function AlumnadoPage() {
                               type="text"
                               value={al.Nombre || ""}
                               onChange={(e) => handleUpdateAlumnado(idx, "Nombre", e.target.value)}
-                              className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-blue-500 focus:outline-none"
+                              className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-info focus:outline-none"
                             />
                           </td>
                           <td className="p-2 pr-2">
@@ -240,7 +241,7 @@ export default function AlumnadoPage() {
                               type="number"
                               value={al.Edad || ""}
                               onChange={(e) => handleUpdateAlumnado(idx, "Edad", e.target.value)}
-                              className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-blue-500 focus:outline-none"
+                              className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-info focus:outline-none"
                             />
                           </td>
                           <td className="p-2 pr-2">
@@ -249,7 +250,7 @@ export default function AlumnadoPage() {
                               value={al.Nacimiento || ""}
                               onChange={(e) => handleUpdateAlumnado(idx, "Nacimiento", e.target.value)}
                               placeholder="DD/MM/YYYY"
-                              className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-blue-500 focus:outline-none text-sm"
+                              className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-info focus:outline-none text-sm"
                             />
                           </td>
                           <td className="p-2 text-center">
@@ -265,7 +266,7 @@ export default function AlumnadoPage() {
                               type="email"
                               value={al.email || ""}
                               onChange={(e) => handleUpdateAlumnado(idx, "email", e.target.value)}
-                              className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-blue-500 focus:outline-none"
+                              className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-info focus:outline-none"
                             />
                           </td>
                           <td className="p-2 pr-2">
@@ -273,13 +274,13 @@ export default function AlumnadoPage() {
                               type="text"
                               value={al.Movil || ""}
                               onChange={(e) => handleUpdateAlumnado(idx, "Movil", e.target.value)}
-                              className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-blue-500 focus:outline-none"
+                              className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-info focus:outline-none"
                             />
                           </td>
                           <td className="p-2 text-center">
                             <button
                               onClick={() => handleRemoveAlumnado(idx)}
-                              className="text-red-400 hover:text-red-300 font-bold"
+                              className="text-danger hover:text-danger font-bold"
                               title="Eliminar Alumnado"
                             >
                               &times;
@@ -294,7 +295,7 @@ export default function AlumnadoPage() {
                   <Button 
                     variant="ghost"
                     onClick={handleAddAlumnado}
-                    className="text-blue-400 hover:text-blue-300 font-semibold flex items-center gap-1"
+                    className="text-info hover:text-info font-semibold flex items-center gap-1"
                   >
                     <span>+</span> Añadir Alumnado
                   </Button>

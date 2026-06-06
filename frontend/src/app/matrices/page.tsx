@@ -1,4 +1,5 @@
 "use client";
+import { Award, BookOpen, Calculator, Check, GraduationCap, Puzzle, Target } from "lucide-react";
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
@@ -23,11 +24,11 @@ export default function MatricesPage() {
   const [activeTab, setActiveTab] = useState("ra");
 
   const TABS = [
-    { id: "ra", label: "RA y sus CE", icon: "🎓" },
-    { id: "ud", label: "UD Unidades didácticas", icon: "📚" },
-    { id: "relacion", label: "Relación entre RA y UD", icon: "🎯" },
-    { id: "contribucion", label: "Contribución de RA en OG", icon: "🎯" },
-    { id: "cpps", label: "Competencias (CPPS)", icon: "🏅" },
+    { id: "ra", label: "RA y sus CE", icon: <><span className="inline-flex"><GraduationCap className="w-[1.2em] h-[1.2em] mr-1" /></span></> },
+    { id: "ud", label: "UD Unidades didácticas", icon: <><span className="inline-flex"><BookOpen className="w-[1.2em] h-[1.2em] mr-1" /></span></> },
+    { id: "relacion", label: "Relación entre RA y UD", icon: <><span className="inline-flex"><Target className="w-[1.2em] h-[1.2em] mr-1" /></span></> },
+    { id: "contribucion", label: "Contribución de RA en OG", icon: <><span className="inline-flex"><Target className="w-[1.2em] h-[1.2em] mr-1" /></span></> },
+    { id: "cpps", label: "Competencias (CPPS)", icon: <><span className="inline-flex"><Award className="w-[1.2em] h-[1.2em] mr-1" /></span></> },
   ];
 
   useEffect(() => {
@@ -94,7 +95,7 @@ export default function MatricesPage() {
         <main className="flex-1 p-8 content-area space-y-8">
           <div>
               <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-              🧮 Matrices OG→ RA→ CE→ UD
+              <span className="inline-flex"><Calculator className="w-[1.2em] h-[1.2em] mr-1" /></span> Matrices OG→ RA→ CE→ UD
             </h1>
             <p className="text-muted mt-2 text-lg">Relación y ponderación entre los RA, CE y las diferentes UD del módulo.</p>
           </div>
@@ -115,7 +116,7 @@ export default function MatricesPage() {
             <div className="space-y-8 animate-in fade-in duration-500">
           <Card className="p-6 border-t-4 border-t-accent">
             <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-4">
-<span>🎓</span> RA. Resultados de aprendizaje
+<span><span className="inline-flex"><GraduationCap className="w-[1.2em] h-[1.2em] mr-1" /></span></span> RA. Resultados de aprendizaje
 </h2>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
@@ -169,7 +170,7 @@ export default function MatricesPage() {
                               : 'bg-background border border-[var(--glass-border)] text-transparent hover:border-[#14a085]/30 hover:bg-[#14a085]/10'
                           }`}
                         >
-                          {(ra.is_dual === true || String(ra.is_dual).toLowerCase() === 'true') && <span className="text-xs font-bold">✓</span>}
+                          {(ra.is_dual === true || String(ra.is_dual).toLowerCase() === 'true') && <span className="text-xs font-medium"><span className="inline-flex"><Check className="w-[1.2em] h-[1.2em] mr-1" /></span></span>}
                         </button>
                       </td>
                       <td className="py-2 pr-2">
@@ -205,7 +206,7 @@ export default function MatricesPage() {
 
               <Card className="px-4 py-2 inline-flex items-center gap-2 border-l-4 border-l-blue-500">
                 <span className="text-muted">Total suma % RA:</span>
-                <span className={`font-bold ${df_ra.reduce((sum: number, ra: any) => sum + (Number(ra.peso_ra) || 0), 0) === 100 ? 'text-green-400' : 'text-red-400'}`}>
+                <span className={`font-bold ${df_ra.reduce((sum: number, ra: any) => sum + (Number(ra.peso_ra) || 0), 0) === 100 ? 'text-success' : 'text-danger'}`}>
                   {df_ra.reduce((sum: number, ra: any) => sum + (Number(ra.peso_ra) || 0), 0).toFixed(0)}%
                 </span>
               </Card>
@@ -216,7 +217,7 @@ export default function MatricesPage() {
           <Card className="p-6 border-t-4 border-t-yellow-500">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
-<span>🧩</span> CE. Criterios de evaluación
+<span><span className="inline-flex"><Puzzle className="w-[1.2em] h-[1.2em] mr-1" /></span></span> CE. Criterios de evaluación
 </h2>
               <Button
                 variant="secondary"
@@ -251,12 +252,12 @@ export default function MatricesPage() {
                       className="p-4 cursor-pointer flex items-center justify-between font-semibold text-lg select-none hover:bg-foreground/10 transition-colors"
                     >
                       <div className="flex items-center gap-4">
-                        <span className="text-yellow-400">{ra.id_ra}</span>
+                        <span className="text-warning">{ra.id_ra}</span>
                         <span className="text-sm text-muted font-normal truncate max-w-xl">{ra.desc_ra}</span>
                       </div>
                       <div className="flex items-center gap-6 text-sm">
                         <span className="text-muted">{ceForRa.length} CE</span>
-                        <span className={`px-2 py-1 rounded ${totalPeso === 100 ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
+                        <span className={`px-2 py-1 rounded ${totalPeso === 100 ? 'bg-success/10 text-success' : 'bg-danger/10 text-danger'}`}>
                           Σ {totalPeso.toFixed(0)}%
                         </span>
                         <span className={`transition-transform duration-300 text-muted ${openCEs.has(ra.id_ra) ? 'rotate-180' : ''}`}>▼</span>
@@ -296,7 +297,7 @@ export default function MatricesPage() {
                                             newCe[globalIdx].id_ce = e.target.value;
                                             updateDataFrame("df_ce", newCe);
                                           }}
-                                          className="w-16 bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-yellow-500 focus:outline-none"
+                                          className="w-16 bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-warning focus:outline-none"
                                         />
                                       </td>
                                       <td className="py-2 pr-2">
@@ -328,7 +329,7 @@ export default function MatricesPage() {
                                             }
                                             updateDataFrame("df_ce", newCe);
                                           }}
-                                          className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-yellow-500 focus:outline-none"
+                                          className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-warning focus:outline-none"
                                         />
                                       </td>
                                       <td className="py-2 pr-2">
@@ -340,7 +341,7 @@ export default function MatricesPage() {
                                             newCe[globalIdx].desc_ce = e.target.value;
                                             updateDataFrame("df_ce", newCe);
                                           }}
-                                          className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-3 py-1 text-foreground focus:border-yellow-500 focus:outline-none"
+                                          className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-3 py-1 text-foreground focus:border-warning focus:outline-none"
                                         />
                                       </td>
                                       <td className="py-2 text-center">
@@ -358,7 +359,7 @@ export default function MatricesPage() {
                                             }
                                             updateDataFrame("df_ce", newCe);
                                           }}
-                                          className="text-red-400 hover:text-red-300 font-bold"
+                                          className="text-danger hover:text-danger font-bold"
                                           title="Eliminar CE"
                                         >
                                           ×
@@ -389,7 +390,7 @@ export default function MatricesPage() {
                                   }
                                   updateDataFrame("df_ce", newCe);
                                 }}
-                                className="text-xs text-yellow-500 hover:text-yellow-400 font-semibold flex items-center gap-1"
+                                className="text-xs text-warning hover:text-warning font-semibold flex items-center gap-1"
                               >
                                 <span>+</span> Añadir CE a {ra.id_ra}
                               </button>
@@ -411,7 +412,7 @@ export default function MatricesPage() {
             <div className="animate-in fade-in duration-500">
           <Card className="p-6 border-t-4 border-t-purple-500">
             <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-4">
-<span>📚</span> UD. Unidades didácticas
+<span><span className="inline-flex"><BookOpen className="w-[1.2em] h-[1.2em] mr-1" /></span></span> UD. Unidades didácticas
 </h2>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
@@ -423,7 +424,7 @@ export default function MatricesPage() {
                     {df_ra.map((ra: any, i: number) => (
                       <th key={i} className="p-3 text-center min-w-[80px]">
                         <div className="text-xs">{ra.id_ra}</div>
-                        <div className="text-[10px] text-purple-400">({ra.peso_ra || 0}%)</div>
+                        <div className="text-[10px] text-info">({ra.peso_ra || 0}%)</div>
                       </th>
                     ))}
                   </tr>
@@ -441,7 +442,7 @@ export default function MatricesPage() {
                             newUd[idx].horas_ud = parseFloat(e.target.value) || 0;
                             updateDataFrame("df_ud", newUd);
                           }}
-                          className="w-16 bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground text-sm focus:border-purple-500 focus:outline-none"
+                          className="w-16 bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground text-sm focus:border-info focus:outline-none"
                         />
                       </td>
                       <td className="p-3 sticky left-[160px] bg-background group-hover:bg-[#111827]">
@@ -453,7 +454,7 @@ export default function MatricesPage() {
                             newUd[idx].desc_ud = e.target.value;
                             updateDataFrame("df_ud", newUd);
                           }}
-                          className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-3 py-1 text-foreground text-sm focus:border-purple-500 focus:outline-none"
+                          className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-3 py-1 text-foreground text-sm focus:border-info focus:outline-none"
                         />
                       </td>
                       {df_ra.map((ra: any, raIdx: number) => (
@@ -466,7 +467,7 @@ export default function MatricesPage() {
                               (newUd[idx] as any)[ra.id_ra] = parseFloat(e.target.value) || 0;
                               updateDataFrame("df_ud", newUd);
                             }}
-                            className="w-14 text-center bg-foreground/15 border border-[var(--glass-border)] rounded px-1 py-1 text-foreground text-sm focus:border-purple-500 focus:outline-none"
+                            className="w-14 text-center bg-foreground/15 border border-[var(--glass-border)] rounded px-1 py-1 text-foreground text-sm focus:border-info focus:outline-none"
                           />
                         </td>
                       ))}
@@ -485,7 +486,7 @@ export default function MatricesPage() {
                     newUd.push({ id_ud: newId, horas_ud: 0, desc_ud: "" });
                     updateDataFrame("df_ud", newUd);
                   }}
-                  className="text-purple-400 hover:text-purple-300"
+                  className="text-info hover:text-info"
                 >
                   <span>+</span> Añadir nueva UD
                 </Button>
@@ -504,7 +505,7 @@ export default function MatricesPage() {
                       ];
                       updateDataFrame("df_ud", demoUds);
                     }}
-                    className="text-amber-500 border-amber-500 hover:bg-amber-500/10"
+                    className="text-warning border-warning hover:bg-warning/10"
                   >
                     Restaurar UDs de ejemplo
                   </Button>
@@ -513,7 +514,7 @@ export default function MatricesPage() {
 
               <Card className="px-4 py-2 inline-flex items-center gap-2 border-l-4 border-l-purple-500">
                 <span className="text-muted">Total horas UD:</span>
-                <span className="font-bold text-purple-400">
+                <span className="font-bold text-info">
                   {df_ud.reduce((sum: number, ud: any) => sum + (Number(ud.horas_ud) || 0), 0)} h
                 </span>
               </Card>
@@ -527,7 +528,7 @@ export default function MatricesPage() {
             <div className="animate-in fade-in duration-500">
           <Card className="p-6 border-t-4 border-t-amber-500">
             <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-4">
-<span>🎯</span> Relación entre Resultados de aprendizaje y Unidades didácticas
+<span><span className="inline-flex"><Target className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Relación entre Resultados de aprendizaje y Unidades didácticas
 </h2>
             {df_ra && df_ra.length > 0 ? (
               <div className="space-y-6">
@@ -573,7 +574,7 @@ export default function MatricesPage() {
             <div className="animate-in fade-in duration-500">
               <Card className="p-6 border-t-4 border-t-[#14a085]">
                 <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-2">
-                  <span>🏅</span> Competencias profesionales, personales y sociales (CPPS)
+                  <span><span className="inline-flex"><Award className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Competencias profesionales, personales y sociales (CPPS)
                 </h2>
                 <p className="text-sm text-muted mb-6">
                   Del Catálogo Nacional de Cualificaciones Profesionales. Artículo 5 de la ORDEN de 14 de julio de 2010 (BOA).

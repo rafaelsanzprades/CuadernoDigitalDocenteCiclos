@@ -1,5 +1,5 @@
+import { BookOpen, CheckCircle2, ChevronDown, ChevronUp, Clock, ShieldAlert } from "lucide-react";
 import React from 'react';
-import { ShieldAlert, CheckCircle2, BookOpen, Clock, ChevronDown, ChevronUp } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
 
@@ -16,7 +16,7 @@ export function TeacherCard({ teacher, hours, assignedModules, isExpanded, toggl
   const progressPercentage = Math.min(100, (hours / 600) * 100);
 
   return (
-    <Card className={`transition-all duration-300 flex flex-col justify-between ${isOverloaded ? "border-red-500/20" : "border-white/5"}`}>
+    <Card className={`transition-all duration-300 flex flex-col justify-between ${isOverloaded ? "border-danger/30" : "border-white/5"}`}>
       <div className="p-6 space-y-4">
         {/* Cabecera de la Tarjeta */}
         <div className="flex justify-between items-start">
@@ -48,7 +48,7 @@ export function TeacherCard({ teacher, hours, assignedModules, isExpanded, toggl
               <Clock className="w-4 h-4 text-accent" />
               Carga Lectiva
             </span>
-            <span className={`text-xl font-black ${isOverloaded ? 'text-red-400' : 'text-foreground'}`}>
+            <span className={`text-xl font-black ${isOverloaded ? 'text-danger' : 'text-foreground'}`}>
               {hours} <span className="text-sm font-normal text-muted">/ 600h</span>
             </span>
           </div>
@@ -56,8 +56,8 @@ export function TeacherCard({ teacher, hours, assignedModules, isExpanded, toggl
           <div className="w-full bg-foreground/5 rounded-full h-2 overflow-hidden">
             <div 
               className={`h-2 rounded-full transition-all duration-1000 ease-out ${
-                isOverloaded ? 'bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]' : 
-                hours > 0 ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-transparent'
+                isOverloaded ? 'bg-danger shadow-[0_0_10px_rgba(239,68,68,0.5)]' : 
+                hours > 0 ? 'bg-success shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-transparent'
               }`}
               style={{ width: `${progressPercentage}%` }}
             />

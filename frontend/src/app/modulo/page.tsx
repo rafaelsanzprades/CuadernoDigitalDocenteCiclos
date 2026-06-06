@@ -1,5 +1,5 @@
 "use client";
-
+import { Building2, FileEdit, FileText, Settings } from "lucide-react";
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
@@ -27,10 +27,10 @@ export default function ModuloConfigPage() {
   }, [activeModuleId, setModuleData]);
 
   const TABS = [
-    { id: "datos", label: "📄 Datos", cleanLabel: "Datos del módulo" },
-    { id: "feoe", label: "🏢 Formación en Empresa (FEOE)", cleanLabel: "Formación en Empresa (FEOE)" },
-    { id: "contexto", label: "📝 Contexto", cleanLabel: "Contexto" },
-    { id: "planes", label: "📄 Planes", cleanLabel: "Planes" }
+    { id: "datos", label: <><span className="inline-flex"><FileText className="w-[1.2em] h-[1.2em] mr-1" /></span> Datos</>, cleanLabel: "Datos del módulo" },
+    { id: "feoe", label: <><span className="inline-flex"><Building2 className="w-[1.2em] h-[1.2em] mr-1" /></span> Formación en Empresa (FEOE)</>, cleanLabel: "Formación en Empresa (FEOE)" },
+    { id: "contexto", label: <><span className="inline-flex"><FileEdit className="w-[1.2em] h-[1.2em] mr-1" /></span> Contexto</>, cleanLabel: "Contexto" },
+    { id: "planes", label: <><span className="inline-flex"><FileText className="w-[1.2em] h-[1.2em] mr-1" /></span> Planes</>, cleanLabel: "Planes" }
   ];
 
   const activeTabCleanLabel = TABS.find(t => t.id === activeTab)?.cleanLabel;
@@ -59,7 +59,7 @@ export default function ModuloConfigPage() {
             {/* ── Título ─────────────────────────────────────────── */}
             <div>
               <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                ⚙️ Módulo didáctico
+                <span className="inline-flex"><Settings className="w-[1.2em] h-[1.2em] mr-1" /></span> Módulo didáctico
               </h1>
               <p className="text-muted mt-2 text-lg">Configuración básica del módulo didáctico.</p>
             </div>

@@ -1,4 +1,5 @@
 "use client";
+import { BookOpen, ClipboardList, Target } from "lucide-react";
 import React, { useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
@@ -17,8 +18,8 @@ export default function ProgramacionPage() {
   const [allUdsOpen, setAllUdsOpen] = useState(false);
 
   const TABS = [
-    { id: "secuenciacion", label: "📋 Secuenciación de UD", cleanLabel: "Secuenciación de UD" },
-    { id: "tareas", label: "🎯 Tareas competenciales", cleanLabel: "Tareas competenciales" }
+    { id: "secuenciacion", label:  <span className="flex items-center gap-2"><ClipboardList className="w-4 h-4 shrink-0" /> Secuenciación de UD</span>, cleanLabel: "Secuenciación de UD" },
+    { id: "tareas", label:  <span className="flex items-center gap-2"><Target className="w-4 h-4 shrink-0" /> Tareas competenciales</span>, cleanLabel: "Tareas competenciales" }
   ];
 
   const [activeTab, setActiveTab] = useState("secuenciacion");
@@ -148,7 +149,7 @@ export default function ProgramacionPage() {
         <main className="flex-1 p-8 space-y-8 overflow-y-auto">
           <div>
             <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-              📚 Programación de aula
+              <span className="inline-flex"><BookOpen className="w-[1.2em] h-[1.2em] mr-1" /></span> Programación de aula
             </h1>
             <p className="text-muted mt-2 text-lg">Secuenciación temporal de las unidades didácticas y diseño de tareas competenciales.</p>
           </div>
@@ -167,7 +168,7 @@ export default function ProgramacionPage() {
             <Card className="p-6 border-t-4 border-t-accent">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
-<span>📋</span> Secuenciación por Unidades didácticas
+<span><span className="inline-flex"><ClipboardList className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Secuenciación por Unidades didácticas
 </h2>
                 <Button
                   variant="ghost"
@@ -194,7 +195,7 @@ export default function ProgramacionPage() {
           {activeTab === "tareas" && (
             <Card className="p-6 border-t-4 border-t-blue-500">
               <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-6">
-<span>🎯</span> Diseño de tareas competenciales (TC)
+<span><span className="inline-flex"><Target className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Diseño de tareas competenciales (TC)
 </h2>
               <TaskTable 
                 df_tareas={df_tareas}

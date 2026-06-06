@@ -1,8 +1,8 @@
+import { AlertTriangle, ArrowRight, CheckCircle2, ClipboardList, Compass, Download, Layers, Search, Table, TrendingUp, User } from "lucide-react";
 import React, { useState } from 'react';
 import { useAppStore } from '@/store/useAppStore';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { Search, Download, Table, Layers, ArrowRight } from 'lucide-react';
 import { Alumnado } from '@/types';
 
 export const TutoriaMatrixTab = () => {
@@ -24,12 +24,12 @@ export const TutoriaMatrixTab = () => {
   });
 
   const categories = [
-    { id: 'todos', label: '📋 Todas las variables' },
-    { id: 'vulnerabilidad', label: '👤 Datos y Vulnerabilidad' },
-    { id: 'acneae', label: '⚠️ ACNEAE y Diversidad' },
-    { id: 'intervenciones', label: '🛠️ Intervenciones y Apoyos' },
-    { id: 'historial', label: '📈 Historial Académico' },
-    { id: 'orientacion', label: '🧭 Actividades y Orientación' }
+    { id: 'todos', label: <><span className="inline-flex"><ClipboardList className="w-[1.2em] h-[1.2em] mr-1" /></span> Todas las variables</> },
+    { id: 'vulnerabilidad', label: <><span className="inline-flex"><User className="w-[1.2em] h-[1.2em] mr-1" /></span> Datos y Vulnerabilidad</> },
+    { id: 'acneae', label: <><span className="inline-flex"><AlertTriangle className="w-[1.2em] h-[1.2em] mr-1" /></span> ACNEAE y Diversidad</> },
+    { id: 'intervenciones', label: '️ Intervenciones y Apoyos' },
+    { id: 'historial', label: <><span className="inline-flex"><TrendingUp className="w-[1.2em] h-[1.2em] mr-1" /></span> Historial Académico</> },
+    { id: 'orientacion', label: <><span className="inline-flex"><Compass className="w-[1.2em] h-[1.2em] mr-1" /></span> Actividades y Orientación</> }
   ];
 
   // Define columns mapping for each category
@@ -186,9 +186,9 @@ export const TutoriaMatrixTab = () => {
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all border ${
                 selectedCategory === cat.id
-                  ? 'bg-blue-500 text-white border-blue-400'
+                  ? 'bg-info text-white border-info'
                   : 'bg-foreground/5 text-muted border-white/5 hover:bg-foreground/10 hover:text-foreground'
               }`}
             >
@@ -200,7 +200,7 @@ export const TutoriaMatrixTab = () => {
         <Button
           variant="secondary"
           onClick={handleExportCSV}
-          className="text-xs font-bold flex items-center gap-1.5 shrink-0 bg-accent/15 text-accent hover:bg-accent/25 border border-accent/30 self-start md:self-auto"
+          className="text-xs font-medium flex items-center gap-1.5 shrink-0 bg-accent/15 text-accent hover:bg-accent/25 border border-accent/30 self-start md:self-auto"
         >
           <Download className="w-4 h-4" /> Exportar CSV
         </Button>
@@ -238,7 +238,7 @@ export const TutoriaMatrixTab = () => {
                     {/* Values columns */}
                     {activeColumns.map((col, colIdx) => {
                       const rawVal = studentTutoria[col.key];
-                      const displayVal = rawVal === 'X' || rawVal === true ? '✅' : (rawVal || '-');
+                      const displayVal = rawVal === 'X' || rawVal === true ? <><span className="inline-flex"><CheckCircle2 className="w-[1.2em] h-[1.2em] mr-1" /></span></> : (rawVal || '-');
                       
                       return (
                         <td key={colIdx} className="p-3 border-r border-white/5 text-center text-foreground/80">

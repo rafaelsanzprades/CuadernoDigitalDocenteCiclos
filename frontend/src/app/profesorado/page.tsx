@@ -1,5 +1,5 @@
 "use client";
-
+import { ClipboardList, School, Shield, UserCircle, Users } from "lucide-react";
 import { useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
@@ -14,10 +14,10 @@ export default function ProfesoradoPage() {
   const [activeTab, setActiveTab] = useState("acceso");
 
   const TABS = [
-    { id: "acceso", label: "🛡️ Acceso usuarios", cleanLabel: "Acceso usuarios" },
-    { id: "gestion", label: "👥 Gestión de usuarios", cleanLabel: "Gestión de usuarios" },
-    { id: "asignacion_docentes", label: "👨‍🏫 Asignación de docentes", cleanLabel: "Asignación de docentes" },
-    { id: "asignacion_modulos", label: "📋 Asignación de módulos", cleanLabel: "Asignación de módulos" }
+    { id: "acceso", label:  <span className="flex items-center gap-2"><Shield className="w-4 h-4 shrink-0" /> Acceso usuarios</span>, cleanLabel: "Acceso usuarios" },
+    { id: "gestion", label:  <span className="flex items-center gap-2"><Users className="w-4 h-4 shrink-0" /> Gestión de usuarios</span>, cleanLabel: "Gestión de usuarios" },
+    { id: "asignacion_docentes", label:  <span className="flex items-center gap-2"><School className="w-4 h-4 shrink-0"/> ‍ Asignación de docentes</span>, cleanLabel:"Asignación de docentes" },
+    { id: "asignacion_modulos", label:  <span className="flex items-center gap-2"><ClipboardList className="w-4 h-4 shrink-0" /> Asignación de módulos</span>, cleanLabel: "Asignación de módulos" }
   ];
 
   const activeTabCleanLabel = TABS.find(t => t.id === activeTab)?.cleanLabel;
@@ -34,7 +34,7 @@ export default function ProfesoradoPage() {
             {/* ── Título ─────────────────────────────────────────── */}
             <div>
               <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                👨‍🏫 Profesorado
+                ‍<span className="inline-flex"><School className="w-[1.2em] h-[1.2em] mr-1" /></span> Profesorado
               </h1>
               <p className="text-muted mt-2 text-lg">Administración del profesorado, perfiles y asignaciones docentes.</p>
             </div>

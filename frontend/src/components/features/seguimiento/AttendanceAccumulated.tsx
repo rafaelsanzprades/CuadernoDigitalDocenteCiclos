@@ -1,8 +1,8 @@
+import { AlertCircle, Clock, OctagonAlert } from "lucide-react";
 import React, { useState, useEffect } from 'react';
 import { useAppStore } from '@/store/useAppStore';
 import { MotionWrapper } from '@/components/ui/MotionWrapper';
 import { Card } from '@/components/ui/Card';
-import { AlertCircle, Clock, OctagonAlert } from 'lucide-react';
 
 type AttendanceStatus = 'presente' | 'falta' | 'retraso' | null;
 
@@ -93,17 +93,17 @@ export const AttendanceAccumulated = () => {
     if (totalHours === 0) return { color: "bg-foreground/20 text-muted", text: "N/A", pct: 0 };
     const pct = (faltas / totalHours) * 100;
     
-    if (pct >= p_ev_pct) return { color: "bg-red-500/20 text-red-500 border border-red-500/30", text: `PdEvC (+${p_ev_pct}%)`, pct };
-    if (pct >= warning2) return { color: "bg-orange-500/20 text-orange-500 border border-orange-500/30", text: `Alerta 2 (+${warning2.toFixed(1)}%)`, pct };
-    if (pct >= warning1) return { color: "bg-yellow-500/20 text-yellow-500 border border-yellow-500/30", text: `Alerta 1 (+${warning1.toFixed(1)}%)`, pct };
-    return { color: "bg-green-500/20 text-green-500 border border-green-500/30", text: "Normal", pct };
+    if (pct >= p_ev_pct) return { color: "bg-danger/10 text-danger border border-danger/30", text: `PdEvC (+${p_ev_pct}%)`, pct };
+    if (pct >= warning2) return { color: "bg-warning/10 text-warning border border-warning/30", text: `Alerta 2 (+${warning2.toFixed(1)}%)`, pct };
+    if (pct >= warning1) return { color: "bg-warning/10 text-warning border border-warning/30", text: `Alerta 1 (+${warning1.toFixed(1)}%)`, pct };
+    return { color: "bg-success/10 text-success border border-success/30", text: "Normal", pct };
   };
 
   return (
     <div className="space-y-6">
       {menores > 0 && (
         <div className="flex justify-end">
-          <span className="text-pink-400 font-semibold text-sm flex items-center gap-1.5 bg-pink-400/10 px-3 py-1 rounded-full border border-pink-400/20">
+          <span className="text-danger font-semibold text-sm flex items-center gap-1.5 bg-danger/10 px-3 py-1 rounded-full border border-danger/30">
             <AlertCircle className="w-4 h-4" /> {menores} alumnado(s) menor(es) de 18 años
           </span>
         </div>
@@ -121,7 +121,7 @@ export const AttendanceAccumulated = () => {
             <p className="text-sm font-semibold text-muted ">Límite PdEvC ({p_ev_pct}%)</p>
             <p className="text-3xl font-extrabold text-foreground">{Math.round(totalHours * (p_ev_pct / 100))} faltas</p>
           </div>
-          <OctagonAlert className="w-10 h-10 text-yellow-500/80" />
+          <OctagonAlert className="w-10 h-10 text-warning" />
         </Card>
       </div>
 
@@ -159,7 +159,7 @@ export const AttendanceAccumulated = () => {
                 return (
                   <tr key={studentId} className="border-b border-[var(--glass-border)]/50 hover:bg-foreground/5 transition-colors">
                     <td className="p-4 text-center text-muted font-mono">{index + 1}</td>
-                    <td className="p-4 text-center text-sm">{parseInt(alumnado.Edad || '18') < 18 ? <AlertCircle className="w-4 h-4 text-pink-400 mx-auto" /> : ''}</td>
+                    <td className="p-4 text-center text-sm">{parseInt(alumnado.Edad || '18') < 18 ? <AlertCircle className="w-4 h-4 text-danger mx-auto" /> : ''}</td>
                     <td className="p-4 font-medium">
                       {alumnado.Apellidos}, {alumnado.Nombre}
                     </td>
@@ -168,7 +168,7 @@ export const AttendanceAccumulated = () => {
                     <td className="p-4 text-center font-mono text-muted">{faltas3T > 0 ? faltas3T : '-'}</td>
                     <td className="p-4 text-center font-bold text-foreground">{faltasTotal}</td>
                     <td className="p-4 text-center">
-                      <span className={`px-3 py-1 rounded-md text-sm font-bold block ${status.color}`}>
+                      <span className={`px-3 py-1 rounded-md text-sm font-semibold block ${status.color}`}>
                         {status.text}
                       </span>
                     </td>

@@ -1,4 +1,5 @@
 "use client";
+import { BarChart, Building2, ClipboardList, Save, Target, TrendingUp, User, Users } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
@@ -279,11 +280,11 @@ export default function ProgresoPage() {
   });
 
   const TABS = [
-    { id: "resumen", label: "📊 Resumen" },
-    { id: "detalle", label: "👥 Detalle por alumnado" },
-    { id: "grupal", label: "📋 Grupal" },
-    { id: "individual", label: "👤 Individual" },
-    { id: "feoe", label: "🏢 Calificación FEOE" }
+    { id: "resumen", label: <><span className="inline-flex"><BarChart className="w-[1.2em] h-[1.2em] mr-1" /></span> Resumen</> },
+    { id: "detalle", label: <><span className="inline-flex"><Users className="w-[1.2em] h-[1.2em] mr-1" /></span> Detalle por alumnado</> },
+    { id: "grupal", label: <><span className="inline-flex"><ClipboardList className="w-[1.2em] h-[1.2em] mr-1" /></span> Grupal</> },
+    { id: "individual", label: <><span className="inline-flex"><User className="w-[1.2em] h-[1.2em] mr-1" /></span> Individual</> },
+    { id: "feoe", label: <><span className="inline-flex"><Building2 className="w-[1.2em] h-[1.2em] mr-1" /></span> Calificación FEOE</> }
   ];
 
   return (
@@ -296,14 +297,14 @@ export default function ProgresoPage() {
           <div className="flex justify-between items-start">
             <div>
               <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                📈 Progreso académico
+                <span className="inline-flex"><TrendingUp className="w-[1.2em] h-[1.2em] mr-1" /></span> Progreso académico
               </h1>
               <p className="text-muted mt-2 text-lg">Panel integrado de calificaciones numéricas, evaluación por resultados de aprendizaje (RA) y analíticas.</p>
             </div>
             {/* Save Button */}
             <div className="flex items-center gap-4">
               {saveMessage && (
-                <span className={`text-sm font-semibold ${saveMessage.includes("Error") ? "text-red-400" : "text-green-400"}`}>
+                <span className={`text-sm font-semibold ${saveMessage.includes("Error") ? "text-danger" : "text-success"}`}>
                   {saveMessage}
                 </span>
               )}
@@ -312,7 +313,7 @@ export default function ProgresoPage() {
                 disabled={saving}
                 className="bg-accent text-background hover:bg-accent/80 font-bold px-6 py-2 rounded-xl flex items-center gap-2"
               >
-                {saving ? "Guardando..." : "Guardar Cambios 💾"}
+                {saving ? "Guardando..." : <>Guardar Cambios <span className="inline-flex"><Save className="w-[1.2em] h-[1.2em] mr-1" /></span></>}
               </Button>
             </div>
           </div>
@@ -334,7 +335,7 @@ export default function ProgresoPage() {
               {/* Bloque 1: Resumen de calificaciones por trimestres */}
               <Card className="p-6 border-t-4 border-t-blue-500">
                 <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-5">
-                  <span>📊</span> Resumen de calificaciones por trimestres
+                  <span><span className="inline-flex"><BarChart className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Resumen de calificaciones por trimestres
                 </h2>
                 <div className="overflow-x-auto">
                   {(() => {
@@ -451,7 +452,7 @@ export default function ProgresoPage() {
               {/* Bloque 2: Resumen de Resultados de aprendizaje por trimestres */}
               <Card className="p-6 border-t-4 border-t-emerald-500">
                 <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-5">
-                  <span>🎯</span> Resumen de Resultados de aprendizaje por trimestres
+                  <span><span className="inline-flex"><Target className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Resumen de Resultados de aprendizaje por trimestres
                 </h2>
                 <div className="space-y-5">
                   {Object.keys(ra_info).map(ra_id => {
@@ -530,11 +531,11 @@ export default function ProgresoPage() {
                               />
                             );
                           })()}
-                          <div className="absolute top-0 bottom-0 w-px bg-yellow-500/40" style={{ left: '50%' }} />
+                          <div className="absolute top-0 bottom-0 w-px bg-warning/10" style={{ left: '50%' }} />
 
                           {/* Min marker */}
                           <div
-                            className="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full border-2 border-red-400 bg-red-400/30"
+                            className="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full border-2 border-danger bg-danger/10"
                             style={{ left: `calc(${(minN / 10) * 100}% - 6px)` }}
                             title={`Mín: ${minN.toFixed(1)}`}
                           />
@@ -550,7 +551,7 @@ export default function ProgresoPage() {
                           />
                           {/* Max marker */}
                           <div
-                            className="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full border-2 border-green-400 bg-green-400/30"
+                            className="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full border-2 border-success bg-success/10"
                             style={{ left: `calc(${(maxN / 10) * 100}% - 6px)` }}
                             title={`Máx: ${maxN.toFixed(1)}`}
                           />
@@ -561,8 +562,8 @@ export default function ProgresoPage() {
                           <span className="text-muted/80">0</span>
                           <div className="flex items-center gap-6">
                             <span className="flex items-center gap-1">
-                              <span className="w-2.5 h-2.5 rounded-full bg-red-400/50 border border-red-400 inline-block" />
-                              <span className="text-red-400 font-mono">{minN.toFixed(1)}</span>
+                              <span className="w-2.5 h-2.5 rounded-full bg-danger/10 border border-danger inline-block" />
+                              <span className="text-danger font-mono">{minN.toFixed(1)}</span>
                               <span className="text-muted">Mín</span>
                             </span>
                             <span className="flex items-center gap-1">
@@ -571,8 +572,8 @@ export default function ProgresoPage() {
                               <span className="text-muted">Media</span>
                             </span>
                             <span className="flex items-center gap-1">
-                              <span className="w-2.5 h-2.5 rounded-full bg-green-400/50 border border-green-400 inline-block" />
-                              <span className="text-green-400 font-mono">{maxN.toFixed(1)}</span>
+                              <span className="w-2.5 h-2.5 rounded-full bg-success/10 border border-success inline-block" />
+                              <span className="text-success font-mono">{maxN.toFixed(1)}</span>
                               <span className="text-muted">Máx</span>
                             </span>
                           </div>
@@ -593,7 +594,7 @@ export default function ProgresoPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <h2 className="text-2xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                    👥 Detalle por alumnado
+                    <span className="inline-flex"><Users className="w-[1.2em] h-[1.2em] mr-1" /></span> Detalle por alumnado
                   </h2>
                   <p className="text-muted mt-1">Notas individuales por alumnado, instrumento de evaluación y nivel de adquisición de RA.</p>
                 </div>
@@ -671,7 +672,7 @@ export default function ProgresoPage() {
                         className="p-4 cursor-pointer flex items-center justify-between font-semibold text-lg select-none hover:bg-foreground/10 transition-colors"
                       >
                         <div className="flex items-center gap-4 w-1/3">
-                          <span className="text-2xl">👤</span>
+                          <span className="text-2xl"><span className="inline-flex"><User className="w-[1.2em] h-[1.2em] mr-1" /></span></span>
                           <span>{al.Apellidos}, {al.Nombre}</span>
                         </div>
 
@@ -721,7 +722,7 @@ export default function ProgresoPage() {
                                 {/* Left: Instrument Inputs */}
                                 <div className="flex-1">
                                   <h3 className="font-bold text-foreground mb-4 flex items-center gap-2">
-                                    <span>📊</span> Detalle de Calificaciones por Instrumento
+                                    <span><span className="inline-flex"><BarChart className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Detalle de Calificaciones por Instrumento
                                   </h3>
                                   <div onClick={(e) => e.stopPropagation()}>
                                     <Tabs value={activeStudentTab} onValueChange={(val) => setActiveTabByStudent(prev => ({ ...prev, [al_id]: val }))}>
@@ -744,7 +745,7 @@ export default function ProgresoPage() {
                                         return (
                                           <div key={act_id} className="flex items-center justify-between gap-4">
                                             <label className="text-sm text-foreground/85 flex-1 truncate" title={act.desc_act}>
-                                              <span className="text-muted font-bold text-xs tracking-wider bg-foreground/5 border border-white/5 px-2 py-0.5 rounded-md mr-2">
+                                              <span className="text-muted font-medium text-xs tracking-wider bg-foreground/5 border border-white/5 px-2 py-0.5 rounded-md mr-2">
                                                 {act.Tipo || "Act"}
                                               </span>
                                               {act.desc_act || act_id}
@@ -757,7 +758,7 @@ export default function ProgresoPage() {
                                               value={val || ""}
                                               onChange={(e) => handleUpdateActNota(al_id, act_id, Number(e.target.value) || 0)}
                                               onClick={(e) => e.stopPropagation()}
-                                              className="w-20 bg-background/50 border border-[var(--glass-border)] rounded px-3 py-1.5 text-foreground focus:border-blue-500 focus:outline-none font-mono text-center text-sm font-semibold"
+                                              className="w-20 bg-background/50 border border-[var(--glass-border)] rounded px-3 py-1.5 text-foreground focus:border-info focus:outline-none font-mono text-center text-sm font-semibold"
                                             />
                                           </div>
                                         );
@@ -778,7 +779,7 @@ export default function ProgresoPage() {
                                         value={nota_prev || ""}
                                         onChange={(e) => handleOverrideNotaFinal(al_id, Number(e.target.value) || 0)}
                                         onClick={(e) => e.stopPropagation()}
-                                        className="w-full bg-background/50 border border-[var(--glass-border)] rounded px-3 py-2 text-xl font-bold text-foreground focus:border-blue-500 focus:outline-none"
+                                        className="w-full bg-background/50 border border-[var(--glass-border)] rounded px-3 py-2 text-xl font-bold text-foreground focus:border-info focus:outline-none"
                                       />
                                     </div>
                                   </div>
@@ -794,7 +795,7 @@ export default function ProgresoPage() {
                               {/* BLOQUE 2: Grado de consecución de los RA por alumnado */}
                               <div className="pt-6 border-t border-[var(--glass-border)] space-y-4">
                                 <h3 className="font-bold text-foreground flex items-center gap-2">
-                                  <span>🎯</span> Consecución de Resultados de Aprendizaje (RA)
+                                  <span><span className="inline-flex"><Target className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Consecución de Resultados de Aprendizaje (RA)
                                 </h3>
                                 <div className="space-y-5">
                                   {resultados_ra.map((r, idx) => {
@@ -824,15 +825,15 @@ export default function ProgresoPage() {
 
                                         <div className="w-full md:w-60 bg-foreground/5 border border-white/5 rounded-lg p-2.5 text-[10px] text-foreground/80 space-y-1 self-stretch flex flex-col justify-center">
                                           <div className="flex justify-between">
-                                            <span className="text-blue-300 font-semibold">Evaluado en:</span>
+                                            <span className="text-info font-semibold">Evaluado en:</span>
                                             <span>{r.tris.join(", ") || "-"}</span>
                                           </div>
                                           <div className="flex justify-between">
-                                            <span className="text-yellow-200 font-semibold">UDs:</span>
+                                            <span className="text-warning font-semibold">UDs:</span>
                                             <span className="truncate max-w-[120px]" title={r.uds.join(", ")}>{r.uds.join(", ") || "-"}</span>
                                           </div>
                                           <div className="flex justify-between">
-                                            <span className="text-yellow-500 font-semibold">Prácticas:</span>
+                                            <span className="text-warning font-semibold">Prácticas:</span>
                                             <span className="truncate max-w-[120px]" title={r.prs.join(", ")}>{r.prs.join(", ") || "-"}</span>
                                           </div>
                                         </div>

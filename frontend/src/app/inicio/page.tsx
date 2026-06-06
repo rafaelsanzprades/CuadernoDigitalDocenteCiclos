@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";

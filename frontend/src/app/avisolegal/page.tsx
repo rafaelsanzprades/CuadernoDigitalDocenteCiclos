@@ -1,5 +1,5 @@
 "use client";
-
+import { Scale, Shield } from "lucide-react";
 import Link from "next/link";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
@@ -19,7 +19,7 @@ export default function LegalNoticePage() {
             {/* Header Title */}
             <div>
               <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight">
-                ⚖️ Información Legal y Privacidad
+                <span className="inline-flex"><Scale className="w-[1.2em] h-[1.2em] mr-1" /></span> Información Legal y Privacidad
               </h1>
               <p className="text-muted mt-2 text-lg">
                 Cumplimiento del RGPD, condiciones de uso y protección de datos.
@@ -44,8 +44,8 @@ export default function LegalNoticePage() {
             <Card className="p-8 border border-white/5 rounded-2xl bg-foreground/5 space-y-6">
               <h2 className="text-2xl font-bold text-foreground">2. Política de Privacidad y RGPD</h2>
               
-              <div className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 p-4 rounded-xl text-sm flex items-start gap-3">
-                <span className="text-lg">🛡️</span>
+              <div className="bg-success/10 border border-success/30 text-success p-4 rounded-xl text-sm flex items-start gap-3">
+                <span className="text-lg"><span className="inline-flex"><Shield className="w-[1.2em] h-[1.2em] mr-1" /></span></span>
                 <div>
                   <strong className="block mb-1">Modelo de Privacidad Local-First</strong>
                   Esta aplicación ha sido diseñada bajo el principio de <strong>privacidad absoluta</strong>. Los datos personales de tus alumnado (nombres, calificaciones, tutorías) no se envían, transmiten ni almacenan en ningún servidor ajeno al control del docente.
@@ -97,7 +97,7 @@ export default function LegalNoticePage() {
 
             {/* Back Link */}
             <div className="text-center">
-              <Link href="/" className="text-sm text-blue-400 hover:text-blue-300 font-semibold underline">
+              <Link href="/" className="text-sm text-info hover:text-info font-semibold underline">
                 Volver al Inicio
               </Link>
             </div>

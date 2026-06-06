@@ -1,5 +1,5 @@
 "use client";
-
+import { Building2 } from "lucide-react";
 import { useAppStore } from "@/store/useAppStore";
 import { Card } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
@@ -17,7 +17,7 @@ export function FeoeTab() {
     <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
       <Card className="p-6 border-l-4 border-l-pink-500 hover:shadow-lg hover:shadow-pink-500/10 transition-shadow">
         <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-6">
-<span>🏢</span> Formación en Empresa (FEOE)
+<span><span className="inline-flex"><Building2 className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Formación en Empresa (FEOE)
 </h2>
         <div className="grid grid-cols-3 gap-6">
           <div>

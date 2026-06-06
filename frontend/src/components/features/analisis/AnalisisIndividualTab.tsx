@@ -1,3 +1,4 @@
+import { BarChart, RefreshCw, Target } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
@@ -28,7 +29,7 @@ export const AnalisisIndividualTab = () => {
   if (activeAlumnado.length === 0) {
     return (
       <Card className="p-8 text-center border-l-4 border-l-yellow-500 mt-6">
-        <h2 className="text-xl font-bold text-yellow-400 mb-2">Faltan Datos</h2>
+        <h2 className="text-xl font-bold text-warning mb-2">Faltan Datos</h2>
         <p className="text-foreground/80">No hay alumnado activos para analizar.</p>
       </Card>
     );
@@ -134,7 +135,7 @@ export const AnalisisIndividualTab = () => {
               setSelectedAlId(e.target.value);
               setSimVals({}); // Reset sim on student change
             }}
-            className="bg-transparent border-none p-0 text-foreground focus:outline-none font-bold text-lg cursor-pointer hover:text-teal-400 transition-colors pr-8"
+            className="bg-transparent border-none p-0 text-foreground focus:outline-none font-bold text-lg cursor-pointer hover:text-success transition-colors pr-8"
             style={{ appearance: 'auto' }}
           >
             {activeAlumnado.map((al: any) => (
@@ -148,18 +149,18 @@ export const AnalisisIndividualTab = () => {
 
       <section className="grid grid-cols-3 gap-6">
         <Card className="p-6 border-l-4 border-l-teal-500 flex flex-col justify-center items-center relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-4 opacity-10 text-6xl">📊</div>
-          <span className="text-muted text-sm font-bold tracking-wider mb-2">Nota Media Actual</span>
-          <span className="text-5xl font-black text-teal-400">{realCalc.nota_final.toFixed(2)}</span>
+          <div className="absolute top-0 right-0 p-4 opacity-10 text-6xl"><span className="inline-flex"><BarChart className="w-[1.2em] h-[1.2em] mr-1" /></span></div>
+          <span className="text-muted text-sm font-semibold tracking-wider mb-2">Nota Media Actual</span>
+          <span className="text-5xl font-black text-success">{realCalc.nota_final.toFixed(2)}</span>
         </Card>
         <Card className="p-6 border-l-4 border-l-blue-500 flex flex-col justify-center items-center relative overflow-hidden">
-          <div className="absolute top-0 right-0 p-4 opacity-10 text-6xl">🎯</div>
-          <span className="text-muted text-sm font-bold tracking-wider mb-2">Estado</span>
-          <span className="text-4xl font-black text-blue-400">{realCalc.nota_final >= 5 ? 'Apto' : 'En Proceso'}</span>
+          <div className="absolute top-0 right-0 p-4 opacity-10 text-6xl"><span className="inline-flex"><Target className="w-[1.2em] h-[1.2em] mr-1" /></span></div>
+          <span className="text-muted text-sm font-semibold tracking-wider mb-2">Estado</span>
+          <span className="text-4xl font-black text-info">{realCalc.nota_final >= 5 ? 'Apto' : 'En Proceso'}</span>
         </Card>
         <Card className="p-6 border-l-4" style={{ borderLeftColor: realSigad.col }}>
           <div className="flex flex-col items-center justify-center h-full">
-            <span className="text-muted text-sm font-bold tracking-wider mb-2">Calificación Oficial</span>
+            <span className="text-muted text-sm font-semibold tracking-wider mb-2">Calificación Oficial</span>
             <div className="text-4xl font-black" style={{ color: realSigad.col }}>{realSigad.n} · {realSigad.cod}</div>
             <div className="text-sm mt-1 text-foreground/80 font-semibold">{realSigad.txt}</div>
           </div>
@@ -167,7 +168,7 @@ export const AnalisisIndividualTab = () => {
       </section>
 
       <Card className="p-6">
-        <h2 className="text-[1.1rem] font-bold mb-6">🎯 Adquisición de competencias (RA)</h2>
+        <h2 className="text-[1.1rem] font-bold mb-6"><span className="inline-flex"><Target className="w-[1.2em] h-[1.2em] mr-1" /></span> Adquisición de competencias (RA)</h2>
         <div className="grid grid-cols-2 gap-6">
           {df_ra.map((ra: any) => {
             if (!ra.id_ra) return null;
@@ -178,7 +179,7 @@ export const AnalisisIndividualTab = () => {
               <div key={ra.id_ra} className="bg-foreground/10 border border-white/5 rounded-xl p-4">
                 <div className="flex justify-between items-start mb-2">
                   <div>
-                    <h3 className="font-bold text-teal-400">{ra.id_ra}</h3>
+                    <h3 className="font-bold text-success">{ra.id_ra}</h3>
                     <p className="text-xs text-muted truncate max-w-xs">{ra.desc_ra}</p>
                   </div>
                   <div className="font-mono font-bold">{n_ra.toFixed(2)} / 10</div>
@@ -196,7 +197,7 @@ export const AnalisisIndividualTab = () => {
       </Card>
 
       <Card className="p-6 border-t-4 border-t-purple-500">
-        <h2 className="text-[1.1rem] font-bold mb-2">🎮 Simulador de calificaciones</h2>
+        <h2 className="text-[1.1rem] font-bold mb-2"> Simulador de calificaciones</h2>
         <p className="text-muted mb-6 text-sm">Experimenta con tus notas para proyectar tu resultado final.</p>
 
         <div className="flex gap-8">
@@ -215,7 +216,7 @@ export const AnalisisIndividualTab = () => {
                         <div key={act_id}>
                           <div className="flex justify-between text-xs mb-1">
                             <span className="text-foreground/80 truncate w-32" title={act.desc_act}>{act.desc_act || act_id}</span>
-                            <span className="font-mono text-purple-400 font-bold">{sim_val.toFixed(1)}</span>
+                            <span className="font-mono text-info font-bold">{sim_val.toFixed(1)}</span>
                           </div>
                           <input 
                             type="range" 
@@ -237,7 +238,7 @@ export const AnalisisIndividualTab = () => {
               onClick={() => setSimVals({})} 
               className="text-sm flex items-center gap-1"
             >
-              🔄 Restaurar a notas reales
+              <span className="inline-flex"><RefreshCw className="w-[1.2em] h-[1.2em] mr-1" /></span> Restaurar a notas reales
             </Button>
           </div>
 

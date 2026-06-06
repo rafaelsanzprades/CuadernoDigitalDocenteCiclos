@@ -1,5 +1,5 @@
 "use client";
-
+import { Calendar, FileEdit, Receipt, Scale, School, UserCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useAppStore } from "@/store/useAppStore";
 import { Card } from "@/components/ui/Card";
@@ -170,7 +170,7 @@ export function DatosTab() {
       {/* 1. Centro y docente */}
       <Card className="p-6">
         <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-5">
-<span>🧑‍🏫</span> Centro y docente
+<span>‍<span className="inline-flex"><School className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Centro y docente
 </h2>
         <div className="grid grid-cols-2 gap-6">
           <Input 
@@ -191,7 +191,7 @@ export function DatosTab() {
       {/* 2. Módulo didáctico */}
       <Card className="p-6">
         <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-5">
-<span>📝</span> Módulo didáctico
+<span><span className="inline-flex"><FileEdit className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Módulo didáctico
 </h2>
 
         <div className="grid grid-cols-2 gap-4 mb-4">
@@ -271,7 +271,7 @@ export function DatosTab() {
           <Input 
             label={`Horas P.Ev. (${p_ev}%)`}
             type="text"
-            className="text-yellow-400 cursor-not-allowed text-center font-bold"
+            className="text-warning cursor-not-allowed text-center font-bold"
             disabled 
             value={`${h_p_ev} h`}
           />
@@ -282,11 +282,11 @@ export function DatosTab() {
       <Card className="p-6 border-l-4 border-l-purple-500">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground">
-<span>🕒</span> Sesiones semanales
+<span></span> Sesiones semanales
 </h2>
           <div className="bg-foreground/15 px-4 py-2 rounded-lg border border-[var(--glass-border)] text-sm">
             Desfase con H/Semanal:{" "}
-            <span className={`font-bold ${suma_horario === h_sem ? "text-green-400" : "text-yellow-400"}`}>
+            <span className={`font-bold ${suma_horario === h_sem ? "text-success" : "text-warning"}`}>
               {suma_horario - h_sem} h
             </span>
           </div>
@@ -308,7 +308,7 @@ export function DatosTab() {
       {/* 4. Sesiones trimestrales */}
       <Card className="p-6 border-l-4 border-l-emerald-500">
         <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-6">
-<span>📅</span> Sesiones trimestrales
+<span><span className="inline-flex"><Calendar className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Sesiones trimestrales
 </h2>
         <div className="grid grid-cols-3 gap-6">
           {[
@@ -319,7 +319,7 @@ export function DatosTab() {
             <div key={t.label}>
               <label className="block text-sm font-semibold text-muted mb-2 text-center">{t.label}</label>
               <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-4 text-center">
-                <div className="text-[1.1rem] font-bold text-emerald-400 font-mono">{t.value} h</div>
+                <div className="text-[1.1rem] font-bold text-success font-mono">{t.value} h</div>
               </div>
             </div>
           ))}
@@ -327,8 +327,8 @@ export function DatosTab() {
         <div className="grid grid-cols-3 gap-6 mt-4">
           {[
             { label: "Horas BOA", value: `${h_boa} h`, cls: "text-foreground" },
-            { label: "Horas clases real", value: `${h_real} h`, cls: "text-emerald-400" },
-            { label: `Horas P.Ev. (${p_ev}%)`, value: `${h_p_ev} h`, cls: "text-yellow-400" },
+            { label: "Horas clases real", value: `${h_real} h`, cls: "text-success" },
+            { label: `Horas P.Ev. (${p_ev}%)`, value: `${h_p_ev} h`, cls: "text-warning" },
           ].map(s => (
             <div key={s.label}>
               <label className="block text-sm font-semibold text-muted mb-2 text-center">{s.label}</label>
@@ -343,8 +343,8 @@ export function DatosTab() {
       {/* 5. Evaluación */}
       <Card className="p-6 border-l-4 border-l-accent">
         <h4 className="text-lg font-bold text-foreground mb-6 flex items-center justify-between">
-          <span className="flex items-center gap-2"><span>⚖️</span> % Ponderación por trimestres</span>
-          <span className={`text-sm font-bold px-3 py-1 rounded-full ${sumaTrimestres === 100 ? 'bg-green-500/20 text-green-400 border border-green-500/50' : 'bg-red-500/20 text-red-400 border border-red-500/50'}`}>
+          <span className="flex items-center gap-2"><span><span className="inline-flex"><Scale className="w-[1.2em] h-[1.2em] mr-1" /></span></span> % Ponderación por trimestres</span>
+          <span className={`text-sm font-semibold px-3 py-1 rounded-full ${sumaTrimestres === 100 ? 'bg-success/10 text-success border border-success/30' : 'bg-danger/10 text-danger border border-danger/30'}`}>
             {sumaTrimestres}% {sumaTrimestres !== 100 && "(Debe sumar 100%)"}
           </span>
         </h4>
@@ -362,8 +362,8 @@ export function DatosTab() {
 
       <Card className="p-6 border-l-4 border-l-purple-500">
         <h4 className="text-lg font-bold text-foreground mb-6 flex items-center justify-between">
-          <span className="flex items-center gap-2"><span>🧾</span> % Instrumentos de evaluación</span>
-          <span className={`text-sm font-bold px-3 py-1 rounded-full ${sumaCriterios === 100 ? 'bg-green-500/20 text-green-400 border border-green-500/50' : 'bg-red-500/20 text-red-400 border border-red-500/50'}`}>
+          <span className="flex items-center gap-2"><span><span className="inline-flex"><Receipt className="w-[1.2em] h-[1.2em] mr-1" /></span></span> % Instrumentos de evaluación</span>
+          <span className={`text-sm font-semibold px-3 py-1 rounded-full ${sumaCriterios === 100 ? 'bg-success/10 text-success border border-success/30' : 'bg-danger/10 text-danger border border-danger/30'}`}>
             {sumaCriterios}% {sumaCriterios !== 100 && "(Debe sumar 100%)"}
           </span>
         </h4>

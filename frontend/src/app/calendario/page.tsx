@@ -1,4 +1,5 @@
 "use client";
+import { Calendar, Circle, ClipboardList, Search, Settings } from "lucide-react";
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
@@ -71,16 +72,16 @@ function NotesTable({ calendar_notes, onUpdateNote }: { calendar_notes: Record<s
                 <td className="p-2 font-mono text-foreground/80">{dateStr}</td>
                 <td className="p-2">
                   <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${
-                    isF ? "bg-red-500/20 text-red-300" : "bg-blue-500/20 text-blue-300"
+                    isF ? "bg-danger/10 text-danger" : "bg-info/10 text-info"
                   }`}>
-                    {isF ? "🔴 Festivo" : "🔵 Evento"}
+                    {isF ? <><span className="inline-flex"><Circle className="w-[1.2em] h-[1.2em] mr-1" /></span> Festivo</> : <><span className="inline-flex"><Circle className="w-[1.2em] h-[1.2em] mr-1" /></span> Evento</>}
                   </span>
                 </td>
                 <td className="p-2 text-foreground/90">{v as string}</td>
                 <td className="p-2 text-center">
                   <button
                     onClick={() => onUpdateNote(k, "")}
-                    className="text-muted/80 hover:text-red-400 font-bold text-lg leading-none transition-colors"
+                    className="text-muted/80 hover:text-danger font-bold text-lg leading-none transition-colors"
                   >×</button>
                 </td>
               </tr>
@@ -100,10 +101,10 @@ function NotesTable({ calendar_notes, onUpdateNote }: { calendar_notes: Record<s
               <select
                 value={newType}
                 onChange={e => setNewType(e.target.value as "f" | "r")}
-                className="w-full bg-foreground/20 border border-[var(--glass-border)] rounded p-1 text-sm text-foreground focus:border-yellow-500 focus:outline-none"
+                className="w-full bg-foreground/20 border border-[var(--glass-border)] rounded p-1 text-sm text-foreground focus:border-warning focus:outline-none"
               >
-                <option value="f">🔴 Festivo</option>
-                <option value="r">🔵 Evento</option>
+                <option value="f">Festivo</option>
+                <option value="r">Evento</option>
               </select>
             </td>
             <td className="p-2">
@@ -113,14 +114,14 @@ function NotesTable({ calendar_notes, onUpdateNote }: { calendar_notes: Record<s
                 onChange={e => setNewText(e.target.value)}
                 onKeyDown={e => e.key === "Enter" && addNote()}
                 placeholder="Descripción..."
-                className="w-full bg-foreground/20 border border-[var(--glass-border)] rounded p-1 text-sm text-foreground focus:border-yellow-500 focus:outline-none"
+                className="w-full bg-foreground/20 border border-[var(--glass-border)] rounded p-1 text-sm text-foreground focus:border-warning focus:outline-none"
               />
             </td>
             <td className="p-2">
               <button
                 onClick={addNote}
                 disabled={!newDate || !newText}
-                className="text-yellow-400 hover:text-yellow-300 font-bold text-lg leading-none disabled:text-gray-700 transition-colors"
+                className="text-warning hover:text-warning font-bold text-lg leading-none disabled:text-gray-700 transition-colors"
               >+</button>
             </td>
           </tr>
@@ -169,13 +170,13 @@ function InteractiveCalendar({ info_fechas, horario, calendar_notes, onUpdateNot
     const isFestivo = !!calendar_notes[`f_${dkey}`];
     const isEvento  = !!calendar_notes[`r_${dkey}`];
 
-    if (isFestivo)            return "bg-red-500/80 text-foreground font-bold ring-1 ring-red-400";
-    if (isEvento)             return "bg-blue-500/80 text-foreground font-bold ring-1 ring-blue-400";
+    if (isFestivo)            return "bg-danger/10 text-foreground font-bold ring-1 ring-danger";
+    if (isEvento)             return "bg-info/10 text-foreground font-bold ring-1 ring-info";
     if (isWeekend)            return "bg-foreground/5 text-muted/80 cursor-default";
-    if (inRange(date, feoS, feoE)) return "bg-orange-500/30 text-orange-200 hover:bg-orange-500/50 cursor-pointer";
-    if (inRange(date, t1s, t1e))   return "bg-sky-600/30 text-sky-200 hover:bg-sky-500/50 cursor-pointer";
-    if (inRange(date, t2s, t2e))   return "bg-emerald-600/30 text-emerald-200 hover:bg-emerald-500/50 cursor-pointer";
-    if (inRange(date, t3s, t3e))   return "bg-purple-600/30 text-purple-200 hover:bg-purple-500/50 cursor-pointer";
+    if (inRange(date, feoS, feoE)) return "bg-warning/10 text-warning hover:bg-warning/10 cursor-pointer";
+    if (inRange(date, t1s, t1e))   return "bg-info/10 text-info hover:bg-info/10 cursor-pointer";
+    if (inRange(date, t2s, t2e))   return "bg-success/10 text-success hover:bg-success/10 cursor-pointer";
+    if (inRange(date, t3s, t3e))   return "bg-info/10 text-info hover:bg-info/10 cursor-pointer";
     if (inRange(date, cs, ce))     return "bg-foreground/5 text-muted hover:bg-foreground/10 cursor-pointer";
     return "text-gray-700 cursor-default";
   }
@@ -205,12 +206,12 @@ function InteractiveCalendar({ info_fechas, horario, calendar_notes, onUpdateNot
       {/* Legend */}
       <div className="flex flex-wrap gap-4 mb-6 text-xs">
         {[
-          { cls: "bg-sky-600/40 border-sky-500/30",      label: "1er trimestre" },
-          { cls: "bg-emerald-600/40 border-emerald-500/30", label: "2º trimestre" },
-          { cls: "bg-purple-600/40 border-purple-500/30",  label: "3er trimestre" },
-          { cls: "bg-red-500/70 border-red-400/40",        label: "Festivo (clic para añadir/quitar)" },
-          { cls: "bg-blue-500/70 border-blue-400/40",      label: "Evento relevante" },
-          { cls: "bg-orange-500/30 border-orange-400/30",  label: "FEOE" },
+          { cls: "bg-info/10 border-info/30",      label: "1er trimestre" },
+          { cls: "bg-success/10 border-success/30", label: "2º trimestre" },
+          { cls: "bg-info/10 border-info/30",  label: "3er trimestre" },
+          { cls: "bg-danger/10 border-danger/30",        label: "Festivo (clic para añadir/quitar)" },
+          { cls: "bg-info/10 border-info/30",      label: "Evento relevante" },
+          { cls: "bg-warning/10 border-warning/30",  label: "FEOE" },
         ].map(l => (
           <span key={l.label} className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border ${l.cls}`}>
             <span className="text-foreground/80">{l.label}</span>
@@ -232,7 +233,7 @@ function InteractiveCalendar({ info_fechas, horario, calendar_notes, onUpdateNot
 
           return (
             <div key={`${y}-${m}`} className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-4">
-              <h3 className="text-center font-bold text-sm mb-3 text-foreground/90">
+              <h3 className="text-center font-semibold text-sm mb-3 text-foreground/90">
                 {MONTH_NAMES[m]} {y}
               </h3>
               <div className="grid grid-cols-7 gap-0.5">
@@ -247,7 +248,7 @@ function InteractiveCalendar({ info_fechas, horario, calendar_notes, onUpdateNot
                     <button
                       key={day}
                       onClick={(e) => openPopup(e, date)}
-                      className={`text-center text-[11px] rounded py-1 transition-all ${getDayStyle(date)} ${isToday ? "ring-1 ring-yellow-400 ring-offset-1 ring-offset-black/50" : ""}`}
+                      className={`text-center text-[11px] rounded py-1 transition-all ${getDayStyle(date)} ${isToday ? "ring-1 ring-warning ring-offset-1 ring-offset-black/50" : ""}`}
                       title={`${pad(day)}/${pad(m + 1)}/${y}`}
                     >
                       {day}
@@ -263,7 +264,7 @@ function InteractiveCalendar({ info_fechas, horario, calendar_notes, onUpdateNot
       {/* Notes list */}
       {noteEntries.length > 0 && (
         <div className="mt-6">
-          <h3 className="text-sm font-semibold text-muted mb-3">📋 Notas registradas ({noteEntries.length})</h3>
+          <h3 className="text-sm font-semibold text-muted mb-3"><span className="inline-flex"><ClipboardList className="w-[1.2em] h-[1.2em] mr-1" /></span> Notas registradas ({noteEntries.length})</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
             {noteEntries
               .sort(([a], [b]) => a.localeCompare(b))
@@ -273,8 +274,8 @@ function InteractiveCalendar({ info_fechas, horario, calendar_notes, onUpdateNot
                   <div
                     key={k}
                     className={`flex items-center gap-2 text-xs rounded-lg px-3 py-2 border ${
-                      isF ? "bg-red-500/10 border-red-500/20 text-red-300"
-                          : "bg-blue-500/10 border-blue-500/20 text-blue-300"
+                      isF ? "bg-danger/10 border-danger/30 text-danger"
+                          : "bg-info/10 border-info/30 text-info"
                     }`}
                   >
                     <span className="flex-1 truncate">
@@ -283,7 +284,7 @@ function InteractiveCalendar({ info_fechas, horario, calendar_notes, onUpdateNot
                     </span>
                     <button
                       onClick={() => onUpdateNote(k, "")}
-                      className="text-muted/80 hover:text-red-400 font-bold text-base leading-none"
+                      className="text-muted/80 hover:text-danger font-bold text-base leading-none"
                     >×</button>
                   </div>
                 );
@@ -303,28 +304,28 @@ function InteractiveCalendar({ info_fechas, horario, calendar_notes, onUpdateNot
               top:  Math.min(popup.y + 8, (typeof window !== "undefined" ? window.innerHeight : 600) - 170),
             }}
           >
-            <p className="text-sm font-bold mb-3 text-foreground/90">📌 {popup.key}</p>
+            <p className="text-sm font-semibold mb-3 text-foreground/90"> {popup.key}</p>
             <div className="flex gap-2 mb-3">
               <button
                 onClick={() => setNoteType("f")}
                 className={`flex-1 text-xs py-1.5 rounded transition-all ${
                   noteType === "f"
-                    ? "bg-red-500/30 text-red-300 border border-red-500/50"
+                    ? "bg-danger/10 text-danger border border-danger/30"
                     : "bg-foreground/5 text-muted border border-[var(--glass-border)] hover:bg-foreground/10"
                 }`}
-              >🔴 Festivo</button>
+              ><span className="inline-flex"><Circle className="w-[1.2em] h-[1.2em] mr-1" /></span> Festivo</button>
               <button
                 onClick={() => setNoteType("r")}
                 className={`flex-1 text-xs py-1.5 rounded transition-all ${
                   noteType === "r"
-                    ? "bg-blue-500/30 text-blue-300 border border-blue-500/50"
+                    ? "bg-info/10 text-info border border-info/30"
                     : "bg-foreground/5 text-muted border border-[var(--glass-border)] hover:bg-foreground/10"
                 }`}
-              >🔵 Evento</button>
+              ><span className="inline-flex"><Circle className="w-[1.2em] h-[1.2em] mr-1" /></span> Evento</button>
             </div>
             <input
               autoFocus
-              className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded p-2 text-sm text-foreground mb-3 focus:border-blue-500 focus:outline-none"
+              className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded p-2 text-sm text-foreground mb-3 focus:border-info focus:outline-none"
               placeholder={noteType === "f" ? "Nombre del festivo..." : "Descripción del evento..."}
               value={noteText}
               onChange={e => setNoteText(e.target.value)}
@@ -336,7 +337,7 @@ function InteractiveCalendar({ info_fechas, horario, calendar_notes, onUpdateNot
             <div className="flex gap-2">
               <button
                 onClick={saveNote}
-                className="flex-1 bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 text-xs py-1.5 rounded border border-blue-500/30 transition-all"
+                className="flex-1 bg-info/10 hover:bg-info/10 text-info text-xs py-1.5 rounded border border-info/30 transition-all"
               >Añadir</button>
               <button
                 onClick={() => setPopup(null)}
@@ -402,7 +403,7 @@ export default function CalendarioPage() {
         <div className="flex-1 flex flex-col relative z-10 min-w-0">
           <Header />
           <main className="flex-1 flex items-center justify-center content-area">
-            <div className="text-xl text-blue-400 animate-pulse">Cargando calendario...</div>
+            <div className="text-xl text-info animate-pulse">Cargando calendario...</div>
           </main>
         </div>
       </div>
@@ -421,9 +422,9 @@ export default function CalendarioPage() {
     updateModuleData("calendar_notes", { ...calendar_notes, [key]: val });
 
   const TABS = [
-    { id: "fechas", label: "⚙️ Configuración de fechas", cleanLabel: "Configuración de fechas" },
-    { id: "eventos", label: "📌 Eventos y festivos", cleanLabel: "Eventos y festivos" },
-    { id: "visual", label: "📅 Calendario visual", cleanLabel: "Calendario visual" }
+    { id: "fechas", label: <><span className="inline-flex"><Settings className="w-[1.2em] h-[1.2em] mr-1" /></span> Configuración de fechas</>, cleanLabel: "Configuración de fechas" },
+    { id: "eventos", label: " Eventos y festivos", cleanLabel: "Eventos y festivos" },
+    { id: "visual", label: <><span className="inline-flex"><Calendar className="w-[1.2em] h-[1.2em] mr-1" /></span> Calendario visual</>, cleanLabel: "Calendario visual" }
   ];
 
   const [activeTab, setActiveTab] = useState("fechas");
@@ -439,13 +440,13 @@ export default function CalendarioPage() {
 
           {/* Page heading */}
           <div>
-              <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">🗓️ Calendario académico</h1>
+              <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">️ Calendario académico</h1>
             <p className="text-muted mt-2 text-lg">Fechas generales, trimestres, horario semanal, festivos y eventos relevantes del curso.</p>
           </div>
 
           {/* Save message */}
           {saveMessage && (
-            <p className={`text-sm font-semibold ${saveMessage.includes("Error") ? "text-red-400" : "text-green-400"}`}>
+            <p className={`text-sm font-semibold ${saveMessage.includes("Error") ? "text-danger" : "text-success"}`}>
               {saveMessage}
             </p>
           )}
@@ -478,9 +479,9 @@ export default function CalendarioPage() {
                         handleUpdateFechas("fin_curso", dates[dates.length - 1]);
                       }
                     }}
-                    className="text-xs text-blue-300 hover:text-blue-200"
+                    className="text-xs text-info hover:text-info"
                   >
-                    🔍 Autodetectar desde Planning
+                    <span className="inline-flex"><Search className="w-[1.2em] h-[1.2em] mr-1" /></span> Autodetectar desde Planning
                   </Button>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -533,7 +534,7 @@ export default function CalendarioPage() {
 
           {activeTab === "eventos" && (
             <Card className="p-6 border-t-4 border-t-yellow-500">
-              <h2 className="text-xl font-bold mb-2">📌 Festivos y eventos</h2>
+              <h2 className="text-xl font-bold mb-2"> Festivos y eventos</h2>
               <p className="text-muted text-sm mb-4">
                 Introduce manualmente o haz clic en el calendario. Los festivos excluyen horas del cómputo real.
               </p>
@@ -544,7 +545,7 @@ export default function CalendarioPage() {
 
           {activeTab === "visual" && (
             <Card className="p-6 border-t-4 border-t-purple-500">
-              <h3 className="text-lg font-bold mb-4 text-foreground/80">📅 Calendario visual</h3>
+              <h3 className="text-lg font-bold mb-4 text-foreground/80"><span className="inline-flex"><Calendar className="w-[1.2em] h-[1.2em] mr-1" /></span> Calendario visual</h3>
               <InteractiveCalendar
                 info_fechas={info_fechas}
                 horario={horario}

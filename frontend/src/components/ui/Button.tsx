@@ -20,13 +20,13 @@ export function Button({ children, className = '', variant = 'primary', size = '
       variantStyle = "bg-accent/15 text-accent border border-accent/40 hover:bg-accent/25 hover:border-accent/60 shadow-sm";
       break;
     case 'secondary':
-      variantStyle = "bg-blue-500/15 text-blue-600 dark:text-blue-400 border border-blue-500/30 hover:bg-blue-500/25";
+      variantStyle = "bg-info/10 text-info dark:text-info border border-info/30 hover:bg-info/10";
       break;
     case 'danger':
-      variantStyle = "bg-red-500/15 text-red-600 dark:text-red-400 border border-red-500/30 hover:bg-red-500/25";
+      variantStyle = "bg-danger/10 text-danger dark:text-danger border border-danger/30 hover:bg-danger/10";
       break;
     case 'success':
-      variantStyle = "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/25";
+      variantStyle = "bg-success/10 text-success dark:text-success border border-success/30 hover:bg-success/10";
       break;
     case 'ghost':
       variantStyle = "bg-transparent border border-transparent text-muted hover:text-foreground hover:bg-foreground/5";

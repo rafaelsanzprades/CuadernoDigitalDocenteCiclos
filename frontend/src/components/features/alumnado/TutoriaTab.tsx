@@ -1,11 +1,8 @@
+import { Award, CheckSquare, ChevronDown, ChevronUp, Compass, FileText, HelpCircle, Save, ShieldAlert, Square, Stethoscope, User, Users } from "lucide-react";
 import React, { useState } from 'react';
 import { useAppStore } from '@/store/useAppStore';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { 
-  User, ShieldAlert, Award, Stethoscope, FileText, Compass, 
-  ChevronDown, ChevronUp, CheckSquare, Square, Save, HelpCircle 
-} from 'lucide-react';
 import { Alumnado } from '@/types';
 
 export const TutoriaTab = () => {
@@ -80,24 +77,24 @@ export const TutoriaTab = () => {
 
   const renderInput = (field: string, label: string, type = 'text', placeholder = '') => (
     <div className="flex flex-col gap-1.5">
-      <label className="text-xs font-bold text-muted tracking-wider">{label}</label>
+      <label className="text-xs font-medium text-muted tracking-wider">{label}</label>
       <input
         type={type}
         value={studentData[field] || ''}
         onChange={(e) => updateField(field, e.target.value)}
         placeholder={placeholder}
-        className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded-lg px-3 py-2 text-foreground text-sm focus:border-blue-500 focus:outline-none focus:bg-background/40 transition-all"
+        className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded-lg px-3 py-2 text-foreground text-sm focus:border-info focus:outline-none focus:bg-background/40 transition-all"
       />
     </div>
   );
 
   const renderSelect = (field: string, label: string, options: { value: string; label: string }[]) => (
     <div className="flex flex-col gap-1.5">
-      <label className="text-xs font-bold text-muted tracking-wider">{label}</label>
+      <label className="text-xs font-medium text-muted tracking-wider">{label}</label>
       <select
         value={studentData[field] || ''}
         onChange={(e) => updateField(field, e.target.value)}
-        className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded-lg px-3 py-2 text-foreground text-sm focus:border-blue-500 focus:outline-none focus:bg-background/40 transition-all cursor-pointer"
+        className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded-lg px-3 py-2 text-foreground text-sm focus:border-info focus:outline-none focus:bg-background/40 transition-all cursor-pointer"
       >
         <option value="" className="bg-[#0f172a] text-muted">-- Seleccionar --</option>
         {options.map(opt => (
@@ -112,9 +109,9 @@ export const TutoriaTab = () => {
   if (activeStudents.length === 0) {
     return (
       <Card className="p-8 text-center border-l-4 border-l-yellow-500 mt-6">
-        <h2 className="text-xl font-bold text-yellow-400 mb-2">Falta Alumnado</h2>
+        <h2 className="text-xl font-bold text-warning mb-2">Falta Alumnado</h2>
         <p className="text-foreground/80">
-          Primero debes registrar alumnado en la pestaña 👥 Registro de Alumnado.
+          Primero debes registrar alumnado en la pestaña <span className="inline-flex"><Users className="w-[1.2em] h-[1.2em] mr-1" /></span> Registro de Alumnado.
         </p>
       </Card>
     );
@@ -125,7 +122,7 @@ export const TutoriaTab = () => {
       {/* Student List Sidebar */}
       <div className="w-80 bg-foreground/5 border border-white/5 rounded-2xl flex flex-col overflow-hidden">
         <div className="p-4 border-b border-white/5 bg-foreground/10">
-          <div className="text-xs font-bold text-muted tracking-wider">
+          <div className="text-xs font-medium text-muted tracking-wider">
             Alumnado Activos ({activeStudents.length})
           </div>
         </div>
@@ -180,7 +177,7 @@ export const TutoriaTab = () => {
                 {renderSectionHeader(
                   'vulnerabilidad', 
                   'Sección 1: Datos y Vulnerabilidad', 
-                  <User className="w-5 h-5 text-blue-400" />,
+                  <User className="w-5 h-5 text-info" />,
                   openSections.vulnerabilidad
                 )}
                 {openSections.vulnerabilidad && (
@@ -199,7 +196,7 @@ export const TutoriaTab = () => {
                     </div>
 
                     <div className="md:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-3 pt-2 border-t border-white/5">
-                      <div className="col-span-2 md:col-span-4 text-xs font-bold text-muted tracking-wider">Becas Concedidas</div>
+                      <div className="col-span-2 md:col-span-4 text-xs font-medium text-muted tracking-wider">Becas Concedidas</div>
                       {renderCheckbox('Beca materiales', 'Beca Materiales')}
                       {renderCheckbox('Beca ampa materiales banco libros', 'Banco de Libros')}
                       {renderCheckbox('Beca acneaes', 'Beca ACNEAE')}
@@ -214,7 +211,7 @@ export const TutoriaTab = () => {
                 {renderSectionHeader(
                   'acneae', 
                   'Sección 2: ACNEAE y Dificultades', 
-                  <ShieldAlert className="w-5 h-5 text-orange-400" />,
+                  <ShieldAlert className="w-5 h-5 text-warning" />,
                   openSections.acneae
                 )}
                 {openSections.acneae && (
@@ -237,16 +234,16 @@ export const TutoriaTab = () => {
                 {renderSectionHeader(
                   'adaptaciones', 
                   'Sección 3: Adaptaciones y ACS', 
-                  <Award className="w-5 h-5 text-emerald-400" />,
+                  <Award className="w-5 h-5 text-success" />,
                   openSections.adaptaciones
                 )}
                 {openSections.adaptaciones && (
                   <div className="bg-background/20 border border-white/5 rounded-xl p-5 grid grid-cols-1 md:grid-cols-3 gap-4 animate-in slide-in-from-top-2 duration-300">
                     <div className="col-span-3 flex justify-between items-center border-b border-white/5 pb-2">
-                      <span className="text-sm font-bold text-foreground">Adaptaciones Curriculares Significativas (ACS)</span>
+                      <span className="text-sm font-semibold text-foreground">Adaptaciones Curriculares Significativas (ACS)</span>
                       {renderCheckbox('ACS', 'Tiene ACS')}
                     </div>
-                    <div className="col-span-3 text-xs font-bold text-muted tracking-wider mb-2">ACS específicas por materia:</div>
+                    <div className="col-span-3 text-xs font-medium text-muted tracking-wider mb-2">ACS específicas por materia:</div>
                     {renderCheckbox('Lengua', 'ACS Lengua')}
                     {renderCheckbox('Matemáticas', 'ACS Matemáticas')}
                     {renderCheckbox('CC Sociales', 'ACS Ciencias Sociales')}
@@ -262,7 +259,7 @@ export const TutoriaTab = () => {
                 {renderSectionHeader(
                   'intervencion', 
                   'Sección 4: Intervención y Apoyos', 
-                  <Stethoscope className="w-5 h-5 text-teal-400" />,
+                  <Stethoscope className="w-5 h-5 text-success" />,
                   openSections.intervencion
                 )}
                 {openSections.intervencion && (
@@ -273,7 +270,7 @@ export const TutoriaTab = () => {
                     {renderInput('Fecha resolución', 'Fecha de resolución de apoyos', 'date')}
                     
                     <div className="md:col-span-2 grid grid-cols-2 md:grid-cols-4 gap-3 pt-3 border-t border-white/5">
-                      <div className="col-span-2 md:col-span-4 text-xs font-bold text-muted tracking-wider">Reinforcements & Supports</div>
+                      <div className="col-span-2 md:col-span-4 text-xs font-medium text-muted tracking-wider">Reinforcements & Supports</div>
                       {renderCheckbox('AEE', 'Acompañamiento (AEE)')}
                       {renderCheckbox('MENTORÍA', 'Tiene Mentoría')}
                       {renderCheckbox('Refuerzo auna proa+', 'Refuerzo AUNA PROA+')}
@@ -284,13 +281,13 @@ export const TutoriaTab = () => {
                     </div>
 
                     <div className="md:col-span-2 flex flex-col gap-1.5 pt-3 border-t border-white/5">
-                      <label className="text-xs font-bold text-muted tracking-wider">Observaciones de orientación</label>
+                      <label className="text-xs font-medium text-muted tracking-wider">Observaciones de orientación</label>
                       <textarea
                         value={studentData['Observaciones'] || ''}
                         onChange={(e) => updateField('Observaciones', e.target.value)}
                         placeholder="Escribe aquí observaciones y anotaciones clave de orientación y tutoría..."
                         rows={3}
-                        className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded-lg px-3 py-2 text-foreground text-sm focus:border-blue-500 focus:outline-none focus:bg-background/40 transition-all resize-none"
+                        className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded-lg px-3 py-2 text-foreground text-sm focus:border-info focus:outline-none focus:bg-background/40 transition-all resize-none"
                       />
                     </div>
                   </div>
@@ -302,7 +299,7 @@ export const TutoriaTab = () => {
                 {renderSectionHeader(
                   'historial', 
                   'Sección 5: Historial Académico (Evolución)', 
-                  <FileText className="w-5 h-5 text-purple-400" />,
+                  <FileText className="w-5 h-5 text-info" />,
                   openSections.historial
                 )}
                 {openSections.historial && (
@@ -314,7 +311,7 @@ export const TutoriaTab = () => {
 
                     {/* Notas Medias */}
                     <div className="border-t border-white/5 pt-4">
-                      <div className="text-xs font-bold text-muted tracking-wider mb-3">Notas Medias del Historial</div>
+                      <div className="text-xs font-medium text-muted tracking-wider mb-3">Notas Medias del Historial</div>
                       <div className="grid grid-cols-2 md:grid-cols-7 gap-3">
                         {renderInput('Nota media 6º primaria', '6º Prim', 'number')}
                         {renderInput('Nota media 1º eso', '1º eso', 'number')}
@@ -328,7 +325,7 @@ export const TutoriaTab = () => {
 
                     {/* Materias Suspensas */}
                     <div className="border-t border-white/5 pt-4">
-                      <div className="text-xs font-bold text-muted tracking-wider mb-3">Nº Materias Suspensas por Curso</div>
+                      <div className="text-xs font-medium text-muted tracking-wider mb-3">Nº Materias Suspensas por Curso</div>
                       <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
                         {renderInput('Suspensos 1º eso', '1º eso', 'number')}
                         {renderInput('Suspensos 2º eso', '2º eso', 'number')}
@@ -341,7 +338,7 @@ export const TutoriaTab = () => {
 
                     {/* Calificaciones Lengua y Matemáticas */}
                     <div className="border-t border-white/5 pt-4">
-                      <div className="text-xs font-bold text-muted tracking-wider mb-3">Historial Calificaciones Lengua</div>
+                      <div className="text-xs font-medium text-muted tracking-wider mb-3">Historial Calificaciones Lengua</div>
                       <div className="grid grid-cols-2 md:grid-cols-7 gap-3">
                         {renderInput('Nota lengua 6º ep', '6º ep', 'text', 'Nº o BI/NT')}
                         {renderInput('Nota lengua 1º eso', '1º eso', 'text', 'Nº o BI/NT')}
@@ -354,7 +351,7 @@ export const TutoriaTab = () => {
                     </div>
 
                     <div className="border-t border-white/5 pt-4">
-                      <div className="text-xs font-bold text-muted tracking-wider mb-3">Historial Calificaciones Matemáticas</div>
+                      <div className="text-xs font-medium text-muted tracking-wider mb-3">Historial Calificaciones Matemáticas</div>
                       <div className="grid grid-cols-2 md:grid-cols-7 gap-3">
                         {renderInput('Nota mates 6º ep', '6º ep', 'text', 'Nº o BI/NT')}
                         {renderInput('Nota mates 1º eso', '1º eso', 'text', 'Nº o BI/NT')}
@@ -374,14 +371,14 @@ export const TutoriaTab = () => {
                 {renderSectionHeader(
                   'orientacion', 
                   'Sección 6: Actividades, Viajes y Orientación', 
-                  <Compass className="w-5 h-5 text-pink-400" />,
+                  <Compass className="w-5 h-5 text-danger" />,
                   openSections.orientacion
                 )}
                 {openSections.orientacion && (
                   <div className="bg-background/20 border border-white/5 rounded-xl p-5 space-y-6 animate-in slide-in-from-top-2 duration-300">
                     
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                      <div className="col-span-2 md:col-span-3 text-xs font-bold text-muted tracking-wider">Actividades y Viajes Escolares</div>
+                      <div className="col-span-2 md:col-span-3 text-xs font-medium text-muted tracking-wider">Actividades y Viajes Escolares</div>
                       {renderCheckbox('Erasmus+ y otros viajes', 'Erasmus+ / Viajes')}
                       {renderCheckbox('English week 1º eso', 'English Week 1º ESO')}
                       {renderCheckbox('Entorno aragón', 'Entorno Aragón')}
@@ -394,7 +391,7 @@ export const TutoriaTab = () => {
                     </div>
 
                     <div className="border-t border-white/5 pt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div className="col-span-1 md:col-span-3 text-xs font-bold text-muted tracking-wider">Propuestas de Orientación de Futuro</div>
+                      <div className="col-span-1 md:col-span-3 text-xs font-medium text-muted tracking-wider">Propuestas de Orientación de Futuro</div>
                       {renderInput('PROPUESTAS', 'Propuesta general')}
                       {renderInput('PROMOCIÓN', 'Decisión promoción')}
                       {renderSelect('Repetición de curso', 'Repetición de Curso', [{ value: 'Sí', label: 'Sí' }, { value: 'X', label: 'Confirmado' }, { value: '?', label: 'Dudoso' }])}

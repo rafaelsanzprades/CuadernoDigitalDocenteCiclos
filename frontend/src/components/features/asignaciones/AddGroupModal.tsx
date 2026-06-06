@@ -1,5 +1,5 @@
+import { BookOpen, X } from "lucide-react";
 import React from 'react';
-import { X, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
@@ -42,7 +42,7 @@ export function AddGroupModal({
         </button>
         
         <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-6">
-<BookOpen className="w-6 h-6 text-blue-400" />
+<BookOpen className="w-6 h-6 text-info" />
           Nuevo Grupo Escolar
 </h2>
 

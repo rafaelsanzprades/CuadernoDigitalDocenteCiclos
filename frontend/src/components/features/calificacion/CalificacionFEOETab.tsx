@@ -52,7 +52,7 @@ export const CalificacionFEOETab = () => {
   if (ras_dualizados.length === 0) {
     return (
       <Card className="p-6 border-l-4 border-l-yellow-500 mt-6">
-        <h3 className="text-xl font-bold text-yellow-400 mb-2">No hay RAs Dualizados</h3>
+        <h3 className="text-xl font-bold text-warning mb-2">No hay RAs Dualizados</h3>
         <p className="text-foreground/80">Ve a la pestaña Módulo didáctico y marca al menos un RA como 'Dualizado' (FEOE).</p>
       </Card>
     );
@@ -61,7 +61,7 @@ export const CalificacionFEOETab = () => {
   if (df_evaluable.length === 0) {
     return (
       <Card className="p-6 border-l-4 border-l-yellow-500 mt-6">
-        <h3 className="text-xl font-bold text-yellow-400 mb-2">No hay alumnado</h3>
+        <h3 className="text-xl font-bold text-warning mb-2">No hay alumnado</h3>
         <p className="text-foreground/80">Asegúrate de añadir alumnado en la Gestión de Matrícula.</p>
       </Card>
     );
@@ -77,7 +77,7 @@ export const CalificacionFEOETab = () => {
               <th className="p-3 sticky left-[64px] z-50 border-r border-[var(--glass-border)] !bg-[#0b1120] min-w-[250px] shadow-[2px_0_5px_-2px_rgba(0,0,0,0.3)]">Alumnado</th>
               {ras_dualizados.map((ra: string) => (
                 <th key={ra} className="p-3 text-center border-r border-[var(--glass-border)] min-w-[120px] align-top">
-                  <div className="font-bold text-purple-400">{ra}</div>
+                  <div className="font-bold text-info">{ra}</div>
                   <div className="text-[10px] text-muted mb-2">(1-4)</div>
                   <select
                     onChange={(e) => {
@@ -86,16 +86,16 @@ export const CalificacionFEOETab = () => {
                         e.target.value = "";
                       }
                     }}
-                    className="w-[110px] mx-auto block bg-foreground/15 text-muted font-bold border border-[var(--glass-border)] rounded px-2 py-1 text-xs focus:border-purple-500 focus:outline-none cursor-pointer transition-colors hover:bg-foreground/20"
+                    className="w-[110px] mx-auto block bg-foreground/15 text-muted font-bold border border-[var(--glass-border)] rounded px-2 py-1 text-xs focus:border-info focus:outline-none cursor-pointer transition-colors hover:bg-foreground/20"
                     defaultValue=""
                     title={`Valorar todos los alumnado para ${ra}`}
                   >
                     <option value="" disabled className="bg-background text-muted font-bold">Todos ↓</option>
                     <option value="0" className="bg-background text-muted">0 - Sin evaluar</option>
-                    <option value="1" className="bg-background text-red-500">1 - No Superado</option>
-                    <option value="2" className="bg-background text-orange-500">2 - Superado</option>
-                    <option value="3" className="bg-background text-yellow-500">3 - Bien</option>
-                    <option value="4" className="bg-background text-green-500">4 - Excelente</option>
+                    <option value="1" className="bg-background text-danger">1 - No Superado</option>
+                    <option value="2" className="bg-background text-warning">2 - Superado</option>
+                    <option value="3" className="bg-background text-warning">3 - Bien</option>
+                    <option value="4" className="bg-background text-success">4 - Excelente</option>
                   </select>
                 </th>
               ))}
@@ -121,16 +121,16 @@ export const CalificacionFEOETab = () => {
                             e.target.value = "";
                           }
                         }}
-                        className="w-[100px] bg-foreground/15 text-muted font-bold border border-[var(--glass-border)] rounded px-2 py-1 text-xs focus:border-purple-500 focus:outline-none cursor-pointer transition-colors hover:bg-foreground/20"
+                        className="w-[100px] bg-foreground/15 text-muted font-bold border border-[var(--glass-border)] rounded px-2 py-1 text-xs focus:border-info focus:outline-none cursor-pointer transition-colors hover:bg-foreground/20"
                         defaultValue=""
                         title="Valorar todos los RA de este alumnado"
                       >
                         <option value="" disabled className="bg-background text-muted font-bold">Todos →</option>
                         <option value="0" className="bg-background text-muted">0 - Sin</option>
-                        <option value="1" className="bg-background text-red-500">1 - No Sup.</option>
-                        <option value="2" className="bg-background text-orange-500">2 - Sup.</option>
-                        <option value="3" className="bg-background text-yellow-500">3 - Bien</option>
-                        <option value="4" className="bg-background text-green-500">4 - Exc.</option>
+                        <option value="1" className="bg-background text-danger">1 - No Sup.</option>
+                        <option value="2" className="bg-background text-warning">2 - Sup.</option>
+                        <option value="3" className="bg-background text-warning">3 - Bien</option>
+                        <option value="4" className="bg-background text-success">4 - Exc.</option>
                       </select>
                     </div>
                   </td>
@@ -141,19 +141,19 @@ export const CalificacionFEOETab = () => {
                         <select
                           value={val}
                           onChange={(e) => handleUpdateFEOE(al_id, ra, Number(e.target.value) || 0)}
-                          className={`w-[160px] border border-[var(--glass-border)] rounded px-2 py-1 text-sm font-bold focus:border-purple-500 focus:outline-none cursor-pointer transition-colors ${
-                            val === 1 ? 'bg-red-500/10 text-red-500' :
-                            val === 2 ? 'bg-orange-500/10 text-orange-500' :
-                            val === 3 ? 'bg-yellow-500/10 text-yellow-500' :
-                            val === 4 ? 'bg-green-500/10 text-green-500' :
+                          className={`w-[160px] border border-[var(--glass-border)] rounded px-2 py-1 text-sm font-semibold focus:border-info focus:outline-none cursor-pointer transition-colors ${
+                            val === 1 ? 'bg-danger/10 text-danger' :
+                            val === 2 ? 'bg-warning/10 text-warning' :
+                            val === 3 ? 'bg-warning/10 text-warning' :
+                            val === 4 ? 'bg-success/10 text-success' :
                             'bg-foreground/15 text-muted'
                           }`}
                         >
                           <option value="0" className="bg-background text-muted">0 - Sin evaluar</option>
-                          <option value="1" className="bg-background text-red-500">1 - No Superado</option>
-                          <option value="2" className="bg-background text-orange-500">2 - Superado</option>
-                          <option value="3" className="bg-background text-yellow-500">3 - Bien</option>
-                          <option value="4" className="bg-background text-green-500">4 - Excelente</option>
+                          <option value="1" className="bg-background text-danger">1 - No Superado</option>
+                          <option value="2" className="bg-background text-warning">2 - Superado</option>
+                          <option value="3" className="bg-background text-warning">3 - Bien</option>
+                          <option value="4" className="bg-background text-success">4 - Excelente</option>
                         </select>
                       </td>
                     );

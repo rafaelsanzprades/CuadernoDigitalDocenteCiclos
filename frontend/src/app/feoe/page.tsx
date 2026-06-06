@@ -1,4 +1,5 @@
 "use client";
+import { Building2, Check, ClipboardList, Edit, Mail, MapPin, Phone, Trash2, UserPlus, Users } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
@@ -13,7 +14,6 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import { fileManager } from "@/services/fileManager";
 import { demoSeed, CRM_SEED_VERSION } from "@/services/demo-ele203-0237ictve-curso202526";
 import type { CrmEmpresa, CrmInteraccion, CursoData } from "@/types";
-import { Building2, Phone, Mail, MapPin, Edit, Trash2, UserPlus, ClipboardList, Users } from "lucide-react";
 
 const TIPO_INTERACCION: Record<string, string> = { llamada: "Llamada", email: "Email", visita: "Visita", otro: "Otro" };
 
@@ -180,9 +180,9 @@ export default function FeoePage() {
   }
 
   const estadoColor: Record<string, string> = {
-    activo: "bg-green-500/20 text-green-300 border-green-500/30",
-    inactivo: "bg-red-500/20 text-red-300 border-red-500/30",
-    pendiente: "bg-yellow-500/20 text-yellow-300 border-yellow-500/30",
+    activo: "bg-success/10 text-success border-success/30",
+    inactivo: "bg-danger/10 text-danger border-danger/30",
+    pendiente: "bg-warning/10 text-warning border-warning/30",
   };
 
   if (loading) return <LoadingSpinner />;
@@ -283,7 +283,7 @@ export default function FeoePage() {
                               <div className="flex flex-wrap gap-1 mt-2">
                                 {emp.alumnado_asignados.map((sid: string) => {
                                   const al = alumnado.find((a: any) => a.ID === sid);
-                                  return <span key={sid} className="text-[10px] bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2 py-0.5 rounded-full">{al ? `${al.Apellidos}, ${al.Nombre}` : sid}</span>;
+                                  return <span key={sid} className="text-[10px] bg-info/10 text-info border border-info/30 px-2 py-0.5 rounded-full">{al ? `${al.Apellidos}, ${al.Nombre}` : sid}</span>;
                                 })}
                               </div>
                             )}
@@ -307,7 +307,7 @@ export default function FeoePage() {
                             {/* Student assignment inline */}
                             <div>
                               <div className="flex items-center justify-between mb-2">
-                                <h4 className="text-xs font-bold text-muted ">Alumnado asignados</h4>
+                                <h4 className="text-xs font-medium text-muted ">Alumnado asignados</h4>
                                 <Button variant="ghost" className="text-xs flex items-center gap-1.5" onClick={() => setAsignEmpresa(asignEmpresa === emp.id ? null : emp.id)}>
                                   {asignEmpresa === emp.id ? "Cerrar" : <><UserPlus className="w-3.5 h-3.5" /> Asignar / desasignar</>}
                                 </Button>
@@ -319,9 +319,9 @@ export default function FeoePage() {
                                     const selected = emp.alumnado_asignados.includes(al.ID);
                                     const assignedTo = empresas.filter((e: CrmEmpresa) => e.id !== emp.id && e.alumnado_asignados.includes(al.ID));
                                     return (
-                                      <div key={al.ID} className={`flex items-center justify-between p-2 rounded-lg border cursor-pointer transition-colors ${selected ? "bg-blue-500/20 border-blue-500/40" : "bg-transparent border-[var(--glass-border)] hover:bg-foreground/10"}`} onClick={() => toggleStudent(emp.id, al.ID)}>
-                                        <span className="text-sm text-foreground">{al.Apellidos}, {al.Nombre}{assignedTo.length > 0 ? <span className="text-[10px] text-yellow-400 ml-2">(también en {assignedTo.map((e: CrmEmpresa) => e.nombre).join(", ")})</span> : ""}</span>
-                                        <span className={`text-lg ${selected ? "text-blue-400" : "text-muted"}`}>{selected ? "✓" : "+"}</span>
+                                      <div key={al.ID} className={`flex items-center justify-between p-2 rounded-lg border cursor-pointer transition-colors ${selected ? "bg-info/10 border-info/30" : "bg-transparent border-[var(--glass-border)] hover:bg-foreground/10"}`} onClick={() => toggleStudent(emp.id, al.ID)}>
+                                        <span className="text-sm text-foreground">{al.Apellidos}, {al.Nombre}{assignedTo.length > 0 ? <span className="text-[10px] text-warning ml-2">(también en {assignedTo.map((e: CrmEmpresa) => e.nombre).join(", ")})</span> : ""}</span>
+                                        <span className={`text-lg ${selected ? "text-info" : "text-muted"}`}>{selected ? <><span className="inline-flex"><Check className="w-[1.2em] h-[1.2em] mr-1" /></span></> : "+"}</span>
                                       </div>
                                     );
                                   })}
@@ -332,7 +332,7 @@ export default function FeoePage() {
                                   {emp.alumnado_asignados.map((sid: string) => {
                                     const al = alumnado.find((a: any) => a.ID === sid);
                                     return (
-                                      <span key={sid} className="flex items-center gap-1 text-xs bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2 py-1 rounded-full">
+                                      <span key={sid} className="flex items-center gap-1 text-xs bg-info/10 text-info border border-info/30 px-2 py-1 rounded-full">
                                         {al ? `${al.Apellidos}, ${al.Nombre}` : sid}
                                       </span>
                                     );
@@ -344,9 +344,9 @@ export default function FeoePage() {
                             {/* Interactions inline */}
                             <div className="space-y-3">
                               <div className="flex items-center justify-between">
-                                <h4 className="text-xs font-bold text-muted ">Historial de interacciones</h4>
+                                <h4 className="text-xs font-medium text-muted ">Historial de interacciones</h4>
                                 <div className="flex gap-2">
-                                  <Button variant="ghost" className="text-xs flex items-center gap-1.5" onClick={() => handleDelete(emp.id)}><Trash2 className="w-3.5 h-3.5 text-red-400" /> Empresa</Button>
+                                  <Button variant="ghost" className="text-xs flex items-center gap-1.5" onClick={() => handleDelete(emp.id)}><Trash2 className="w-3.5 h-3.5 text-danger" /> Empresa</Button>
                                   <Button variant="ghost" className="text-xs flex items-center gap-1.5" onClick={() => openEdit(emp)}><Edit className="w-3.5 h-3.5" /> Editar</Button>
                                   <Button variant="ghost" className="text-xs flex items-center gap-1.5" onClick={() => { setInterEmpresa(interEmpresa === emp.id ? null : emp.id); setEditIntId(null); setInterForm({ fecha: formatDate(new Date()), tipo: "llamada", descripcion: "", contacto: emp.contacto_nombre }); }}>
                                     <Phone className="w-3.5 h-3.5" /> Nueva interacción
@@ -357,7 +357,7 @@ export default function FeoePage() {
                               {/* Interaction form inline */}
                               {interEmpresa === emp.id && (
                                 <div className="bg-foreground/5 rounded-xl p-4 border border-[var(--glass-border)] space-y-3">
-                                  <h5 className="text-sm font-bold text-foreground">{editIntId ? "Editar interacción" : "Nueva interacción"}</h5>
+                                  <h5 className="text-sm font-semibold text-foreground">{editIntId ? "Editar interacción" : "Nueva interacción"}</h5>
                                   <div className="grid grid-cols-3 gap-3">
                                     <Input label="Fecha" value={interForm.fecha} onChange={e => setInterForm({ ...interForm, fecha: e.target.value })} />
                                     <Select label="Tipo" value={interForm.tipo} onChange={e => setInterForm({ ...interForm, tipo: e.target.value as "llamada" | "email" | "visita" | "otro" })}>
@@ -389,14 +389,14 @@ export default function FeoePage() {
                                       <div className="flex-1 min-w-0">
                                         <div className="flex items-center gap-2">
                                           <span className="font-mono text-xs text-muted">{int.fecha}</span>
-                                          <span className="text-xs font-bold text-foreground/80">{TIPO_INTERACCION[int.tipo]}</span>
+                                          <span className="text-xs font-medium text-foreground/80">{TIPO_INTERACCION[int.tipo]}</span>
                                           <span className="text-xs text-muted">— {int.contacto}</span>
                                         </div>
                                         <p className="text-foreground/80 mt-1">{int.descripcion}</p>
                                       </div>
                                       <div className="flex gap-1 shrink-0">
                                         <button onClick={() => { setInterEmpresa(emp.id); setEditIntId(int.id); setInterForm({ fecha: int.fecha, tipo: int.tipo, descripcion: int.descripcion, contacto: int.contacto }); }} className="text-xs text-muted hover:text-accent transition-colors"><Edit className="w-4 h-4" /></button>
-                                        <button onClick={() => deleteInteraccion(emp.id, int.id)} className="text-xs text-muted hover:text-red-400 transition-colors"><Trash2 className="w-4 h-4" /></button>
+                                        <button onClick={() => deleteInteraccion(emp.id, int.id)} className="text-xs text-muted hover:text-danger transition-colors"><Trash2 className="w-4 h-4" /></button>
                                       </div>
                                     </div>
                                   ))}
@@ -434,7 +434,7 @@ export default function FeoePage() {
                           {emp.alumnado_asignados.map((sid: string) => {
                             const al = alumnado.find((a: any) => a.ID === sid);
                             return (
-                              <span key={sid} className="text-sm bg-blue-500/20 text-blue-300 border border-blue-500/30 px-3 py-1 rounded-full">
+                              <span key={sid} className="text-sm bg-info/10 text-info border border-info/30 px-3 py-1 rounded-full">
                                 {al ? `${al.Apellidos}, ${al.Nombre}` : sid}
                               </span>
                             );
@@ -449,7 +449,7 @@ export default function FeoePage() {
                           {(() => {
                             const asignados = new Set(empresas.flatMap((e: CrmEmpresa) => e.alumnado_asignados));
                             return alumnado.filter((a: any) => !asignados.has(a.ID)).map((al: any) => (
-                              <span key={al.ID} className="text-sm bg-yellow-500/10 text-yellow-300 border border-yellow-500/30 px-3 py-1 rounded-full">
+                              <span key={al.ID} className="text-sm bg-warning/10 text-warning border border-warning/30 px-3 py-1 rounded-full">
                                 {al.Apellidos}, {al.Nombre}
                               </span>
                             ));

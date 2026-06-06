@@ -1,9 +1,8 @@
 "use client";
-
+import { AlertTriangle, BarChart, BookOpen, Calculator, Calendar, CalendarDays, ChevronRight, Construction, CornerLeftUp, Download, DownloadCloud, File, FileEdit, FileSpreadsheet, FileText, Folder, FolderOpen, GraduationCap, MapPin, Play, Scale, Search, Settings, UploadCloud, User, Users, X } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
-import { Folder, FileText, File, Download, ChevronRight, CornerLeftUp, FileSpreadsheet, Search, UploadCloud, Scale, Play, MapPin, GraduationCap, X, DownloadCloud } from "lucide-react";
 import toast from "react-hot-toast";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
@@ -172,9 +171,9 @@ export default function DocumentosPage() {
 
   const getFileIcon = (filename: string) => {
     const ext = filename.split('.').pop()?.toLowerCase();
-    if (ext === 'pdf') return <FileText className="w-8 h-8 text-red-400" />;
-    if (ext === 'xlsx' || ext === 'xls' || ext === 'csv') return <FileSpreadsheet className="w-8 h-8 text-green-400" />;
-    if (ext === 'doc' || ext === 'docx') return <FileText className="w-8 h-8 text-blue-400" />;
+    if (ext === 'pdf') return <FileText className="w-8 h-8 text-danger" />;
+    if (ext === 'xlsx' || ext === 'xls' || ext === 'csv') return <FileSpreadsheet className="w-8 h-8 text-success" />;
+    if (ext === 'doc' || ext === 'docx') return <FileText className="w-8 h-8 text-info" />;
     return <File className="w-8 h-8 text-muted" />;
   };
 
@@ -205,7 +204,7 @@ export default function DocumentosPage() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
               <div>
                 <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                  <span className="text-3xl text-blue-400"><FileText className="w-8 h-8" strokeWidth={2.5} /></span> Documentos y descargas
+                  <span className="text-3xl text-info"><FileText className="w-8 h-8" strokeWidth={2.5} /></span> Documentos y descargas
                 </h1>
                 <p className="text-muted mt-2 text-lg">Explorador de archivos oficiales, legislación, otros documentos y generación de PDFs.</p>
               </div>
@@ -242,11 +241,11 @@ export default function DocumentosPage() {
                       placeholder="Buscar archivo..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="bg-foreground/15 border border-[var(--glass-border)] text-foreground pl-10 pr-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all w-full md:w-64 placeholder-gray-500"
+                      className="bg-foreground/15 border border-[var(--glass-border)] text-foreground pl-10 pr-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-info transition-all w-full md:w-64 placeholder-gray-500"
                     />
                   </div>
                   <button 
-                    onClick={() => toast("Función de subida próximamente.", { icon: "🚧" })}
+                    onClick={() => toast("Función de subida próximamente.", { icon: <><span className="inline-flex"><Construction className="w-[1.2em] h-[1.2em] mr-1" /></span></> })}
                     className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-foreground font-bold py-2 px-5 rounded-xl shadow-lg shadow-blue-500/30 flex items-center gap-2 transition-all hover:scale-105 active:scale-95"
                   >
                     <UploadCloud className="w-5 h-5" />
@@ -290,12 +289,12 @@ export default function DocumentosPage() {
                     </div>
                   ) : error ? (
                     <div className="p-12 text-center">
-                      <div className="text-red-400 mb-2">⚠️ Error</div>
+                      <div className="text-danger mb-2"><span className="inline-flex"><AlertTriangle className="w-[1.2em] h-[1.2em] mr-1" /></span> Error</div>
                       <p className="text-foreground/80">{error}</p>
                     </div>
                   ) : items.length === 0 ? (
                     <div className="p-16 text-center text-muted">
-                      <div className="text-4xl mb-4">📂</div>
+                      <div className="text-4xl mb-4"><span className="inline-flex"><FolderOpen className="w-[1.2em] h-[1.2em] mr-1" /></span></div>
                       <p className="text-lg">El directorio está vacío.</p>
                     </div>
                   ) : (
@@ -315,7 +314,7 @@ export default function DocumentosPage() {
                             {downloadingStr === item.path ? (
                               <div className="w-12 h-12 flex items-center justify-center animate-spin border-4 border-accent border-t-transparent rounded-full" />
                             ) : item.is_dir ? (
-                              <Folder className="w-12 h-12 text-blue-400 drop-shadow-md" />
+                              <Folder className="w-12 h-12 text-info drop-shadow-md" />
                             ) : (
                               getFileIcon(item.name)
                             )}
@@ -365,12 +364,12 @@ export default function DocumentosPage() {
                     {activeTab === 'inicio' && (
                       <div className="space-y-8 animate-in fade-in duration-500">
                         <Card className="p-6 border-t-4 border-t-purple-500">
-                          <h2 className="text-2xl font-bold mb-1">📅 Gestión temporal global</h2>
+                          <h2 className="text-2xl font-bold mb-1"><span className="inline-flex"><Calendar className="w-[1.2em] h-[1.2em] mr-1" /></span> Gestión temporal global</h2>
                           <p className="text-sm text-muted mb-6">Planificación del módulo</p>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between">
                               <div>
-                                <h3 className="text-lg font-bold mb-2">📆 Calendario académico</h3>
+                                <h3 className="text-lg font-bold mb-2"><span className="inline-flex"><CalendarDays className="w-[1.2em] h-[1.2em] mr-1" /></span> Calendario académico</h3>
                                 <p className="text-sm text-muted mb-6">Vista global del curso con fechas, sesiones y eventos.</p>
                               </div>
                               <Button onClick={() => handleDownloadPdf('calendario')} disabled={downloadingStr === 'calendario'} className="w-full">
@@ -379,7 +378,7 @@ export default function DocumentosPage() {
                             </div>
                             <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between">
                               <div>
-                                <h3 className="text-lg font-bold mb-2">📊 Planificación mensual</h3>
+                                <h3 className="text-lg font-bold mb-2"><span className="inline-flex"><BarChart className="w-[1.2em] h-[1.2em] mr-1" /></span> Planificación mensual</h3>
                                 <p className="text-sm text-muted mb-6">Horas previstas frente a impartidas por UD y mes.</p>
                               </div>
                               <Button onClick={() => handleDownloadPdf('planificacion')} disabled={downloadingStr === 'planificacion'} className="w-full">
@@ -389,12 +388,12 @@ export default function DocumentosPage() {
                           </div>
                         </Card>
                         <Card className="p-6 border-t-4 border-t-accent">
-                          <h2 className="text-2xl font-bold mb-1">⚙️ Gestión del aprendizaje</h2>
+                          <h2 className="text-2xl font-bold mb-1"><span className="inline-flex"><Settings className="w-[1.2em] h-[1.2em] mr-1" /></span> Gestión del aprendizaje</h2>
                           <p className="text-sm text-muted mb-6">Matrices y programación del módulo</p>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between">
                               <div>
-                                <h3 className="text-lg font-bold mb-2">🧮 Matrices RA → UD</h3>
+                                <h3 className="text-lg font-bold mb-2"><span className="inline-flex"><Calculator className="w-[1.2em] h-[1.2em] mr-1" /></span> Matrices RA → UD</h3>
                                 <p className="text-sm text-muted mb-6">Relación y ponderación entre RA y UD del módulo.</p>
                               </div>
                               <Button onClick={() => handleDownloadPdf('matrices')} disabled={downloadingStr === 'matrices'} className="w-full">
@@ -409,12 +408,12 @@ export default function DocumentosPage() {
                     {activeTab === 'seguimiento' && (
                       <div className="space-y-8 animate-in fade-in duration-500">
                         <Card className="p-6 border-t-4 border-t-emerald-500">
-                          <h2 className="text-2xl font-bold mb-1">📝 Clases mensual - por UD</h2>
+                          <h2 className="text-2xl font-bold mb-1"><span className="inline-flex"><FileEdit className="w-[1.2em] h-[1.2em] mr-1" /></span> Clases mensual - por UD</h2>
                           <p className="text-sm text-muted mb-6">Registro detallado de clases impartidas y secuenciación por unidad didáctica.</p>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between">
                               <div>
-                                <h3 className="text-lg font-bold mb-2">📝 Seguimiento diario</h3>
+                                <h3 className="text-lg font-bold mb-2"><span className="inline-flex"><FileEdit className="w-[1.2em] h-[1.2em] mr-1" /></span> Seguimiento diario</h3>
                                 <p className="text-sm text-muted mb-6">Registro detallado de la planificación del día a día.</p>
                               </div>
                               <Button onClick={() => handleDownloadPdf('seguimiento')} disabled={downloadingStr === 'seguimiento'} className="w-full">
@@ -423,7 +422,7 @@ export default function DocumentosPage() {
                             </div>
                             <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between">
                               <div>
-                                <h3 className="text-lg font-bold mb-2">📚 Clases por UD</h3>
+                                <h3 className="text-lg font-bold mb-2"><span className="inline-flex"><BookOpen className="w-[1.2em] h-[1.2em] mr-1" /></span> Clases por UD</h3>
                                 <p className="text-sm text-muted mb-6">Secuenciación de sesiones de cada Unidad Didáctica.</p>
                               </div>
                               <Button onClick={() => handleDownloadPdf('clases_ud')} disabled={downloadingStr === 'clases_ud'} className="w-full">
@@ -438,11 +437,11 @@ export default function DocumentosPage() {
                     {activeTab === 'evaluacion' && (
                       <div className="space-y-8 animate-in fade-in duration-500">
                         <Card className="p-6 border-t-4 border-t-blue-500">
-                          <h2 className="text-2xl font-bold mb-6">📊 Boletines de calificaciones grupales</h2>
+                          <h2 className="text-2xl font-bold mb-6"><span className="inline-flex"><BarChart className="w-[1.2em] h-[1.2em] mr-1" /></span> Boletines de calificaciones grupales</h2>
                           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                             <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between text-center">
                               <div>
-                                <h3 className="text-lg font-bold mb-2">👥 1er trimestre</h3>
+                                <h3 className="text-lg font-bold mb-2"><span className="inline-flex"><Users className="w-[1.2em] h-[1.2em] mr-1" /></span> 1er trimestre</h3>
                               </div>
                               <Button variant="secondary" onClick={() => handleDownloadPdf('grupal_1t')} disabled={downloadingStr === 'grupal_1t'} className="w-full">
                                 {downloadingStr === 'grupal_1t' ? '⏳' : 'PDF Boletín grupal 1T'}
@@ -450,7 +449,7 @@ export default function DocumentosPage() {
                             </div>
                             <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between text-center">
                               <div>
-                                <h3 className="text-lg font-bold mb-2">👥 2º trimestre</h3>
+                                <h3 className="text-lg font-bold mb-2"><span className="inline-flex"><Users className="w-[1.2em] h-[1.2em] mr-1" /></span> 2º trimestre</h3>
                               </div>
                               <Button variant="secondary" onClick={() => handleDownloadPdf('grupal_2t')} disabled={downloadingStr === 'grupal_2t'} className="w-full">
                                 {downloadingStr === 'grupal_2t' ? '⏳' : 'PDF Boletín grupal 2T'}
@@ -458,7 +457,7 @@ export default function DocumentosPage() {
                             </div>
                             <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between text-center">
                               <div>
-                                <h3 className="text-lg font-bold mb-2">👥 3er trimestre</h3>
+                                <h3 className="text-lg font-bold mb-2"><span className="inline-flex"><Users className="w-[1.2em] h-[1.2em] mr-1" /></span> 3er trimestre</h3>
                               </div>
                               <Button variant="secondary" onClick={() => handleDownloadPdf('grupal_3t')} disabled={downloadingStr === 'grupal_3t'} className="w-full">
                                 {downloadingStr === 'grupal_3t' ? '⏳' : 'PDF Boletín grupal 3T'}
@@ -466,7 +465,7 @@ export default function DocumentosPage() {
                             </div>
                             <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between text-center border-l-4 border-l-yellow-400">
                               <div>
-                                <h3 className="text-lg font-bold mb-2">🎓 Eval. Final</h3>
+                                <h3 className="text-lg font-bold mb-2"><span className="inline-flex"><GraduationCap className="w-[1.2em] h-[1.2em] mr-1" /></span> Eval. Final</h3>
                               </div>
                               <Button variant="secondary" onClick={() => handleDownloadPdf('grupal_final')} disabled={downloadingStr === 'grupal_final'} className="w-full">
                                 {downloadingStr === 'grupal_final' ? '⏳' : 'PDF Boletín Final'}
@@ -476,13 +475,13 @@ export default function DocumentosPage() {
                         </Card>
 
                         <Card className="p-6 border-t-4 border-t-blue-500">
-                          <h2 className="text-2xl font-bold mb-6">👤 Boletines individuales</h2>
+                          <h2 className="text-2xl font-bold mb-6"><span className="inline-flex"><User className="w-[1.2em] h-[1.2em] mr-1" /></span> Boletines individuales</h2>
                           {activeAlumnado.length > 0 ? (
                             <div className="flex flex-col md:flex-row md:items-end gap-6 bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6">
                               <div className="flex-1">
-                                <h3 className="text-lg font-bold mb-2">📄 Boletín de alumnado</h3>
+                                <h3 className="text-lg font-bold mb-2"><span className="inline-flex"><FileText className="w-[1.2em] h-[1.2em] mr-1" /></span> Boletín de alumnado</h3>
                                 <p className="text-sm text-muted mb-4">Genera un boletín detallado de un alumnado específico.</p>
-                                <select id="alumnado_select" className="w-full bg-foreground/25 border border-[var(--glass-border)] rounded-lg p-3 text-[var(--foreground)] focus:border-blue-500 focus:outline-none font-bold">
+                                <select id="alumnado_select" className="w-full bg-foreground/25 border border-[var(--glass-border)] rounded-lg p-3 text-[var(--foreground)] focus:border-info focus:outline-none font-bold">
                                   {activeAlumnado.map((al: Alumnado) => (
                                     <option key={al.ID} value={al.ID}>{al.Apellidos}, {al.Nombre} ({al.ID})</option>
                                   ))}
@@ -517,7 +516,7 @@ export default function DocumentosPage() {
           <div className="fixed inset-0 z-50 flex flex-col bg-black/90 backdrop-blur-md">
             <div className="flex items-center justify-between p-4 bg-[var(--glass-bg)] border-b border-[var(--glass-border)]">
               <h2 className="text-2xl font-bold flex items-center gap-3 text-foreground">
-                <FileText className="w-6 h-6 text-blue-400" /> {previewFilename}
+                <FileText className="w-6 h-6 text-info" /> {previewFilename}
               </h2>
               <div className="flex gap-4">
                 <button
@@ -527,7 +526,7 @@ export default function DocumentosPage() {
                     a.download = previewFilename || "documento.pdf";
                     a.click();
                   }}
-                  className="bg-blue-600 hover:bg-blue-500 text-foreground px-4 py-2 rounded-lg font-bold flex items-center gap-2 transition-colors"
+                  className="bg-info hover:bg-info text-foreground px-4 py-2 rounded-lg font-bold flex items-center gap-2 transition-colors"
                 >
                   <DownloadCloud className="w-5 h-5" /> Descargar
                 </button>
@@ -536,7 +535,7 @@ export default function DocumentosPage() {
                     setPreviewUrl(null);
                     setPreviewFilename(null);
                   }}
-                  className="bg-red-600 hover:bg-red-500 text-foreground px-4 py-2 rounded-lg font-bold flex items-center gap-2 transition-colors"
+                  className="bg-danger hover:bg-danger text-foreground px-4 py-2 rounded-lg font-bold flex items-center gap-2 transition-colors"
                 >
                   <X className="w-5 h-5" /> Cerrar
                 </button>

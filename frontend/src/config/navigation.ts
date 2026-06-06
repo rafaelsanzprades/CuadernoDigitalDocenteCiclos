@@ -1,20 +1,4 @@
-import {
-  FolderOpen,
-  GraduationCap,
-  CalendarDays,
-  FileText,
-  Activity,
-  Settings,
-  Calendar,
-  Grid,
-  Wrench,
-  BookOpen,
-  Users,
-  Compass,
-  Building2,
-  MapPin,
-  TrendingUp
-} from "lucide-react";
+import { Activity, BookOpen, Building2, Calendar, CalendarDays, Compass, FileText, FolderOpen, GraduationCap, Grid, MapPin, Settings, TrendingUp, Users, Wrench } from "lucide-react";
 
 export const navGroups = [
   {

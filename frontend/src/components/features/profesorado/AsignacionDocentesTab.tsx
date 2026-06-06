@@ -1,9 +1,8 @@
 "use client";
-
+import { Search, Users } from "lucide-react";
 import React, { useState } from "react";
 import { useAppStore, calculateTeacherHours, getTeacherAssignedModules } from "@/store/useAppStore";
 import { useUsers } from "@/hooks/useApi";
-import { Search, Users } from "lucide-react";
 import { TeacherCard } from "@/components/features/docentes/TeacherCard";
 
 export function AsignacionDocentesTab() {
@@ -35,7 +34,7 @@ export function AsignacionDocentesTab() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
         <div>
           <h2 className="text-[1.1rem] font-bold flex items-center gap-3">
-            <Users className="w-8 h-8 text-blue-400" /> Asignación de docentes
+            <Users className="w-8 h-8 text-info" /> Asignación de docentes
           </h2>
           <p className="text-muted mt-2">Jefatura de Estudios: Control de carga horaria lectiva del profesorado y módulos asignados.</p>
         </div>

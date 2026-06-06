@@ -1,5 +1,5 @@
-import React from 'react';
 import { BookOpen, ChevronDown, ChevronUp, Filter } from "lucide-react";
+import React from 'react';
 import { CourseGroup, ModuleAssignment } from "@/types";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
@@ -92,7 +92,7 @@ export function GroupList({
                   <div key={module.id} className="bg-foreground/10 rounded-lg p-3 border border-white/5 hover:border-[var(--glass-border)] transition-colors flex flex-col gap-1.5">
                     <div className="flex justify-between items-center w-full">
                       <div className="flex items-center gap-2">
-                        <span className="text-accent font-mono text-sm font-bold">{module.code}</span>
+                        <span className="text-accent font-mono text-sm font-semibold">{module.code}</span>
                         <h3 className="text-base font-medium text-foreground">{module.name}</h3>
                         {module.isDual && <Badge variant="info">Feoe</Badge>}
                       </div>
@@ -102,9 +102,9 @@ export function GroupList({
                     </div>
 
                     <div className="pl-10">
-                      <div className={`relative rounded transition-colors w-full sm:w-2/3 md:w-1/2 max-w-xs ${!module.assignedTeacherId ? 'border border-red-500/50 bg-red-500/10' : 'border border-transparent hover:border-[var(--glass-border)] hover:bg-foreground/5'}`}>
+                      <div className={`relative rounded transition-colors w-full sm:w-2/3 md:w-1/2 max-w-xs ${!module.assignedTeacherId ? 'border border-danger/30 bg-danger/10' : 'border border-transparent hover:border-[var(--glass-border)] hover:bg-foreground/5'}`}>
                         {!module.assignedTeacherId && (
-                          <div className="absolute -left-1.5 -top-1.5 w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse" title="Falta asignación" />
+                          <div className="absolute -left-1.5 -top-1.5 w-2.5 h-2.5 bg-danger rounded-full animate-pulse" title="Falta asignación" />
                         )}
                         <select
                           value={module.assignedTeacherId || ""}

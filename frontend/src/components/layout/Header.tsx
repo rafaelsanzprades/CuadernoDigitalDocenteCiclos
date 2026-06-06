@@ -1,12 +1,11 @@
 "use client";
-
-import { useState, useEffect, useRef } from "react";
+import { AlertTriangle, ChevronRight, Cloud, Hourglass, Moon, Redo2, Save, Shield, Sun, Undo2, XCircle } from "lucide-react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useAppStore, useTemporalStore } from "@/store/useAppStore";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import toast from "react-hot-toast";
-import { Sun, Moon, ChevronRight, Undo2, Redo2 } from "lucide-react";
 import { navGroups } from "@/config/navigation";
 import { initialGroups } from "@/store/initialData";
 import { showRichToast } from "@/utils/toast";
@@ -14,7 +13,7 @@ import { motion } from "framer-motion";
 import { fileManager } from "@/services/fileManager";
 
 
-export default function Header({ title, breadcrumbSuffix }: { title?: string; breadcrumbSuffix?: string }) {
+export default function Header({ title, breadcrumbSuffix }: { title?: React.ReactNode; breadcrumbSuffix?: React.ReactNode }) {
   const { activeModuleId, activeCursoId, moduleData, cursoData, saveModuleData, saveCursoData, isSidebarOpen, toggleSidebar } = useAppStore();
   const [isSaving, setIsSaving] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
@@ -27,22 +26,6 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
   const initialLoadRef = useRef<boolean>(true);
 
   const { undo, redo, pastStates, futureStates } = useTemporalStore((state) => state);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
-        if (e.shiftKey) {
-          if (futureStates.length > 0) redo();
-        } else {
-          if (pastStates.length > 0) undo();
-        }
-      } else if ((e.ctrlKey || e.metaKey) && e.key === 'y') {
-        if (futureStates.length > 0) redo();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [undo, redo, pastStates.length, futureStates.length]);
 
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -130,7 +113,7 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
     };
   }, [cursoData, activeCursoId, saveCursoData]);
 
-  const handleSave = async () => {
+  const handleSave = useCallback(async () => {
     setIsSaving(true);
     let ok: boolean | "conflict" = false;
     let cursoOk: boolean | "conflict" = false;
@@ -151,7 +134,26 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
       showRichToast.error("Error al guardar", "Revisa la conexión o los datos.");
     }
     setIsSaving(false);
-  };
+  }, [moduleData, activeModuleId, cursoData, activeCursoId, saveModuleData, saveCursoData]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        handleSave();
+      } else if ((e.ctrlKey || e.metaKey) && e.key === 'z') {
+        if (e.shiftKey) {
+          if (futureStates.length > 0) redo();
+        } else {
+          if (pastStates.length > 0) undo();
+        }
+      } else if ((e.ctrlKey || e.metaKey) && e.key === 'y') {
+        if (futureStates.length > 0) redo();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [undo, redo, pastStates.length, futureStates.length, handleSave]);
 
   return (
     <div className="w-full flex flex-col z-40 sticky top-0 bg-background/95 backdrop-blur-xl border-b border-[var(--glass-border)] pb-2 shadow-md">
@@ -235,7 +237,7 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
                         key={item.href}
                         href={item.href}
                         onClick={() => setActiveDropdown(null)}
-                        className={`flex items-center gap-3 px-4 py-3 hover:bg-foreground/5 transition-colors ${isActive ? 'bg-gradient-to-r from-blue-500/10 to-transparent border-l-2 border-blue-400' : 'border-l-2 border-transparent'}`}
+                        className={`flex items-center gap-3 px-4 py-3 hover:bg-foreground/5 transition-colors ${isActive ? 'bg-gradient-to-r from-blue-500/10 to-transparent border-l-2 border-info' : 'border-l-2 border-transparent'}`}
                       >
                         <span className="flex items-center justify-center w-5 h-5"><item.icon className="w-5 h-5" strokeWidth={1.75} /></span>
                         <span className={`text-[0.85rem] ${isActive ? 'text-foreground font-bold' : 'text-foreground/80 font-medium'}`}>{item.label}</span>
@@ -258,33 +260,33 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
               disabled={isSaving}
               className="glass-button bg-[var(--accent-color)]/10 text-[var(--accent-color)] border-[var(--accent-color)]/30 hover:bg-[var(--accent-color)]/20 font-semibold py-1.5 px-4 text-sm rounded-lg flex items-center gap-2 transition-all"
             >
-              <span>{isSaving ? "⏳" : "💾"}</span>
+              <span>{isSaving ? <><span className="inline-flex"><Hourglass className="w-[1.2em] h-[1.2em] mr-1" /></span></> : <><span className="inline-flex"><Save className="w-[1.2em] h-[1.2em] mr-1" /></span></>}</span>
               {isSaving ? "Guardando..." : "Guardar"}
             </motion.button>
           )}
 
           {moduleData && sourceType !== 'demo' && (
             <div className="flex items-center">
-              {autosaveStatus === "saved" && <span className="text-green-500 text-sm font-medium">☁️ Guardado</span>}
-              {autosaveStatus === "saving" && <span className="text-amber-500 text-sm font-medium animate-pulse">⏳ Guardando...</span>}
-              {autosaveStatus === "error" && <span className="text-red-500 text-sm font-medium">❌ Error al guardar</span>}
-              {autosaveStatus === "idle" && <span className="text-[var(--text-muted)] text-sm font-medium">☁️ Sincronizado</span>}
+              {autosaveStatus === "saved" && <span className="text-success text-sm font-medium"><span className="inline-flex"><Cloud className="w-[1.2em] h-[1.2em] mr-1" /></span> Guardado</span>}
+              {autosaveStatus === "saving" && <span className="text-warning text-sm font-medium animate-pulse">⏳ Guardando...</span>}
+              {autosaveStatus === "error" && <span className="text-danger text-sm font-medium"><span className="inline-flex"><XCircle className="w-[1.2em] h-[1.2em] mr-1" /></span> Error al guardar</span>}
+              {autosaveStatus === "idle" && <span className="text-[var(--text-muted)] text-sm font-medium"><span className="inline-flex"><Cloud className="w-[1.2em] h-[1.2em] mr-1" /></span> Sincronizado</span>}
             </div>
           )}
 
           <div>
             <Link href="/entorno" className="inline-block transition-transform hover:scale-105">
               {sourceType === 'demo' ? (
-                <span className="px-3 py-1.5 rounded-lg text-xs font-extrabold tracking-wider border border-amber-500/30 text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 cursor-pointer flex items-center gap-1 transition-all" title="Haz clic para configurar tu Entorno de Trabajo">
-                  ⚠️ Datos ficticios
+                <span className="px-3 py-1.5 rounded-lg text-xs font-extrabold tracking-wider border border-warning/30 text-warning bg-warning/10 hover:bg-warning/10 cursor-pointer flex items-center gap-1 transition-all" title="Haz clic para configurar tu Entorno de Trabajo">
+                  <span className="inline-flex"><AlertTriangle className="w-[1.2em] h-[1.2em] mr-1" /></span> Datos ficticios
                 </span>
               ) : cloudSynced ? (
-                <span className="px-3 py-1.5 rounded-lg text-xs font-extrabold tracking-wider border border-green-500/30 text-green-400 bg-green-500/10 hover:bg-green-500/20 cursor-pointer flex items-center gap-1 transition-all" title="Haz clic para configurar tu Entorno de Trabajo">
-                  🛡️ Datos reales en nube
+                <span className="px-3 py-1.5 rounded-lg text-xs font-extrabold tracking-wider border border-success/30 text-success bg-success/10 hover:bg-success/10 cursor-pointer flex items-center gap-1 transition-all" title="Haz clic para configurar tu Entorno de Trabajo">
+                  <span className="inline-flex"><Shield className="w-[1.2em] h-[1.2em] mr-1" /></span> Datos reales en nube
                 </span>
               ) : (
-                <span className="px-3 py-1.5 rounded-lg text-xs font-extrabold tracking-wider border border-blue-500/30 text-blue-300 bg-blue-500/10 hover:bg-blue-500/20 cursor-pointer flex items-center gap-1 transition-all" title="Haz clic para configurar tu Entorno de Trabajo">
-                  🛡️ Datos reales en local
+                <span className="px-3 py-1.5 rounded-lg text-xs font-extrabold tracking-wider border border-info/30 text-info bg-info/10 hover:bg-info/10 cursor-pointer flex items-center gap-1 transition-all" title="Haz clic para configurar tu Entorno de Trabajo">
+                  <span className="inline-flex"><Shield className="w-[1.2em] h-[1.2em] mr-1" /></span> Datos reales en local
                 </span>
               )}
             </Link>
@@ -314,7 +316,7 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="glass-button text-gray-300 hover:text-amber-400 p-2 rounded-lg flex items-center justify-center transition-colors"
+              className="glass-button text-gray-300 hover:text-warning p-2 rounded-lg flex items-center justify-center transition-colors"
               title="Cambiar tema"
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}

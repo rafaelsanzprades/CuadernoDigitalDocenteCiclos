@@ -1,6 +1,6 @@
+import { GripVertical } from "lucide-react";
 import React, { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
-import { GripVertical } from "lucide-react";
 import { UnidadDidactica, Sesion } from "@/types";
 
 interface SessionTableProps {
@@ -154,7 +154,7 @@ export function SessionTable({
                                 <td className="py-2 text-center">
                                   <button
                                     onClick={() => handleDeleteSesion(globalIdx)}
-                                    className="text-red-400 hover:text-red-300 font-bold"
+                                    className="text-danger hover:text-danger font-bold"
                                     title="Eliminar Sesión"
                                   >
                                     ×

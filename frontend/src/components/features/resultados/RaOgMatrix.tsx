@@ -1,8 +1,7 @@
 "use client";
-
+import { Check, Link as LinkIcon } from "lucide-react";
 import { useAppStore } from "@/store/useAppStore";
 import { Card } from "@/components/ui/Card";
-import { Link as LinkIcon, Check } from "lucide-react";
 
 export function RaOgMatrix() {
   const { moduleData, updateInfoModulo } = useAppStore();
@@ -39,7 +38,7 @@ export function RaOgMatrix() {
   return (
     <Card className="p-6 border-l-4 border-l-blue-500 overflow-hidden animate-in fade-in duration-500">
       <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-6">
-        <LinkIcon className="w-5 h-5 text-blue-400" /> Contribución de los RA a los OG del Título
+        <LinkIcon className="w-5 h-5 text-info" /> Contribución de los RA a los OG del Título
       </h2>
       
       <div className="overflow-x-auto pb-4 scrollbar-hide">
@@ -67,7 +66,7 @@ export function RaOgMatrix() {
               <tr key={idx} className="hover:bg-foreground/5 transition-colors border-b border-[var(--glass-border)]/50 group">
                 <td className="p-3 align-top">
                   <div className="flex gap-2">
-                    <span className="font-mono text-xs font-bold text-blue-400 mt-0.5">OG{String.fromCharCode(97 + idx)}.</span>
+                    <span className="font-mono text-xs font-medium text-info mt-0.5">OG{String.fromCharCode(97 + idx)}.</span>
                     <span className="text-foreground/90 leading-relaxed">{og}</span>
                   </div>
                 </td>
@@ -80,8 +79,8 @@ export function RaOgMatrix() {
                           onClick={() => toggleMapping(idx, ra.id_ra)}
                           className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
                             isChecked 
-                              ? 'bg-blue-500/20 text-blue-400 border border-blue-500/50 shadow-[0_0_10px_rgba(59,130,246,0.2)]' 
-                              : 'bg-background border border-[var(--glass-border)] text-transparent hover:border-blue-500/30 hover:bg-blue-500/10'
+                              ? 'bg-info/10 text-info border border-info/30 shadow-[0_0_10px_rgba(59,130,246,0.2)]' 
+                              : 'bg-background border border-[var(--glass-border)] text-transparent hover:border-info/30 hover:bg-info/10'
                           }`}
                         >
                           {isChecked && <Check className="w-5 h-5" strokeWidth={3} />}

@@ -1,4 +1,5 @@
 "use client";
+import { Calendar, FileEdit, MapPin } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
@@ -15,8 +16,8 @@ export default function SeguimientoPage() {
   const [allDiarioOpen, setAllDiarioOpen] = useState(false);
 
   const TABS = [
-    { id: "diario", label: "📝 Diario de aula", cleanLabel: "Diario de aula" },
-    { id: "asistencia", label: "🙋‍♂️ Control de asistencia", cleanLabel: "Control de asistencia" }
+    { id: "diario", label:  <span className="flex items-center gap-2"><FileEdit className="w-4 h-4 shrink-0" /> Diario de aula</span>, cleanLabel: "Diario de aula" },
+    { id: "asistencia", label: "‍️ Control de asistencia", cleanLabel: "Control de asistencia" }
   ];
 
   const [activeTab, setActiveTab] = useState("diario");
@@ -168,7 +169,7 @@ export default function SeguimientoPage() {
         <main className="flex-1 p-8 content-area space-y-8">
           <div>
               <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-              📍 Seguimiento diario
+              <span className="inline-flex"><MapPin className="w-[1.2em] h-[1.2em] mr-1" /></span> Seguimiento diario
             </h1>
             <p className="text-muted mt-2 text-lg">Registro detallado del desarrollo diario de las clases y contingencias.</p>
           </div>
@@ -188,7 +189,7 @@ export default function SeguimientoPage() {
               {/* Seguimiento diario */}
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
-<span>🗓️</span> Diario de clases. Contingencias
+<span>️</span> Diario de clases. Contingencias
 </h2>
                 <button
                   onClick={() => {
@@ -212,7 +213,7 @@ export default function SeguimientoPage() {
                     <details key={m_short} open className="diario-details group bg-foreground/5 rounded-lg border border-[var(--glass-border)] overflow-hidden open:bg-foreground/10 transition-colors">
                       <summary className="p-4 cursor-pointer flex items-center justify-between font-semibold text-lg select-none hover:bg-foreground/5">
                         <div className="flex items-center gap-3">
-                          <span className="text-blue-400">📅</span>
+                          <span className="text-info"><span className="inline-flex"><Calendar className="w-[1.2em] h-[1.2em] mr-1" /></span></span>
                           <span>{meses_nombres[m_short as keyof typeof meses_nombres]} {lectivos[0].getFullYear()}</span>
                         </div>
                         <div className="text-sm text-muted">
@@ -227,7 +228,7 @@ export default function SeguimientoPage() {
                             const udPrev = planning_ledger[dateStr] ? planning_ledger[dateStr].join(', ') : '';
                             const ledgerEntry = daily_ledger[dateStr] || { sin_docencia: false, seguimiento: "", publico: false };
                             
-                            const nodeColor = ledgerEntry.sin_docencia ? 'bg-orange-500' : (ledgerEntry.seguimiento ? 'bg-blue-500' : 'bg-gray-600');
+                            const nodeColor = ledgerEntry.sin_docencia ? 'bg-warning' : (ledgerEntry.seguimiento ? 'bg-info' : 'bg-gray-600');
 
                             return (
                               <div key={i} className="relative pl-8 group">
@@ -238,11 +239,11 @@ export default function SeguimientoPage() {
                                   <div className="flex items-center justify-between mb-4">
                                     <div className="flex items-center gap-3">
                                       <span className="font-mono text-lg font-bold text-foreground tracking-widest">{dateStr.substring(0,5)}</span>
-                                      <span className="text-xs font-bold text-muted tracking-wider bg-foreground/5 px-2 py-1 rounded">{diaSemana}</span>
-                                      {udPrev && <span className="bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2 py-0.5 rounded text-xs font-bold shadow-sm">UD: {udPrev}</span>}
+                                      <span className="text-xs font-medium text-muted tracking-wider bg-foreground/5 px-2 py-1 rounded">{diaSemana}</span>
+                                      {udPrev && <span className="bg-info/10 text-info border border-info/30 px-2 py-0.5 rounded text-xs font-medium shadow-sm">UD: {udPrev}</span>}
                                     </div>
                                     <div className="flex items-center gap-5">
-                                      <label className="flex items-center gap-2 text-xs font-bold text-muted cursor-pointer hover:text-orange-400 transition-colors tracking-wider">
+                                      <label className="flex items-center gap-2 text-xs font-medium text-muted cursor-pointer hover:text-warning transition-colors tracking-wider">
                                         <input
                                           type="checkbox"
                                           checked={ledgerEntry.sin_docencia}
@@ -251,7 +252,7 @@ export default function SeguimientoPage() {
                                         />
                                         Sin Docencia
                                       </label>
-                                      <label className="flex items-center gap-2 text-xs font-bold text-muted cursor-pointer hover:text-green-400 transition-colors tracking-wider">
+                                      <label className="flex items-center gap-2 text-xs font-medium text-muted cursor-pointer hover:text-success transition-colors tracking-wider">
                                         <input
                                           type="checkbox"
                                           checked={ledgerEntry.publico}
@@ -263,12 +264,12 @@ export default function SeguimientoPage() {
                                     </div>
                                   </div>
                                   <div className="flex items-start gap-3">
-                                    <span className="text-xl mt-2 opacity-50 select-none">📝</span>
+                                    <span className="text-xl mt-2 opacity-50 select-none"><span className="inline-flex"><FileEdit className="w-[1.2em] h-[1.2em] mr-1" /></span></span>
                                     <textarea
                                       value={ledgerEntry.seguimiento}
                                       onChange={(e) => handleLedgerChange(dateStr, 'seguimiento', e.target.value)}
                                       placeholder="Escribe aquí el seguimiento de la clase, incidencias o progreso real..."
-                                      className="w-full bg-foreground/20 border border-white/5 hover:border-[var(--glass-border)] rounded-lg px-4 py-3 text-foreground focus:border-blue-500 focus:bg-black/60 focus:outline-none transition-all resize-none overflow-hidden min-h-[60px] text-sm"
+                                      className="w-full bg-foreground/20 border border-white/5 hover:border-[var(--glass-border)] rounded-lg px-4 py-3 text-foreground focus:border-info focus:bg-black/60 focus:outline-none transition-all resize-none overflow-hidden min-h-[60px] text-sm"
                                       rows={1}
                                       onInput={(e) => {
                                         const target = e.target as HTMLTextAreaElement;

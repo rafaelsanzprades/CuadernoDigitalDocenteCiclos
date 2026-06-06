@@ -7,6 +7,8 @@
 - **Nueva Vista 'Hoy':** Se estableció `/hoy` como página principal redirigida desde `/`, ofreciendo un resumen de tareas diarias, panel de bienvenida y acceso rápido mediante el botón "Tu día y semana".
 - **Mantenimiento:** Limpieza profunda de directorios, eliminación de 18 scripts obsoletos de Python, bases de datos residuales en raíz y archivos temporales del frontend.
 - **Renombrado:** Actualización de la ruta `/introduccion` a `/contexto` en el código y navegación.
+- **Refactorización Visual:** Reemplazo integral de emojis clásicos (299 ocurrencias) por iconos vectoriales modernos de `lucide-react` a lo largo de toda la aplicación, logrando un diseño visual mucho más consistente y corporativo.
+- **Robustez y PWA (Fases 2 y 3):** Verificación e implementación de `GlobalErrorBoundary`, sistema de autoguardado pasivo, y backups rotativos diarios en el backend (SQLite). Completada configuración de PWA con `next-pwa` e iconos generados (192x192 y 512x512) en la carpeta public.
 
 ## Fecha: 27 de Mayo de 2026
 

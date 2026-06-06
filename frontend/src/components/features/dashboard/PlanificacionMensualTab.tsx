@@ -1,5 +1,5 @@
 "use client";
-
+import { Calendar } from "lucide-react";
 import React from "react";
 import { useAppStore } from "@/store/useAppStore";
 import { Card } from "@/components/ui/Card";
@@ -32,7 +32,7 @@ export function PlanificacionMensualTab() {
   return (
     <div className="space-y-6 animate-in fade-in duration-500">
       <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground">
-        <span>📅</span> Planificación y seguimiento mensual
+        <span><span className="inline-flex"><Calendar className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Planificación y seguimiento mensual
       </h2>
 
       <section className="glass-card p-6 overflow-x-auto">
@@ -48,11 +48,11 @@ export function PlanificacionMensualTab() {
             </tr>
             <tr className="border-b border-[var(--glass-border)] text-xs text-muted bg-foreground/5">
               <th className="p-2 sticky left-0 bg-[#111827] z-10 border-r border-[var(--glass-border)] text-center font-bold text-foreground">UD</th>
-              <th className="p-2 sticky left-[60px] bg-[#111827] z-10 text-center text-blue-400/70">Prv</th>
+              <th className="p-2 sticky left-[60px] bg-[#111827] z-10 text-center text-info">Prv</th>
               <th className="p-2 sticky left-[130px] bg-[#111827] z-10 text-center text-[#14a085]/70 border-r border-[var(--glass-border)]">Imp</th>
               {meses_display.map((m) => (
                 <React.Fragment key={m}>
-                  <th className="p-2 text-center text-blue-400/70">Prv</th>
+                  <th className="p-2 text-center text-info">Prv</th>
                   <th className="p-2 text-center text-[#14a085]/70 border-r border-[var(--glass-border)]">Imp</th>
                 </React.Fragment>
               ))}
@@ -62,7 +62,7 @@ export function PlanificacionMensualTab() {
             {df_sgmt_calculated.map((row: any, idx: number) => (
               <tr key={idx} className="border-b border-white/5 hover:bg-foreground/5 transition-colors">
                 <td className="p-3 font-mono sticky left-0 bg-background group-hover:bg-[#111827] border-r border-[var(--glass-border)] font-bold">{row.id_ud}</td>
-                <td className="p-3 text-center sticky left-[60px] bg-background group-hover:bg-[#111827] text-blue-400">{row.horas_ud || ''}</td>
+                <td className="p-3 text-center sticky left-[60px] bg-background group-hover:bg-[#111827] text-info">{row.horas_ud || ''}</td>
                 <td className="p-3 text-center sticky left-[130px] bg-background group-hover:bg-[#111827] border-r border-[var(--glass-border)] text-[#14a085] font-bold">{row.Total_Imp || ''}</td>
                 {meses_display.map((m) => (
                   <React.Fragment key={m}>

@@ -1,10 +1,9 @@
 "use client";
-
+import { CheckCircle2, ClipboardList, Plus, Save } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
 import { useSearchParams } from "next/navigation";
-import { Save, Plus, CheckCircle2 } from "lucide-react";
 import { useAppStore } from "@/store/useAppStore";
 import { useUsers, useFamilies, useLearningOutcomes } from "@/hooks/useApi";
 import { CourseGroup, ModuleAssignment } from "@/types";
@@ -141,7 +140,7 @@ function AsignacionesContent() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
               <div>
                 <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3 mb-2">
-                  <span className="text-3xl">📋</span> Asignación de módulos
+                  <span className="text-3xl"><span className="inline-flex"><ClipboardList className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Asignación de módulos
                 </h1>
                 <p className="text-muted mt-2 text-lg">Jefatura de Estudios: Asigna el profesorado a los módulos de cada ciclo formativo.</p>
               </div>
@@ -149,7 +148,7 @@ function AsignacionesContent() {
                 onClick={handleSave}
                 disabled={!hasChanges && saveStatus !== "saved"}
                 variant={saveStatus === "saved" ? "success" : hasChanges ? "primary" : "ghost"}
-                className={saveStatus === "saved" ? "bg-emerald-500/20 text-emerald-400 border-emerald-500/30" : ""}
+                className={saveStatus === "saved" ? "bg-success/10 text-success border-success/30" : ""}
               >
                 {saveStatus === "saving" ? (
                   <div className="w-5 h-5 border-2 border-accent border-t-transparent rounded-full animate-spin" />

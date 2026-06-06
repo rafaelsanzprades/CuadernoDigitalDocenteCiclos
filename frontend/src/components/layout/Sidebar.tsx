@@ -1,10 +1,10 @@
 "use client";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAppStore } from '@/store/useAppStore';
 import { navGroups } from '@/config/navigation';
 import { useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -37,7 +37,7 @@ export default function Sidebar() {
       <div className={`px-4 pt-4 pb-2 flex ${isSidebarOpen ? 'justify-between' : 'justify-center'} items-center`}>
         {isSidebarOpen && (
           <Link href="/inicio" onClick={() => { if (window.innerWidth < 1024) toggleSidebar(); }}>
-            <h1 className="text-[1.3rem] font-extrabold leading-tight text-foreground hover:text-blue-400 transition-colors mb-4 tracking-tight whitespace-nowrap cursor-pointer">
+            <h1 className="text-[1.3rem] font-extrabold leading-tight text-foreground hover:text-info transition-colors mb-4 tracking-tight whitespace-nowrap cursor-pointer">
               Cuaderno Ciclos FP
             </h1>
           </Link>
@@ -105,7 +105,7 @@ export default function Sidebar() {
             <p className="text-center text-[0.65rem] text-muted/80 mt-1 whitespace-nowrap">
               © {new Date().getFullYear()} Rafael Sanz Prades
             </p>
-            <Link href="/avisolegal" className="text-[0.6rem] text-blue-400 hover:text-blue-300 hover:underline" onClick={() => { if (window.innerWidth < 1024) toggleSidebar(); }}>
+            <Link href="/avisolegal" className="text-[0.6rem] text-info hover:text-info hover:underline" onClick={() => { if (window.innerWidth < 1024) toggleSidebar(); }}>
               Aviso Legal y Privacidad
             </Link>
           </>

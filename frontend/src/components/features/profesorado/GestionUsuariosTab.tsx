@@ -1,7 +1,6 @@
 "use client";
-
+import { CheckCircle2, Edit2, Filter, Search, Shield, Trash2, UserPlus, Users, X } from "lucide-react";
 import React, { useState, useEffect } from "react";
-import { UserPlus, Search, Filter, Edit2, Shield, Trash2, CheckCircle2, X } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/Button";
@@ -100,7 +99,7 @@ export function GestionUsuariosTab() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
         <div>
           <h2 className="text-[1.1rem] font-bold flex items-center gap-3">
-            <span className="text-2xl">👥</span> Gestión de usuarios
+            <span className="text-2xl"><span className="inline-flex"><Users className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Gestión de usuarios
           </h2>
           <p className="text-muted mt-2">Administra el claustro, asigna perfiles RBAC y define los contextos de actuación de cada docente.</p>
         </div>
@@ -176,7 +175,7 @@ export function GestionUsuariosTab() {
                     <div className="flex flex-col gap-1">
                       {user.centers.map((c, i) => (
                         <span key={i} className="text-sm text-foreground/80 flex items-center gap-1.5">
-                          <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                          <div className="w-1.5 h-1.5 rounded-full bg-info" />
                           {c}
                         </span>
                       ))}
@@ -199,7 +198,7 @@ export function GestionUsuariosTab() {
                   </td>
                   <td className="p-4 text-center">
                     {user.status === 'active' && (
-                      <span className="inline-flex items-center gap-1 text-emerald-400 text-xs font-medium bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
+                      <span className="inline-flex items-center gap-1 text-success text-xs font-medium bg-success/10 px-2.5 py-1 rounded-full border border-success/30">
                         <CheckCircle2 className="w-3.5 h-3.5" /> Activo
                       </span>
                     )}
@@ -209,7 +208,7 @@ export function GestionUsuariosTab() {
                       <button className="p-2 text-muted hover:text-accent rounded-lg hover:bg-accent/10 transition-colors" title="Editar Perfiles">
                         <Edit2 className="w-4 h-4" />
                       </button>
-                      <button className="p-2 text-muted hover:text-red-400 rounded-lg hover:bg-red-400/10 transition-colors" title="Dar de baja">
+                      <button className="p-2 text-muted hover:text-danger rounded-lg hover:bg-danger/10 transition-colors" title="Dar de baja">
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>

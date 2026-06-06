@@ -1,4 +1,5 @@
 "use client";
+import { BarChart, Check, FileEdit } from "lucide-react";
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
@@ -15,10 +16,10 @@ export default function InstrumentosPage() {
   const [saveMessage, setSaveMessage] = useState("");
 
   const TABS = [
-    { id: "resumen", label: "📊 Resumen", cleanLabel: "Resumen" },
-    { id: "tri1", label: "📝 IE. 1er Tri.", cleanLabel: "IE. 1er Tri." },
-    { id: "tri2", label: "📝 IE. 2º Tri.", cleanLabel: "IE. 2º Tri." },
-    { id: "tri3", label: "📝 IE. 3er Tri.", cleanLabel: "IE. 3er Tri." }
+    { id: "resumen", label:  <span className="flex items-center gap-2"><BarChart className="w-4 h-4 shrink-0" /> Resumen</span>, cleanLabel: "Resumen" },
+    { id: "tri1", label:  <span className="flex items-center gap-2"><FileEdit className="w-4 h-4 shrink-0" /> IE. 1er Tri.</span>, cleanLabel: "IE. 1er Tri." },
+    { id: "tri2", label:  <span className="flex items-center gap-2"><FileEdit className="w-4 h-4 shrink-0" /> IE. 2º Tri.</span>, cleanLabel: "IE. 2º Tri." },
+    { id: "tri3", label:  <span className="flex items-center gap-2"><FileEdit className="w-4 h-4 shrink-0" /> IE. 3er Tri.</span>, cleanLabel: "IE. 3er Tri." }
   ];
 
   const [activeTab, setActiveTab] = useState("resumen");
@@ -128,7 +129,7 @@ export default function InstrumentosPage() {
     if (lista_ce_ids.length === 0) {
       return (
         <Card className="p-6 border-l-4 border-l-yellow-500">
-          <h3 className="text-xl font-bold text-yellow-400 mb-2">Faltan Criterios de evaluación</h3>
+          <h3 className="text-xl font-bold text-warning mb-2">Faltan Criterios de evaluación</h3>
           <p className="text-foreground/80">Primero añade Criterios de evaluación en la pestaña 'Matrices'.</p>
         </Card>
       );
@@ -142,13 +143,13 @@ export default function InstrumentosPage() {
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-2xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
-              📝 Instrumentos de Evaluación - {triNombre}
+              <span className="inline-flex"><FileEdit className="w-[1.2em] h-[1.2em] mr-1" /></span> Instrumentos de Evaluación - {triNombre}
             </h2>
             <p className="text-muted mt-1">Detalle de los instrumentos de evaluación organizados para este trimestre.</p>
           </div>
           <div className="flex items-center gap-6 text-sm">
             <span className="text-muted">{actTri.length} actividades</span>
-            <span className="text-indigo-300 font-mono bg-indigo-500/10 px-4 py-2 rounded-lg text-lg">Σ {sumaPeso.toFixed(0)}%</span>
+            <span className="text-info font-mono bg-info/10 px-4 py-2 rounded-lg text-lg">Σ {sumaPeso.toFixed(0)}%</span>
           </div>
         </div>
 
@@ -161,9 +162,9 @@ export default function InstrumentosPage() {
                   <th className="p-2 sticky left-[60px] z-10 border-r border-[var(--glass-border)] bg-background">Tipo</th>
                   <th className="p-2 sticky left-[160px] z-10 border-r border-[var(--glass-border)] bg-background w-64">Instrumento / Actividad</th>
                   <th className="p-2 sticky left-[416px] z-10 border-r border-[var(--glass-border)] bg-background">% Pond.</th>
-                  <th className="p-2 sticky left-[486px] z-10 border-r border-[var(--glass-border)] bg-background">✓</th>
+                  <th className="p-2 sticky left-[486px] z-10 border-r border-[var(--glass-border)] bg-background"><span className="inline-flex"><Check className="w-[1.2em] h-[1.2em] mr-1" /></span></th>
                   {lista_ce_ids.map((ce: string) => (
-                    <th key={ce} className="p-2 text-center text-xs font-mono border-r border-[var(--glass-border)] text-indigo-300">
+                    <th key={ce} className="p-2 text-center text-xs font-mono border-r border-[var(--glass-border)] text-info">
                       {ce}
                     </th>
                   ))}
@@ -180,7 +181,7 @@ export default function InstrumentosPage() {
                         <select 
                           value={act.Tipo || "Teoria"}
                           onChange={(e) => handleUpdateAct(globalIdx, "Tipo", e.target.value)}
-                          className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-indigo-500 focus:outline-none appearance-none"
+                          className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-info focus:outline-none appearance-none"
                         >
                           <option value="Teoria">Teoria</option>
                           <option value="Practica">Practica</option>
@@ -193,7 +194,7 @@ export default function InstrumentosPage() {
                           type="text"
                           value={act.desc_act || ""}
                           onChange={(e) => handleUpdateAct(globalIdx, "desc_act", e.target.value)}
-                          className="w-full min-w-[200px] bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-indigo-500 focus:outline-none"
+                          className="w-full min-w-[200px] bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-info focus:outline-none"
                         />
                       </td>
                       <td className="p-2 sticky left-[416px] z-10 border-r border-[var(--glass-border)] bg-background group-hover:bg-[#111827]">
@@ -201,7 +202,7 @@ export default function InstrumentosPage() {
                           type="number"
                           value={act.peso_act || 0}
                           onChange={(e) => handleUpdateAct(globalIdx, "peso_act", Number(e.target.value) || 0)}
-                          className="w-16 bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-indigo-500 focus:outline-none"
+                          className="w-16 bg-foreground/15 border border-[var(--glass-border)] rounded px-2 py-1 text-foreground focus:border-info focus:outline-none"
                         />
                       </td>
                       <td className="p-2 text-center sticky left-[486px] z-10 border-r border-[var(--glass-border)] bg-background group-hover:bg-[#111827]">
@@ -229,7 +230,7 @@ export default function InstrumentosPage() {
                             newAct.splice(globalIdx, 1);
                             updateDataFrame("df_act", newAct);
                           }}
-                          className="text-red-400 hover:text-red-300 font-bold px-2"
+                          className="text-danger hover:text-danger font-bold px-2"
                           title="Eliminar Actividad"
                         >
                           ×
@@ -244,7 +245,7 @@ export default function InstrumentosPage() {
               <Button 
                 variant="ghost"
                 onClick={() => handleAddAct(triKey)}
-                className="text-indigo-400 hover:text-indigo-300 font-semibold flex items-center gap-1"
+                className="text-info hover:text-info font-semibold flex items-center gap-1"
               >
                 <span>+</span> Añadir Instrumento/Actividad en {triNombre}
               </Button>
@@ -264,7 +265,7 @@ export default function InstrumentosPage() {
         <main className="flex-1 p-8 content-area space-y-8">
           <div>
             <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-              🛠️ Instrumentos de evaluación
+              ️ Instrumentos de evaluación
             </h1>
             <p className="text-muted mt-2 text-lg">Definición y ponderación de las herramientas y métodos de evaluación.</p>
           </div>
@@ -282,7 +283,7 @@ export default function InstrumentosPage() {
           {activeTab === "resumen" && (
             <Card className="p-6 animate-in fade-in duration-500">
               <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground mb-5">
-                <span>📊</span> Resumen de instrumentos de evaluación por trimestres
+                <span><span className="inline-flex"><BarChart className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Resumen de instrumentos de evaluación por trimestres
               </h2>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm border-collapse">
@@ -306,16 +307,16 @@ export default function InstrumentosPage() {
                         <tr key={tri.key} className="border-b border-white/5 hover:bg-foreground/5 transition-colors">
                           <td className="p-3 font-semibold text-foreground">{tri.nombre}</td>
                           <td className="p-3 text-center border-l border-[var(--glass-border)]">
-                            <span className="bg-blue-500/15 text-blue-400 font-bold text-lg px-3 py-1 rounded-lg inline-block min-w-[40px]">{nTeo}</span>
+                            <span className="bg-info/10 text-info font-bold text-lg px-3 py-1 rounded-lg inline-block min-w-[40px]">{nTeo}</span>
                           </td>
                           <td className="p-3 text-center border-l border-[var(--glass-border)]">
-                            <span className="bg-emerald-500/15 text-emerald-400 font-bold text-lg px-3 py-1 rounded-lg inline-block min-w-[40px]">{nPra}</span>
+                            <span className="bg-success/10 text-success font-bold text-lg px-3 py-1 rounded-lg inline-block min-w-[40px]">{nPra}</span>
                           </td>
                           <td className="p-3 text-center border-l border-[var(--glass-border)]">
-                            <span className="bg-orange-500/15 text-orange-400 font-bold text-lg px-3 py-1 rounded-lg inline-block min-w-[40px]">{nInf}</span>
+                            <span className="bg-warning/10 text-warning font-bold text-lg px-3 py-1 rounded-lg inline-block min-w-[40px]">{nInf}</span>
                           </td>
                           <td className="p-3 text-center border-l border-[var(--glass-border)]">
-                            <span className="bg-purple-500/15 text-purple-400 font-bold text-lg px-3 py-1 rounded-lg inline-block min-w-[40px]">{nTar}</span>
+                            <span className="bg-info/10 text-info font-bold text-lg px-3 py-1 rounded-lg inline-block min-w-[40px]">{nTar}</span>
                           </td>
                         </tr>
                       );
@@ -323,16 +324,16 @@ export default function InstrumentosPage() {
                     <tr className="border-t-2 border-[var(--glass-border)] bg-foreground/5">
                       <td className="p-4 font-extrabold text-foreground text-lg">Total</td>
                       <td className="p-4 text-center border-l border-[var(--glass-border)]">
-                        <span className="bg-blue-500/20 text-blue-400 font-extrabold text-2xl px-4 py-1.5 rounded-lg inline-block min-w-[50px]">{df_act.filter((a: any) => a.Tipo === "Teoria").length}</span>
+                        <span className="bg-info/10 text-info font-extrabold text-2xl px-4 py-1.5 rounded-lg inline-block min-w-[50px]">{df_act.filter((a: any) => a.Tipo === "Teoria").length}</span>
                       </td>
                       <td className="p-4 text-center border-l border-[var(--glass-border)]">
-                        <span className="bg-emerald-500/20 text-emerald-400 font-extrabold text-2xl px-4 py-1.5 rounded-lg inline-block min-w-[50px]">{df_act.filter((a: any) => a.Tipo === "Practica").length}</span>
+                        <span className="bg-success/10 text-success font-extrabold text-2xl px-4 py-1.5 rounded-lg inline-block min-w-[50px]">{df_act.filter((a: any) => a.Tipo === "Practica").length}</span>
                       </td>
                       <td className="p-4 text-center border-l border-[var(--glass-border)]">
-                        <span className="bg-orange-500/20 text-orange-400 font-extrabold text-2xl px-4 py-1.5 rounded-lg inline-block min-w-[50px]">{df_act.filter((a: any) => a.Tipo === "Informes").length}</span>
+                        <span className="bg-warning/10 text-warning font-extrabold text-2xl px-4 py-1.5 rounded-lg inline-block min-w-[50px]">{df_act.filter((a: any) => a.Tipo === "Informes").length}</span>
                       </td>
                       <td className="p-4 text-center border-l border-[var(--glass-border)]">
-                        <span className="bg-purple-500/20 text-purple-400 font-extrabold text-2xl px-4 py-1.5 rounded-lg inline-block min-w-[50px]">{df_act.filter((a: any) => a.Tipo === "Tareas").length}</span>
+                        <span className="bg-info/10 text-info font-extrabold text-2xl px-4 py-1.5 rounded-lg inline-block min-w-[50px]">{df_act.filter((a: any) => a.Tipo === "Tareas").length}</span>
                       </td>
                     </tr>
                   </tbody>

@@ -1,18 +1,6 @@
 "use client";
-
+import { ArrowRight, BookOpen, Briefcase, Building2, Database, GraduationCap, School, Shield, UserCheck, Users } from "lucide-react";
 import React, { useState } from "react";
-import { 
-  Shield, 
-  Building2, 
-  BookOpen, 
-  Users, 
-  GraduationCap, 
-  Briefcase, 
-  School,
-  Database,
-  ArrowRight,
-  UserCheck
-} from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -28,81 +16,81 @@ export function AccesoUsuariosTab() {
 
   const roles = [
     {
-      icon: <Shield className="w-6 h-6 text-purple-400" />,
+      icon: <Shield className="w-6 h-6 text-info" />,
       title: "Superadmin",
       scope: "Global (Plataforma completa)",
       description: "Control absoluto. Gestiona tablas maestras (CCAA, Familias Profesionales, Currículos) y licencias de centros.",
-      color: "border-purple-500/30 bg-purple-500/10"
+      color: "border-info/30 bg-info/10"
     },
     {
-      icon: <Building2 className="w-6 h-6 text-blue-400" />,
+      icon: <Building2 className="w-6 h-6 text-info" />,
       title: "Admin de Centro (COFOTAP)",
       scope: "Centro Educativo",
       description: "Configuración integral del centro. Define el calendario, crea departamentos, importa alumnado y gestiona asignaciones del profesorado.",
-      color: "border-blue-500/30 bg-blue-500/10"
+      color: "border-info/30 bg-info/10"
     },
     {
-      icon: <BookOpen className="w-6 h-6 text-emerald-400" />,
+      icon: <BookOpen className="w-6 h-6 text-success" />,
       title: "Jefe de Estudios",
       scope: "Centro Educativo + Curso Académico",
       description: "Visión global académica. Supervisa todos los equipos docentes, horarios, y actas del curso actual o históricos.",
-      color: "border-emerald-500/30 bg-emerald-500/10"
+      color: "border-success/30 bg-success/10"
     },
     {
-      icon: <Briefcase className="w-6 h-6 text-amber-400" />,
+      icon: <Briefcase className="w-6 h-6 text-warning" />,
       title: "Tutor Dual Coordinador",
       scope: "Centro Educativo + Curso Académico",
       description: "Visión global de la Dual en el centro. Supervisa convenios, normativas y coordina la estrategia FP Dual con Jefatura.",
-      color: "border-amber-500/30 bg-amber-500/10"
+      color: "border-warning/30 bg-warning/10"
     },
     {
-      icon: <School className="w-6 h-6 text-cyan-400" />,
+      icon: <School className="w-6 h-6 text-info" />,
       title: "Jefe de Dpto. Didáctico",
       scope: "Departamento + Curso Académico",
       description: "Coordina a los profesores de un departamento concreto. Accede a las programaciones de su área.",
-      color: "border-cyan-500/30 bg-cyan-500/10"
+      color: "border-info/30 bg-info/10"
     },
     {
-      icon: <Briefcase className="w-6 h-6 text-yellow-500" />,
+      icon: <Briefcase className="w-6 h-6 text-warning" />,
       title: "Tutor Dual General",
       scope: "Centro (o Familia Prof.) + Curso Acad.",
       description: "Prospector de empresas. Tiene acceso transversal a todas las horas FEOE de los módulos dualizados para negociar convenios.",
-      color: "border-yellow-500/30 bg-yellow-500/10"
+      color: "border-warning/30 bg-warning/10"
     },
     {
-      icon: <Users className="w-6 h-6 text-pink-400" />,
+      icon: <Users className="w-6 h-6 text-danger" />,
       title: "Tutor de Grupo",
       scope: "Grupo + Curso Académico",
       description: "Gestiona un grupo concreto (ej. 1º DAW). Centraliza notas, actas de evaluación y coordinación de su equipo docente.",
-      color: "border-pink-500/30 bg-pink-500/10"
+      color: "border-danger/30 bg-danger/10"
     },
     {
-      icon: <UserCheck className="w-6 h-6 text-orange-400" />,
+      icon: <UserCheck className="w-6 h-6 text-warning" />,
       title: "Tutor Dual (Seguimiento)",
       scope: "Grupo/Alumnado + Curso Académico",
       description: "El docente en la 'trinchera'. Gestiona los planes formativos y evalúa junto con el instructor de la empresa.",
-      color: "border-orange-500/30 bg-orange-500/10"
+      color: "border-warning/30 bg-warning/10"
     },
     {
-      icon: <BookOpen className="w-6 h-6 text-indigo-400" />,
+      icon: <BookOpen className="w-6 h-6 text-info" />,
       title: "Profesorado",
       scope: "Módulo + Grupo + Curso Académico",
       description: "Rol base en el aula. Accede exclusivamente a sus cuadernos docentes para calificar a sus alumnado.",
-      color: "border-indigo-500/30 bg-indigo-500/10"
+      color: "border-info/30 bg-info/10"
     },
     {
-      icon: <GraduationCap className="w-6 h-6 text-green-400" />,
+      icon: <GraduationCap className="w-6 h-6 text-success" />,
       title: "Alumnado",
       scope: "Matrícula (N Módulos + N FEOE)",
       description: "Acceso como estudiante para consultar sus calificaciones por Resultados de Aprendizaje, horarios, y seguimiento Dual.",
-      color: "border-green-500/30 bg-green-500/10"
+      color: "border-success/30 bg-success/10"
     }
   ];
 
   return (
     <div className="space-y-8">
       <div>
-        <h2 className="text-[1.1rem] font-bold text-foreground tracking-tight flex items-center gap-3">🛡️ Acceso usuarios</h2>
+        <h2 className="text-[1.1rem] font-bold text-foreground tracking-tight flex items-center gap-3"><span className="inline-flex"><Shield className="w-[1.2em] h-[1.2em] mr-1" /></span> Acceso usuarios</h2>
         <p className="text-muted mt-2">
           Sistema de Roles Basado en Contextos (RBAC). Los permisos no son estáticos, dependen del contexto geográfico, organizativo y temporal.
         </p>
@@ -241,27 +229,27 @@ export function AccesoUsuariosTab() {
 
             <div className="space-y-6">
               <div className="flex items-center gap-4 bg-foreground/5 p-4 rounded-xl border border-[var(--glass-border)]">
-                <div className="p-3 bg-blue-500/20 text-blue-400 rounded-lg"><Building2 className="w-6 h-6" /></div>
+                <div className="p-3 bg-info/10 text-info rounded-lg"><Building2 className="w-6 h-6" /></div>
                 <div className="flex-1">
-                  <h4 className="font-semibold text-blue-300">Nivel Centro (COFOTAP modifica Calendario)</h4>
+                  <h4 className="font-semibold text-info">Nivel Centro (COFOTAP modifica Calendario)</h4>
                   <p className="text-sm text-muted">Si se altera el calendario escolar, los días lectivos se recalculan automáticamente en la tabla <code className="text-accent bg-foreground/15 px-1 rounded">AcademicCalendar</code> asociada al Centro.</p>
                 </div>
                 <ArrowRight className="w-6 h-6 text-muted hidden md:block" />
               </div>
 
               <div className="flex items-center gap-4 bg-foreground/5 p-4 rounded-xl border border-[var(--glass-border)] ml-0 md:ml-8">
-                <div className="p-3 bg-indigo-500/20 text-indigo-400 rounded-lg"><BookOpen className="w-6 h-6" /></div>
+                <div className="p-3 bg-info/10 text-info rounded-lg"><BookOpen className="w-6 h-6" /></div>
                 <div className="flex-1">
-                  <h4 className="font-semibold text-indigo-300">Nivel Módulo (Profesorado)</h4>
+                  <h4 className="font-semibold text-info">Nivel Módulo (Profesorado)</h4>
                   <p className="text-sm text-muted">El Cuaderno Digital Docente (<code className="text-accent bg-foreground/15 px-1 rounded">Module</code>) recalcula instantáneamente las horas disponibles para impartir los RAs, ya que su cálculo depende del calendario del centro.</p>
                 </div>
                 <ArrowRight className="w-6 h-6 text-muted hidden md:block" />
               </div>
 
               <div className="flex items-center gap-4 bg-foreground/5 p-4 rounded-xl border border-[var(--glass-border)] ml-0 md:ml-16">
-                <div className="p-3 bg-green-500/20 text-green-400 rounded-lg"><GraduationCap className="w-6 h-6" /></div>
+                <div className="p-3 bg-success/10 text-success rounded-lg"><GraduationCap className="w-6 h-6" /></div>
                 <div className="flex-1">
-                  <h4 className="font-semibold text-green-300">Nivel Alumnado (Estudiante matriculado)</h4>
+                  <h4 className="font-semibold text-success">Nivel Alumnado (Estudiante matriculado)</h4>
                   <p className="text-sm text-muted">Sus fechas de evaluación y períodos de FEOE (<code className="text-accent bg-foreground/15 px-1 rounded">Enrollment</code>) se ajustan para reflejar los nuevos festivos, sin que el Tutor Dual tenga que reconfigurar uno por uno.</p>
                 </div>
               </div>

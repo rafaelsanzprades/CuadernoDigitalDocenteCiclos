@@ -16,6 +16,10 @@ except ImportError:
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+import asyncio
+from contextlib import asynccontextmanager
+
+from services.backup_service import backup_task, perform_backup
 
 from routers import modules, users, catalogs, pdf, documents, attendance
 
@@ -25,10 +29,17 @@ logging.basicConfig(
 )
 logger = logging.getLogger("cdd-pro")
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    task = asyncio.create_task(backup_task())
+    yield
+    task.cancel()
+
 app = FastAPI(
     title="Cuaderno Digital Docente API",
     description="Backend for the Cuaderno Digital Docente Next.js app",
     version="1.0.0",
+    lifespan=lifespan,
 )
 
 # CORS from env (comma-separated) or default for dev
@@ -67,6 +78,16 @@ def read_root():
 @app.get("/health")
 def health_check():
     return {"status": "healthy"}
+
+@app.post("/admin/backup")
+def trigger_backup():
+    success = perform_backup()
+    if success:
+        return {"status": "ok", "message": "Backup created successfully"}
+    return JSONResponse(
+        status_code=500,
+        content={"status": "error", "message": "Failed to create backup or not using SQLite"}
+    )
 
 
 if __name__ == "__main__":

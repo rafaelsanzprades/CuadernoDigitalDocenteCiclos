@@ -1,5 +1,5 @@
 "use client";
-
+import { BarChart, Calendar } from "lucide-react";
 import { useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
@@ -9,7 +9,6 @@ import { DashboardCharts } from "@/components/features/dashboard/DashboardCharts
 import { TodayClasses } from "@/components/features/dashboard/TodayClasses";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { MotionWrapper } from "@/components/ui/MotionWrapper";
-import { Calendar } from "lucide-react";
 import { WelcomeWizard } from "@/components/features/dashboard/WelcomeWizard";
 import { useModulesList } from "@/hooks/useApi";
 import { useEffect } from "react";
@@ -55,8 +54,8 @@ export default function HoyPage() {
   }, [modulesList, activeModuleId, setWizardOpen]);
 
   const TABS = [
-    { id: "actual", label: "📅 Actual", cleanLabel: "Actual" },
-    { id: "resumen", label: "📊 Resumen", cleanLabel: "Resumen" }
+    { id: "actual", label: <><span className="inline-flex"><Calendar className="w-[1.2em] h-[1.2em] mr-1" /></span> Actual</>, cleanLabel: "Actual" },
+    { id: "resumen", label: <><span className="inline-flex"><BarChart className="w-[1.2em] h-[1.2em] mr-1" /></span> Resumen</>, cleanLabel: "Resumen" }
   ];
 
   const activeTabCleanLabel = TABS.find(t => t.id === activeTab)?.cleanLabel;
@@ -81,7 +80,7 @@ export default function HoyPage() {
             {/* Título */}
             <div>
               <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                📅 Tu día y semana
+                <span className="inline-flex"><Calendar className="w-[1.2em] h-[1.2em] mr-1" /></span> Tu día y semana
               </h1>
               <p className="text-muted mt-2 text-lg">Revisa lo que toca impartir hoy y el estado general de tu clase.</p>
             </div>

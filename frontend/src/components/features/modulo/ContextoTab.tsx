@@ -1,5 +1,5 @@
 "use client";
-
+import { School, Settings, User } from "lucide-react";
 import { useAppStore } from "@/store/useAppStore";
 
 export function ContextoTab() {
@@ -20,7 +20,7 @@ export function ContextoTab() {
     <div className="space-y-6 animate-in fade-in duration-500">
       <div className="glass-card p-6 border-t-4 border-t-indigo-500">
         <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-4">
-          🏫 Contexto escolar
+          <span className="inline-flex"><School className="w-[1.2em] h-[1.2em] mr-1" /></span> Contexto escolar
         </h2>
         <div className="space-y-4">
           <div>
@@ -28,7 +28,7 @@ export function ContextoTab() {
             <textarea
               value={config_contexto.instalaciones || ""}
               onChange={e => handleContextoChange("instalaciones", e.target.value)}
-              className="w-full h-24 bg-foreground/15 border border-[var(--glass-border)] rounded-lg p-3 text-foreground focus:border-indigo-500 focus:outline-none"
+              className="w-full h-24 bg-foreground/15 border border-[var(--glass-border)] rounded-lg p-3 text-foreground focus:border-info focus:outline-none"
             />
           </div>
           <div>
@@ -36,7 +36,7 @@ export function ContextoTab() {
             <textarea
               value={config_contexto.horario_lectivo || ""}
               onChange={e => handleContextoChange("horario_lectivo", e.target.value)}
-              className="w-full h-24 bg-foreground/15 border border-[var(--glass-border)] rounded-lg p-3 text-foreground focus:border-indigo-500 focus:outline-none"
+              className="w-full h-24 bg-foreground/15 border border-[var(--glass-border)] rounded-lg p-3 text-foreground focus:border-info focus:outline-none"
             />
           </div>
           <div>
@@ -44,7 +44,7 @@ export function ContextoTab() {
             <textarea
               value={config_contexto.equipo_docente || ""}
               onChange={e => handleContextoChange("equipo_docente", e.target.value)}
-              className="w-full h-24 bg-foreground/15 border border-[var(--glass-border)] rounded-lg p-3 text-foreground focus:border-indigo-500 focus:outline-none"
+              className="w-full h-24 bg-foreground/15 border border-[var(--glass-border)] rounded-lg p-3 text-foreground focus:border-info focus:outline-none"
             />
           </div>
           <div>
@@ -52,7 +52,7 @@ export function ContextoTab() {
             <textarea
               value={config_contexto.entorno_socioeconomico || ""}
               onChange={e => handleContextoChange("entorno_socioeconomico", e.target.value)}
-              className="w-full h-24 bg-foreground/15 border border-[var(--glass-border)] rounded-lg p-3 text-foreground focus:border-indigo-500 focus:outline-none"
+              className="w-full h-24 bg-foreground/15 border border-[var(--glass-border)] rounded-lg p-3 text-foreground focus:border-info focus:outline-none"
             />
           </div>
         </div>
@@ -60,7 +60,7 @@ export function ContextoTab() {
 
       <div className="glass-card p-6 border-t-4 border-t-purple-500">
         <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-4">
-          👦🏻 Alumnado (ACNEAE)
+          <span className="inline-flex"><User className="w-[1.2em] h-[1.2em] mr-1" /></span> Alumnado (ACNEAE)
         </h2>
         <div className="space-y-4">
           <div>
@@ -68,7 +68,7 @@ export function ContextoTab() {
             <textarea
               value={config_contexto.inclusion || ""}
               onChange={e => handleContextoChange("inclusion", e.target.value)}
-              className="w-full h-24 bg-foreground/15 border border-[var(--glass-border)] rounded-lg p-3 text-foreground focus:border-purple-500 focus:outline-none"
+              className="w-full h-24 bg-foreground/15 border border-[var(--glass-border)] rounded-lg p-3 text-foreground focus:border-info focus:outline-none"
             />
           </div>
           <div>
@@ -76,7 +76,7 @@ export function ContextoTab() {
             <textarea
               value={config_contexto.elenco_situaciones || ""}
               onChange={e => handleContextoChange("elenco_situaciones", e.target.value)}
-              className="w-full h-24 bg-foreground/15 border border-[var(--glass-border)] rounded-lg p-3 text-foreground focus:border-purple-500 focus:outline-none"
+              className="w-full h-24 bg-foreground/15 border border-[var(--glass-border)] rounded-lg p-3 text-foreground focus:border-info focus:outline-none"
             />
           </div>
           <div>
@@ -84,7 +84,7 @@ export function ContextoTab() {
             <textarea
               value={config_contexto.circunstancias_ocultas || ""}
               onChange={e => handleContextoChange("circunstancias_ocultas", e.target.value)}
-              className="w-full h-24 bg-foreground/15 border border-[var(--glass-border)] rounded-lg p-3 text-foreground focus:border-purple-500 focus:outline-none"
+              className="w-full h-24 bg-foreground/15 border border-[var(--glass-border)] rounded-lg p-3 text-foreground focus:border-info focus:outline-none"
             />
           </div>
         </div>
@@ -92,7 +92,7 @@ export function ContextoTab() {
 
       <div className="glass-card p-6 border-t-4 border-t-pink-500">
         <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-4">
-          ⚙️ Configuración del aula
+          <span className="inline-flex"><Settings className="w-[1.2em] h-[1.2em] mr-1" /></span> Configuración del aula
         </h2>
         <div className="space-y-4">
           <div>
@@ -100,7 +100,7 @@ export function ContextoTab() {
             <textarea
               value={config_contexto.metodologia || ""}
               onChange={e => handleContextoChange("metodologia", e.target.value)}
-              className="w-full h-24 bg-foreground/15 border border-[var(--glass-border)] rounded-lg p-3 text-foreground focus:border-pink-500 focus:outline-none"
+              className="w-full h-24 bg-foreground/15 border border-[var(--glass-border)] rounded-lg p-3 text-foreground focus:border-danger focus:outline-none"
             />
           </div>
           <div>
@@ -108,7 +108,7 @@ export function ContextoTab() {
             <textarea
               value={config_aula.Metodología || ""}
               onChange={e => handleAulaChange("Metodología", e.target.value)}
-              className="w-full h-24 bg-foreground/15 border border-[var(--glass-border)] rounded-lg p-3 text-foreground focus:border-pink-500 focus:outline-none"
+              className="w-full h-24 bg-foreground/15 border border-[var(--glass-border)] rounded-lg p-3 text-foreground focus:border-danger focus:outline-none"
             />
           </div>
           <div>
@@ -116,7 +116,7 @@ export function ContextoTab() {
             <textarea
               value={config_aula["Atención a la diversidad"] || ""}
               onChange={e => handleAulaChange("Atención a la diversidad", e.target.value)}
-              className="w-full h-24 bg-foreground/15 border border-[var(--glass-border)] rounded-lg p-3 text-foreground focus:border-pink-500 focus:outline-none"
+              className="w-full h-24 bg-foreground/15 border border-[var(--glass-border)] rounded-lg p-3 text-foreground focus:border-danger focus:outline-none"
             />
           </div>
         </div>

@@ -1,3 +1,4 @@
+import { Gift, Hand, Rocket } from "lucide-react";
 import React, { useState } from "react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
@@ -81,7 +82,7 @@ export function WelcomeWizard({ onComplete, fetchModules, setActiveModuleId, set
           
           <div className="text-center mb-10">
             <h2 className="text-4xl font-extrabold text-foreground mb-4 flex items-center justify-center gap-3">
-              <span className="text-5xl">👋</span> ¡Bienvenido al Cuaderno Digital!
+              <span className="text-5xl"><span className="inline-flex"><Hand className="w-[1.2em] h-[1.2em] mr-1" /></span></span> ¡Bienvenido al Cuaderno Digital!
             </h2>
             <p className="text-lg text-muted">
               Parece que es tu primera vez aquí. Vamos a preparar tu entorno de trabajo para que puedas empezar a volar.
@@ -99,14 +100,14 @@ export function WelcomeWizard({ onComplete, fetchModules, setActiveModuleId, set
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
               <div 
                 onClick={handleLoadDemo}
-                className="group cursor-pointer border-2 border-[var(--glass-border)] hover:border-purple-500 rounded-2xl p-6 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20 bg-background/50 hover:bg-purple-500/5 flex flex-col items-center text-center gap-4"
+                className="group cursor-pointer border-2 border-[var(--glass-border)] hover:border-info rounded-2xl p-6 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20 bg-background/50 hover:bg-info/10 flex flex-col items-center text-center gap-4"
               >
-                <span className="text-6xl group-hover:scale-110 transition-transform">🎁</span>
+                <span className="text-6xl group-hover:scale-110 transition-transform"><span className="inline-flex"><Gift className="w-[1.2em] h-[1.2em] mr-1" /></span></span>
                 <h3 className="text-[1.1rem] font-bold text-foreground">Cargar Demo</h3>
                 <p className="text-sm text-muted">
                   Inyecta un entorno ficticio completo con Resultados de Aprendizaje, Unidades y Alumnado para ver cómo funciona todo al instante.
                 </p>
-                <Button className="w-full mt-auto bg-purple-600 hover:bg-purple-500">
+                <Button className="w-full mt-auto bg-info hover:bg-info">
                   Explorar Demo
                 </Button>
               </div>
@@ -115,7 +116,7 @@ export function WelcomeWizard({ onComplete, fetchModules, setActiveModuleId, set
                 onClick={() => setStep("CREATE_FORM")}
                 className="group cursor-pointer border-2 border-[var(--glass-border)] hover:border-accent rounded-2xl p-6 transition-all duration-300 hover:shadow-lg hover:shadow-accent/20 bg-background/50 hover:bg-accent/5 flex flex-col items-center text-center gap-4"
               >
-                <span className="text-6xl group-hover:scale-110 transition-transform">🚀</span>
+                <span className="text-6xl group-hover:scale-110 transition-transform"><span className="inline-flex"><Rocket className="w-[1.2em] h-[1.2em] mr-1" /></span></span>
                 <h3 className="text-[1.1rem] font-bold text-foreground">Empezar de Cero</h3>
                 <p className="text-sm text-muted">
                   Crea tu propio Módulo vacío y empieza a introducir tus rúbricas y alumnado desde cero.
@@ -130,7 +131,7 @@ export function WelcomeWizard({ onComplete, fetchModules, setActiveModuleId, set
           {step === "CREATE_FORM" && (
             <div className="space-y-6 animate-in slide-in-from-right-8 duration-300">
               <div className="space-y-2">
-                <label className="text-sm font-bold text-foreground">Nombre de tu Módulo (La Programación)</label>
+                <label className="text-sm font-semibold text-foreground">Nombre de tu Módulo (La Programación)</label>
                 <div className="relative">
                   <Input 
                     value={newPdName}
@@ -144,7 +145,7 @@ export function WelcomeWizard({ onComplete, fetchModules, setActiveModuleId, set
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-bold text-foreground">Año de tu primer Curso (El Aula Real)</label>
+                <label className="text-sm font-semibold text-foreground">Año de tu primer Curso (El Aula Real)</label>
                 <div className="relative">
                   <span className="absolute left-4 top-4 text-muted font-mono z-10 opacity-50 pr-2 border-r border-[var(--glass-border)]">
                     {newPdName || "modulo"}-curso-
@@ -164,7 +165,7 @@ export function WelcomeWizard({ onComplete, fetchModules, setActiveModuleId, set
                   Volver
                 </Button>
                 <Button onClick={handleCreateNew} disabled={!newPdName || !newCursoName} className="w-2/3 bg-accent hover:bg-accent/80 text-background text-lg py-6">
-                  ✨ Crear mi Entorno
+                   Crear mi Entorno
                 </Button>
               </div>
             </div>

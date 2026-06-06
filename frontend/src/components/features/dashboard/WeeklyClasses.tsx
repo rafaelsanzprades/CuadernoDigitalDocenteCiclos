@@ -1,6 +1,6 @@
+import { AlertCircle, BookOpen, Calendar, CalendarDays, ChevronRight, Circle, Clock, Layers } from "lucide-react";
 import React, { useState } from 'react';
 import { useAppStore } from '@/store/useAppStore';
-import { Calendar, Clock, BookOpen, Layers, CalendarDays, ChevronRight, AlertCircle } from 'lucide-react';
 import { MotionWrapper } from '@/components/ui/MotionWrapper';
 import { format, isSameDay } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -79,7 +79,7 @@ export const WeeklyClasses = () => {
               </span>
             );
           } else if (schedule.isFestivo) {
-            cardStyle = "bg-red-500/5 border-red-500/20 opacity-90";
+            cardStyle = "bg-danger/10 border-danger/30 opacity-90";
           } else if (schedule.hours === 0 || !schedule.udId || schedule.sessions.length === 0) {
             cardStyle = "bg-background/10 border-white/3 opacity-70";
           }
@@ -92,7 +92,7 @@ export const WeeklyClasses = () => {
               {/* Day Header */}
               <div className="border-b border-[var(--glass-border)] pb-3 mb-3">
                 <div className="flex justify-between items-center mb-1">
-                  <span className={`font-bold text-sm ${isToday ? "text-accent" : "text-foreground/90"}`}>
+                  <span className={`font-semibold text-sm ${isToday ? "text-accent" : "text-foreground/90"}`}>
                     {formattedDayName}
                   </span>
                   {badge}
@@ -103,9 +103,9 @@ export const WeeklyClasses = () => {
               {/* Class Info */}
               <div className="flex-1 flex flex-col justify-start">
                 {schedule.isFestivo ? (
-                  <div className="bg-red-500/10 border border-red-500/20 p-2.5 rounded-lg text-center my-auto">
-                    <span className="text-red-400 font-bold text-xs block mb-1">🔴 Festivo</span>
-                    <span className="text-red-300/80 text-[11px] font-medium line-clamp-2">
+                  <div className="bg-danger/10 border border-danger/30 p-2.5 rounded-lg text-center my-auto">
+                    <span className="text-danger font-medium text-xs block mb-1"><span className="inline-flex"><Circle className="w-[1.2em] h-[1.2em] mr-1" /></span> Festivo</span>
+                    <span className="text-danger text-[11px] font-medium line-clamp-2">
                       {schedule.festivoName || "Día festivo"}
                     </span>
                   </div>
@@ -157,7 +157,7 @@ export const WeeklyClasses = () => {
                   <span className="font-semibold">{schedule.hours} horas lectivas</span>
                   {schedule.isEvent && (
                     <span
-                      className="bg-blue-500/20 text-blue-400 border border-blue-500/25 px-1.5 py-0.5 rounded font-bold tracking-wider"
+                      className="bg-info/10 text-info border border-info/30 px-1.5 py-0.5 rounded font-bold tracking-wider"
                       title={schedule.eventName}
                     >
                       Evento
@@ -177,7 +177,7 @@ export const WeeklyClasses = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <div>
           <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground">
-            <CalendarDays className="w-6 h-6 text-blue-400" /> Previsión Semanal
+            <CalendarDays className="w-6 h-6 text-info" /> Previsión Semanal
           </h2>
           <p className="text-sm text-muted mt-1">
             Distribución temporal de los módulos y las sesiones planificadas en el aula.
@@ -189,9 +189,9 @@ export const WeeklyClasses = () => {
           <div className="flex bg-background/50 p-1 rounded-xl border border-[var(--glass-border)] self-start md:self-auto">
             <button
               onClick={() => setActiveWeekTab('current')}
-              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+              className={`px-4 py-2 rounded-lg text-xs font-medium transition-all ${
                 activeWeekTab === 'current'
-                  ? 'bg-blue-500 text-white shadow-sm'
+                  ? 'bg-info text-white shadow-sm'
                   : 'text-muted hover:text-foreground'
               }`}
             >
@@ -199,9 +199,9 @@ export const WeeklyClasses = () => {
             </button>
             <button
               onClick={() => setActiveWeekTab('next')}
-              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+              className={`px-4 py-2 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 ${
                 activeWeekTab === 'next'
-                  ? 'bg-blue-500 text-white shadow-sm'
+                  ? 'bg-info text-white shadow-sm'
                   : 'text-muted hover:text-foreground'
               }`}
             >
@@ -210,7 +210,7 @@ export const WeeklyClasses = () => {
             </button>
           </div>
         ) : (
-          <div className="bg-blue-500/10 border border-blue-500/25 text-blue-300 text-xs px-3 py-1.5 rounded-lg font-bold">
+          <div className="bg-info/10 border border-info/30 text-info text-xs px-3 py-1.5 rounded-lg font-bold">
             Semana Actual
           </div>
         )}
@@ -219,14 +219,14 @@ export const WeeklyClasses = () => {
       {/* Week Contents */}
       {activeWeekTab === 'current' ? (
         <div className="animate-in fade-in duration-300">
-          <div className="text-xs font-bold text-muted tracking-wider mb-3">
+          <div className="text-xs font-medium text-muted tracking-wider mb-3">
             Semana del {format(currentWeekDays[0], "d 'de' MMMM", { locale: es })} al {format(currentWeekDays[4], "d 'de' MMMM", { locale: es })}
           </div>
           {renderWeekDays(currentWeekDays)}
         </div>
       ) : (
         <div className="animate-in fade-in duration-300">
-          <div className="text-xs font-bold text-muted tracking-wider mb-3">
+          <div className="text-xs font-medium text-muted tracking-wider mb-3">
             Semana del {format(nextWeekDays[0], "d 'de' MMMM", { locale: es })} al {format(nextWeekDays[4], "d 'de' MMMM", { locale: es })}
           </div>
           {renderWeekDays(nextWeekDays)}

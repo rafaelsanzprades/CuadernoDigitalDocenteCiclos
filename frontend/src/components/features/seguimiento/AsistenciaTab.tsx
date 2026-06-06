@@ -1,10 +1,9 @@
 "use client";
-
+import { BarChart2, ClipboardEdit, Settings, Users } from "lucide-react";
 import { useState } from "react";
 import { useAppStore } from "@/store/useAppStore";
 import { AttendanceGrid } from "@/components/features/seguimiento/AttendanceGrid";
 import { AttendanceAccumulated } from "@/components/features/seguimiento/AttendanceAccumulated";
-import { Users, ClipboardEdit, BarChart2, Settings } from "lucide-react";
 import { EmptyState } from "@/components/ui/EmptyState";
 import Link from "next/link";
 
@@ -33,7 +32,7 @@ export function AsistenciaTab() {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === tab.id ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground'}`}
+            className={`px-6 py-4 font-semibold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === tab.id ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground'}`}
           >
             {tab.label}
           </button>

@@ -1,5 +1,5 @@
 "use client";
-
+import { Activity, AlertTriangle, ArrowRight, BarChart2, BookOpen, Briefcase, Building2, CalendarDays, Check, CheckCircle, ClipboardList, FileText, GraduationCap, HeartHandshake, Layers, Users, Wrench, XCircle } from "lucide-react";
 import { useAppStore } from "@/store/useAppStore";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
@@ -7,12 +7,6 @@ import { MotionWrapper } from "@/components/ui/MotionWrapper";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import Link from "next/link";
-import {
-  CheckCircle, AlertTriangle, XCircle, ArrowRight,
-  BookOpen, Users, BarChart2, CalendarDays, Wrench,
-  ClipboardList, FileText, Building2, Briefcase, HeartHandshake,
-  GraduationCap, Layers, Activity
-} from "lucide-react";
 
 // ── Tipos ─────────────────────────────────────────────────────────────────
 type CheckStatus = "ok" | "warning" | "empty";
@@ -41,16 +35,16 @@ function sumPesos(arr: { peso_ra?: string | number; peso_ce?: string | number }[
 
 function StatusBadge({ status }: { status: CheckStatus }) {
   if (status === "ok")
-    return <Badge variant="success" className="bg-green-500/10 text-green-400 border-green-500/30 shrink-0">Correcto</Badge>;
+    return <Badge variant="success" className="bg-success/10 text-success border-success/30 shrink-0">Correcto</Badge>;
   if (status === "warning")
-    return <Badge variant="warning" className="bg-amber-500/10 text-amber-400 border-amber-500/30 shrink-0">Advertencia</Badge>;
-  return <Badge variant="default" className="bg-red-500/10 text-red-400 border-red-500/30 shrink-0">Sin datos</Badge>;
+    return <Badge variant="warning" className="bg-warning/10 text-warning border-warning/30 shrink-0">Advertencia</Badge>;
+  return <Badge variant="default" className="bg-danger/10 text-danger border-danger/30 shrink-0">Sin datos</Badge>;
 }
 
 function StatusIcon({ status }: { status: CheckStatus }) {
-  if (status === "ok") return <CheckCircle className="w-5 h-5 text-green-400 shrink-0" />;
-  if (status === "warning") return <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />;
-  return <XCircle className="w-5 h-5 text-red-400 shrink-0" />;
+  if (status === "ok") return <CheckCircle className="w-5 h-5 text-success shrink-0" />;
+  if (status === "warning") return <AlertTriangle className="w-5 h-5 text-warning shrink-0" />;
+  return <XCircle className="w-5 h-5 text-danger shrink-0" />;
 }
 
 function CheckCard({ item }: { item: CheckItem }) {
@@ -187,7 +181,7 @@ export default function AyudaPage() {
         ? ["No hay RA definidos"]
         : [
           `${raCount} RA definidos`,
-          `Suma de pesos: ${raPesoSum.toFixed(1)}% ${Math.abs(raPesoSum - 100) > 1 ? "⚠️ no suman 100%" : "✓"}`,
+          `Suma de pesos: ${raPesoSum.toFixed(1)}% ${Math.abs(raPesoSum - 100) > 1 ? <><span className="inline-flex"><AlertTriangle className="w-[1.2em] h-[1.2em] mr-1" /></span> no suman 100%</> : <><span className="inline-flex"><Check className="w-[1.2em] h-[1.2em] mr-1" /></span></>}`,
         ],
       actionHref: raCount === 0 ? "/matrices" : undefined,
       actionLabel: raCount === 0 ? "Añadir primer RA" : undefined,
@@ -220,7 +214,7 @@ export default function AyudaPage() {
         ? ["No hay instrumentos definidos"]
         : [
           `${instrCount} instrumentos definidos`,
-          `Suma de pesos: ${instrPesoSum.toFixed(1)}% ${Math.abs(instrPesoSum - 100) > 1 ? "⚠️ no suman 100%" : "✓"}`,
+          `Suma de pesos: ${instrPesoSum.toFixed(1)}% ${Math.abs(instrPesoSum - 100) > 1 ? <><span className="inline-flex"><AlertTriangle className="w-[1.2em] h-[1.2em] mr-1" /></span> no suman 100%</> : <><span className="inline-flex"><Check className="w-[1.2em] h-[1.2em] mr-1" /></span></>}`,
         ],
       actionHref: instrCount === 0 ? "/instrumentos" : undefined,
       actionLabel: instrCount === 0 ? "Añadir instrumento" : undefined,
@@ -428,19 +422,19 @@ export default function AyudaPage() {
 
             {/* ── Resumen ────────────────────────────────────────── */}
             <div className="grid grid-cols-3 gap-4">
-              <Card className="p-4 border border-green-500/20 bg-green-500/5 rounded-2xl text-center">
-                <CheckCircle className="w-7 h-7 text-green-400 mx-auto mb-1" />
-                <div className="text-2xl font-extrabold text-green-400">{okCount}</div>
+              <Card className="p-4 border border-success/30 bg-success/10 rounded-2xl text-center">
+                <CheckCircle className="w-7 h-7 text-success mx-auto mb-1" />
+                <div className="text-2xl font-extrabold text-success">{okCount}</div>
                 <div className="text-xs text-muted mt-0.5">Correctos</div>
               </Card>
-              <Card className="p-4 border border-amber-500/20 bg-amber-500/5 rounded-2xl text-center">
-                <AlertTriangle className="w-7 h-7 text-amber-400 mx-auto mb-1" />
-                <div className="text-2xl font-extrabold text-amber-400">{warnCount}</div>
+              <Card className="p-4 border border-warning/30 bg-warning/10 rounded-2xl text-center">
+                <AlertTriangle className="w-7 h-7 text-warning mx-auto mb-1" />
+                <div className="text-2xl font-extrabold text-warning">{warnCount}</div>
                 <div className="text-xs text-muted mt-0.5">Advertencias</div>
               </Card>
-              <Card className="p-4 border border-red-500/20 bg-red-500/5 rounded-2xl text-center">
-                <XCircle className="w-7 h-7 text-red-400 mx-auto mb-1" />
-                <div className="text-2xl font-extrabold text-red-400">{emptyCount}</div>
+              <Card className="p-4 border border-danger/30 bg-danger/10 rounded-2xl text-center">
+                <XCircle className="w-7 h-7 text-danger mx-auto mb-1" />
+                <div className="text-2xl font-extrabold text-danger">{emptyCount}</div>
                 <div className="text-xs text-muted mt-0.5">Sin datos</div>
               </Card>
             </div>

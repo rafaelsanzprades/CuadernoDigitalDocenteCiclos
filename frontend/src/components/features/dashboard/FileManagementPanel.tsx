@@ -1,3 +1,4 @@
+import { Calendar, CheckCircle2, Settings } from "lucide-react";
 import React from "react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
@@ -44,7 +45,7 @@ export function FileManagementPanel({
         <Card className="h-full p-6 border-t-4 border-t-accent flex flex-col gap-6 transform transition-all duration-300 hover:shadow-2xl hover:shadow-accent/10">
           <div>
             <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-2">
-<span>⚙️</span> Programación
+<span><span className="inline-flex"><Settings className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Programación
 </h2>
             <p className="text-sm text-muted">
               Activa la Programación Didáctica maestra (RAs, UDs, Tareas, etc.) que servirá de plantilla.
@@ -71,7 +72,7 @@ export function FileManagementPanel({
               disabled={!selectedPd}
               className="w-full bg-gradient-to-r from-accent to-[#1abc9c] hover:from-[#1abc9c] hover:to-accent"
             >
-              <span>✅</span> Activar Programación
+              <span><span className="inline-flex"><CheckCircle2 className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Activar Programación
             </Button>
           </div>
 
@@ -93,7 +94,7 @@ export function FileManagementPanel({
               variant="secondary"
               className="w-full"
             >
-              <span>✨</span> Crear nueva Programación
+              <span></span> Crear nueva Programación
             </Button>
           </div>
         </Card>
@@ -102,7 +103,7 @@ export function FileManagementPanel({
         <Card className="h-full p-6 border-t-4 border-t-blue-500 flex flex-col gap-6 transform transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10">
           <div>
             <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-2">
-<span>📅</span> Curso
+<span><span className="inline-flex"><Calendar className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Curso
 </h2>
             <p className="text-sm text-muted">
               Activa el Curso escolar real (Alumnado, Notas, Seguimiento diario) de la Programación seleccionada.
@@ -125,7 +126,7 @@ export function FileManagementPanel({
               disabled={!selectedCurso}
               className="w-full bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-500 hover:to-blue-300"
             >
-              <span>✅</span> Activar Curso
+              <span><span className="inline-flex"><CheckCircle2 className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Activar Curso
             </Button>
           </div>
 
@@ -149,7 +150,7 @@ export function FileManagementPanel({
               variant="secondary"
               className="w-full"
             >
-              <span>📅</span> Crear nuevo Curso
+              <span><span className="inline-flex"><Calendar className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Crear nuevo Curso
             </Button>
           </div>
         </Card>

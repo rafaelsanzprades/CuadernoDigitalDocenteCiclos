@@ -1,5 +1,5 @@
 "use client";
-
+import { AlertTriangle, BarChart, Building2, CheckCircle2, Factory, Lightbulb, Scale } from "lucide-react";
 import React, { useState } from "react";
 import { Card } from "@/components/ui/Card";
 
@@ -47,11 +47,11 @@ const COMPARATIVAS: { id: string; titulo: string; emoji: string; comparativa: Co
   {
     id: "instalaciones-mantenimiento",
     titulo: "Instalaciones vs. Mantenimiento",
-    emoji: "🔧",
+    emoji: "",
     comparativa: {
       optionA: {
         label: "Instalaciones",
-        emoji: "🏗️",
+        emoji: "️",
         description: "Montaje de obra nueva. Ves el resultado desde cero.",
         pros: [
           "Ves el resultado final desde cero; satisfacción de \"estrenar\" equipos",
@@ -67,7 +67,7 @@ const COMPARATIVAS: { id: string; titulo: string; emoji: string; comparativa: Co
       },
       optionB: {
         label: "Mantenimiento",
-        emoji: "🛠️",
+        emoji: "️",
         description: "Correctivo y preventivo. Diagnóstico de averías.",
         pros: [
           "Trabajo más intelectual (diagnóstico, polímetro, esquemas)",
@@ -87,11 +87,11 @@ const COMPARATIVAS: { id: string; titulo: string; emoji: string; comparativa: Co
   {
     id: "insitu-taller",
     titulo: "In-situ en cliente vs. Sede / Taller",
-    emoji: "🚐",
+    emoji: "",
     comparativa: {
       optionA: {
         label: "In-situ (en el cliente)",
-        emoji: "🗺️",
+        emoji: "️",
         description: "Cada día es una aventura. Tú y tu furgoneta.",
         pros: [
           "Cada día es distinto; no hay monotonía",
@@ -107,7 +107,7 @@ const COMPARATIVAS: { id: string; titulo: string; emoji: string; comparativa: Co
       },
       optionB: {
         label: "Sede / Taller",
-        emoji: "🏭",
+        emoji: "",
         description: "Entorno controlado. Cuadristas o reparación.",
         pros: [
           "Entorno controlado y ordenado",
@@ -126,11 +126,11 @@ const COMPARATIVAS: { id: string; titulo: string; emoji: string; comparativa: Co
   {
     id: "publico-privado",
     titulo: "Sector Público vs. Sector Privado",
-    emoji: "⚖️",
+    emoji: "️",
     comparativa: {
       optionA: {
         label: "Sector Público",
-        emoji: "🏛️",
+        emoji: "️",
         description: "Ayuntamientos, SALUD, DGA. Máxima estabilidad.",
         pros: [
           "Máxima estabilidad laboral (una vez dentro, es para siempre)",
@@ -147,7 +147,7 @@ const COMPARATIVAS: { id: string; titulo: string; emoji: string; comparativa: Co
       },
       optionB: {
         label: "Sector Privado",
-        emoji: "🏢",
+        emoji: "",
         description: "PYMEs o Grandes Multinacionales. Dinamismo y oportunidad.",
         pros: [
           "Posibilidad de subir de sueldo rápido si eres bueno",
@@ -166,21 +166,21 @@ const COMPARATIVAS: { id: string; titulo: string; emoji: string; comparativa: Co
 ];
 
 const RESUMEN_TABLA = [
-  { criterio: "Esfuerzo", a: "💪 Instalación: Más físico", b: "🧠 Mantenimiento: Más mental" },
-  { criterio: "Ubicación", a: "🌤️ Campo: Aire libre, movilidad", b: "🏭 Taller: Comodidad, rutina" },
-  { criterio: "Sueldo", a: "🏛️ Público: Estable, medio", b: "🚀 Privado: Variable, potencial alto" },
-  { criterio: "Horario", a: "🔨 Obra: Fijo (7:00–15:00)", b: "📱 Mantenimiento: Guardias y avisos" },
+  { criterio: "Esfuerzo", a: "Instalación: Más físico", b: "Mantenimiento: Más mental" },
+  { criterio: "Ubicación", a: "️ Campo: Aire libre, movilidad", b: "Taller: Comodidad, rutina" },
+  { criterio: "Sueldo", a: "️ Público: Estable, medio", b: "Privado: Variable, potencial alto" },
+  { criterio: "Horario", a: "Obra: Fijo (7:00–15:00)", b: "Mantenimiento: Guardias y avisos" },
 ];
 
 const SECTORES: Sector[] = [
   {
     id: "primario",
-    emoji: "🌾",
+    emoji: "",
     nombre: "Sector Primario",
     subtitulo: "Extracción y Materias Primas",
-    color: "text-green-400",
-    colorBg: "bg-green-500/5",
-    colorBorder: "border-green-500/30",
+    color: "text-success",
+    colorBg: "bg-success/10",
+    colorBorder: "border-success/30",
     intro:
       "Digitalizar y automatizar el campo. La modernización agrícola ha disparado la necesidad de técnicos eléctricos y de teleco. En Aragón, potencia agroalimentaria, somos tan necesarios como veterinarios o agrónomos.",
     advertencia:
@@ -190,7 +190,7 @@ const SECTORES: Sector[] = [
         titulo: "Ganadería Industrial (Porcino y Avícola)",
         quéHace:
           "Instalación de sistemas de alimentación automática, control de clima (sensores de temperatura y ventilación), sistemas de purines y cámaras de vigilancia IP.",
-        badge: "🐖 Aragón = 1er productor de porcino de España",
+        badge: "Aragón = 1er productor de porcino de España",
         empresas: [
           { nombre: "Grupo Jorge", nota: "Sede en Zaragoza, centros en toda la región" },
           { nombre: "Vall Companys / Piensos Costa", nota: "Cientos de granjas integradas" },
@@ -237,12 +237,12 @@ const SECTORES: Sector[] = [
   },
   {
     id: "secundario",
-    emoji: "⚙️",
+    emoji: "️",
     nombre: "Sector Secundario",
     subtitulo: "Industria y Energía — El motor del empleo técnico",
-    color: "text-blue-400",
-    colorBg: "bg-blue-500/5",
-    colorBorder: "border-blue-500/30",
+    color: "text-info",
+    colorBg: "bg-info/10",
+    colorBorder: "border-info/30",
     intro:
       "Es el 'corazón' del empleo técnico. Aquí el trabajo es más estable y especializado. Ecosistema industrial muy potente concentrado en el eje del Ebro (Zaragoza), con nodos fuertes en Huesca y Teruel.",
     advertencia:
@@ -252,7 +252,7 @@ const SECTORES: Sector[] = [
         titulo: "Automoción y Auxiliares",
         quéHace:
           "Mantenimiento de robots, líneas de soldadura, autómatas programables (PLC), sensores de presencia y visión artificial.",
-        badge: "🚗 El gigante de la región",
+        badge: "El gigante de la región",
         empresas: [
           { nombre: "Stellantis (Figueruelas)", nota: "La antigua Opel. Miles de cuadros eléctricos y sistemas de teleco" },
           { nombre: "Lear, Magna, Mann+Hummel, Brembo", nota: "Cluster de Automoción de Aragón (CAAR). Requieren técnicos 24/7" },
@@ -262,7 +262,7 @@ const SECTORES: Sector[] = [
         titulo: "Logística y Centros de Datos",
         quéHace:
           "Instalación de racks, tendido de fibra óptica de alta densidad, sistemas SAI y redes de datos masivas.",
-        badge: "🏭 Aragón = hub logístico y de datos del sur de Europa",
+        badge: "Aragón = hub logístico y de datos del sur de Europa",
         empresas: [
           { nombre: "Amazon Web Services (AWS)", nota: "Tres centros de datos: Huesca, El Burgo de Ebro, Villanueva de Gállego" },
           { nombre: "PLAZA Zaragoza", nota: "El centro logístico más grande de Europa. Inditex, Amazon, DHL…" },
@@ -300,12 +300,12 @@ const SECTORES: Sector[] = [
   },
   {
     id: "terciario",
-    emoji: "🏙️",
+    emoji: "️",
     nombre: "Sector Terciario",
     subtitulo: "Servicios — Conectar personas, mantener ciudades",
-    color: "text-purple-400",
-    colorBg: "bg-purple-500/5",
-    colorBorder: "border-purple-500/30",
+    color: "text-info",
+    colorBg: "bg-info/10",
+    colorBorder: "border-info/30",
     intro:
       "El bloque más amplio. Aquí se necesitan técnicos 'todoterreno'. El trabajo no es solo montar una instalación, sino asegurar que hospitales, redes digitales y ciudades sigan funcionando 24/7.",
     advertencia:
@@ -315,7 +315,7 @@ const SECTORES: Sector[] = [
         titulo: "Infraestructuras de Salud (Hospitales)",
         quéHace:
           "Mantenimiento de quirófanos (SAI), grupos electrógenos, sistemas de llamada de enfermería y redes de datos para diagnóstico por imagen. Un fallo aquí no es una molestia, es una emergencia.",
-        badge: "🚨 Mayor criticidad: tolerancia 0 al fallo",
+        badge: "Mayor criticidad: tolerancia 0 al fallo",
         empresas: [
           { nombre: "SALUD (Servicio Aragonés de Salud)", nota: "Hospital Miguel Servet, Clínico Lozano Blesa (a través de contratas)" },
           { nombre: "Ferrovial Servicios, Eulen, Veolia", nota: "Mantenimiento integral de grandes centros" },
@@ -325,7 +325,7 @@ const SECTORES: Sector[] = [
         titulo: "Centros de Datos y Telecomunicaciones",
         quéHace:
           "Fusionado de fibra óptica, montaje de racks, cableado estructurado, certificación de redes y mantenimiento de refrigeración de precisión.",
-        badge: "📡 Aragón = capital del dato en España",
+        badge: "Aragón = capital del dato en España",
         empresas: [
           { nombre: "Amazon Web Services (AWS)", nota: "Centros en El Burgo, Villanueva de Gállego y Huesca" },
           { nombre: "Embou", nota: "El operador aragonés por excelencia" },
@@ -380,22 +380,22 @@ function ProsConsCard({
       </div>
       <div className="p-5 space-y-4">
         <div>
-          <div className="text-[10px] font-bold tracking-widest text-emerald-400 mb-2">✅ Pros</div>
+          <div className="text-[10px] font-bold tracking-widest text-success mb-2"><span className="inline-flex"><CheckCircle2 className="w-[1.2em] h-[1.2em] mr-1" /></span> Pros</div>
           <ul className="space-y-1.5">
             {option.pros.map((p, i) => (
               <li key={i} className="text-sm text-foreground/80 flex items-start gap-2">
-                <span className="text-emerald-400 shrink-0 mt-0.5">+</span>
+                <span className="text-success shrink-0 mt-0.5">+</span>
                 <span>{p}</span>
               </li>
             ))}
           </ul>
         </div>
         <div className="border-t border-white/5 pt-4">
-          <div className="text-[10px] font-bold tracking-widest text-red-400 mb-2">⚠️ Contras</div>
+          <div className="text-[10px] font-bold tracking-widest text-danger mb-2"><span className="inline-flex"><AlertTriangle className="w-[1.2em] h-[1.2em] mr-1" /></span> Contras</div>
           <ul className="space-y-1.5">
             {option.cons.map((c, i) => (
               <li key={i} className="text-sm text-foreground/80 flex items-start gap-2">
-                <span className="text-red-400 shrink-0 mt-0.5">−</span>
+                <span className="text-danger shrink-0 mt-0.5">−</span>
                 <span>{c}</span>
               </li>
             ))}
@@ -427,7 +427,7 @@ export const PanoramaTab = () => {
       {/* ── Comparativas ─────────────────────────────────────────────────────── */}
       <section className="space-y-6">
         <h2 className="text-2xl font-extrabold text-foreground flex items-center gap-3">
-          ⚖️ <span>Las grandes decisiones de tu carrera</span>
+          <span className="inline-flex"><Scale className="w-[1.2em] h-[1.2em] mr-1" /></span> <span>Las grandes decisiones de tu carrera</span>
         </h2>
 
         <div className="space-y-4">
@@ -449,14 +449,14 @@ export const PanoramaTab = () => {
                 {isOpen && (
                   <div className="p-5 space-y-5 animate-in slide-in-from-top-2 duration-200 bg-background/20">
                     <div className="flex flex-col md:flex-row gap-4">
-                      <ProsConsCard option={comp.comparativa.optionA} accentClass="bg-emerald-500/10" />
+                      <ProsConsCard option={comp.comparativa.optionA} accentClass="bg-success/10" />
                       <div className="flex items-center justify-center text-2xl font-black text-muted shrink-0">Vs</div>
-                      <ProsConsCard option={comp.comparativa.optionB} accentClass="bg-blue-500/10" />
+                      <ProsConsCard option={comp.comparativa.optionB} accentClass="bg-info/10" />
                     </div>
                     {comp.comparativa.tip && (
-                      <div className="border border-amber-500/30 bg-amber-500/8 rounded-xl px-5 py-4 flex items-start gap-3">
-                        <span className="text-amber-400 text-xl shrink-0">💡</span>
-                        <p className="text-sm text-amber-300/90 leading-relaxed">{comp.comparativa.tip}</p>
+                      <div className="border border-warning/30 bg-warning/10 rounded-xl px-5 py-4 flex items-start gap-3">
+                        <span className="text-warning text-xl shrink-0"><span className="inline-flex"><Lightbulb className="w-[1.2em] h-[1.2em] mr-1" /></span></span>
+                        <p className="text-sm text-warning leading-relaxed">{comp.comparativa.tip}</p>
                       </div>
                     )}
                   </div>
@@ -469,7 +469,7 @@ export const PanoramaTab = () => {
         {/* Resumen tabla */}
         <Card className="border border-white/5 bg-foreground/5 overflow-hidden">
           <div className="px-6 py-4 border-b border-white/5 bg-foreground/10">
-            <h3 className="text-sm font-bold text-foreground tracking-wider">📊 Resumen comparativo rápido</h3>
+            <h3 className="text-sm font-semibold text-foreground tracking-wider"><span className="inline-flex"><BarChart className="w-[1.2em] h-[1.2em] mr-1" /></span> Resumen comparativo rápido</h3>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -497,7 +497,7 @@ export const PanoramaTab = () => {
       {/* ── Sectores económicos ───────────────────────────────────────────────── */}
       <section className="space-y-6">
         <h2 className="text-2xl font-extrabold text-foreground flex items-center gap-3">
-          🏭 <span>División por sectores económicos en Aragón</span>
+          <span className="inline-flex"><Factory className="w-[1.2em] h-[1.2em] mr-1" /></span> <span>División por sectores económicos en Aragón</span>
         </h2>
         <p className="text-muted text-base">
           Cada sector tiene sus propias empresas, sus propias condiciones y su propia cultura de trabajo.
@@ -517,7 +517,7 @@ export const PanoramaTab = () => {
                   <div className="flex items-center gap-4">
                     <span className="text-4xl">{sector.emoji}</span>
                     <div>
-                      <div className={`text-xs font-bold tracking-widest ${sector.color} mb-0.5`}>
+                      <div className={`text-xs font-medium tracking-widest ${sector.color} mb-0.5`}>
                         {sector.subtitulo}
                       </div>
                       <h3 className="text-xl font-extrabold text-foreground">{sector.nombre}</h3>
@@ -533,7 +533,7 @@ export const PanoramaTab = () => {
                     {/* Warning / tip */}
                     {sector.advertencia && (
                       <div className={`border ${sector.colorBorder} ${sector.colorBg} rounded-xl px-5 py-4 flex items-start gap-3`}>
-                        <span className="text-xl shrink-0">⚠️</span>
+                        <span className="text-xl shrink-0"><span className="inline-flex"><AlertTriangle className="w-[1.2em] h-[1.2em] mr-1" /></span></span>
                         <p className={`text-sm ${sector.color} leading-relaxed`}>{sector.advertencia}</p>
                       </div>
                     )}
@@ -543,7 +543,7 @@ export const PanoramaTab = () => {
                       {sector.subsectores.map((sub, idx) => (
                         <div key={idx} className="bg-foreground/5 border border-white/5 rounded-xl p-5 space-y-3">
                           <div>
-                            <h4 className="text-sm font-bold text-foreground">{sub.titulo}</h4>
+                            <h4 className="text-sm font-semibold text-foreground">{sub.titulo}</h4>
                             {sub.badge && (
                               <span className={`inline-block text-[10px] font-bold ${sector.color} ${sector.colorBg} border ${sector.colorBorder} px-2 py-0.5 rounded-full mt-1 tracking-wide`}>
                                 {sub.badge}
@@ -558,12 +558,12 @@ export const PanoramaTab = () => {
 
                           <div>
                             <div className="text-[10px] font-bold text-muted tracking-wider mb-2">
-                              🏢 Empresas y entidades clave en Aragón
+                              <span className="inline-flex"><Building2 className="w-[1.2em] h-[1.2em] mr-1" /></span> Empresas y entidades clave en Aragón
                             </div>
                             <ul className="space-y-1.5">
                               {sub.empresas.map((emp, ei) => (
                                 <li key={ei} className="flex items-start gap-2">
-                                  <span className={`text-xs font-bold ${sector.color} shrink-0 mt-0.5`}>›</span>
+                                  <span className={`text-xs font-medium ${sector.color} shrink-0 mt-0.5`}>›</span>
                                   <div>
                                     <span className="text-xs font-semibold text-foreground">{emp.nombre}</span>
                                     {emp.nota && (

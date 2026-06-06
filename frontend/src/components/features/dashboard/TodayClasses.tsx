@@ -1,6 +1,6 @@
+import { BookOpen, Calendar, Clock, Layers } from "lucide-react";
 import React from 'react';
 import { useAppStore } from '@/store/useAppStore';
-import { Calendar, Clock, BookOpen, Layers } from 'lucide-react';
 import { MotionWrapper } from '@/components/ui/MotionWrapper';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';

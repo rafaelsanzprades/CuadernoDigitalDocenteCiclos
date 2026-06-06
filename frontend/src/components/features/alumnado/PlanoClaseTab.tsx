@@ -1,10 +1,10 @@
+import { Grid, HelpCircle, PartyPopper, RefreshCw, School, Trash2, User, UserCircle, Users } from "lucide-react";
 import React, { useMemo } from 'react';
 import { useAppStore } from '@/store/useAppStore';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Select } from '@/components/ui/Select';
 import { Badge } from '@/components/ui/Badge';
-import { Trash2, Grid, Users, User, RefreshCw, HelpCircle } from 'lucide-react';
 import { Alumnado } from '@/types';
 
 export const PlanoClaseTab = () => {
@@ -143,7 +143,7 @@ export const PlanoClaseTab = () => {
         <div className="flex flex-wrap items-center gap-6">
           <div className="flex items-center gap-2">
             <Grid className="w-5 h-5 text-accent" />
-            <span className="text-sm font-bold text-foreground/90">Dimensiones del Aula:</span>
+            <span className="text-sm font-semibold text-foreground/90">Dimensiones del Aula:</span>
           </div>
 
           <div className="flex items-center gap-4">
@@ -182,15 +182,15 @@ export const PlanoClaseTab = () => {
         {/* Stats and helper info */}
         <div className="flex items-center gap-4 text-xs text-muted">
           <div className="flex items-center gap-1">
-            <Users className="w-4 h-4 text-blue-400" />
+            <Users className="w-4 h-4 text-info" />
             <span>Alumnado activos: <strong>{activeStudents.length}</strong></span>
           </div>
           <div className="flex items-center gap-1">
-            <User className="w-4 h-4 text-green-400" />
+            <User className="w-4 h-4 text-success" />
             <span>Sentados: <strong>{assignedStudentIds.size}</strong></span>
           </div>
           <div className="flex items-center gap-1">
-            <HelpCircle className="w-4 h-4 text-amber-400" />
+            <HelpCircle className="w-4 h-4 text-warning" />
             <span>Sin asignar: <strong>{unassignedStudents.length}</strong></span>
           </div>
         </div>
@@ -200,7 +200,7 @@ export const PlanoClaseTab = () => {
           <Button
             variant="ghost"
             onClick={handleAutoFill}
-            className="text-xs font-bold flex items-center gap-1.5 bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 border border-blue-500/30 px-4 py-2 rounded-xl"
+            className="text-xs font-medium flex items-center gap-1.5 bg-info/10 text-info hover:bg-info/10 border border-info/30 px-4 py-2 rounded-xl"
           >
             <RefreshCw className="w-4 h-4" /> Distribución Alfabética
           </Button>
@@ -208,7 +208,7 @@ export const PlanoClaseTab = () => {
           <Button
             variant="ghost"
             onClick={handleResetLayout}
-            className="text-xs font-bold flex items-center gap-1.5 bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/30 px-4 py-2 rounded-xl"
+            className="text-xs font-medium flex items-center gap-1.5 bg-danger/10 text-danger hover:bg-danger/10 border border-danger/30 px-4 py-2 rounded-xl"
           >
             <Trash2 className="w-4 h-4" /> Vaciar Plano
           </Button>
@@ -245,7 +245,7 @@ export const PlanoClaseTab = () => {
                     key={seatKey}
                     className={`border rounded-xl p-3 flex flex-col justify-between aspect-video min-w-[130px] transition-all duration-300 ${
                       student
-                        ? 'border-blue-500/40 bg-blue-500/5 hover:bg-blue-500/10'
+                        ? 'border-info/30 bg-info/10 hover:bg-info/10'
                         : 'border-white/5 bg-foreground/5 hover:bg-foreground/10'
                     }`}
                   >
@@ -298,7 +298,7 @@ export const PlanoClaseTab = () => {
           
           {/* Teacher Desk */}
           <div className="w-1/3 min-w-[200px] border border-accent/30 bg-accent/5 hover:bg-accent/10 transition-colors duration-300 rounded-xl p-3.5 text-center text-accent font-extrabold text-xs tracking-widest flex items-center justify-center gap-2 shadow-lg">
-            <span>👨‍🏫 Mesa del Profesor / Pizarra</span>
+            <span>‍<span className="inline-flex"><School className="w-[1.2em] h-[1.2em] mr-1" /></span> Mesa del Profesor / Pizarra</span>
           </div>
         </div>
       </Card>
@@ -306,7 +306,7 @@ export const PlanoClaseTab = () => {
       {/* Unassigned Students Section */}
       <Card className="border border-white/5 rounded-2xl p-6 bg-foreground/5 shadow-lg">
         <div className="flex items-center justify-between mb-4 border-b border-[var(--glass-border)] pb-3">
-          <h3 className="text-sm font-bold text-foreground flex items-center gap-2">
+          <h3 className="text-sm font-semibold text-foreground flex items-center gap-2">
             <Users className="w-5 h-5 text-accent" /> Alumnado sin asignar en el plano ({unassignedStudents.length})
           </h3>
           {unassignedStudents.length > 0 && (
@@ -317,8 +317,8 @@ export const PlanoClaseTab = () => {
         </div>
 
         {unassignedStudents.length === 0 ? (
-          <div className="text-center py-6 text-sm text-green-400 font-semibold">
-            🎉 ¡Todos los alumnado activos han sido colocados en el plano!
+          <div className="text-center py-6 text-sm text-success font-semibold">
+            <span className="inline-flex"><PartyPopper className="w-[1.2em] h-[1.2em] mr-1" /></span> ¡Todos los alumnado activos han sido colocados en el plano!
           </div>
         ) : (
           <div className="flex flex-wrap gap-2">
@@ -328,7 +328,7 @@ export const PlanoClaseTab = () => {
                 className="bg-foreground/10 text-foreground/80 border border-[var(--glass-border)] hover:border-accent/40 hover:text-foreground px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 transition-all duration-300"
                 title={`ID: ${al.ID}`}
               >
-                <div className="w-1.5 h-1.5 rounded-full bg-amber-400"></div>
+                <div className="w-1.5 h-1.5 rounded-full bg-warning"></div>
                 <span>
                   {al.Apellidos}, {al.Nombre}
                 </span>

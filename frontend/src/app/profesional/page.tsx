@@ -1,5 +1,5 @@
 "use client";
-
+import { BarChart, ClipboardList, Compass, FolderOpen, GraduationCap, Map, Save } from "lucide-react";
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
@@ -14,10 +14,10 @@ import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 
 const TABS = [
-  { id: "perfil",     label: "🧭 Perfil individual",    cleanLabel: "Perfil individual" },
-  { id: "resumen",    label: "📋 Resumen del alumnado",  cleanLabel: "Resumen del alumnado" },
-  { id: "tendencias", label: "📊 Mapa de tendencias",    cleanLabel: "Mapa de tendencias" },
-  { id: "panorama",   label: "🗺️ Panorama profesional", cleanLabel: "Panorama profesional" },
+  { id: "perfil",     label:  <span className="flex items-center gap-2"><Compass className="w-4 h-4 shrink-0" /> Perfil individual</span>,    cleanLabel: "Perfil individual" },
+  { id: "resumen",    label:  <span className="flex items-center gap-2"><ClipboardList className="w-4 h-4 shrink-0" /> Resumen del alumnado</span>,  cleanLabel: "Resumen del alumnado" },
+  { id: "tendencias", label:  <span className="flex items-center gap-2"><BarChart className="w-4 h-4 shrink-0" /> Mapa de tendencias</span>,    cleanLabel: "Mapa de tendencias" },
+  { id: "panorama",   label:  <span className="flex items-center gap-2"><Map className="w-4 h-4 shrink-0" /> Panorama profesional</span>, cleanLabel: "Panorama profesional" },
 ];
 
 export default function ProfesionalPage() {
@@ -83,10 +83,10 @@ export default function ProfesionalPage() {
           <Header />
           <main className="flex-1 p-8">
             <Card className="p-12 text-center flex flex-col items-center gap-4">
-              <span className="text-5xl">🎓</span>
+              <span className="text-5xl"><span className="inline-flex"><GraduationCap className="w-[1.2em] h-[1.2em] mr-1" /></span></span>
               <h2 className="text-2xl font-bold text-foreground">No hay Curso activo seleccionado</h2>
               <p className="text-muted max-w-md">
-                Ve a <strong>📂 Entorno de trabajo</strong> y selecciona un Curso activo para acceder a las fichas de orientación profesional.
+                Ve a <strong><span className="inline-flex"><FolderOpen className="w-[1.2em] h-[1.2em] mr-1" /></span> Entorno de trabajo</strong> y selecciona un Curso activo para acceder a las fichas de orientación profesional.
               </p>
             </Card>
           </main>
@@ -112,7 +112,7 @@ export default function ProfesionalPage() {
           <div className="flex justify-between items-start gap-4">
             <div>
               <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                🧭 Orientación profesional
+                <span className="inline-flex"><Compass className="w-[1.2em] h-[1.2em] mr-1" /></span> Orientación profesional
               </h1>
               <p className="text-muted mt-2 text-lg">
                 Ficha individual de orientación, intereses, aspiraciones e inserción laboral por alumnado.
@@ -122,7 +122,7 @@ export default function ProfesionalPage() {
               {saveMessage && (
                 <span
                   className={`text-sm font-semibold ${
-                    saveMessage.includes("Error") ? "text-red-400" : "text-green-400"
+                    saveMessage.includes("Error") ? "text-danger" : "text-success"
                   }`}
                 >
                   {saveMessage}
@@ -133,7 +133,7 @@ export default function ProfesionalPage() {
                 disabled={saving}
                 className="bg-accent text-background hover:bg-accent/80 font-bold px-6 py-2 rounded-xl flex items-center gap-2"
               >
-                {saving ? "Guardando..." : "Guardar cambios 💾"}
+                {saving ? "Guardando..." : <>Guardar cambios <span className="inline-flex"><Save className="w-[1.2em] h-[1.2em] mr-1" /></span></>}
               </Button>
             </div>
           </div>

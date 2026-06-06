@@ -1,12 +1,8 @@
 "use client";
-
+import { BarChart, BookOpen, Brain, Briefcase, Building2, CheckCircle2, ChevronDown, ChevronUp, ClipboardList, Coins, Diamond, Factory, Folder, Globe, Globe2, GraduationCap, Handshake, Heart, HelpCircle, Hospital, Lock, Map, MapPin, MessageSquare, Monitor, NotebookPen, Palette, RefreshCw, Rocket, Search, Server, Store, Target, TrendingUp, UserCog, Users, Wrench, XCircle, Zap } from "lucide-react";
 import React, { useState } from "react";
 import { useAppStore } from "@/store/useAppStore";
 import { Card } from "@/components/ui/Card";
-import {
-  Target, Briefcase, Brain, Rocket, TrendingUp, NotebookPen,
-  ChevronDown, ChevronUp, HelpCircle
-} from "lucide-react";
 import { Alumnado } from "@/types";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -73,7 +69,7 @@ export const OrientacionTab = () => {
   // Field renderers
   const renderInput = (field: string, label: string, type = "text", placeholder = "") => (
     <div className="flex flex-col gap-1.5">
-      <label className="text-xs font-bold text-muted tracking-wider">{label}</label>
+      <label className="text-xs font-medium text-muted tracking-wider">{label}</label>
       <input
         type={type}
         value={studentData[field] || ""}
@@ -86,7 +82,7 @@ export const OrientacionTab = () => {
 
   const renderTextarea = (field: string, label: string, placeholder = "") => (
     <div className="flex flex-col gap-1.5">
-      <label className="text-xs font-bold text-muted tracking-wider">{label}</label>
+      <label className="text-xs font-medium text-muted tracking-wider">{label}</label>
       <textarea
         value={studentData[field] || ""}
         onChange={(e) => updateField(field, e.target.value)}
@@ -99,7 +95,7 @@ export const OrientacionTab = () => {
 
   const renderSelect = (field: string, label: string, options: { value: string; label: string }[]) => (
     <div className="flex flex-col gap-1.5">
-      <label className="text-xs font-bold text-muted tracking-wider">{label}</label>
+      <label className="text-xs font-medium text-muted tracking-wider">{label}</label>
       <select
         value={studentData[field] || ""}
         onChange={(e) => updateField(field, e.target.value)}
@@ -133,9 +129,9 @@ export const OrientacionTab = () => {
   if (activeStudents.length === 0) {
     return (
       <Card className="p-8 text-center border-l-4 border-l-yellow-500 mt-6">
-        <h2 className="text-xl font-bold text-yellow-400 mb-2">Sin alumnado</h2>
+        <h2 className="text-xl font-bold text-warning mb-2">Sin alumnado</h2>
         <p className="text-foreground/80">
-          Primero registra alumnado en la pestaña 👥 Alumnado y tutoría.
+          Primero registra alumnado en la pestaña <span className="inline-flex"><Users className="w-[1.2em] h-[1.2em] mr-1" /></span> Alumnado y tutoría.
         </p>
       </Card>
     );
@@ -146,7 +142,7 @@ export const OrientacionTab = () => {
       {/* ── Student list sidebar ─────────────────────────────────── */}
       <div className="w-80 bg-foreground/5 border border-white/5 rounded-2xl flex flex-col overflow-hidden shrink-0">
         <div className="p-4 border-b border-white/5 bg-foreground/10">
-          <div className="text-xs font-bold text-muted tracking-wider">
+          <div className="text-xs font-medium text-muted tracking-wider">
             Alumnado activos ({activeStudents.length})
           </div>
         </div>
@@ -213,16 +209,16 @@ export const OrientacionTab = () => {
 
               {/* ── SECCIÓN 1: Motivación y elección ─────────────── */}
               <div className="space-y-3">
-                {renderSectionHeader("motivacion", "Sección 1: Motivación y elección del ciclo", <Target className="w-5 h-5 text-blue-400" />, openSections.motivacion, toggleSection)}
+                {renderSectionHeader("motivacion", "Sección 1: Motivación y elección del ciclo", <Target className="w-5 h-5 text-info" />, openSections.motivacion, toggleSection)}
                 {openSections.motivacion && (
                   <div className="bg-background/20 border border-white/5 rounded-xl p-5 grid grid-cols-1 md:grid-cols-2 gap-4 animate-in slide-in-from-top-2 duration-300">
                     {renderSelect("motivo_eleccion", "Motivo de elección del ciclo", [
-                      { value: "Vocación", label: "🎯 Vocación / pasión por el sector" },
-                      { value: "Salida laboral", label: "💼 Salida laboral clara" },
-                      { value: "Reorientación", label: "🔄 Reorientación profesional" },
-                      { value: "Por descarte", label: "❓ Por descarte (no otra opción)" },
-                      { value: "Familia", label: "👨‍👩‍👧 Influencia familiar o entorno" },
-                      { value: "Coste económico", label: "💰 Coste económico vs universidad" },
+                      { value: "Vocación", label: "Vocación / pasión por el sector" },
+                      { value: "Salida laboral", label: "Salida laboral clara" },
+                      { value: "Reorientación", label: "Reorientación profesional" },
+                      { value: "Por descarte", label: "Por descarte (no otra opción)" },
+                      { value: "Familia", label: "Influencia familiar o entorno" },
+                      { value: "Coste económico", label: "Coste económico vs universidad" },
                     ])}
                     {renderSelect("via_acceso", "Vía de acceso al ciclo", [
                       { value: "ESO", label: "ESO (título graduado)" },
@@ -245,7 +241,7 @@ export const OrientacionTab = () => {
 
               {/* ── SECCIÓN 2: Experiencia laboral previa ─────────── */}
               <div className="space-y-3">
-                {renderSectionHeader("experiencia", "Sección 2: Experiencia y situación laboral", <Briefcase className="w-5 h-5 text-orange-400" />, openSections.experiencia, toggleSection)}
+                {renderSectionHeader("experiencia", "Sección 2: Experiencia y situación laboral", <Briefcase className="w-5 h-5 text-warning" />, openSections.experiencia, toggleSection)}
                 {openSections.experiencia && (
                   <div className="bg-background/20 border border-white/5 rounded-xl p-5 grid grid-cols-1 md:grid-cols-2 gap-4 animate-in slide-in-from-top-2 duration-300">
                     {renderSelect("experiencia_previa", "Experiencia laboral previa", [
@@ -271,52 +267,52 @@ export const OrientacionTab = () => {
 
               {/* ── SECCIÓN 3: Intereses y aptitudes ──────────────── */}
               <div className="space-y-3">
-                {renderSectionHeader("aptitudes", "Sección 3: Intereses y aptitudes detectadas", <Brain className="w-5 h-5 text-purple-400" />, openSections.aptitudes, toggleSection)}
+                {renderSectionHeader("aptitudes", "Sección 3: Intereses y aptitudes detectadas", <Brain className="w-5 h-5 text-info" />, openSections.aptitudes, toggleSection)}
                 {openSections.aptitudes && (
                   <div className="bg-background/20 border border-white/5 rounded-xl p-5 space-y-5 animate-in slide-in-from-top-2 duration-300">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {renderSelect("aptitud_principal", "Aptitud principal detectada", [
-                        { value: "Técnica", label: "🔧 Técnica / práctica" },
-                        { value: "Analítica", label: "🔍 Analítica / investigadora" },
-                        { value: "Creativa", label: "🎨 Creativa / innovadora" },
-                        { value: "Comercial", label: "🤝 Comercial / negociadora" },
-                        { value: "Comunicativa", label: "💬 Comunicativa / docente" },
-                        { value: "Relacional", label: "🌐 Relacional / social" },
-                        { value: "Emprendedora", label: "🚀 Emprendedora / autónoma" },
-                        { value: "Organizativa", label: "📋 Organizativa / gestora" },
+                        { value: "Técnica", label: "Técnica / práctica" },
+                        { value: "Analítica", label: "Analítica / investigadora" },
+                        { value: "Creativa", label: "Creativa / innovadora" },
+                        { value: "Comercial", label: "Comercial / negociadora" },
+                        { value: "Comunicativa", label: "Comunicativa / docente" },
+                        { value: "Relacional", label: "Relacional / social" },
+                        { value: "Emprendedora", label: "Emprendedora / autónoma" },
+                        { value: "Organizativa", label: "Organizativa / gestora" },
                       ])}
                       {renderSelect("area_interes", "Área de interés dominante", [
-                        { value: "Desarrollo software", label: "💻 Desarrollo software / programación" },
-                        { value: "Sistemas / infraestructura", label: "🖥️ Sistemas / infraestructura" },
-                        { value: "Ciberseguridad", label: "🔐 Ciberseguridad" },
-                        { value: "Datos / IA", label: "📊 Datos / IA / Machine Learning" },
-                        { value: "Diseño / UX", label: "🎨 Diseño / UX / multimedia" },
-                        { value: "Electrónica / hardware", label: "⚡ Electrónica / hardware" },
-                        { value: "Atención al cliente", label: "🤝 Atención al cliente / soporte" },
-                        { value: "Gestión / administración", label: "📁 Gestión / administración" },
-                        { value: "Sanidad / cuidados", label: "🏥 Sanidad / cuidados" },
-                        { value: "Industria / producción", label: "🏭 Industria / producción" },
+                        { value: "Desarrollo software", label: "Desarrollo software / programación" },
+                        { value: "Sistemas / infraestructura", label: "Sistemas / infraestructura" },
+                        { value: "Ciberseguridad", label: "Ciberseguridad" },
+                        { value: "Datos / IA", label: "Datos / IA / Machine Learning" },
+                        { value: "Diseño / UX", label: "Diseño / UX / multimedia" },
+                        { value: "Electrónica / hardware", label: "Electrónica / hardware" },
+                        { value: "Atención al cliente", label: "Atención al cliente / soporte" },
+                        { value: "Gestión / administración", label: "Gestión / administración" },
+                        { value: "Sanidad / cuidados", label: "Sanidad / cuidados" },
+                        { value: "Industria / producción", label: "Industria / producción" },
                         { value: "Otro", label: "Otro / no definido aún" },
                       ])}
                       {renderSelect("entorno_laboral_preferido", "Entorno laboral preferido", [
-                        { value: "Empresa grande", label: "🏢 Empresa grande / corporación" },
-                        { value: "PYME", label: "🏪 PYME / empresa mediana" },
-                        { value: "Startup", label: "🚀 Startup / empresa emergente" },
-                        { value: "Administración pública", label: "🏛️ Administración pública" },
-                        { value: "ONG / sector social", label: "💛 ONG / sector social" },
-                        { value: "Autónomo / freelance", label: "🧑‍💻 Autónomo / freelance" },
+                        { value: "Empresa grande", label: "Empresa grande / corporación" },
+                        { value: "PYME", label: "PYME / empresa mediana" },
+                        { value: "Startup", label: "Startup / empresa emergente" },
+                        { value: "Administración pública", label: "️ Administración pública" },
+                        { value: "ONG / sector social", label: "ONG / sector social" },
+                        { value: "Autónomo / freelance", label: "Autónomo / freelance" },
                         { value: "Indiferente", label: "Indiferente" },
                       ])}
                       {renderSelect("preferencia_geografica", "Preferencia geográfica de trabajo", [
-                        { value: "Local / ciudad actual", label: "📍 Local / ciudad actual" },
-                        { value: "Nacional", label: "🗺️ Nacional (movilidad España)" },
-                        { value: "Internacional", label: "🌍 Internacional" },
+                        { value: "Local / ciudad actual", label: "Local / ciudad actual" },
+                        { value: "Nacional", label: "Nacional (movilidad España)" },
+                        { value: "Internacional", label: "Internacional" },
                         { value: "Indiferente", label: "Indiferente" },
                       ])}
                     </div>
 
                     <div className="border-t border-white/5 pt-4">
-                      <div className="text-xs font-bold text-muted tracking-wider mb-3">Idiomas de trabajo</div>
+                      <div className="text-xs font-medium text-muted tracking-wider mb-3">Idiomas de trabajo</div>
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                         {renderCheckbox("idioma_espanol", "Español (nativo / fluido)")}
                         {renderCheckbox("idioma_ingles", "Inglés")}
@@ -336,24 +332,24 @@ export const OrientacionTab = () => {
 
               {/* ── SECCIÓN 4: Aspiraciones al terminar ───────────── */}
               <div className="space-y-3">
-                {renderSectionHeader("aspiraciones", "Sección 4: Aspiraciones al finalizar el ciclo", <Rocket className="w-5 h-5 text-emerald-400" />, openSections.aspiraciones, toggleSection)}
+                {renderSectionHeader("aspiraciones", "Sección 4: Aspiraciones al finalizar el ciclo", <Rocket className="w-5 h-5 text-success" />, openSections.aspiraciones, toggleSection)}
                 {openSections.aspiraciones && (
                   <div className="bg-background/20 border border-white/5 rounded-xl p-5 space-y-5 animate-in slide-in-from-top-2 duration-300">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {renderSelect("intencion_al_terminar", "Intención principal al terminar", [
-                        { value: "Empleo inmediato", label: "💼 Buscar empleo inmediatamente" },
-                        { value: "FEOE / prácticas empresa", label: "🏢 FEOE / prácticas en empresa colaboradora" },
-                        { value: "Ciclo superior", label: "📚 Continuar con otro ciclo (GM→GS)" },
-                        { value: "Universidad", label: "🎓 Continuar en universidad" },
-                        { value: "Emprender", label: "🚀 Emprender / autoempleo" },
-                        { value: "Sin decidir", label: "❓ Aún sin decidir" },
+                        { value: "Empleo inmediato", label: "Buscar empleo inmediatamente" },
+                        { value: "FEOE / prácticas empresa", label: "FEOE / prácticas en empresa colaboradora" },
+                        { value: "Ciclo superior", label: "Continuar con otro ciclo (GM→GS)" },
+                        { value: "Universidad", label: "Continuar en universidad" },
+                        { value: "Emprender", label: "Emprender / autoempleo" },
+                        { value: "Sin decidir", label: "Aún sin decidir" },
                       ])}
                       {renderInput("empresa_objetivo", "Empresa o sector objetivo (si lo tiene)", "text", "Ej. INDITEX, empresa local TIC, clínica propia...")}
                       {renderInput("ciclo_superior_interes", "Ciclo superior / grado de interés", "text", "Ej. DAM, ASIR, Ingeniería Informática, ADE...")}
                     </div>
 
                     <div className="border-t border-white/5 pt-4">
-                      <div className="text-xs font-bold text-muted tracking-wider mb-3">Intereses específicos</div>
+                      <div className="text-xs font-medium text-muted tracking-wider mb-3">Intereses específicos</div>
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                         {renderCheckbox("interes_erasmus", "Interesado en FEOE internacional (Erasmus+)")}
                         {renderCheckbox("interes_bolsa_empleo", "Interesado en bolsa de empleo del centro")}
@@ -369,26 +365,26 @@ export const OrientacionTab = () => {
 
               {/* ── SECCIÓN 5: Seguimiento de inserción ───────────── */}
               <div className="space-y-3">
-                {renderSectionHeader("insercion", "Sección 5: Inserción laboral (post-ciclo)", <TrendingUp className="w-5 h-5 text-cyan-400" />, openSections.insercion, toggleSection)}
+                {renderSectionHeader("insercion", "Sección 5: Inserción laboral (post-ciclo)", <TrendingUp className="w-5 h-5 text-info" />, openSections.insercion, toggleSection)}
                 {openSections.insercion && (
                   <div className="bg-background/20 border border-white/5 rounded-xl p-5 space-y-5 animate-in slide-in-from-top-2 duration-300">
-                    <p className="text-xs text-cyan-400/80 border border-cyan-500/20 bg-cyan-500/5 rounded-lg px-3 py-2">
+                    <p className="text-xs text-info border border-info/30 bg-info/10 rounded-lg px-3 py-2">
                       ℹ️ Esta sección se rellena al finalizar el ciclo o como seguimiento de egresados.
                     </p>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {renderSelect("estado_insercion", "Estado de inserción laboral", [
-                        { value: "En formación", label: "📚 Todavía en formación / ciclo en curso" },
-                        { value: "En búsqueda", label: "🔍 Egresado — en búsqueda activa" },
-                        { value: "Empleado empresa", label: "💼 Empleado en empresa" },
-                        { value: "FEOE", label: "🏢 Realizando FEOE / prácticas" },
-                        { value: "Autoempleo", label: "🚀 Autoempleo / autónomo" },
-                        { value: "Sigue estudiando", label: "🎓 Sigue estudiando (ciclo / universidad)" },
-                        { value: "Sin datos", label: "❓ Sin datos de seguimiento" },
+                        { value: "En formación", label: "Todavía en formación / ciclo en curso" },
+                        { value: "En búsqueda", label: "Egresado — en búsqueda activa" },
+                        { value: "Empleado empresa", label: "Empleado en empresa" },
+                        { value: "FEOE", label: "Realizando FEOE / prácticas" },
+                        { value: "Autoempleo", label: "Autoempleo / autónomo" },
+                        { value: "Sigue estudiando", label: "Sigue estudiando (ciclo / universidad)" },
+                        { value: "Sin datos", label: "Sin datos de seguimiento" },
                       ])}
                       {renderSelect("relacion_ciclo", "Relación del empleo con el ciclo", [
-                        { value: "Sí, directamente", label: "✅ Sí, directamente relacionado" },
-                        { value: "Parcialmente", label: "🔶 Parcialmente relacionado" },
-                        { value: "No relacionado", label: "❌ No relacionado con el ciclo" },
+                        { value: "Sí, directamente", label: "Sí, directamente relacionado" },
+                        { value: "Parcialmente", label: "Parcialmente relacionado" },
+                        { value: "No relacionado", label: "No relacionado con el ciclo" },
                         { value: "N/A", label: "No aplica (sigue estudiando)" },
                       ])}
                       {renderInput("empresa_insercion", "Empresa de inserción", "text", "Nombre de la empresa...")}
@@ -402,12 +398,12 @@ export const OrientacionTab = () => {
                         { value: "Beca", label: "Beca" },
                         { value: "FEOE", label: "Contrato FEOE (FCT)" },
                       ])}
-                      {renderSelect("valoracion_egresado", "Valoración global del egresado (1-5★)", [
-                        { value: "1", label: "★☆☆☆☆ — Muy baja" },
-                        { value: "2", label: "★★☆☆☆ — Baja" },
-                        { value: "3", label: "★★★☆☆ — Media" },
-                        { value: "4", label: "★★★★☆ — Alta" },
-                        { value: "5", label: "★★★★★ — Excelente" },
+                      {renderSelect("valoracion_egresado", "Valoración global del egresado (1-5)", [
+                        { value: "1", label: " — Muy baja" },
+                        { value: "2", label: " — Baja" },
+                        { value: "3", label: " — Media" },
+                        { value: "4", label: " — Alta" },
+                        { value: "5", label: " — Excelente" },
                       ])}
                     </div>
                     <div className="border-t border-white/5 pt-4">
@@ -419,7 +415,7 @@ export const OrientacionTab = () => {
 
               {/* ── SECCIÓN 6: Notas del tutor ────────────────────── */}
               <div className="space-y-3">
-                {renderSectionHeader("notas", "Sección 6: Notas y seguimiento del tutor", <NotebookPen className="w-5 h-5 text-pink-400" />, openSections.notas, toggleSection)}
+                {renderSectionHeader("notas", "Sección 6: Notas y seguimiento del tutor", <NotebookPen className="w-5 h-5 text-danger" />, openSections.notas, toggleSection)}
                 {openSections.notas && (
                   <div className="bg-background/20 border border-white/5 rounded-xl p-5 grid grid-cols-1 md:grid-cols-2 gap-4 animate-in slide-in-from-top-2 duration-300">
                     {renderInput("reuniones_celebradas", "Nº de reuniones de orientación celebradas", "number", "0")}

@@ -1,3 +1,4 @@
+import { Check, X } from "lucide-react";
 import toast from "react-hot-toast";
 
 export const showRichToast = {
@@ -7,12 +8,12 @@ export const showRichToast = {
         <div className="flex-1 w-0 p-4">
           <div className="flex items-start">
             <div className="flex-shrink-0 pt-0.5">
-              <div className="h-10 w-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                <span className="text-emerald-400 text-xl font-bold">✓</span>
+              <div className="h-10 w-10 rounded-full bg-success/10 flex items-center justify-center">
+                <span className="text-success text-xl font-bold"><span className="inline-flex"><Check className="w-[1.2em] h-[1.2em] mr-1" /></span></span>
               </div>
             </div>
             <div className="ml-3 flex-1">
-              <p className="text-sm font-bold text-foreground">{message}</p>
+              <p className="text-sm font-semibold text-foreground">{message}</p>
               {description && <p className="mt-1 text-xs text-muted">{description}</p>}
             </div>
           </div>
@@ -35,12 +36,12 @@ export const showRichToast = {
         <div className="flex-1 w-0 p-4">
           <div className="flex items-start">
             <div className="flex-shrink-0 pt-0.5">
-              <div className="h-10 w-10 rounded-full bg-red-500/20 flex items-center justify-center">
-                <span className="text-red-400 text-xl font-bold">✕</span>
+              <div className="h-10 w-10 rounded-full bg-danger/10 flex items-center justify-center">
+                <span className="text-danger text-xl font-bold"><span className="inline-flex"><X className="w-[1.2em] h-[1.2em] mr-1" /></span></span>
               </div>
             </div>
             <div className="ml-3 flex-1">
-              <p className="text-sm font-bold text-foreground">{message}</p>
+              <p className="text-sm font-semibold text-foreground">{message}</p>
               {description && <p className="mt-1 text-xs text-muted">{description}</p>}
             </div>
           </div>
@@ -63,12 +64,12 @@ export const showRichToast = {
         <div className="flex-1 w-0 p-4">
           <div className="flex items-start">
             <div className="flex-shrink-0 pt-0.5">
-              <div className="h-10 w-10 rounded-full bg-blue-500/20 flex items-center justify-center">
-                <span className="text-blue-400 text-xl font-bold">ℹ️</span>
+              <div className="h-10 w-10 rounded-full bg-info/10 flex items-center justify-center">
+                <span className="text-info text-xl font-bold">ℹ️</span>
               </div>
             </div>
             <div className="ml-3 flex-1">
-              <p className="text-sm font-bold text-foreground">{message}</p>
+              <p className="text-sm font-semibold text-foreground">{message}</p>
               {description && <p className="mt-1 text-xs text-muted">{description}</p>}
             </div>
           </div>
@@ -79,7 +80,7 @@ export const showRichToast = {
               onUndo();
               toast.dismiss(t.id);
             }}
-            className="w-full flex-1 border-b border-[var(--glass-border)] p-2 flex items-center justify-center text-sm font-bold text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 transition-colors"
+            className="w-full flex-1 border-b border-[var(--glass-border)] p-2 flex items-center justify-center text-sm font-semibold text-info hover:text-info hover:bg-info/10 transition-colors"
           >
             Deshacer
           </button>

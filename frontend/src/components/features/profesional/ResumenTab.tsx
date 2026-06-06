@@ -1,5 +1,5 @@
 "use client";
-
+import { AlertTriangle, Building2, CheckCircle2, ClipboardList, Compass, Globe2, GraduationCap, Handshake, Rocket, Search, Target, XCircle } from "lucide-react";
 import React, { useState, useMemo } from "react";
 import { useAppStore } from "@/store/useAppStore";
 import { Card } from "@/components/ui/Card";
@@ -8,33 +8,33 @@ import { Alumnado } from "@/types";
 // ─── Badge de intención ───────────────────────────────────────────────────────
 
 const INTENCION_COLOR: Record<string, string> = {
-  "Empleo inmediato":       "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
-  "FEOE / prácticas empresa": "bg-blue-500/15 text-blue-400 border-blue-500/30",
-  "Ciclo superior":         "bg-purple-500/15 text-purple-400 border-purple-500/30",
-  "Universidad":            "bg-indigo-500/15 text-indigo-400 border-indigo-500/30",
-  "Emprender":              "bg-orange-500/15 text-orange-400 border-orange-500/30",
+  "Empleo inmediato":       "bg-success/10 text-success border-success/30",
+  "FEOE / prácticas empresa": "bg-info/10 text-info border-info/30",
+  "Ciclo superior":         "bg-info/10 text-info border-info/30",
+  "Universidad":            "bg-info/10 text-info border-info/30",
+  "Emprender":              "bg-warning/10 text-warning border-warning/30",
   "Sin decidir":            "bg-muted/10 text-muted border-white/10",
 };
 
 const INSERCION_COLOR: Record<string, string> = {
   "En formación":    "text-muted/70",
-  "Empleado empresa": "text-emerald-400 font-semibold",
-  "Autoempleo":      "text-orange-400 font-semibold",
-  "FEOE":            "text-blue-400 font-semibold",
-  "Sigue estudiando": "text-purple-400",
-  "En búsqueda":     "text-yellow-400",
+  "Empleado empresa": "text-success font-semibold",
+  "Autoempleo":      "text-warning font-semibold",
+  "FEOE":            "text-info font-semibold",
+  "Sigue estudiando": "text-info",
+  "En búsqueda":     "text-warning",
   "Sin datos":       "text-muted/50 italic",
 };
 
 const APTITUD_COLOR: Record<string, string> = {
-  "Técnica":       "text-sky-400",
-  "Analítica":     "text-purple-400",
-  "Creativa":      "text-pink-400",
-  "Comercial":     "text-amber-400",
-  "Comunicativa":  "text-teal-400",
-  "Relacional":    "text-green-400",
-  "Emprendedora":  "text-orange-400",
-  "Organizativa":  "text-cyan-400",
+  "Técnica":       "text-info",
+  "Analítica":     "text-info",
+  "Creativa":      "text-danger",
+  "Comercial":     "text-warning",
+  "Comunicativa":  "text-success",
+  "Relacional":    "text-success",
+  "Emprendedora":  "text-warning",
+  "Organizativa":  "text-info",
 };
 
 // ─── Main Component ───────────────────────────────────────────────────────────
@@ -144,18 +144,18 @@ export const ResumenTab = () => {
             placeholder="Buscar alumnado/a..."
             className="w-full bg-foreground/10 border border-[var(--glass-border)] rounded-xl px-4 py-2 pl-9 text-sm text-foreground focus:border-accent focus:outline-none"
           />
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted text-sm">🔍</span>
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted text-sm"><span className="inline-flex"><Search className="w-[1.2em] h-[1.2em] mr-1" /></span></span>
         </div>
 
         {/* Estado filter */}
-        <div className="flex rounded-xl border border-[var(--glass-border)] overflow-hidden text-xs font-bold">
+        <div className="flex rounded-xl border border-[var(--glass-border)] overflow-hidden text-xs font-medium">
           {(["todos", "Alta", "Baja"] as const).map(v => (
             <button
               key={v}
               onClick={() => setFilterEstado(v)}
               className={`px-4 py-2 transition-colors ${filterEstado === v ? "bg-accent text-background" : "bg-foreground/5 text-muted hover:text-foreground"}`}
             >
-              {v === "todos" ? "Todos" : v === "Alta" ? "✅ Activos" : "❌ Baja"}
+              {v === "todos" ? "Todos" : v === "Alta" ? <><span className="inline-flex"><CheckCircle2 className="w-[1.2em] h-[1.2em] mr-1" /></span> Activos</> : <><span className="inline-flex"><XCircle className="w-[1.2em] h-[1.2em] mr-1" /></span> Baja</>}
             </button>
           ))}
         </div>
@@ -218,10 +218,10 @@ export const ResumenTab = () => {
                   Intención al terminar <SortIcon field="intencion" />
                 </th>
                 <th className="text-left p-4 font-semibold whitespace-nowrap">Inserción</th>
-                <th className="text-center p-4 font-semibold whitespace-nowrap">🌍</th>
-                <th className="text-center p-4 font-semibold whitespace-nowrap">🚀</th>
-                <th className="text-center p-4 font-semibold whitespace-nowrap">🎓</th>
-                <th className="text-center p-4 font-semibold whitespace-nowrap">⚠️</th>
+                <th className="text-center p-4 font-semibold whitespace-nowrap"><span className="inline-flex"><Globe2 className="w-[1.2em] h-[1.2em] mr-1" /></span></th>
+                <th className="text-center p-4 font-semibold whitespace-nowrap"><span className="inline-flex"><Rocket className="w-[1.2em] h-[1.2em] mr-1" /></span></th>
+                <th className="text-center p-4 font-semibold whitespace-nowrap"><span className="inline-flex"><GraduationCap className="w-[1.2em] h-[1.2em] mr-1" /></span></th>
+                <th className="text-center p-4 font-semibold whitespace-nowrap"><span className="inline-flex"><AlertTriangle className="w-[1.2em] h-[1.2em] mr-1" /></span></th>
                 <th className="text-left p-4 font-semibold whitespace-nowrap">Reuniones</th>
               </tr>
             </thead>
@@ -252,7 +252,7 @@ export const ResumenTab = () => {
                           <div>
                             <div className="font-semibold text-foreground">
                               {al.Apellidos}, {al.Nombre}
-                              {isBaja && <span className="ml-2 text-[10px] text-red-400 border border-red-400/30 px-1.5 py-0.5 rounded-full">Baja</span>}
+                              {isBaja && <span className="ml-2 text-[10px] text-danger border border-danger/30 px-1.5 py-0.5 rounded-full">Baja</span>}
                             </div>
                             <div className="text-[10px] text-muted font-mono">{al.ID}</div>
                           </div>
@@ -293,30 +293,30 @@ export const ResumenTab = () => {
 
                       {/* Erasmus */}
                       <td className="p-4 text-center">
-                        {d.interes_erasmus === "X" ? <span title="Interesado/a en Erasmus+">🌍</span> : <span className="text-muted/20">·</span>}
+                        {d.interes_erasmus === "X" ? <span title="Interesado/a en Erasmus+"><span className="inline-flex"><Globe2 className="w-[1.2em] h-[1.2em] mr-1" /></span></span> : <span className="text-muted/20">·</span>}
                       </td>
 
                       {/* Emprender */}
                       <td className="p-4 text-center">
-                        {d.interes_emprender === "X" ? <span title="Tiene idea de negocio">🚀</span> : <span className="text-muted/20">·</span>}
+                        {d.interes_emprender === "X" ? <span title="Tiene idea de negocio"><span className="inline-flex"><Rocket className="w-[1.2em] h-[1.2em] mr-1" /></span></span> : <span className="text-muted/20">·</span>}
                       </td>
 
                       {/* Universidad */}
                       <td className="p-4 text-center">
-                        {d.interes_universidad === "X" ? <span title="Interesado/a en universidad">🎓</span> : <span className="text-muted/20">·</span>}
+                        {d.interes_universidad === "X" ? <span title="Interesado/a en universidad"><span className="inline-flex"><GraduationCap className="w-[1.2em] h-[1.2em] mr-1" /></span></span> : <span className="text-muted/20">·</span>}
                       </td>
 
                       {/* Derivado orientador */}
                       <td className="p-4 text-center">
                         {d.derivado_orientador === "X"
-                          ? <span className="text-amber-400 font-bold" title="Derivado al orientador">⚠️</span>
+                          ? <span className="text-warning font-bold" title="Derivado al orientador"><span className="inline-flex"><AlertTriangle className="w-[1.2em] h-[1.2em] mr-1" /></span></span>
                           : <span className="text-muted/20">·</span>}
                       </td>
 
                       {/* Reuniones */}
                       <td className="p-4 text-center">
                         {d.reuniones_celebradas
-                          ? <span className="text-xs font-bold text-foreground/80 bg-foreground/10 px-2 py-0.5 rounded-full">{d.reuniones_celebradas}</span>
+                          ? <span className="text-xs font-medium text-foreground/80 bg-foreground/10 px-2 py-0.5 rounded-full">{d.reuniones_celebradas}</span>
                           : <span className="text-muted/40 text-xs">—</span>}
                       </td>
                     </tr>
@@ -329,7 +329,7 @@ export const ResumenTab = () => {
 
                             {/* Col 1: Perfil */}
                             <div className="space-y-3">
-                              <div className="text-[10px] font-bold text-muted tracking-widest mb-2">🎯 Perfil</div>
+                              <div className="text-[10px] font-bold text-muted tracking-widest mb-2"><span className="inline-flex"><Target className="w-[1.2em] h-[1.2em] mr-1" /></span> Perfil</div>
                               {[
                                 ["Motivo elección", d.motivo_eleccion],
                                 ["Experiencia previa", d.experiencia_previa],
@@ -344,18 +344,18 @@ export const ResumenTab = () => {
                               ) : null)}
                               {/* Intereses con iconos */}
                               <div className="flex flex-wrap gap-1.5 pt-1">
-                                {d.interes_bolsa_empleo === "X" && <span className="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full">📋 Bolsa empleo</span>}
-                                {d.interes_erasmus === "X" && <span className="text-[10px] bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded-full">🌍 Erasmus+</span>}
-                                {d.interes_emprender === "X" && <span className="text-[10px] bg-orange-500/10 text-orange-400 border border-orange-500/20 px-2 py-0.5 rounded-full">🚀 Emprender</span>}
-                                {d.interes_mentoria === "X" && <span className="text-[10px] bg-purple-500/10 text-purple-400 border border-purple-500/20 px-2 py-0.5 rounded-full">🤝 Mentoría</span>}
-                                {d.interes_universidad === "X" && <span className="text-[10px] bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2 py-0.5 rounded-full">🎓 Universidad</span>}
-                                {d.empresa_identificada === "X" && <span className="text-[10px] bg-teal-500/10 text-teal-400 border border-teal-500/20 px-2 py-0.5 rounded-full">🏢 Empresa identificada</span>}
+                                {d.interes_bolsa_empleo === "X" && <span className="text-[10px] bg-success/10 text-success border border-success/30 px-2 py-0.5 rounded-full"><span className="inline-flex"><ClipboardList className="w-[1.2em] h-[1.2em] mr-1" /></span> Bolsa empleo</span>}
+                                {d.interes_erasmus === "X" && <span className="text-[10px] bg-info/10 text-info border border-info/30 px-2 py-0.5 rounded-full"><span className="inline-flex"><Globe2 className="w-[1.2em] h-[1.2em] mr-1" /></span> Erasmus+</span>}
+                                {d.interes_emprender === "X" && <span className="text-[10px] bg-warning/10 text-warning border border-warning/30 px-2 py-0.5 rounded-full"><span className="inline-flex"><Rocket className="w-[1.2em] h-[1.2em] mr-1" /></span> Emprender</span>}
+                                {d.interes_mentoria === "X" && <span className="text-[10px] bg-info/10 text-info border border-info/30 px-2 py-0.5 rounded-full"><span className="inline-flex"><Handshake className="w-[1.2em] h-[1.2em] mr-1" /></span> Mentoría</span>}
+                                {d.interes_universidad === "X" && <span className="text-[10px] bg-info/10 text-info border border-info/30 px-2 py-0.5 rounded-full"><span className="inline-flex"><GraduationCap className="w-[1.2em] h-[1.2em] mr-1" /></span> Universidad</span>}
+                                {d.empresa_identificada === "X" && <span className="text-[10px] bg-success/10 text-success border border-success/30 px-2 py-0.5 rounded-full"><span className="inline-flex"><Building2 className="w-[1.2em] h-[1.2em] mr-1" /></span> Empresa identificada</span>}
                               </div>
                             </div>
 
                             {/* Col 2: Aspiraciones */}
                             <div className="space-y-3">
-                              <div className="text-[10px] font-bold text-muted tracking-widest mb-2">🧭 Aspiraciones</div>
+                              <div className="text-[10px] font-bold text-muted tracking-widest mb-2"><span className="inline-flex"><Compass className="w-[1.2em] h-[1.2em] mr-1" /></span> Aspiraciones</div>
                               {[
                                 ["Preferencia laboral", d.entorno_laboral_preferido],
                                 ["Movilidad geográfica", d.preferencia_geografica],
@@ -376,7 +376,7 @@ export const ResumenTab = () => {
 
                             {/* Col 3: Seguimiento */}
                             <div className="space-y-3">
-                              <div className="text-[10px] font-bold text-muted tracking-widest mb-2">📋 Seguimiento tutor</div>
+                              <div className="text-[10px] font-bold text-muted tracking-widest mb-2"><span className="inline-flex"><ClipboardList className="w-[1.2em] h-[1.2em] mr-1" /></span> Seguimiento tutor</div>
                               {[
                                 ["Reuniones celebradas", d.reuniones_celebradas],
                                 ["Última reunión", d.fecha_ultima_reunion],
@@ -413,10 +413,10 @@ export const ResumenTab = () => {
             Mostrando <strong className="text-foreground">{filtered.length}</strong> alumnado/as
           </span>
           <div className="flex gap-4 text-xs text-muted">
-            <span>🌍 Erasmus: <strong className="text-foreground">{filtered.filter((al: Alumnado) => profesionalLedger[al.ID!]?.interes_erasmus === "X").length}</strong></span>
-            <span>🚀 Emprender: <strong className="text-foreground">{filtered.filter((al: Alumnado) => profesionalLedger[al.ID!]?.interes_emprender === "X").length}</strong></span>
-            <span>🎓 Universidad: <strong className="text-foreground">{filtered.filter((al: Alumnado) => profesionalLedger[al.ID!]?.interes_universidad === "X").length}</strong></span>
-            <span>⚠️ Derivados: <strong className="text-amber-400">{filtered.filter((al: Alumnado) => profesionalLedger[al.ID!]?.derivado_orientador === "X").length}</strong></span>
+            <span><span className="inline-flex"><Globe2 className="w-[1.2em] h-[1.2em] mr-1" /></span> Erasmus: <strong className="text-foreground">{filtered.filter((al: Alumnado) => profesionalLedger[al.ID!]?.interes_erasmus === "X").length}</strong></span>
+            <span><span className="inline-flex"><Rocket className="w-[1.2em] h-[1.2em] mr-1" /></span> Emprender: <strong className="text-foreground">{filtered.filter((al: Alumnado) => profesionalLedger[al.ID!]?.interes_emprender === "X").length}</strong></span>
+            <span><span className="inline-flex"><GraduationCap className="w-[1.2em] h-[1.2em] mr-1" /></span> Universidad: <strong className="text-foreground">{filtered.filter((al: Alumnado) => profesionalLedger[al.ID!]?.interes_universidad === "X").length}</strong></span>
+            <span><span className="inline-flex"><AlertTriangle className="w-[1.2em] h-[1.2em] mr-1" /></span> Derivados: <strong className="text-warning">{filtered.filter((al: Alumnado) => profesionalLedger[al.ID!]?.derivado_orientador === "X").length}</strong></span>
           </div>
         </div>
       </Card>

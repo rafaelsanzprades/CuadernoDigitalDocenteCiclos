@@ -1,5 +1,5 @@
 "use client";
-
+import { AlertTriangle, ArrowRight, BookOpen, CheckCircle, Cloud, Download, FileText, FolderOpen, Lightbulb, LogIn, Power, PowerOff, RefreshCw, Save, Shield, ShieldAlert, Sparkles, Target, Upload, Users, Zap } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
@@ -10,12 +10,6 @@ import { Badge } from "@/components/ui/Badge";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import { fileManager, DataSourceType } from "@/services/fileManager";
 import { initialGroups } from "@/store/initialData";
-import {
-  FileText, Download, Upload,
-  Cloud, RefreshCw, CheckCircle, AlertTriangle,
-  ArrowRight, ShieldAlert, Sparkles, LogIn,
-  PowerOff, Power, Zap
-} from "lucide-react";
 import toast from "react-hot-toast";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
 
@@ -190,7 +184,7 @@ export default function EntornoTrabajoPage() {
   // Export JSON file
   const handleExport = () => {
     fileManager.exportToJsonFile();
-    toast.success("Copia de seguridad descargada correctamente 💾");
+    toast.success(<>Copia de seguridad descargada correctamente <span className="inline-flex"><Save className="w-[1.2em] h-[1.2em] mr-1" /></span></>);
   };
 
   // Trigger file input
@@ -212,7 +206,7 @@ export default function EntornoTrabajoPage() {
 
       const success = fileManager.importFromJson(content);
       if (success) {
-        toast.success("Base de datos importada correctamente 📂");
+        toast.success(<>Base de datos importada correctamente <span className="inline-flex"><FolderOpen className="w-[1.2em] h-[1.2em] mr-1" /></span></>);
       } else {
         toast.error("Error al importar: el archivo no tiene un formato válido");
       }
@@ -324,7 +318,7 @@ export default function EntornoTrabajoPage() {
             {/* Title */}
             <div>
               <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                📂 Entorno de trabajo
+                <FolderOpen className="w-6 h-6 text-accent" /> Entorno de trabajo
               </h1>
               <p className="text-muted mt-2 text-lg">
                 Elige dónde residen tus datos: trabájalo en local o sincronízalo en tu Google Drive / OneDrive personal.
@@ -336,22 +330,25 @@ export default function EntornoTrabajoPage() {
             {/* Tabs para conmutar modos de almacenamiento */}
             <Tabs value={activeTab} onValueChange={(val: any) => setActiveTab(val)}>
               <TabsList className="mb-2 max-w-full">
-                <TabsTrigger value="demo">
-                  💡 Modos de trabajo
+                <TabsTrigger value="demo" className="flex items-center gap-2">
+                  <Lightbulb className="w-4 h-4 text-warning" /> Modos de trabajo
                 </TabsTrigger>
-                <TabsTrigger value="backup">
-                  🔄 Respaldo y sincronización
+                <TabsTrigger value="backup" className="flex items-center gap-2">
+                  <RefreshCw className="w-4 h-4 text-info" /> Respaldo y sincronización
                 </TabsTrigger>
               </TabsList>
             </Tabs>
 
-            {/* Cartel indicativo de estado actual */}
-            <div className={`mt-2 mb-6 p-3 rounded-xl border flex items-center justify-center font-bold text-sm shadow-md transition-colors ${
+            <div className={`mt-2 mb-6 p-3 rounded-xl border flex items-center justify-center font-semibold text-sm shadow-md transition-colors ${
               dataSource === 'demo' 
-                ? 'bg-amber-500/10 border-amber-500/30 text-amber-400 shadow-amber-500/5'
-                : 'bg-blue-500/10 border-blue-500/30 text-blue-300 shadow-blue-500/5'
+                ? 'bg-warning/10 border-warning/30 text-warning shadow-amber-500/5'
+                : 'bg-info/10 border-info/30 text-info shadow-blue-500/5'
             }`}>
-              {dataSource === 'demo' ? '⚠️ ACTIVADO. Datos ficticios' : '🛡️ ACTIVADO. Datos reales en local'}
+              {dataSource === 'demo' ? (
+                <><AlertTriangle className="w-4 h-4 mr-2" /> ACTIVADO. Datos ficticios</>
+              ) : (
+                <><Shield className="w-4 h-4 mr-2" /> ACTIVADO. Datos reales en local</>
+              )}
             </div>
 
             {/* Pestaña: Demostración */}
@@ -364,20 +361,20 @@ export default function EntornoTrabajoPage() {
                     <div className="flex items-center gap-3">
                       <h3 className="text-xl font-bold text-foreground">Modo Datos ficticios</h3>
                       {dataSource === 'demo' ? (
-                        <Badge variant="warning" className="bg-amber-500/10 text-amber-400 border-amber-500/30">Activo</Badge>
+                        <Badge variant="warning" className="bg-warning/10 text-warning border-warning/30">Activo</Badge>
                       ) : (
                         <Badge variant="default" className="bg-white/10 text-muted border-white/5">Inactivo</Badge>
                       )}
                     </div>
                     {dataSource === 'demo' ? (
-                      <div className="w-full py-3 px-6 rounded-xl font-bold flex items-center justify-center gap-3 border border-amber-500/30 bg-amber-500/10 text-amber-500 shadow-md">
+                      <div className="w-full py-3 px-6 rounded-xl font-bold flex items-center justify-center gap-3 border border-warning/30 bg-warning/10 text-warning shadow-md">
                         <CheckCircle className="w-5 h-5 shrink-0" />
                         Este es tu modo actual
                       </div>
                     ) : (
                       <Button
                         onClick={() => handleSourceChange('demo')}
-                        className="w-full py-3 px-6 rounded-xl font-bold flex items-center gap-3 border border-amber-500/30 bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 transition-all shadow-md shadow-amber-500/5"
+                        className="w-full py-3 px-6 rounded-xl font-bold flex items-center gap-3 border border-warning/30 bg-warning/10 text-warning hover:bg-warning/10 transition-all shadow-md shadow-amber-500/5"
                       >
                         <Zap className="w-5 h-5 shrink-0" />
                         Cambiar a modo Datos ficticios
@@ -393,20 +390,20 @@ export default function EntornoTrabajoPage() {
                     <div className="flex items-center gap-3">
                       <h3 className="text-xl font-bold text-foreground">Datos reales en local</h3>
                       {dataSource === 'local' ? (
-                        <Badge variant="info" className="bg-blue-500/10 text-blue-300 border-blue-500/30">Activo</Badge>
+                        <Badge variant="info" className="bg-info/10 text-info border-info/30">Activo</Badge>
                       ) : (
                         <Badge variant="default" className="bg-white/10 text-muted border-white/5">Inactivo</Badge>
                       )}
                     </div>
                     {dataSource === 'local' ? (
-                      <div className="w-full py-3 px-6 rounded-xl font-bold flex items-center justify-center gap-3 border border-blue-500/30 bg-blue-500/10 text-blue-400 shadow-md">
+                      <div className="w-full py-3 px-6 rounded-xl font-bold flex items-center justify-center gap-3 border border-info/30 bg-info/10 text-info shadow-md">
                         <CheckCircle className="w-5 h-5 shrink-0" />
                         Este es tu modo actual
                       </div>
                     ) : (
                       <Button
                         onClick={() => handleSourceChange('local')}
-                        className="w-full py-3 px-6 rounded-xl font-bold flex items-center gap-3 border border-blue-500/30 bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 transition-all shadow-md shadow-blue-500/5"
+                        className="w-full py-3 px-6 rounded-xl font-bold flex items-center gap-3 border border-info/30 bg-info/10 text-info hover:bg-info/10 transition-all shadow-md shadow-blue-500/5"
                       >
                         <Power className="w-5 h-5 shrink-0" />
                         Cambiar a Datos reales en local
@@ -423,7 +420,7 @@ export default function EntornoTrabajoPage() {
                   <Card className="p-8 border border-accent/25 rounded-2xl bg-accent/5 shadow-lg space-y-6 flex flex-col justify-between">
                     <div>
                       <h3 className="text-xl font-bold text-foreground flex items-center gap-2">
-                        🎯 Selección de Programación y Curso activos
+                        <Target className="w-5 h-5 text-accent" /> Selección de Programación y Curso activos
                         {dataSource === 'demo' && (
                           <span className="text-[10px] bg-white/10 text-muted px-2.5 py-1 rounded-full font-bold tracking-wider ml-2">
                             No disponible en modo Datos ficticios
@@ -438,8 +435,8 @@ export default function EntornoTrabajoPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
                       {/* Programming Selector */}
                       <div className="flex flex-col gap-2">
-                        <label className="text-sm font-semibold text-foreground">
-                          📚 Programación
+                        <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                          <BookOpen className="w-4 h-4 text-info" /> Programación
                         </label>
                         <select
                           disabled={pdKeys.length === 0}
@@ -464,8 +461,8 @@ export default function EntornoTrabajoPage() {
 
                       {/* Course Selector */}
                       <div className="flex flex-col gap-2">
-                        <label className="text-sm font-semibold text-foreground">
-                          👥 Curso
+                        <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                          <Users className="w-4 h-4 text-info" /> Curso
                         </label>
                         <select
                           disabled={filteredCursoKeys.length === 0}
@@ -483,11 +480,9 @@ export default function EntornoTrabajoPage() {
                               ))}
                             </>
                           ) : (
-                            <option value="">
-                              {activeModuleId
+                            <option value="">{activeModuleId
                                 ? "No hay cursos asociados."
-                                : "Selecciona primero una programación."}
-                            </option>
+                                : "Selecciona primero una programación."}</option>
                           )}
                         </select>
                       </div>
@@ -497,12 +492,12 @@ export default function EntornoTrabajoPage() {
 
                 {/* Aviso de Seguridad y RGPD al final (centrado) */}
                 <div className="flex flex-col items-center justify-center text-center space-y-3 pt-8 border-t border-[var(--glass-border)] max-w-2xl mx-auto">
-                  <ShieldAlert className="w-8 h-8 text-blue-400" />
+                  <ShieldAlert className="w-8 h-8 text-info" />
                   <h3 className="text-xl font-extrabold text-foreground">Seguridad y RGPD garantizados</h3>
                   <div className="text-base text-muted space-y-2">
                     <p>Esta aplicación procesa toda la información confidencial en tu propio entorno.</p>
                     <p>Ningún dato de tu alumnado se envía a servidores externos ni es accesible por el administrador.</p>
-                    <p className="font-semibold text-blue-300">Asegúrate de hacer backup de tu programación didáctica y cursos para no perderlos al hacer cambios.</p>
+                    <p className="font-semibold text-info">Asegúrate de hacer backup de tu programación didáctica y cursos para no perderlos al hacer cambios.</p>
                   </div>
                 </div>
 
@@ -522,7 +517,7 @@ export default function EntornoTrabajoPage() {
                     <div>
                       <div className="flex justify-between items-center mb-1">
                         <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
-                          <FileText className="w-5 h-5 text-blue-400" /> Respaldar tus datos reales en local
+                          <FileText className="w-5 h-5 text-info" /> Respaldar tus datos reales en local
                         </h3>
                         {dataSource !== 'local' && (
                           <span className="text-[10px] bg-white/10 text-muted px-2.5 py-1 rounded-full font-bold tracking-wider">
@@ -546,16 +541,16 @@ export default function EntornoTrabajoPage() {
 
                       <Button
                         onClick={triggerImport}
-                        className="text-sm font-bold flex items-center gap-2 bg-foreground/10 hover:bg-foreground/15 text-foreground border border-white/5 px-5 py-3 rounded-xl transition-all w-full justify-center"
+                        className="text-sm font-semibold flex items-center gap-2 bg-foreground/10 hover:bg-foreground/15 text-foreground border border-white/5 px-5 py-3 rounded-xl transition-all w-full justify-center"
                       >
-                        <Upload className="w-4 h-4 text-blue-400" /> Importar Base de datos (.cdd)
+                        <Upload className="w-4 h-4 text-info" /> Importar Base de datos (.cdd)
                       </Button>
 
                       <Button
                         onClick={handleExport}
-                        className="text-sm font-bold flex items-center gap-2 bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 border border-blue-500/20 px-5 py-3 rounded-xl transition-all w-full justify-center"
+                        className="text-sm font-semibold flex items-center gap-2 bg-info/10 hover:bg-info/10 text-info border border-info/30 px-5 py-3 rounded-xl transition-all w-full justify-center"
                       >
-                        <Download className="w-4 h-4 text-blue-400" /> Exportar Base de datos (.cdd)
+                        <Download className="w-4 h-4 text-info" /> Exportar Base de datos (.cdd)
                       </Button>
 
                     </div>
@@ -564,7 +559,7 @@ export default function EntornoTrabajoPage() {
                   {/* Sincronización en tu nube */}
                   <Card
                     className={`p-8 border rounded-2xl shadow-lg space-y-6 transition-all duration-300 ${dataSource === 'local' && (googleConnected || onedriveConnected)
-                      ? 'border-green-500/50 bg-green-500/5 shadow-md shadow-green-500/5'
+                      ? 'border-success/30 bg-success/10 shadow-md shadow-green-500/5'
                       : 'border-white/5 bg-foreground/5'
                       } ${dataSource !== 'local' ? 'opacity-40 pointer-events-none select-none' : ''}`}
                   >
@@ -597,7 +592,7 @@ export default function EntornoTrabajoPage() {
                           <div className="min-w-0">
                             <h3 className="text-base font-bold text-foreground">Google Drive</h3>
                             {googleConnected ? (
-                              <p className="text-sm text-green-400/90 truncate font-mono mt-0.5">{googleUser}</p>
+                              <p className="text-sm text-success truncate font-mono mt-0.5">{googleUser}</p>
                             ) : (
                               <p className="text-sm text-muted mt-0.5">No conectado</p>
                             )}
@@ -614,8 +609,8 @@ export default function EntornoTrabajoPage() {
                           <Button
                             onClick={handleConnectGoogle}
                             disabled={syncing}
-                            className={`text-sm font-bold px-4 py-2 rounded-lg flex items-center gap-1 ${googleConnected
-                              ? 'bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20'
+                            className={`text-sm font-semibold px-4 py-2 rounded-lg flex items-center gap-1 ${googleConnected
+                              ? 'bg-danger/10 text-danger hover:bg-danger/10 border border-danger/30'
                               : 'bg-accent/10 text-accent hover:bg-accent/20 border border-accent/20'
                               }`}
                           >
@@ -633,7 +628,7 @@ export default function EntornoTrabajoPage() {
                           <div className="min-w-0">
                             <h3 className="text-base font-bold text-foreground">Microsoft OneDrive</h3>
                             {onedriveConnected ? (
-                              <p className="text-sm text-blue-400/90 truncate font-mono mt-0.5">{onedriveUser}</p>
+                              <p className="text-sm text-info truncate font-mono mt-0.5">{onedriveUser}</p>
                             ) : (
                               <p className="text-sm text-muted mt-0.5">No conectado</p>
                             )}
@@ -650,9 +645,9 @@ export default function EntornoTrabajoPage() {
                           <Button
                             onClick={handleConnectOneDrive}
                             disabled={syncing}
-                            className={`text-sm font-bold px-4 py-2 rounded-lg flex items-center gap-1 ${onedriveConnected
-                              ? 'bg-red-500/10 text-red-400 hover:bg-red-500/20 border border-red-500/20'
-                              : 'bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 border border-blue-500/20'
+                            className={`text-sm font-semibold px-4 py-2 rounded-lg flex items-center gap-1 ${onedriveConnected
+                              ? 'bg-danger/10 text-danger hover:bg-danger/10 border border-danger/30'
+                              : 'bg-info/10 text-info hover:bg-info/10 border border-info/30'
                               }`}
                           >
                             {syncing ? 'Conectando...' : onedriveConnected ? 'Desconectar' : 'Conectar'}
@@ -665,12 +660,12 @@ export default function EntornoTrabajoPage() {
 
                 {/* Aviso de Seguridad de RGPD al final (centrado) */}
                 <div className="flex flex-col items-center justify-center text-center space-y-3 pt-4 max-w-2xl mx-auto">
-                  <ShieldAlert className="w-8 h-8 text-blue-400" />
+                  <ShieldAlert className="w-8 h-8 text-info" />
                   <h3 className="text-xl font-extrabold text-foreground">Seguridad y RGPD garantizados</h3>
                   <div className="text-base text-muted space-y-2">
                     <p>Esta aplicación procesa toda la información confidencial en tu propio entorno.</p>
                     <p>Ningún dato de tu alumnado se envía a servidores externos ni es accesible por el administrador.</p>
-                    <p className="font-semibold text-blue-300">Asegúrate de hacer backup de tu programación didáctica y cursos para no perderlos al hacer cambios.</p>
+                    <p className="font-semibold text-info">Asegúrate de hacer backup de tu programación didáctica y cursos para no perderlos al hacer cambios.</p>
                   </div>
                 </div>
               </div>

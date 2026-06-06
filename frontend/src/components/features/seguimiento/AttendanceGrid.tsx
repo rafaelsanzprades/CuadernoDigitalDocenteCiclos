@@ -1,3 +1,4 @@
+import { AlertCircle, CheckCircle, ChevronLeft, ChevronRight, Clock, XCircle } from "lucide-react";
 import React, { useState, useEffect, useRef } from 'react';
 import { useAppStore } from '@/store/useAppStore';
 import { MotionWrapper } from '@/components/ui/MotionWrapper';
@@ -5,7 +6,6 @@ import { format, subDays, addDays } from 'date-fns';
 import { es } from 'date-fns/locale';
 import toast from 'react-hot-toast';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { CheckCircle, XCircle, Clock, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 
 type AttendanceStatus = 'presente' | 'falta' | 'retraso' | null;
 
@@ -78,9 +78,9 @@ export const AttendanceGrid = () => {
 
   const getStatusColor = (status: AttendanceStatus) => {
     switch (status) {
-      case 'presente': return 'bg-green-500/20 text-green-500 border-green-500/30';
-      case 'falta': return 'bg-red-500/20 text-red-500 border-red-500/30';
-      case 'retraso': return 'bg-orange-500/20 text-orange-500 border-orange-500/30';
+      case 'presente': return 'bg-success/10 text-success border-success/30';
+      case 'falta': return 'bg-danger/10 text-danger border-danger/30';
+      case 'retraso': return 'bg-warning/10 text-warning border-warning/30';
       default: return 'bg-background/40 text-muted border-[var(--glass-border)] hover:bg-foreground/5';
     }
   };
@@ -112,7 +112,7 @@ export const AttendanceGrid = () => {
             Asistencia: {format(currentDate, "EEEE d 'de' MMMM", { locale: es })}
           </h2>
           {menores > 0 && (
-            <span className="text-pink-400 font-semibold text-sm flex items-center gap-1.5 bg-pink-400/10 px-3 py-1 rounded-full border border-pink-400/20">
+            <span className="text-danger font-semibold text-sm flex items-center gap-1.5 bg-danger/10 px-3 py-1 rounded-full border border-danger/30">
               <AlertCircle className="w-4 h-4" /> {menores} alumnado(s) menor(es) de 18 años
             </span>
           )}
@@ -161,7 +161,7 @@ export const AttendanceGrid = () => {
                     }}
                   >
                     <td className="p-4 text-center text-muted font-mono w-16 flex items-center justify-center shrink-0">{index + 1}</td>
-                    <td className="p-4 text-center text-sm w-12 flex items-center justify-center shrink-0">{parseInt(al.Edad || '18') < 18 ? <AlertCircle className="w-4 h-4 text-pink-400" /> : ''}</td>
+                    <td className="p-4 text-center text-sm w-12 flex items-center justify-center shrink-0">{parseInt(al.Edad || '18') < 18 ? <AlertCircle className="w-4 h-4 text-danger" /> : ''}</td>
                     <td className="p-4 font-medium flex-1 flex items-center">
                       {al.Apellidos}, {al.Nombre}
                     </td>
@@ -179,7 +179,7 @@ export const AttendanceGrid = () => {
                             document.getElementById(`attendance-btn-${index - 1}`)?.focus();
                           }
                         }}
-                        className={`w-full py-2 px-4 rounded-md border font-bold flex items-center justify-center gap-2 transition-all ${getStatusColor(status)} focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
+                        className={`w-full py-2 px-4 rounded-md border font-bold flex items-center justify-center gap-2 transition-all ${getStatusColor(status)} focus:ring-2 focus:ring-offset-2 focus:ring-info`}
                       >
                         <span>{getStatusIcon(status)}</span>
                         <span className="">{status || 'Sin registrar'}</span>

@@ -1,11 +1,10 @@
 "use client";
-
+import { CheckCircle2, Save, ShieldAlert, UserCog } from "lucide-react";
 import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useUsers, useAdminModules, useAssignments, saveAssignments } from "@/hooks/useApi";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { UserCog, Save, CheckCircle2, ShieldAlert } from "lucide-react";
 
 export function AsignacionModulosTab() {
   const { data: session, status } = useSession();
@@ -64,8 +63,8 @@ export function AsignacionModulosTab() {
   if (!isSuperadmin) {
     return (
       <div className="flex items-center justify-center py-12">
-        <Card className="p-8 text-center max-w-md border-red-500/30 bg-red-500/5">
-          <ShieldAlert className="w-16 h-16 text-red-500 mx-auto mb-4" />
+        <Card className="p-8 text-center max-w-md border-danger/30 bg-danger/10">
+          <ShieldAlert className="w-16 h-16 text-danger mx-auto mb-4" />
           <h2 className="text-xl font-bold text-foreground mb-2">Acceso Restringido</h2>
           <p className="text-muted">Esta página es exclusiva para Superadministradores y equipos directivos.</p>
         </Card>
@@ -133,7 +132,7 @@ export function AsignacionModulosTab() {
               </div>
               
               {successMsg && (
-                <div className="bg-green-500/20 text-green-400 p-3 rounded-lg mb-6 border border-green-500/30 flex items-center gap-2 animate-in fade-in">
+                <div className="bg-success/10 text-success p-3 rounded-lg mb-6 border border-success/30 flex items-center gap-2 animate-in fade-in">
                   <CheckCircle2 className="w-5 h-5" />
                   {successMsg}
                 </div>
@@ -152,7 +151,7 @@ export function AsignacionModulosTab() {
                         {isAssigned && <CheckCircle2 className="w-4 h-4" />}
                       </div>
                       <div>
-                        <div className={`font-bold text-sm ${isAssigned ? 'text-foreground' : 'text-foreground/80'}`}>
+                        <div className={`font-semibold text-sm ${isAssigned ? 'text-foreground' : 'text-foreground/80'}`}>
                           {m.code}
                         </div>
                         <div className={`text-xs mt-1 ${isAssigned ? 'text-foreground/90' : 'text-muted'}`}>

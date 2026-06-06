@@ -6,10 +6,10 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 const variants = {
-  success: "bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border-emerald-500/25",
-  danger: "bg-red-500/15 text-red-700 dark:text-red-400 border-red-500/25",
-  warning: "bg-amber-500/15 text-amber-700 dark:text-amber-400 border-amber-500/25",
-  info: "bg-blue-500/15 text-blue-700 dark:text-blue-400 border-blue-500/25",
+  success: "bg-success/10 text-success dark:text-success border-success/30",
+  danger: "bg-danger/10 text-danger dark:text-danger border-danger/30",
+  warning: "bg-warning/10 text-warning dark:text-warning border-warning/30",
+  info: "bg-info/10 text-info dark:text-info border-info/30",
   default: "bg-foreground/8 text-foreground/70 border-[var(--glass-border)]",
 };
 

@@ -1,5 +1,5 @@
+import { BarChart, BarChart3, CheckCircle, Clock, Users } from "lucide-react";
 import React, { useEffect } from "react";
-import { Users, CheckCircle, BarChart3, Clock } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { motion, animate, useMotionValue, useTransform } from "framer-motion";
 
@@ -81,7 +81,7 @@ export function DashboardKPIs({ cursoData, moduleData }: DashboardKPIsProps) {
   return (
     <div className="space-y-6">
       <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground">
-        <span>📊</span> Resumen planificación y seguimiento global
+        <span><span className="inline-flex"><BarChart className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Resumen planificación y seguimiento global
       </h2>
       <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
         <div className="glass-card p-6 flex flex-col items-center justify-center border-t-4 border-t-blue-500 hover:scale-[1.02] transition-transform shadow-lg hover:shadow-blue-500/20">

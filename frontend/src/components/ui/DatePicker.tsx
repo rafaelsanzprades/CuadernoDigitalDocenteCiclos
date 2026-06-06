@@ -1,6 +1,6 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
 import { Calendar, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
 
 interface DatePickerProps {
   value: string; // YYYY-MM-DD
@@ -189,7 +189,7 @@ export default function DatePicker({ value, onChange, label, className, placehol
               <button
                 type="button"
                 onClick={() => { onChange(""); setOpen(false); }}
-                className="text-xs text-muted hover:text-red-400 transition-colors"
+                className="text-xs text-muted hover:text-danger transition-colors"
               >
                 Borrar
               </button>

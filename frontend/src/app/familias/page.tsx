@@ -1,5 +1,5 @@
 "use client";
-
+import { Library } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
@@ -64,7 +64,7 @@ export default function FamiliasPage() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
               <div>
               <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                  <span className="text-3xl">🗂️</span> Familias profesionales
+                  <span className="text-3xl"><span className="inline-flex"><Library className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Familias profesionales
                 </h1>
                 <p className="text-muted mt-2 text-lg">Catálogo oficial de Ciclos Formativos. Grado Básico, Grado Medio y Grado Superior</p>
               </div>
@@ -97,7 +97,7 @@ export default function FamiliasPage() {
                         )}
                       </div>
 
-                      <div className="text-xs font-bold px-2 py-1 rounded-md mb-2" style={{ backgroundColor: `${family.color_hex}30`, color: family.color_hex }}>
+                      <div className="text-xs font-medium px-2 py-1 rounded-md mb-2" style={{ backgroundColor: `${family.color_hex}30`, color: family.color_hex }}>
                         {family.code}
                       </div>
                       <h2 className="text-lg font-bold text-foreground leading-tight">

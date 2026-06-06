@@ -1,19 +1,9 @@
 "use client";
-
+import { BookOpen, ChevronDown, ChevronUp, Clock, FolderTree, GraduationCap, Layers, ListChecks } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
 import { useSearchParams, useRouter } from "next/navigation";
-import {
-  ChevronDown,
-  ChevronUp,
-  BookOpen,
-  GraduationCap,
-  Clock,
-  ListChecks,
-  Layers,
-  FolderTree,
-} from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
@@ -196,7 +186,7 @@ function TabFamilias({ onSelectTitulo }: { onSelectTitulo: (familiaName: string,
               </div>
 
               <div
-                className="text-xs font-bold px-2 py-1 rounded-md mb-2"
+                className="text-xs font-medium px-2 py-1 rounded-md mb-2"
                 style={{ backgroundColor: `${family.color_hex}30`, color: family.color_hex }}
               >
                 {family.code}
@@ -451,7 +441,7 @@ function TabCursos({ globalSelection, updateGlobalSelection, onSelectModulo }: {
               >
                 <div className="flex items-center justify-between gap-4">
                   <div className="flex items-center gap-3 min-w-0 flex-1">
-                    <span className="font-mono text-xs font-bold text-accent bg-accent/10 border border-accent/20 px-2 py-1 rounded shrink-0">
+                    <span className="font-mono text-xs font-medium text-accent bg-accent/10 border border-accent/20 px-2 py-1 rounded shrink-0">
                       {mod.codigo}
                     </span>
                     <div className="min-w-0">
@@ -686,7 +676,7 @@ function TabModulos({ globalSelection, updateGlobalSelection }: { globalSelectio
         <>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <span className="font-mono text-xs font-bold text-accent bg-accent/10 border border-accent/20 px-2 py-1 rounded">
+              <span className="font-mono text-xs font-medium text-accent bg-accent/10 border border-accent/20 px-2 py-1 rounded">
                 {modulo.codigo}
               </span>
               <h2 className="text-lg font-bold text-foreground">{modulo.nombre}</h2>
@@ -705,7 +695,7 @@ function TabModulos({ globalSelection, updateGlobalSelection }: { globalSelectio
                     className="w-full p-4 flex items-center justify-between gap-4 hover:bg-foreground/5 transition-colors text-left"
                   >
                     <div className="flex items-center gap-3 min-w-0 flex-1">
-                      <span className="text-xs font-bold text-accent bg-accent/10 border border-accent/20 px-2 py-0.5 rounded shrink-0">
+                      <span className="text-xs font-medium text-accent bg-accent/10 border border-accent/20 px-2 py-0.5 rounded shrink-0">
                         {ra.id}
                       </span>
                       <p className="text-sm text-foreground leading-snug">{ra.descripcion}</p>
@@ -725,7 +715,7 @@ function TabModulos({ globalSelection, updateGlobalSelection }: { globalSelectio
                       <p className="text-xs font-semibold text-muted tracking-wider">Criterios de Evaluación</p>
                       {ra.criterios_evaluacion.map((ce) => (
                         <div key={ce.id} className="flex items-start gap-2 text-sm bg-foreground/5 rounded-lg p-3 border border-[var(--glass-border)]">
-                          <span className="text-xs font-bold text-accent shrink-0 mt-0.5">{ce.id}</span>
+                          <span className="text-xs font-medium text-accent shrink-0 mt-0.5">{ce.id}</span>
                           <span className="text-foreground/80">{ce.descripcion}</span>
                         </div>
                       ))}

@@ -1,3 +1,4 @@
+import { AlertTriangle, ClipboardList, PartyPopper, Target, TrendingDown, TrendingUp } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import {
   BarChart,
@@ -28,7 +29,7 @@ export const AnalisisGrupalTab = () => {
   if (df_eval_activos.length === 0) {
     return (
       <Card className="p-8 text-center border-l-4 border-l-yellow-500 mt-6">
-        <h2 className="text-xl font-bold text-yellow-400 mb-2">Faltan Datos</h2>
+        <h2 className="text-xl font-bold text-warning mb-2">Faltan Datos</h2>
         <p className="text-foreground/80">No hay datos de evaluación para alumnado activos. Ve a Evaluación Competencial primero.</p>
       </Card>
     );
@@ -88,9 +89,9 @@ export const AnalisisGrupalTab = () => {
       const al = activeAlumnado.find((a: any) => a.ID === e.ID);
       const nota = Number(e.Nota_Final) || 0;
       let riskLevel = "🟡 Moderado";
-      let riskColor = "text-yellow-400";
-      if (nota < 3) { riskLevel = "🔴 Muy Alto"; riskColor = "text-red-500"; }
-      else if (nota < 4) { riskLevel = "🟠 Alto"; riskColor = "text-orange-400"; }
+      let riskColor = "text-warning";
+      if (nota < 3) { riskLevel = "Muy Alto"; riskColor = "text-danger"; }
+      else if (nota < 4) { riskLevel = "🟠 Alto"; riskColor = "text-warning"; }
       
       return {
         id: e.ID,
@@ -121,32 +122,32 @@ export const AnalisisGrupalTab = () => {
   return (
     <div className="space-y-8 animate-in slide-in-from-left-4 duration-500">
       <h2 className="text-2xl font-extrabold text-foreground tracking-tight flex items-center gap-3">
-        📋 Resumen datos grupales
+        <span className="inline-flex"><ClipboardList className="w-[1.2em] h-[1.2em] mr-1" /></span> Resumen datos grupales
       </h2>
 
       <section className="grid grid-cols-4 gap-6">
         <Card className="p-6 border-l-4 border-l-blue-500 flex flex-col justify-center items-center hover:scale-105 transition-transform">
-          <span className="text-muted text-sm font-bold tracking-wider mb-2">Media Grupal</span>
-          <span className="text-4xl font-black text-blue-400">{media_grupal.toFixed(2)}</span>
+          <span className="text-muted text-sm font-semibold tracking-wider mb-2">Media Grupal</span>
+          <span className="text-4xl font-black text-info">{media_grupal.toFixed(2)}</span>
         </Card>
         <Card className="p-6 border-l-4 border-l-emerald-500 flex flex-col justify-center items-center hover:scale-105 transition-transform">
-          <span className="text-muted text-sm font-bold tracking-wider mb-2">% Aprobados</span>
-          <span className="text-4xl font-black text-emerald-400">{tasa_aprobado.toFixed(1)}%</span>
+          <span className="text-muted text-sm font-semibold tracking-wider mb-2">% Aprobados</span>
+          <span className="text-4xl font-black text-success">{tasa_aprobado.toFixed(1)}%</span>
         </Card>
         <Card className="p-6 border-l-4 border-l-purple-500 flex flex-col justify-center items-center hover:scale-105 transition-transform">
-          <span className="text-muted text-sm font-bold tracking-wider mb-2">Nº Alumnado</span>
-          <span className="text-4xl font-black text-purple-400">{total}</span>
+          <span className="text-muted text-sm font-semibold tracking-wider mb-2">Nº Alumnado</span>
+          <span className="text-4xl font-black text-info">{total}</span>
         </Card>
         <Card className="p-6 border-l-4 border-l-pink-500 flex flex-col justify-center items-center hover:scale-105 transition-transform">
-          <span className="text-muted text-sm font-bold tracking-wider mb-2">Cohesión (Desv.)</span>
-          <span className="text-4xl font-black text-pink-400">{desv_tipica.toFixed(2)}</span>
+          <span className="text-muted text-sm font-semibold tracking-wider mb-2">Cohesión (Desv.)</span>
+          <span className="text-4xl font-black text-danger">{desv_tipica.toFixed(2)}</span>
         </Card>
       </section>
 
       <section className="grid grid-cols-2 gap-6">
         <Card className="p-6">
           <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-6">
-            📉 Distribución de Calificaciones
+            <span className="inline-flex"><TrendingDown className="w-[1.2em] h-[1.2em] mr-1" /></span> Distribución de Calificaciones
           </h2>
           <div className="h-72 w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -167,7 +168,7 @@ export const AnalisisGrupalTab = () => {
 
         <Card className="p-6">
           <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-6">
-            📈 Evolución por Trimestres
+            <span className="inline-flex"><TrendingUp className="w-[1.2em] h-[1.2em] mr-1" /></span> Evolución por Trimestres
           </h2>
           <div className="h-72 w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -192,7 +193,7 @@ export const AnalisisGrupalTab = () => {
       {raData.length > 0 && (
         <Card className="p-6">
           <h2 className="text-[1.1rem] font-bold flex items-center gap-2 text-foreground mb-6">
-            🎯 Rendimiento por RA
+            <span className="inline-flex"><Target className="w-[1.2em] h-[1.2em] mr-1" /></span> Rendimiento por RA
           </h2>
           <div className="space-y-4">
             {raData.map((ra: any) => {
@@ -220,7 +221,7 @@ export const AnalisisGrupalTab = () => {
 
               return (
                 <div key={ra.subject} className="flex items-center gap-4">
-                  <span className="w-16 text-sm font-bold text-foreground shrink-0">{ra.subject}</span>
+                  <span className="w-16 text-sm font-semibold text-foreground shrink-0">{ra.subject}</span>
                   <div className="flex-1 relative h-7 bg-foreground/20 rounded-full border border-[var(--glass-border)] overflow-hidden">
                     <div
                       className="absolute top-0.5 bottom-0.5 left-0 rounded-full transition-all duration-700 flex items-center justify-end pr-3"
@@ -234,10 +235,10 @@ export const AnalisisGrupalTab = () => {
                       )}
                     </div>
                     {/* 5.0 threshold */}
-                    <div className="absolute top-0 bottom-0 w-px bg-yellow-500/40" style={{ left: '50%' }} />
+                    <div className="absolute top-0 bottom-0 w-px bg-warning/10" style={{ left: '50%' }} />
                   </div>
                   {pct <= 12 && (
-                    <span className="text-sm font-bold text-foreground/80 w-10">{val.toFixed(1)}</span>
+                    <span className="text-sm font-semibold text-foreground/80 w-10">{val.toFixed(1)}</span>
                   )}
                 </div>
               );
@@ -254,11 +255,11 @@ export const AnalisisGrupalTab = () => {
       )}
 
       <Card className="p-6">
-        <h2 className="text-[1.1rem] font-bold mb-6">⚠️ Seguimiento de Riesgo Académico</h2>
+        <h2 className="text-[1.1rem] font-bold mb-6"><span className="inline-flex"><AlertTriangle className="w-[1.2em] h-[1.2em] mr-1" /></span> Seguimiento de Riesgo Académico</h2>
         {risks.length > 0 ? (
           <>
-            <div className="bg-red-500/10 border border-red-500/30 text-red-300 px-4 py-3 rounded-lg mb-4 text-sm font-semibold flex items-center gap-2">
-              <span className="text-xl">⚠️</span>
+            <div className="bg-danger/10 border border-danger/30 text-danger px-4 py-3 rounded-lg mb-4 text-sm font-semibold flex items-center gap-2">
+              <span className="text-xl"><span className="inline-flex"><AlertTriangle className="w-[1.2em] h-[1.2em] mr-1" /></span></span>
               Se han detectado {risks.length} alumnado(s) con rendimiento insuficiente.
             </div>
             <table className="w-full text-left text-sm whitespace-nowrap">
@@ -283,8 +284,8 @@ export const AnalisisGrupalTab = () => {
             </table>
           </>
         ) : (
-          <div className="bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 px-4 py-8 rounded-lg flex flex-col items-center justify-center gap-3 text-center">
-            <span className="text-4xl">🎉</span>
+          <div className="bg-success/10 border border-success/30 text-success px-4 py-8 rounded-lg flex flex-col items-center justify-center gap-3 text-center">
+            <span className="text-4xl"><span className="inline-flex"><PartyPopper className="w-[1.2em] h-[1.2em] mr-1" /></span></span>
             <span className="font-bold text-lg">¡Excelente rendimiento!</span>
             <span className="text-sm opacity-80">No hay alumnado en riesgo según la proyección actual.</span>
           </div>
