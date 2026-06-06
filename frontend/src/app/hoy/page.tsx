@@ -15,6 +15,7 @@ import { useModulesList } from "@/hooks/useApi";
 import { useEffect } from "react";
 import { PlanificacionMensualTab } from "@/components/features/dashboard/PlanificacionMensualTab";
 import { WeeklyClasses } from "@/components/features/dashboard/WeeklyClasses";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 
 export default function HoyPage() {
   const { moduleData, cursoData, setModuleData, setCursoData, isWizardOpen, setWizardOpen, activeModuleId, setActiveModuleId, activeCursoId, setActiveCursoId } = useAppStore();
@@ -86,17 +87,15 @@ export default function HoyPage() {
             </div>
 
             {/* Pestañas */}
-            <div className="flex border-b border-[var(--glass-border)] overflow-x-auto scrollbar-hide">
-              {TABS.map(tab => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === tab.id ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground'}`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
+            <Tabs value={activeTab} onValueChange={setActiveTab}>
+              <TabsList className="mb-2 max-w-full">
+                {TABS.map(tab => (
+                  <TabsTrigger key={tab.id} value={tab.id}>
+                    {tab.label}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
 
             {/* Contenido Pestaña Actual */}
             {activeTab === "actual" && (

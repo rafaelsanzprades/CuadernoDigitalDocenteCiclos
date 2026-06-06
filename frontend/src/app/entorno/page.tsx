@@ -7,6 +7,7 @@ import { useAppStore } from "@/store/useAppStore";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import { fileManager, DataSourceType } from "@/services/fileManager";
 import { initialGroups } from "@/store/initialData";
 import {
@@ -333,25 +334,24 @@ export default function EntornoTrabajoPage() {
 
 
             {/* Tabs para conmutar modos de almacenamiento */}
-            <div className="flex border-b border-[var(--glass-border)] overflow-x-auto scrollbar-hide">
-              <button
-                onClick={() => setActiveTab("demo")}
-                className={`px-6 py-4 font-bold text-base border-b-2 transition-colors whitespace-nowrap cursor-pointer ${activeTab === "demo"
-                  ? 'border-accent text-accent'
-                  : 'border-transparent text-muted hover:text-foreground'
-                  }`}
-              >
-                💡 Modos de trabajo
-              </button>
-              <button
-                onClick={() => setActiveTab("backup")}
-                className={`px-6 py-4 font-bold text-base border-b-2 transition-colors whitespace-nowrap cursor-pointer ${activeTab === "backup"
-                  ? 'border-accent text-accent'
-                  : 'border-transparent text-muted hover:text-foreground'
-                  }`}
-              >
-                🔄 Respaldo y sincronización
-              </button>
+            <Tabs value={activeTab} onValueChange={(val: any) => setActiveTab(val)}>
+              <TabsList className="mb-2 max-w-full">
+                <TabsTrigger value="demo">
+                  💡 Modos de trabajo
+                </TabsTrigger>
+                <TabsTrigger value="backup">
+                  🔄 Respaldo y sincronización
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
+
+            {/* Cartel indicativo de estado actual */}
+            <div className={`mt-2 mb-6 p-3 rounded-xl border flex items-center justify-center font-bold text-sm shadow-md transition-colors ${
+              dataSource === 'demo' 
+                ? 'bg-amber-500/10 border-amber-500/30 text-amber-400 shadow-amber-500/5'
+                : 'bg-blue-500/10 border-blue-500/30 text-blue-300 shadow-blue-500/5'
+            }`}>
+              {dataSource === 'demo' ? '⚠️ ACTIVADO. Datos ficticios' : '🛡️ ACTIVADO. Datos reales en local'}
             </div>
 
             {/* Pestaña: Demostración */}
@@ -362,7 +362,7 @@ export default function EntornoTrabajoPage() {
                   {/* Panel Demo */}
                   <Card className="p-6 border border-white/5 rounded-2xl bg-foreground/5 shadow-lg space-y-4 flex flex-col">
                     <div className="flex items-center gap-3">
-                      <h3 className="text-xl font-bold text-foreground">Modo Datos ficticios (demo)</h3>
+                      <h3 className="text-xl font-bold text-foreground">Modo Datos ficticios</h3>
                       {dataSource === 'demo' ? (
                         <Badge variant="warning" className="bg-amber-500/10 text-amber-400 border-amber-500/30">Activo</Badge>
                       ) : (
@@ -370,31 +370,28 @@ export default function EntornoTrabajoPage() {
                       )}
                     </div>
                     {dataSource === 'demo' ? (
-                      <Button
-                        onClick={() => handleSourceChange('local')}
-                        className="w-full py-3 px-6 rounded-xl font-bold flex items-center gap-3 border border-red-500/30 bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-all shadow-md"
-                      >
-                        <PowerOff className="w-5 h-5 shrink-0" />
-                        Desactivar Datos ficticios (demo) y activar Datos reales en local
-                      </Button>
+                      <div className="w-full py-3 px-6 rounded-xl font-bold flex items-center justify-center gap-3 border border-amber-500/30 bg-amber-500/10 text-amber-500 shadow-md">
+                        <CheckCircle className="w-5 h-5 shrink-0" />
+                        Este es tu modo actual
+                      </div>
                     ) : (
                       <Button
                         onClick={() => handleSourceChange('demo')}
                         className="w-full py-3 px-6 rounded-xl font-bold flex items-center gap-3 border border-amber-500/30 bg-amber-500/10 text-amber-400 hover:bg-amber-500/20 transition-all shadow-md shadow-amber-500/5"
                       >
                         <Zap className="w-5 h-5 shrink-0" />
-                        Activar Datos ficticios (demo)
+                        Cambiar a modo Datos ficticios
                       </Button>
                     )}
                     <p className="text-sm text-muted mt-auto">
-                      Permite explorar la aplicación usando datos ficticios y preconfigurados de alumnado y asignaciones sin afectar tu información real.
+                      Permite explorar la aplicación usando Datos ficticios de alumnado y asignaciones sin afectar tu información.
                     </p>
                   </Card>
 
                   {/* Panel Local */}
                   <Card className="p-6 border border-white/5 rounded-2xl bg-foreground/5 shadow-lg space-y-4 flex flex-col">
                     <div className="flex items-center gap-3">
-                      <h3 className="text-xl font-bold text-foreground">Modo Datos reales en local</h3>
+                      <h3 className="text-xl font-bold text-foreground">Datos reales en local</h3>
                       {dataSource === 'local' ? (
                         <Badge variant="info" className="bg-blue-500/10 text-blue-300 border-blue-500/30">Activo</Badge>
                       ) : (
@@ -402,24 +399,21 @@ export default function EntornoTrabajoPage() {
                       )}
                     </div>
                     {dataSource === 'local' ? (
-                      <Button
-                        onClick={() => handleSourceChange('demo')}
-                        className="w-full py-3 px-6 rounded-xl font-bold flex items-center gap-3 border border-red-500/30 bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-all shadow-md"
-                      >
-                        <PowerOff className="w-5 h-5 shrink-0" />
-                        Desactivar Datos reales en local y activar Datos ficticios (demo)
-                      </Button>
+                      <div className="w-full py-3 px-6 rounded-xl font-bold flex items-center justify-center gap-3 border border-blue-500/30 bg-blue-500/10 text-blue-400 shadow-md">
+                        <CheckCircle className="w-5 h-5 shrink-0" />
+                        Este es tu modo actual
+                      </div>
                     ) : (
                       <Button
                         onClick={() => handleSourceChange('local')}
                         className="w-full py-3 px-6 rounded-xl font-bold flex items-center gap-3 border border-blue-500/30 bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 transition-all shadow-md shadow-blue-500/5"
                       >
                         <Power className="w-5 h-5 shrink-0" />
-                        Activar Datos reales en local
+                        Cambiar a Datos reales en local
                       </Button>
                     )}
                     <p className="text-sm text-muted mt-auto">
-                      Trabaja de forma totalmente segura con datos reales de tu centro, alumnado y evaluaciones cargados en local o respaldados en la nube.
+                      Trabaja de forma totalmente segura con datos reales de tu Centro, alumnado y evaluaciones cargados en local o respaldados en la nube.
                     </p>
                   </Card>
                 </div>
@@ -432,7 +426,7 @@ export default function EntornoTrabajoPage() {
                         🎯 Selección de Programación y Curso activos
                         {dataSource === 'demo' && (
                           <span className="text-[10px] bg-white/10 text-muted px-2.5 py-1 rounded-full font-bold tracking-wider ml-2">
-                            No disponible en modo demo
+                            No disponible en modo Datos ficticios
                           </span>
                         )}
                       </h3>
@@ -682,7 +676,7 @@ export default function EntornoTrabajoPage() {
               </div>
             )}
 
- 
+
 
           </div>
         </div>

@@ -9,6 +9,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { useAppStore } from "@/store/useAppStore";
 import { Alumnado } from "@/types";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 
 type DocumentItem = {
   name: string;
@@ -210,39 +211,26 @@ export default function DocumentosPage() {
               </div>
             </div>
 
-            <div className="flex border-b border-[var(--glass-border)] mb-6 overflow-x-auto scrollbar-hide">
-              <button
-                className={`flex items-center gap-2 py-3 px-6 font-bold text-sm transition-all border-b-2 whitespace-nowrap ${activeTab === 'legislacion' ? 'border-blue-500 text-blue-400' : 'border-transparent text-muted hover:text-foreground'}`}
-                onClick={() => setActiveTab('legislacion')}
-              >
-                <Scale className="w-4 h-4" /> Legislación general
-              </button>
-              <button
-                className={`flex items-center gap-2 py-3 px-6 font-bold text-sm transition-all border-b-2 whitespace-nowrap ${activeTab === 'varios' ? 'border-blue-500 text-blue-400' : 'border-transparent text-muted hover:text-foreground'}`}
-                onClick={() => setActiveTab('varios')}
-              >
-                <Folder className="w-4 h-4" /> Varios
-              </button>
-              <div className="w-px h-8 bg-white/10 mx-2 self-center shrink-0"></div>
-              <button
-                className={`flex items-center gap-2 py-3 px-6 font-bold text-sm transition-all border-b-2 whitespace-nowrap ${activeTab === 'inicio' ? 'border-blue-500 text-blue-400' : 'border-transparent text-muted hover:text-foreground'}`}
-                onClick={() => setActiveTab('inicio')}
-              >
-                <Play className="w-4 h-4" /> PDF Inicio
-              </button>
-              <button
-                className={`flex items-center gap-2 py-3 px-6 font-bold text-sm transition-all border-b-2 whitespace-nowrap ${activeTab === 'seguimiento' ? 'border-blue-500 text-blue-400' : 'border-transparent text-muted hover:text-foreground'}`}
-                onClick={() => setActiveTab('seguimiento')}
-              >
-                <MapPin className="w-4 h-4" /> PDF Seguimiento
-              </button>
-              <button
-                className={`flex items-center gap-2 py-3 px-6 font-bold text-sm transition-all border-b-2 whitespace-nowrap ${activeTab === 'evaluacion' ? 'border-blue-500 text-blue-400' : 'border-transparent text-muted hover:text-foreground'}`}
-                onClick={() => setActiveTab('evaluacion')}
-              >
-                <GraduationCap className="w-4 h-4" /> PDF Evaluación
-              </button>
-            </div>
+            <Tabs value={activeTab} onValueChange={(val: any) => setActiveTab(val)}>
+              <TabsList className="mb-6 max-w-full">
+                <TabsTrigger value="legislacion">
+                  <div className="flex items-center gap-2"><Scale className="w-4 h-4" /> Legislación general</div>
+                </TabsTrigger>
+                <TabsTrigger value="varios">
+                  <div className="flex items-center gap-2"><Folder className="w-4 h-4" /> Varios</div>
+                </TabsTrigger>
+                <div className="w-px h-6 bg-[var(--glass-border)] mx-1 self-center shrink-0"></div>
+                <TabsTrigger value="inicio">
+                  <div className="flex items-center gap-2"><Play className="w-4 h-4" /> PDF Inicio</div>
+                </TabsTrigger>
+                <TabsTrigger value="seguimiento">
+                  <div className="flex items-center gap-2"><MapPin className="w-4 h-4" /> PDF Seguimiento</div>
+                </TabsTrigger>
+                <TabsTrigger value="evaluacion">
+                  <div className="flex items-center gap-2"><GraduationCap className="w-4 h-4" /> PDF Evaluación</div>
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
 
             {(activeTab === 'legislacion' || activeTab === 'varios') && (
               <div className="space-y-6 animate-in fade-in duration-500">

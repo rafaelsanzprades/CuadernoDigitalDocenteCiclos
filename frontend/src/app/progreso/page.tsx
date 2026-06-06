@@ -11,6 +11,7 @@ import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { CalificacionFEOETab } from "@/components/features/calificacion/CalificacionFEOETab";
 import { AnalisisGrupalTab } from "@/components/features/analisis/AnalisisGrupalTab";
 import { AnalisisIndividualTab } from "@/components/features/analisis/AnalisisIndividualTab";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 
 export default function ProgresoPage() {
   const { 
@@ -316,21 +317,15 @@ export default function ProgresoPage() {
             </div>
           </div>
 
-          <div className="flex border-b border-[var(--glass-border)] overflow-x-auto scrollbar-hide">
-            {TABS.map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-6 py-4 font-bold text-sm transition-all border-b-2 whitespace-nowrap ${
-                  activeTab === tab.id
-                    ? "border-blue-500 text-blue-400"
-                    : "border-transparent text-muted hover:text-foreground hover:bg-foreground/5"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
+          <Tabs value={activeTab} onValueChange={setActiveTab}>
+            <TabsList className="mb-2 max-w-full">
+              {TABS.map(tab => (
+                <TabsTrigger key={tab.id} value={tab.id}>
+                  {tab.label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
 
           {/* TAB 1: RESUMEN (Dos bloques uno detrás de otro) */}
           {activeTab === "resumen" && (
@@ -728,23 +723,16 @@ export default function ProgresoPage() {
                                   <h3 className="font-bold text-foreground mb-4 flex items-center gap-2">
                                     <span>📊</span> Detalle de Calificaciones por Instrumento
                                   </h3>
-                                  <div className="flex border-b border-[var(--glass-border)] mb-4">
-                                    {["1T", "2T", "3T"].map(t => (
-                                      <button
-                                        key={t}
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          setActiveTabByStudent(prev => ({ ...prev, [al_id]: t }));
-                                        }}
-                                        className={`px-4 py-2 font-bold text-sm border-b-2 transition-colors ${
-                                          activeStudentTab === t
-                                            ? 'border-blue-500 text-blue-400'
-                                            : 'border-transparent text-muted hover:text-foreground/80'
-                                        }`}
-                                      >
-                                        {t === "1T" ? "1º Trimestre" : t === "2T" ? "2º Trimestre" : "3º Trimestre"}
-                                      </button>
-                                    ))}
+                                  <div onClick={(e) => e.stopPropagation()}>
+                                    <Tabs value={activeStudentTab} onValueChange={(val) => setActiveTabByStudent(prev => ({ ...prev, [al_id]: val }))}>
+                                      <TabsList className="mb-4 max-w-full">
+                                        {["1T", "2T", "3T"].map(t => (
+                                          <TabsTrigger key={t} value={t}>
+                                            {t === "1T" ? "1º Trimestre" : t === "2T" ? "2º Trimestre" : "3º Trimestre"}
+                                          </TabsTrigger>
+                                        ))}
+                                      </TabsList>
+                                    </Tabs>
                                   </div>
                                   <div className="space-y-4">
                                     {acts_by_tri[activeStudentTab].length === 0 ? (

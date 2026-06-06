@@ -11,6 +11,7 @@ import { ResumenTab } from "@/components/features/profesional/ResumenTab";
 import { TendenciasTab } from "@/components/features/profesional/TendenciasTab";
 import { PanoramaTab } from "@/components/features/profesional/PanoramaTab";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 
 const TABS = [
   { id: "perfil",     label: "🧭 Perfil individual",    cleanLabel: "Perfil individual" },
@@ -138,21 +139,15 @@ export default function ProfesionalPage() {
           </div>
 
           {/* Tabs */}
-          <div className="flex border-b border-[var(--glass-border)] overflow-x-auto scrollbar-hide">
-            {TABS.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap cursor-pointer ${
-                  activeTab === tab.id
-                    ? "border-accent text-accent"
-                    : "border-transparent text-muted hover:text-foreground"
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
+          <Tabs value={activeTab} onValueChange={setActiveTab}>
+            <TabsList className="mb-2 max-w-full">
+              {TABS.map(tab => (
+                <TabsTrigger key={tab.id} value={tab.id}>
+                  {tab.label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
 
           {/* Tab content */}
           {activeTab === "perfil"     && <OrientacionTab />}

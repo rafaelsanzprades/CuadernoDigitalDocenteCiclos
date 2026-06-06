@@ -11,6 +11,7 @@ import { RaOgMatrix } from "@/components/features/resultados/RaOgMatrix";
 import { curriculos, CompetenciaCPP } from "@/data/curriculos";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
 import toast from "react-hot-toast";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 
 export default function MatricesPage() {
   const { activeModuleId, moduleData, setModuleData, updateDataFrame, saveModuleData, cursoData, updateCursoData } = useAppStore();
@@ -98,18 +99,16 @@ export default function MatricesPage() {
             <p className="text-muted mt-2 text-lg">Relación y ponderación entre los RA, CE y las diferentes UD del módulo.</p>
           </div>
 
-          <div className="flex border-b border-[var(--glass-border)] overflow-x-auto scrollbar-hide">
-            {TABS.map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === tab.id ? 'border-[#14a085] text-[#14a085]' : 'border-transparent text-muted hover:text-foreground'}`}
-              >
-                <span className="mr-2">{tab.icon}</span>
-                {tab.label}
-              </button>
-            ))}
-          </div>
+          <Tabs value={activeTab} onValueChange={setActiveTab}>
+            <TabsList className="mb-2 max-w-full">
+              {TABS.map(tab => (
+                <TabsTrigger key={tab.id} value={tab.id}>
+                  <span className="mr-2">{tab.icon}</span>
+                  {tab.label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
 
           {/* Resultados de aprendizaje y CE */}
           {activeTab === "ra" && (

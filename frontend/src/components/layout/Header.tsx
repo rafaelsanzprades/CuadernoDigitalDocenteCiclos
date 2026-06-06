@@ -171,10 +171,10 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
           </button>
           {navGroups.map(group => {
             let badgeText = "";
-            let badgeColor = "";
+            const badgeColor = "text-accent bg-accent/10 border-accent/30";
+            
             if (group.title === "Centro educativo" || group.title === "Centro") {
               badgeText = "ciclos-fp";
-              badgeColor = "text-purple-300 bg-purple-500/10 border-purple-500/30";
             } else if (group.title === "Programación" || group.title === "Módulo") {
               let friendlyName = "—";
               if (activeModuleId) {
@@ -187,7 +187,6 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
                 friendlyName = foundName ? `${code} - ${foundName.slice(0, 15)}...` : activeModuleId;
               }
               badgeText = friendlyName;
-              badgeColor = "text-[#14a085] bg-[#14a085]/10 border-[#14a085]/30";
             } else if (group.title === "Curso y alumnado" || group.title === "Curso") {
               let friendlyName = "—";
               if (activeCursoId) {
@@ -201,7 +200,6 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
                 friendlyName = foundName ? `${foundName.slice(0, 15)}... (${year})` : activeCursoId;
               }
               badgeText = friendlyName;
-              badgeColor = "text-blue-300 bg-blue-500/10 border-blue-500/30";
             }
 
             const isOpen = activeDropdown === group.title;
@@ -252,7 +250,47 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
 
         {/* Botón Guardar + Undo/Redo + Tema (Derecha) */}
         <div className="flex-1 flex justify-end items-center gap-3">
-          <div className="flex items-center gap-1 mr-2 bg-foreground/5 p-1 rounded-lg">
+          {sourceType !== 'demo' && (
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleSave}
+              disabled={isSaving}
+              className="glass-button bg-[var(--accent-color)]/10 text-[var(--accent-color)] border-[var(--accent-color)]/30 hover:bg-[var(--accent-color)]/20 font-semibold py-1.5 px-4 text-sm rounded-lg flex items-center gap-2 transition-all"
+            >
+              <span>{isSaving ? "⏳" : "💾"}</span>
+              {isSaving ? "Guardando..." : "Guardar"}
+            </motion.button>
+          )}
+
+          {moduleData && sourceType !== 'demo' && (
+            <div className="flex items-center">
+              {autosaveStatus === "saved" && <span className="text-green-500 text-sm font-medium">☁️ Guardado</span>}
+              {autosaveStatus === "saving" && <span className="text-amber-500 text-sm font-medium animate-pulse">⏳ Guardando...</span>}
+              {autosaveStatus === "error" && <span className="text-red-500 text-sm font-medium">❌ Error al guardar</span>}
+              {autosaveStatus === "idle" && <span className="text-[var(--text-muted)] text-sm font-medium">☁️ Sincronizado</span>}
+            </div>
+          )}
+
+          <div>
+            <Link href="/entorno" className="inline-block transition-transform hover:scale-105">
+              {sourceType === 'demo' ? (
+                <span className="px-3 py-1.5 rounded-lg text-xs font-extrabold tracking-wider border border-amber-500/30 text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 cursor-pointer flex items-center gap-1 transition-all" title="Haz clic para configurar tu Entorno de Trabajo">
+                  ⚠️ Datos ficticios
+                </span>
+              ) : cloudSynced ? (
+                <span className="px-3 py-1.5 rounded-lg text-xs font-extrabold tracking-wider border border-green-500/30 text-green-400 bg-green-500/10 hover:bg-green-500/20 cursor-pointer flex items-center gap-1 transition-all" title="Haz clic para configurar tu Entorno de Trabajo">
+                  🛡️ Datos reales en nube
+                </span>
+              ) : (
+                <span className="px-3 py-1.5 rounded-lg text-xs font-extrabold tracking-wider border border-blue-500/30 text-blue-300 bg-blue-500/10 hover:bg-blue-500/20 cursor-pointer flex items-center gap-1 transition-all" title="Haz clic para configurar tu Entorno de Trabajo">
+                  🛡️ Datos reales en local
+                </span>
+              )}
+            </Link>
+          </div>
+
+          <div className="flex items-center gap-1 bg-foreground/5 p-1 rounded-lg">
             <button
               onClick={() => undo()}
               disabled={pastStates.length === 0}
@@ -271,33 +309,6 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
             </button>
           </div>
 
-          <div className="mr-1">
-            <Link href="/entorno" className="inline-block transition-transform hover:scale-105">
-              {sourceType === 'demo' ? (
-                <span className="px-2.5 py-1 rounded-lg text-[9px] font-extrabold tracking-wider border border-amber-500/30 text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 cursor-pointer flex items-center gap-1 transition-all" title="Haz clic para configurar tu Entorno de Trabajo">
-                  ⚠️ Datos ficticios (demo)
-                </span>
-              ) : cloudSynced ? (
-                <span className="px-2.5 py-1 rounded-lg text-[9px] font-extrabold tracking-wider border border-green-500/30 text-green-400 bg-green-500/10 hover:bg-green-500/20 cursor-pointer flex items-center gap-1 transition-all" title="Haz clic para configurar tu Entorno de Trabajo">
-                  🛡️ Local + nube
-                </span>
-              ) : (
-                <span className="px-2.5 py-1 rounded-lg text-[9px] font-extrabold tracking-wider border border-blue-500/30 text-blue-300 bg-blue-500/10 hover:bg-blue-500/20 cursor-pointer flex items-center gap-1 transition-all" title="Haz clic para configurar tu Entorno de Trabajo">
-                  🛡️ Datos locales
-                </span>
-              )}
-            </Link>
-          </div>
-
-          {moduleData && sourceType !== 'demo' && (
-            <div className="mr-2 flex items-center">
-              {autosaveStatus === "saved" && <span className="text-green-500 text-sm font-medium">☁️ Guardado</span>}
-              {autosaveStatus === "saving" && <span className="text-amber-500 text-sm font-medium animate-pulse">⏳ Guardando...</span>}
-              {autosaveStatus === "error" && <span className="text-red-500 text-sm font-medium">❌ Error al guardar</span>}
-              {autosaveStatus === "idle" && <span className="text-[var(--text-muted)] text-sm font-medium">☁️ Sincronizado</span>}
-            </div>
-          )}
-
           {mounted && (
             <motion.button
               whileHover={{ scale: 1.1 }}
@@ -307,19 +318,6 @@ export default function Header({ title, breadcrumbSuffix }: { title?: string; br
               title="Cambiar tema"
             >
               {theme === "dark" ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-            </motion.button>
-          )}
-
-          {sourceType !== 'demo' && (
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleSave}
-              disabled={isSaving}
-              className="glass-button bg-[var(--accent-color)]/10 text-[var(--accent-color)] border-[var(--accent-color)]/30 hover:bg-[var(--accent-color)]/20 font-semibold py-1.5 px-4 text-sm rounded-lg flex items-center gap-2 transition-all"
-            >
-              <span>{isSaving ? "⏳" : "💾"}</span>
-              {isSaving ? "Guardando..." : "Guardar"}
             </motion.button>
           )}
         </div>

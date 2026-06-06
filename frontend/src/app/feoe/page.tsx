@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { MotionWrapper } from "@/components/ui/MotionWrapper";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import { fileManager } from "@/services/fileManager";
 import { demoSeed, CRM_SEED_VERSION } from "@/services/demo-ele203-0237ictve-curso202526";
 import type { CrmEmpresa, CrmInteraccion, CursoData } from "@/types";
@@ -201,13 +202,15 @@ export default function FeoePage() {
               <p className="text-muted mt-2 text-lg">Gestión de empresas colaboradoras, asignación de alumnado y seguimiento de prácticas duales y FCT.</p>
             </div>
 
-            <div className="flex border-b border-[var(--glass-border)] overflow-x-auto scrollbar-hide">
-              {TABS.map(tab => (
-                <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === tab.id ? "border-accent text-accent" : "border-transparent text-muted hover:text-foreground"}`}>
-                  {tab.label}
-                </button>
-              ))}
-            </div>
+            <Tabs value={activeTab} onValueChange={(val: any) => setActiveTab(val)}>
+              <TabsList className="mb-2 max-w-full">
+                {TABS.map(tab => (
+                  <TabsTrigger key={tab.id} value={tab.id}>
+                    {tab.label}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
 
             {/* Tab 1: Empresas FEOE */}
             {activeTab === "empresas" && (

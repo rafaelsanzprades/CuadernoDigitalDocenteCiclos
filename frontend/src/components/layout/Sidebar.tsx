@@ -76,11 +76,11 @@ export default function Sidebar() {
                 title={!isSidebarOpen ? item.label : undefined}
                 className={`flex items-center ${isSidebarOpen ? 'gap-2.5 px-3' : 'justify-center px-0'} py-2 rounded-lg transition-all duration-150 group
                   ${pathname === item.href
-                    ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/30 text-foreground shadow-sm shadow-blue-500/10'
+                    ? 'bg-accent/10 border border-accent/30 text-foreground shadow-sm shadow-accent/10'
                     : 'text-muted hover:text-foreground hover:bg-foreground/5 border border-transparent'
                   }`}
               >
-                <span className={`flex items-center justify-center transition-transform duration-150 ${pathname === item.href ? 'scale-110 text-blue-400' : 'group-hover:scale-110'}`}>
+                <span className={`flex items-center justify-center transition-transform duration-150 ${pathname === item.href ? 'scale-110 text-accent' : 'group-hover:scale-110'}`}>
                   <item.icon className="w-5 h-5" strokeWidth={1.75} />
                 </span>
                 {isSidebarOpen && (
@@ -89,7 +89,7 @@ export default function Sidebar() {
                       {item.label}
                     </span>
                     {pathname === item.href && (
-                      <div className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_6px_rgba(96,165,250,0.8)] flex-shrink-0" />
+                      <div className="ml-auto w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_6px_var(--accent-color)] flex-shrink-0" />
                     )}
                   </>
                 )}

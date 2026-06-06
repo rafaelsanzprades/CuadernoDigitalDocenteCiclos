@@ -17,6 +17,7 @@ import {
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import {
   curriculos,
   type CurriculumTitulo,
@@ -107,28 +108,22 @@ function CiclosContent() {
               </p>
             </div>
 
-            <div className="flex border-b border-[var(--glass-border)] overflow-x-auto scrollbar-hide">
-              {(
-                [
-                  { id: "familias" as Tab, label: "Familias profesionales" },
-                  { id: "titulo" as Tab, label: "Título" },
-                  { id: "cursos" as Tab, label: "Cursos" },
-                  { id: "modulos" as Tab, label: "Módulos RA\u2192CE" },
-                ]
-              ).map((t) => (
-                <button
-                  key={t.id}
-                  onClick={() => handleTabChange(t.id)}
-                  className={`px-6 py-4 font-bold text-base border-b-2 transition-colors whitespace-nowrap cursor-pointer ${
-                    activeTab === t.id
-                      ? "border-accent text-accent"
-                      : "border-transparent text-muted hover:text-foreground"
-                  }`}
-                >
-                  {t.label}
-                </button>
-              ))}
-            </div>
+            <Tabs value={activeTab} onValueChange={(val: any) => handleTabChange(val as Tab)}>
+              <TabsList className="mb-2 max-w-full">
+                {(
+                  [
+                    { id: "familias" as Tab, label: "Familias profesionales" },
+                    { id: "titulo" as Tab, label: "Título" },
+                    { id: "cursos" as Tab, label: "Cursos" },
+                    { id: "modulos" as Tab, label: "Módulos RA\u2192CE" },
+                  ]
+                ).map((t) => (
+                  <TabsTrigger key={t.id} value={t.id}>
+                    {t.label}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
 
             {activeTab === "familias" && <TabFamilias onSelectTitulo={handleSelectFamiliaToTitulo} />}
             {activeTab === "titulo" && <TabTitulo onSelectTitulo={handleSelectTitulo} globalSelection={globalSelection} updateGlobalSelection={updateGlobalSelection} />}

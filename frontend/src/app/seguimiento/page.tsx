@@ -5,6 +5,7 @@ import Header from "@/components/layout/Header";
 import { useAppStore } from "@/store/useAppStore";
 import { AsistenciaTab } from "@/components/features/seguimiento/AsistenciaTab";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 
 export default function SeguimientoPage() {
   const { activeModuleId, moduleData, setModuleData, activeCursoId, cursoData, setCursoData, updateCursoData, saveCursoData } = useAppStore();
@@ -172,17 +173,15 @@ export default function SeguimientoPage() {
             <p className="text-muted mt-2 text-lg">Registro detallado del desarrollo diario de las clases y contingencias.</p>
           </div>
 
-          <div className="flex border-b border-[var(--glass-border)] overflow-x-auto scrollbar-hide">
-            {TABS.map(tab => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === tab.id ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground'}`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
+          <Tabs value={activeTab} onValueChange={setActiveTab}>
+            <TabsList className="mb-2 max-w-full">
+              {TABS.map(tab => (
+                <TabsTrigger key={tab.id} value={tab.id}>
+                  {tab.label}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
 
           {activeTab === "diario" && (
             <section>

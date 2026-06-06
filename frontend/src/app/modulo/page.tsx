@@ -9,6 +9,7 @@ import { FeoeTab } from "@/components/features/modulo/FeoeTab";
 import { ContextoTab } from "@/components/features/modulo/ContextoTab";
 import { PlanesTab } from "@/components/features/modulo/PlanesTab";
 import { MotionWrapper } from "@/components/ui/MotionWrapper";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 
 export default function ModuloConfigPage() {
   const { activeModuleId, moduleData, setModuleData } = useAppStore();
@@ -63,17 +64,15 @@ export default function ModuloConfigPage() {
               <p className="text-muted mt-2 text-lg">Configuración básica del módulo didáctico.</p>
             </div>
 
-            <div className="flex border-b border-[var(--glass-border)] overflow-x-auto scrollbar-hide">
-              {TABS.map(tab => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`px-6 py-4 font-bold text-sm border-b-2 transition-colors whitespace-nowrap ${activeTab === tab.id ? 'border-accent text-accent' : 'border-transparent text-muted hover:text-foreground'}`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
+            <Tabs value={activeTab} onValueChange={setActiveTab}>
+              <TabsList className="mb-2 max-w-full">
+                {TABS.map(tab => (
+                  <TabsTrigger key={tab.id} value={tab.id}>
+                    {tab.label}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
 
             {activeTab === "datos" && <DatosTab />}
             {activeTab === "feoe" && <FeoeTab />}

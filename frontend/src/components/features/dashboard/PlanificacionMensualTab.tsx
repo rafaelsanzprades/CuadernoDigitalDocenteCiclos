@@ -39,17 +39,17 @@ export function PlanificacionMensualTab() {
         <table className="w-full text-left border-collapse text-sm whitespace-nowrap">
           <thead>
             <tr className="border-b border-[var(--glass-border)] text-muted bg-foreground/5">
-              <th className="p-3 sticky left-0 bg-[#111827] z-10 border-r border-[var(--glass-border)]">Ud</th>
-              <th className="p-3 sticky left-[60px] bg-[#111827] z-10 text-center">Cls. Prv</th>
-              <th className="p-3 sticky left-[130px] bg-[#111827] z-10 text-center border-r border-[var(--glass-border)]">Cls. Imp</th>
+              <th className="p-3 sticky left-0 bg-[#111827] z-10 border-r border-[var(--glass-border)]"></th>
+              <th className="p-3 sticky left-[60px] bg-[#111827] z-10 text-center"></th>
+              <th className="p-3 sticky left-[130px] bg-[#111827] z-10 text-center border-r border-[var(--glass-border)]"></th>
               {meses_display.map((m) => (
                 <th key={m} colSpan={2} className="p-2 text-center border-r border-[var(--glass-border)]">{m}</th>
               ))}
             </tr>
             <tr className="border-b border-[var(--glass-border)] text-xs text-muted bg-foreground/5">
-              <th className="p-2 sticky left-0 bg-[#111827] z-10 border-r border-[var(--glass-border)]"></th>
-              <th className="p-2 sticky left-[60px] bg-[#111827] z-10"></th>
-              <th className="p-2 sticky left-[130px] bg-[#111827] z-10 border-r border-[var(--glass-border)]"></th>
+              <th className="p-2 sticky left-0 bg-[#111827] z-10 border-r border-[var(--glass-border)] text-center font-bold text-foreground">UD</th>
+              <th className="p-2 sticky left-[60px] bg-[#111827] z-10 text-center text-blue-400/70">Prv</th>
+              <th className="p-2 sticky left-[130px] bg-[#111827] z-10 text-center text-[#14a085]/70 border-r border-[var(--glass-border)]">Imp</th>
               {meses_display.map((m) => (
                 <React.Fragment key={m}>
                   <th className="p-2 text-center text-blue-400/70">Prv</th>

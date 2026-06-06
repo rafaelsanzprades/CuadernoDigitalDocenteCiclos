@@ -242,7 +242,7 @@ export function DatosTab() {
           />
         </div>
 
-        <div className="grid grid-cols-6 gap-4">
+        <div className="grid grid-cols-5 gap-4">
           <Input 
             label="Nº de trimestres"
             type="text"
