@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
 import Link from "next/link";
+import { MotionWrapper } from "@/components/ui/MotionWrapper";
 
 type Degree = {
   id: number;
@@ -58,7 +59,7 @@ export default function FamiliasPage() {
         <Header />
 
         <div className="flex-1 p-8 overflow-y-auto scrollbar-hide">
-          <div className="w-full space-y-6 animate-in fade-in duration-500">
+          <MotionWrapper className="w-full space-y-6 pb-12">
 
             {/* Cabecera */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
@@ -143,7 +144,7 @@ export default function FamiliasPage() {
               </div>
             )}
 
-          </div>
+          </MotionWrapper>
         </div>
       </main>
     </div>

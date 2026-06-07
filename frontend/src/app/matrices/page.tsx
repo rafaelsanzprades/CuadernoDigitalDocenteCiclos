@@ -13,6 +13,7 @@ import { curriculos, CompetenciaCPP } from "@/data/curriculos";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
 import toast from "react-hot-toast";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import { MotionWrapper } from "@/components/ui/MotionWrapper";
 
 export default function MatricesPage() {
   const { activeModuleId, moduleData, setModuleData, updateDataFrame, saveModuleData, cursoData, updateCursoData } = useAppStore();
@@ -68,10 +69,13 @@ export default function MatricesPage() {
         <div className="flex-1 flex flex-col relative z-10 min-w-0">
           <Header />
           <main className="flex-1 p-8 content-area">
-            <Card className="p-8 text-center">
-              <h2 className="text-2xl font-bold mb-4">No hay módulo seleccionado</h2>
-              <p className="text-muted">Por favor, ve a la sección de Datos y selecciona un módulo PD.</p>
-            </Card>
+            <MotionWrapper>
+              <Card className="p-12 text-center flex flex-col items-center justify-center gap-4">
+                <Calculator className="w-16 h-16 text-muted-foreground opacity-50" />
+                <h2 className="text-2xl font-bold mb-4">No hay módulo seleccionado</h2>
+                <p className="text-muted">Por favor, ve a la sección de Datos y selecciona un módulo PD.</p>
+              </Card>
+            </MotionWrapper>
           </main>
         </div>
       </div>
@@ -92,8 +96,9 @@ export default function MatricesPage() {
       <div className="flex-1 flex flex-col relative z-10 min-w-0">
         <Header />
 
-        <main className="flex-1 p-8 content-area space-y-8">
-          <div>
+        <main className="flex-1 p-8 content-area overflow-y-auto scrollbar-hide">
+          <MotionWrapper className="space-y-8 pb-12">
+            <div>
               <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
               <span className="inline-flex"><Calculator className="w-[1.2em] h-[1.2em] mr-1" /></span> Matrices OG→ RA→ CE→ UD
             </h1>
@@ -597,6 +602,7 @@ export default function MatricesPage() {
             </div>
           )}
 
+          </MotionWrapper>
         </main>
       </div>
     </div>

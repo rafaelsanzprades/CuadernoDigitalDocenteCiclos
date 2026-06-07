@@ -13,6 +13,7 @@ import { CalificacionFEOETab } from "@/components/features/calificacion/Califica
 import { AnalisisGrupalTab } from "@/components/features/analisis/AnalisisGrupalTab";
 import { AnalisisIndividualTab } from "@/components/features/analisis/AnalisisIndividualTab";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import { MotionWrapper } from "@/components/ui/MotionWrapper";
 
 export default function ProgresoPage() {
   const { 
@@ -81,10 +82,13 @@ export default function ProgresoPage() {
         <div className="flex-1 flex flex-col relative z-10 min-w-0">
           <Header />
           <main className="flex-1 p-8 content-area">
-            <Card className="p-8 text-center">
-              <h2 className="text-2xl font-bold mb-4">No hay Curso o Módulo seleccionado</h2>
-              <p className="text-muted">Por favor, ve a la sección de Datos y asegúrate de cargar ambos.</p>
-            </Card>
+            <MotionWrapper>
+              <Card className="p-12 text-center flex flex-col items-center justify-center gap-4">
+                <TrendingUp className="w-16 h-16 text-muted-foreground opacity-50" />
+                <h2 className="text-2xl font-bold mb-4">No hay Curso o Módulo seleccionado</h2>
+                <p className="text-muted">Por favor, ve a la sección de Datos y asegúrate de cargar ambos.</p>
+              </Card>
+            </MotionWrapper>
           </main>
         </div>
       </div>
@@ -293,8 +297,9 @@ export default function ProgresoPage() {
       <div className="flex-1 flex flex-col relative z-10 min-w-0">
         <Header breadcrumbSuffix={TABS.find(t => t.id === activeTab)?.label} />
 
-        <main className="flex-1 p-8 content-area space-y-6">
-          <div className="flex justify-between items-start">
+        <main className="flex-1 p-8 content-area overflow-y-auto scrollbar-hide">
+          <MotionWrapper className="space-y-6 pb-12">
+            <div className="flex justify-between items-start">
             <div>
               <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
                 <span className="inline-flex"><TrendingUp className="w-[1.2em] h-[1.2em] mr-1" /></span> Progreso académico
@@ -875,6 +880,7 @@ export default function ProgresoPage() {
             </div>
           )}
 
+          </MotionWrapper>
         </main>
       </div>
     </div>

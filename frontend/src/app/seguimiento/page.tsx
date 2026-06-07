@@ -7,6 +7,7 @@ import { useAppStore } from "@/store/useAppStore";
 import { AsistenciaTab } from "@/components/features/seguimiento/AsistenciaTab";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import { MotionWrapper } from "@/components/ui/MotionWrapper";
 
 export default function SeguimientoPage() {
   const { activeModuleId, moduleData, setModuleData, activeCursoId, cursoData, setCursoData, updateCursoData, saveCursoData } = useAppStore();
@@ -70,10 +71,13 @@ export default function SeguimientoPage() {
         <div className="flex-1 flex flex-col relative z-10 min-w-0">
           <Header />
           <main className="flex-1 p-8 content-area">
-            <div className="glass-card p-8 text-center">
-              <h2 className="text-2xl font-bold mb-4">Falta seleccionar módulo o curso</h2>
-              <p className="text-muted">Por favor, ve a la sección de Datos y carga tanto una PD como un Curso.</p>
-            </div>
+            <MotionWrapper>
+              <div className="glass-card p-12 text-center flex flex-col items-center justify-center gap-4">
+                <ClipboardCheck className="w-12 h-12 text-muted" />
+                <h2 className="text-2xl font-bold">Falta seleccionar módulo o curso</h2>
+                <p className="text-muted">Por favor, ve a la sección de Entorno y carga tanto una Programación como un Curso activo.</p>
+              </div>
+            </MotionWrapper>
           </main>
         </div>
       </div>
@@ -166,13 +170,14 @@ export default function SeguimientoPage() {
       <div className="flex-1 flex flex-col relative z-10 min-w-0">
         <Header breadcrumbSuffix={activeTabCleanLabel} />
 
-        <main className="flex-1 p-8 content-area space-y-8">
-          <div>
+        <main className="flex-1 p-8 content-area overflow-y-auto scrollbar-hide">
+          <MotionWrapper className="space-y-8">
+            <div>
               <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-              <span className="inline-flex"><MapPin className="w-[1.2em] h-[1.2em] mr-1" /></span> Seguimiento diario
-            </h1>
-            <p className="text-muted mt-2 text-lg">Registro detallado del desarrollo diario de las clases y contingencias.</p>
-          </div>
+                <MapPin className="w-6 h-6 text-accent" /> Seguimiento diario
+              </h1>
+              <p className="text-muted mt-2 text-base">Registro detallado del desarrollo diario de las clases y contingencias.</p>
+            </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="mb-2 max-w-full">
@@ -188,9 +193,9 @@ export default function SeguimientoPage() {
             <section>
               {/* Seguimiento diario */}
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold flex items-center gap-2 text-foreground">
-<span>️</span> Diario de clases. Contingencias
-</h2>
+                <h2 className="text-xl font-bold flex items-center gap-2 text-foreground">
+                  <FileEdit className="w-5 h-5 text-accent" /> Diario de clases y contingencias
+                </h2>
                 <button
                   onClick={() => {
                     setAllDiarioOpen(prev => !prev);
@@ -295,6 +300,7 @@ export default function SeguimientoPage() {
             <AsistenciaTab />
           )}
 
+          </MotionWrapper>
         </main>
       </div>
     </div>

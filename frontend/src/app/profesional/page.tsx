@@ -12,6 +12,7 @@ import { TendenciasTab } from "@/components/features/profesional/TendenciasTab";
 import { PanoramaTab } from "@/components/features/profesional/PanoramaTab";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import { MotionWrapper } from "@/components/ui/MotionWrapper";
 
 const TABS = [
   { id: "perfil",     label:  <span className="flex items-center gap-2"><Compass className="w-4 h-4 shrink-0" /> Perfil individual</span>,    cleanLabel: "Perfil individual" },
@@ -81,14 +82,16 @@ export default function ProfesionalPage() {
         <Sidebar />
         <div className="flex-1 flex flex-col relative z-10 min-w-0">
           <Header />
-          <main className="flex-1 p-8">
-            <Card className="p-12 text-center flex flex-col items-center gap-4">
-              <span className="text-5xl"><span className="inline-flex"><GraduationCap className="w-[1.2em] h-[1.2em] mr-1" /></span></span>
-              <h2 className="text-2xl font-bold text-foreground">No hay Curso activo seleccionado</h2>
-              <p className="text-muted max-w-md">
-                Ve a <strong><span className="inline-flex"><FolderOpen className="w-[1.2em] h-[1.2em] mr-1" /></span> Entorno de trabajo</strong> y selecciona un Curso activo para acceder a las fichas de orientación profesional.
-              </p>
-            </Card>
+          <main className="flex-1 p-8 content-area">
+            <MotionWrapper>
+              <Card className="p-12 text-center flex flex-col items-center justify-center gap-4">
+                <span className="text-5xl"><span className="inline-flex"><GraduationCap className="w-[1.2em] h-[1.2em] mr-1" /></span></span>
+                <h2 className="text-2xl font-bold text-foreground">No hay Curso activo seleccionado</h2>
+                <p className="text-muted max-w-md">
+                  Ve a <strong><span className="inline-flex"><FolderOpen className="w-[1.2em] h-[1.2em] mr-1" /></span> Entorno de trabajo</strong> y selecciona un Curso activo para acceder a las fichas de orientación profesional.
+                </p>
+              </Card>
+            </MotionWrapper>
           </main>
         </div>
       </div>
@@ -106,7 +109,8 @@ export default function ProfesionalPage() {
       <div className="flex-1 flex flex-col relative z-10 min-w-0">
         <Header breadcrumbSuffix={activeTabCleanLabel} />
 
-        <main className="flex-1 p-8 overflow-y-auto scrollbar-hide space-y-6">
+        <main className="flex-1 p-8 overflow-y-auto scrollbar-hide content-area">
+          <MotionWrapper className="space-y-6 pb-12">
 
           {/* Page header */}
           <div className="flex justify-between items-start gap-4">
@@ -155,6 +159,7 @@ export default function ProfesionalPage() {
           {activeTab === "tendencias" && <TendenciasTab />}
           {activeTab === "panorama"   && <PanoramaTab />}
 
+          </MotionWrapper>
         </main>
       </div>
     </div>

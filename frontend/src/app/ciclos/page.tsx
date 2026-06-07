@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import { MotionWrapper } from "@/components/ui/MotionWrapper";
 import {
   curriculos,
   type CurriculumTitulo,
@@ -88,7 +89,7 @@ function CiclosContent() {
         <Header breadcrumbSuffix="Ciclos formativos" />
 
         <div className="flex-1 p-8 overflow-y-auto scrollbar-hide">
-          <div className="w-full space-y-6 animate-in fade-in duration-500">
+          <MotionWrapper className="w-full space-y-6 pb-12">
             <div>
               <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
                 Ciclos formativos
@@ -119,7 +120,7 @@ function CiclosContent() {
             {activeTab === "titulo" && <TabTitulo onSelectTitulo={handleSelectTitulo} globalSelection={globalSelection} updateGlobalSelection={updateGlobalSelection} />}
             {activeTab === "cursos" && <TabCursos globalSelection={globalSelection} updateGlobalSelection={updateGlobalSelection} onSelectModulo={handleSelectModulo} />}
             {activeTab === "modulos" && <TabModulos globalSelection={globalSelection} updateGlobalSelection={updateGlobalSelection} />}
-          </div>
+          </MotionWrapper>
         </div>
       </main>
     </div>

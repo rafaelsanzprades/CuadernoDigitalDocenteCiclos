@@ -12,6 +12,7 @@ import { Card } from "@/components/ui/Card";
 import { Select } from "@/components/ui/Select";
 import { GroupList } from "@/components/features/asignaciones/GroupList";
 import { AddGroupModal } from "@/components/features/asignaciones/AddGroupModal";
+import { MotionWrapper } from "@/components/ui/MotionWrapper";
 
 export default function AsignacionesPage() {
   return (
@@ -134,7 +135,7 @@ function AsignacionesContent() {
         <Header />
         
         <div className="flex-1 p-8 pt-4 overflow-y-auto scrollbar-hide">
-          <div className="w-full space-y-6 animate-in fade-in duration-500">
+          <MotionWrapper className="w-full space-y-6 pb-12">
             
             {/* Cabecera */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
@@ -206,7 +207,7 @@ function AsignacionesContent() {
               onOpenModal={() => setIsModalOpen(true)}
             />
 
-          </div>
+          </MotionWrapper>
         </div>
 
         <AddGroupModal 

@@ -152,41 +152,53 @@ const STEPS = [
 
 const FAQS = [
   {
-    group: "Seguridad de mis datos",
+    group: "Seguridad y Gestión de Datos",
     items: [
-      { q: "¿Dónde se guardan mis datos?", a: "Todos los datos se procesan localmente en tu sistema. No se envían a servidores externos ni bases de datos en la nube, garantizando la máxima privacidad para ti y tus alumnos." },
-      { q: "¿Cómo hago una copia de seguridad?", a: "Puedes exportar todos tus datos desde la sección 'Entorno' usando el botón de exportación. Te recomendamos descargar este archivo de respaldo de forma regular." },
-      { q: "¿Qué pasa si borro los datos de mi navegador?", a: "Si usas la versión web puramente basada en navegador y limpias el almacenamiento local, podrías perder los datos no exportados. Acuérdate de exportar tu trabajo a un archivo JSON frecuentemente." }
+      { q: "¿Dónde se guardan mis datos?", a: "Todos los datos se procesan localmente en tu sistema a través del almacenamiento de tu navegador (IndexedDB). No se envían a servidores externos ni bases de datos en la nube, garantizando el 100% de privacidad y cumpliendo estrictamente con la LOPD." },
+      { q: "¿Cómo hago una copia de seguridad (backup)?", a: "Puedes exportar todos tus datos desde la sección 'Entorno' utilizando el botón de exportación. Esto generará un archivo .json con toda tu información. Te recomendamos descargar este archivo de respaldo al menos una vez por semana." },
+      { q: "¿Qué pasa si borro los datos o caché de mi navegador?", a: "Si limpias el almacenamiento local de tu navegador (IndexedDB/Local Storage), perderás todos los datos que no hayas exportado. Asegúrate siempre de exportar tu trabajo a un archivo .json antes de hacer limpiezas de navegador." },
+      { q: "¿Puedo trabajar desde varios ordenadores?", a: "Sí, pero como los datos son locales, tendrás que 'Exportar' tu progreso en el ordenador A, enviarte el archivo, y darle a 'Importar' en el ordenador B. No hay sincronización en la nube automática." }
     ]
   },
   {
-    group: "Inicio de curso",
+    group: "Inicio de Curso y Configuración Básica",
     items: [
-      { q: "¿Puedo importar alumnos desde Excel o CSV?", a: "En la sección de 'Alumnado' estamos preparando opciones de importación rápida. Mientras tanto, la tabla de datos te permite añadir rápidamente a los estudiantes uno a uno." },
-      { q: "¿Qué diferencia hay entre Programación y Curso?", a: "La 'Programación' contiene las reglas del juego (RA, CE, UD, Instrumentos) y puede reusarse en varios años escolares. El 'Curso' representa a un grupo concreto de alumnos en un año escolar específico." }
+      { q: "¿Qué diferencia hay entre 'Programación' y 'Curso'?", a: "La 'Programación' contiene las reglas del juego estáticas (Resultados de Aprendizaje, Criterios de Evaluación, Unidades Didácticas e Instrumentos) y se puede reusar en diferentes años. El 'Curso' representa a un grupo concreto de alumnos reales en un año escolar específico." },
+      { q: "¿Puedo importar alumnos desde Seneca, Rayuela o Excel?", a: "En la sección de 'Alumnado' puedes utilizar el formato CSV estándar para importar. Si no está disponible temporalmente, la tabla inteligente te permite copiar y pegar datos directamente como si fuera una hoja de cálculo." },
+      { q: "¿Tengo que meter a mano todos los RA y CE de mi módulo?", a: "Actualmente sí, debes introducirlos según la normativa vigente de tu ciclo (BOE/BOCAA). Estamos trabajando en una base de datos centralizada de Ciclos Formativos para poder autocompletar esto en el futuro." },
+      { q: "¿Qué significa que los RA no suman 100% en las verificaciones?", a: "Cada Resultado de Aprendizaje (RA) debe tener un 'peso' o importancia relativa en la nota final. La suma de todos los pesos de los RA de un módulo debe sumar exactamente 100%. Revisa esto en la pestaña 'Matrices'." }
     ]
   },
   {
-    group: "Desarrollo y seguimiento",
+    group: "Desarrollo de las Clases y Seguimiento",
     items: [
-      { q: "¿Cómo evalúo una tarea concreta?", a: "Ve a la sección 'Progreso' para introducir notas, o dentro de 'Alumnado' (Ficha Individual) para ver todo lo relacionado con un solo estudiante." },
-      { q: "¿Qué es el 'Diario de seguimiento'?", a: "Es un registro en la pestaña 'Seguimiento' que te permite anotar lo que ocurre en cada sesión: contenido impartido, ausencias generales o notas para ti mismo." },
-      { q: "¿Cómo registro las horas sin docencia (claustros, huelgas, excursiones)?", a: "En el Diario de Seguimiento puedes marcar una sesión con el flag de 'Sin docencia'. Automáticamente se descontarán las horas en las gráficas de progreso de la pestaña 'Hoy'." }
+      { q: "¿Qué es el 'Diario de seguimiento'?", a: "Es tu cuaderno de bitácora en la pestaña 'Seguimiento'. Te permite anotar lo que ocurre en cada sesión real de clase: qué contenido se ha impartido, si ha habido incidencias generales y añadir notas privadas para el profesor." },
+      { q: "¿Cómo registro las horas sin docencia (claustros, huelgas, excursiones)?", a: "En el Diario de Seguimiento puedes marcar una sesión con el botón/flag de 'Sin docencia'. Automáticamente se descontarán estas horas en las gráficas de progreso real del módulo." },
+      { q: "¿Cómo paso lista o registro faltas de asistencia?", a: "Dentro de 'Seguimiento' encontrarás la pestaña 'Asistencia'. Allí verás la lista de alumnos y podrás marcar rápidamente con un clic si un alumno ha faltado, tiene un retraso o falta justificada para la sesión actual." }
     ]
   },
   {
-    group: "Cierre de curso",
+    group: "Evaluación y Calificaciones",
     items: [
-      { q: "¿Cómo se calcula la nota final?", a: "El cálculo se realiza automáticamente en 'Progreso'. Cruza las calificaciones obtenidas en las tareas con los pesos definidos para cada Instrumento y los pesos de los Resultados de Aprendizaje (RA)." },
-      { q: "¿Puedo generar informes o boletines?", a: "En 'Progreso' podrás visualizar informes completos que justifican la nota final en base a la evaluación continua de los Resultados de Aprendizaje." }
+      { q: "¿Cómo evalúo una tarea o examen concreto?", a: "Ve a la sección 'Progreso' para introducir notas numéricas de las distintas tareas evaluables. También puedes hacerlo desde dentro de 'Alumnado', entrando en la Ficha Individual del estudiante." },
+      { q: "¿Cómo se calcula exactamente la nota final?", a: "El sistema cruza las calificaciones obtenidas en las tareas con el 'peso' de los Instrumentos de Evaluación que estés usando y el 'peso' global de cada Resultado de Aprendizaje (RA). Es un sistema de evaluación continua totalmente automatizado." },
+      { q: "¿Puedo generar informes o boletines para los alumnos?", a: "Sí. En 'Progreso' y en la Ficha Individual del Alumnado puedes visualizar y generar informes completos en PDF que justifican matemáticamente la nota final en base a los Criterios de Evaluación y los RA." },
+      { q: "¿Qué es la evaluación por Rúbricas?", a: "Dentro de 'Instrumentos' puedes configurar rúbricas detalladas para calificar tareas complejas (ej. Proyectos). Al usarlas, la nota se calculará sola según el nivel de logro seleccionado en la rúbrica." }
     ]
   },
   {
-    group: "Cosicas técnicas y solución de problemas",
+    group: "FCT, Dual y Entorno Profesional",
     items: [
-      { q: "¿Qué pasa si las gráficas de 'Hoy' no cargan?", a: "Comprueba en 'Entorno' que tienes seleccionada una Programación y un Curso Activo. Las gráficas necesitan datos de alumnos y módulos para funcionar." },
-      { q: "¿Se puede usar la app en móviles o tablets?", a: "Sí, el diseño es responsivo y se adapta. Sin embargo, para tareas densas como rellenar las tablas de Matrices o Programación, recomendamos el uso de pantallas grandes." },
-      { q: "He detectado un error extraño (bug)", a: "Intenta recargar la página (F5 o Ctrl+R). Si el error sigue, exporta tus datos para asegurarlos y ponte en contacto con el soporte de la aplicación para revisar el archivo." }
+      { q: "¿Qué es la sección FEOE?", a: "FEOE (Formación en Empresa u Organismo Equiparado) te permite gestionar la relación con empresas, convenios, tutores laborales y la asignación de alumnos para sus prácticas o FP Dual." },
+      { q: "¿Para qué sirve el módulo de Orientación Profesional?", a: "Te ayuda a hacer un seguimiento del perfil laboral de cada alumno, registrar sus preferencias, ayudarles en la elaboración del CV y registrar oportunidades laborales o contacto con empresas." }
+    ]
+  },
+  {
+    group: "Solución de Problemas y Aspectos Técnicos",
+    items: [
+      { q: "¿Qué pasa si las gráficas de la pantalla 'Hoy' no cargan?", a: "Comprueba en 'Entorno' que tienes seleccionada una Programación activa y un Curso activo. Las gráficas necesitan saber a qué módulo y a qué alumnos apuntan para poder dibujar la información." },
+      { q: "¿Se puede usar el Cuaderno Docente en móviles o tablets?", a: "Sí, el diseño es 100% responsivo. Sin embargo, para tareas densas como rellenar las grandes tablas de Matrices o planificar la Programación, te recomendamos usar pantallas de ordenador." },
+      { q: "La app va muy lenta o he detectado un error extraño", a: "Intenta recargar la página completamente (F5 o Ctrl+R). Si el error sigue apareciendo, exporta tus datos (.json) para ponerlos a salvo y ponte en contacto con el soporte o abre un 'Issue' en GitHub detallando tu problema." }
     ]
   }
 ];

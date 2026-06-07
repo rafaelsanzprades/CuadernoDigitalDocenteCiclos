@@ -8,6 +8,7 @@ import DatePicker from "@/components/ui/DatePicker";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import { MotionWrapper } from "@/components/ui/MotionWrapper";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -386,10 +387,13 @@ export default function CalendarioPage() {
         <div className="flex-1 flex flex-col relative z-10 min-w-0">
           <Header />
           <main className="flex-1 p-8 content-area">
-            <Card className="p-8 text-center">
-              <h2 className="text-2xl font-bold mb-4">No hay Módulo PD seleccionado</h2>
-              <p className="text-muted">Ve a Datos y selecciona un Módulo PD.</p>
-            </Card>
+            <MotionWrapper>
+              <Card className="p-12 text-center flex flex-col items-center justify-center gap-4">
+                <Calendar className="w-12 h-12 text-muted" />
+                <h2 className="text-2xl font-bold">No hay Módulo PD seleccionado</h2>
+                <p className="text-muted">Ve a Entorno y selecciona un Módulo PD.</p>
+              </Card>
+            </MotionWrapper>
           </main>
         </div>
       </div>
@@ -436,13 +440,15 @@ export default function CalendarioPage() {
       <div className="flex-1 flex flex-col relative z-10 min-w-0">
         <Header breadcrumbSuffix={activeTabCleanLabel} />
 
-        <main className="flex-1 p-8 content-area space-y-8">
-
-          {/* Page heading */}
-          <div>
-              <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">️ Calendario académico</h1>
-            <p className="text-muted mt-2 text-lg">Fechas generales, trimestres, horario semanal, festivos y eventos relevantes del curso.</p>
-          </div>
+        <main className="flex-1 p-8 content-area overflow-y-auto scrollbar-hide">
+          <MotionWrapper className="space-y-8 pb-12">
+            {/* Page heading */}
+            <div>
+              <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
+                <Calendar className="w-6 h-6 text-accent" /> Calendario académico
+              </h1>
+              <p className="text-muted mt-2 text-base">Fechas generales, trimestres, horario semanal, festivos y eventos relevantes del curso.</p>
+            </div>
 
           {/* Save message */}
           {saveMessage && (
@@ -555,6 +561,9 @@ export default function CalendarioPage() {
             </Card>
           )}
 
+            )}
+
+          </MotionWrapper>
         </main>
       </div>
     </div>

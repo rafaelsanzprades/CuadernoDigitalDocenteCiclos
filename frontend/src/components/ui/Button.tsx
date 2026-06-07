@@ -6,7 +6,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 
 export function Button({ children, className = '', variant = 'primary', size = 'md', ...props }: ButtonProps) {
-  const baseStyle = "font-semibold rounded-xl flex items-center justify-center gap-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed";
+  const baseStyle = "font-semibold rounded-xl flex items-center justify-center gap-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95 hover:scale-[1.02]";
 
   const sizes = {
     sm: "text-xs py-1.5 px-3",

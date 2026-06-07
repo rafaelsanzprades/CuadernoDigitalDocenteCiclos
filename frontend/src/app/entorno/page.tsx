@@ -12,6 +12,7 @@ import { fileManager, DataSourceType } from "@/services/fileManager";
 import { initialGroups } from "@/store/initialData";
 import toast from "react-hot-toast";
 import { fetchWithTimeout } from "@/utils/fetchWithTimeout";
+import { MotionWrapper } from "@/components/ui/MotionWrapper";
 
 export default function EntornoTrabajoPage() {
   const {
@@ -313,7 +314,7 @@ export default function EntornoTrabajoPage() {
 
         <div className="flex-1 p-8 overflow-y-auto scrollbar-hide">
           {/* Changed container to full width w-full */}
-          <div className="w-full space-y-8 pb-12">
+          <MotionWrapper className="w-full space-y-8 pb-12">
 
             {/* Title */}
             <div>
@@ -673,7 +674,7 @@ export default function EntornoTrabajoPage() {
 
 
 
-          </div>
+          </MotionWrapper>
         </div>
       </div>
     </div>

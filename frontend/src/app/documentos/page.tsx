@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/Button";
 import { useAppStore } from "@/store/useAppStore";
 import { Alumnado } from "@/types";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import { MotionWrapper } from "@/components/ui/MotionWrapper";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 type DocumentItem = {
   name: string;
@@ -199,7 +201,7 @@ export default function DocumentosPage() {
         <Header />
 
         <div className="flex-1 p-8 overflow-y-auto scrollbar-hide">
-          <div className="w-full space-y-6 animate-in fade-in duration-500">
+          <MotionWrapper className="w-full space-y-6 pb-12">
 
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
               <div>
@@ -351,14 +353,21 @@ export default function DocumentosPage() {
             {['inicio', 'seguimiento', 'evaluacion'].includes(activeTab) && (
               <div className="space-y-8 animate-in fade-in duration-500">
                 {(!activeCursoId || !activeModuleId) ? (
-                  <Card className="p-8 text-center">
+                  <Card className="p-12 text-center flex flex-col items-center justify-center gap-4">
+                    <FileText className="w-16 h-16 text-muted-foreground opacity-50" />
                     <h2 className="text-2xl font-bold mb-4">No hay Curso o Módulo seleccionado</h2>
                     <p className="text-muted">Por favor, ve a la sección de Datos y asegúrate de cargar ambos para generar PDFs.</p>
                   </Card>
                 ) : (loadingData || !cursoData || !moduleData) ? (
-                  <div className="text-xl text-muted animate-pulse flex items-center justify-center gap-3 p-12">
-                    <span className="text-2xl">⏳</span> Cargando datos del módulo y curso...
-                  </div>
+                  <Card className="p-12">
+                    <div className="space-y-6">
+                      <Skeleton className="h-8 w-1/4" />
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <Skeleton className="h-40 w-full" />
+                        <Skeleton className="h-40 w-full" />
+                      </div>
+                    </div>
+                  </Card>
                 ) : (
                   <>
                     {activeTab === 'inicio' && (
@@ -508,7 +517,7 @@ export default function DocumentosPage() {
             )}
 
 
-          </div>
+          </MotionWrapper>
         </div>
 
         {/* Modal de Previsualización (Compartido para ambos) */}

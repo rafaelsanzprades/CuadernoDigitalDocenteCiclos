@@ -5,6 +5,8 @@ import { usePathname } from 'next/navigation';
 import { useAppStore } from '@/store/useAppStore';
 import { navGroups } from '@/config/navigation';
 import { useEffect, useRef } from 'react';
+import React from 'react';
+import { Tooltip } from '@/components/ui/Tooltip';
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -62,39 +64,49 @@ export default function Sidebar() {
             {!isSidebarOpen && idx > 0 && (
               <div className="w-8 h-px bg-foreground/10 mx-auto my-2" />
             )}
-            {group.items.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={(e) => {
-                  if (item.href === "#wizard") {
-                    e.preventDefault();
-                    useAppStore.getState().setWizardOpen(true);
-                  }
-                  if (window.innerWidth < 1024) toggleSidebar();
-                }}
-                title={!isSidebarOpen ? item.label : undefined}
-                className={`flex items-center ${isSidebarOpen ? 'gap-2.5 px-3' : 'justify-center px-0'} py-2 rounded-lg transition-all duration-150 group
-                  ${pathname === item.href
-                    ? 'bg-accent/10 border border-accent/30 text-foreground shadow-sm shadow-accent/10'
-                    : 'text-muted hover:text-foreground hover:bg-foreground/5 border border-transparent'
-                  }`}
-              >
-                <span className={`flex items-center justify-center transition-transform duration-150 ${pathname === item.href ? 'scale-110 text-accent' : 'group-hover:scale-110'}`}>
-                  <item.icon className="w-5 h-5" strokeWidth={1.75} />
-                </span>
-                {isSidebarOpen && (
-                  <>
-                    <span className={`text-[0.8rem] leading-tight font-medium whitespace-nowrap ${pathname === item.href ? 'text-foreground font-semibold' : ''}`}>
-                      {item.label}
-                    </span>
-                    {pathname === item.href && (
-                      <div className="ml-auto w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_6px_var(--accent-color)] flex-shrink-0" />
-                    )}
-                  </>
-                )}
-              </Link>
-            ))}
+            {group.items.map((item) => {
+              const linkContent = (
+                <Link
+                  href={item.href}
+                  onClick={(e) => {
+                    if (item.href === "#wizard") {
+                      e.preventDefault();
+                      useAppStore.getState().setWizardOpen(true);
+                    }
+                    if (window.innerWidth < 1024) toggleSidebar();
+                  }}
+                  className={`flex items-center ${isSidebarOpen ? 'gap-2.5 px-3' : 'justify-center px-0'} py-2 rounded-lg transition-all duration-150 group
+                    ${pathname === item.href
+                      ? 'bg-accent/10 border border-accent/30 text-foreground shadow-sm shadow-accent/10'
+                      : 'text-muted hover:text-foreground hover:bg-foreground/5 border border-transparent'
+                    }`}
+                >
+                  <span className={`flex items-center justify-center transition-transform duration-150 ${pathname === item.href ? 'scale-110 text-accent' : 'group-hover:scale-110'}`}>
+                    <item.icon className="w-5 h-5" strokeWidth={1.75} />
+                  </span>
+                  {isSidebarOpen && (
+                    <>
+                      <span className={`text-[0.8rem] leading-tight font-medium whitespace-nowrap ${pathname === item.href ? 'text-foreground font-semibold' : ''}`}>
+                        {item.label}
+                      </span>
+                      {pathname === item.href && (
+                        <div className="ml-auto w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_6px_var(--accent-color)] flex-shrink-0" />
+                      )}
+                    </>
+                  )}
+                </Link>
+              );
+
+              return !isSidebarOpen ? (
+                <Tooltip key={item.href} content={item.label} position="right" delay={0.1}>
+                  {linkContent}
+                </Tooltip>
+              ) : (
+                <React.Fragment key={item.href}>
+                  {linkContent}
+                </React.Fragment>
+              );
+            })}
           </div>
         ))}
       </nav>

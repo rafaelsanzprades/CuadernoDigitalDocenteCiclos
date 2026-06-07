@@ -11,6 +11,7 @@ import { TutoriaMatrixTab } from "@/components/features/alumnado/TutoriaMatrixTa
 import { PlanoClaseTab } from "@/components/features/alumnado/PlanoClaseTab";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import { MotionWrapper } from "@/components/ui/MotionWrapper";
 
 export default function AlumnadoPage() {
   const { activeCursoId, cursoData, setCursoData, updateCursoData, saveCursoData } = useAppStore();
@@ -70,10 +71,13 @@ export default function AlumnadoPage() {
         <div className="flex-1 flex flex-col relative z-10 min-w-0">
           <Header />
           <main className="flex-1 p-8 content-area">
-            <Card className="p-8 text-center">
-              <h2 className="text-2xl font-bold mb-4">No hay Curso seleccionado</h2>
-              <p className="text-muted">Por favor, ve a la sección de Datos y selecciona un Curso Activo.</p>
-            </Card>
+            <MotionWrapper>
+              <Card className="p-12 text-center flex flex-col items-center justify-center gap-4">
+                <Users className="w-16 h-16 text-muted-foreground opacity-50" />
+                <h2 className="text-2xl font-bold mb-4">No hay Curso seleccionado</h2>
+                <p className="text-muted">Por favor, ve a la sección de Datos y selecciona un Curso Activo.</p>
+              </Card>
+            </MotionWrapper>
           </main>
         </div>
       </div>
@@ -132,8 +136,9 @@ export default function AlumnadoPage() {
       <div className="flex-1 flex flex-col relative z-10 min-w-0">
         <Header breadcrumbSuffix={activeTabCleanLabel} />
         
-        <main className="flex-1 p-8 content-area space-y-8">
-          <div className="flex justify-between items-start">
+        <main className="flex-1 p-8 content-area overflow-y-auto scrollbar-hide">
+          <MotionWrapper className="space-y-8 pb-12">
+            <div className="flex justify-between items-start">
             <div>
               <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
                 <span className="inline-flex"><Users className="w-[1.2em] h-[1.2em] mr-1" /></span> Alumnado y tutoría
@@ -337,6 +342,7 @@ export default function AlumnadoPage() {
             <PlanoClaseTab />
           )}
 
+          </MotionWrapper>
         </main>
       </div>
     </div>

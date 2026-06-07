@@ -10,6 +10,8 @@ import { TaskTable } from "@/components/features/programacion/TaskTable";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import { MotionWrapper } from "@/components/ui/MotionWrapper";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 
 export default function ProgramacionPage() {
@@ -54,11 +56,14 @@ export default function ProgramacionPage() {
         <Sidebar />
         <div className="flex-1 flex flex-col relative z-10 min-w-0">
           <Header />
-          <main className="flex-1 p-8">
-            <Card className="p-12 text-center text-muted flex flex-col items-center justify-center">
-              <h2 className="text-2xl font-bold mb-4">No hay módulo seleccionado</h2>
-              <p className="text-muted">Por favor, ve a la sección de Datos y selecciona un módulo PD.</p>
-            </Card>
+          <main className="flex-1 p-8 content-area">
+            <MotionWrapper>
+              <Card className="p-12 text-center flex flex-col items-center justify-center gap-4">
+                <BookOpen className="w-16 h-16 text-muted-foreground opacity-50" />
+                <h2 className="text-2xl font-bold mb-4">No hay módulo seleccionado</h2>
+                <p className="text-muted">Por favor, ve a la sección de Datos y selecciona un módulo PD.</p>
+              </Card>
+            </MotionWrapper>
           </main>
         </div>
       </div>
@@ -71,8 +76,20 @@ export default function ProgramacionPage() {
         <Sidebar />
         <div className="flex-1 flex flex-col relative z-10 min-w-0">
           <Header />
-          <main className="flex-1 flex items-center justify-center">
-            <div className="text-xl text-accent animate-pulse">Cargando programación de aula...</div>
+          <main className="flex-1 p-8 content-area">
+            <MotionWrapper>
+              <Card className="p-12">
+                <div className="space-y-6">
+                  <Skeleton className="h-10 w-1/3 mx-auto" />
+                  <Skeleton className="h-4 w-1/2 mx-auto" />
+                  <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Skeleton className="h-32 w-full" />
+                    <Skeleton className="h-32 w-full" />
+                  </div>
+                  <Skeleton className="h-64 w-full mt-4" />
+                </div>
+              </Card>
+            </MotionWrapper>
           </main>
         </div>
       </div>
@@ -146,8 +163,9 @@ export default function ProgramacionPage() {
       <div className="flex-1 flex flex-col relative z-10 min-w-0">
         <Header breadcrumbSuffix={activeTabCleanLabel} />
         
-        <main className="flex-1 p-8 space-y-8 overflow-y-auto">
-          <div>
+        <main className="flex-1 p-8 content-area overflow-y-auto scrollbar-hide">
+          <MotionWrapper className="space-y-8 pb-12">
+            <div>
             <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
               <span className="inline-flex"><BookOpen className="w-[1.2em] h-[1.2em] mr-1" /></span> Programación de aula
             </h1>
@@ -206,6 +224,7 @@ export default function ProgramacionPage() {
             </Card>
           )}
 
+          </MotionWrapper>
         </main>
       </div>
     </div>

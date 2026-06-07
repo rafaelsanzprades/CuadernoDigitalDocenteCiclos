@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import { MotionWrapper } from "@/components/ui/MotionWrapper";
 
 export default function InstrumentosPage() {
   const { activeModuleId, moduleData, setModuleData, updateDataFrame, saveModuleData } = useAppStore();
@@ -75,10 +76,13 @@ export default function InstrumentosPage() {
         <div className="flex-1 flex flex-col relative z-10 min-w-0">
           <Header />
           <main className="flex-1 p-8 content-area">
-            <Card className="p-8 text-center">
-              <h2 className="text-2xl font-bold mb-4">No hay módulo seleccionado</h2>
-              <p className="text-muted">Por favor, ve a la sección de Datos y selecciona un módulo PD.</p>
-            </Card>
+            <MotionWrapper>
+              <Card className="p-12 text-center flex flex-col items-center justify-center gap-4">
+                <FileEdit className="w-16 h-16 text-muted-foreground opacity-50" />
+                <h2 className="text-2xl font-bold mb-4">No hay módulo seleccionado</h2>
+                <p className="text-muted">Por favor, ve a la sección de Datos y selecciona un módulo PD.</p>
+              </Card>
+            </MotionWrapper>
           </main>
         </div>
       </div>
@@ -262,10 +266,11 @@ export default function InstrumentosPage() {
       <div className="flex-1 flex flex-col relative z-10 min-w-0">
         <Header breadcrumbSuffix={activeTabCleanLabel} />
         
-        <main className="flex-1 p-8 content-area space-y-8">
-          <div>
+        <main className="flex-1 p-8 content-area overflow-y-auto scrollbar-hide">
+          <MotionWrapper className="space-y-8 pb-12">
+            <div>
             <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-              ️ Instrumentos de evaluación
+              <FileEdit className="w-6 h-6 text-accent" /> Instrumentos de evaluación
             </h1>
             <p className="text-muted mt-2 text-lg">Definición y ponderación de las herramientas y métodos de evaluación.</p>
           </div>
@@ -346,6 +351,7 @@ export default function InstrumentosPage() {
           {activeTab === "tri2" && renderTrimestreTab("2T", "2º trimestre")}
           {activeTab === "tri3" && renderTrimestreTab("3T", "3er trimestre")}
 
+          </MotionWrapper>
         </main>
       </div>
     </div>
