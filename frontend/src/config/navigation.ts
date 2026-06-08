@@ -3,11 +3,11 @@ import { Activity, BookOpen, Building2, Calendar, CalendarDays, Compass, FileTex
 export const navGroups = [
   {
     title: "General",
-    sectionDescription: "Espacio para la administración global. Gestiona tus entornos activos, explora el catálogo de ciclos, visualiza el resumen de tu día, accede a la documentación legal y genera los reportes en PDF.",
+    sectionDescription: "Espacio para la administración global. Gestiona tus entornos activos, explora el catálogo de ciclos, visualiza la agenda de clase, accede a la documentación legal y genera los reportes en PDF.",
     items: [
       { href: "/entorno", label: "Entorno de trabajo", icon: FolderOpen, description: "Gestión de las programaciones didácticas, cursos y base de datos activa." },
       { href: "/ciclos", label: "Ciclos formativos", icon: GraduationCap, description: "Catálogo oficial de Ciclos Formativos. Grados Básico, Medio y Superior." },
-      { href: "/hoy", label: "Tu día, semana y mes", icon: CalendarDays, description: "Revisa lo que toca impartir hoy y el estado general de tu clase." },
+      { href: "/agenda", label: "Agenda de clase", icon: CalendarDays, description: "Revisa lo que toca impartir hoy y el estado general de tu clase." },
       { href: "/documentos", label: "Documentos y descargas", icon: FileText, description: "Explorador de archivos oficiales, legislación, otros documentos y generación de PDFs." },
       { href: "/ayuda", label: "Centro de ayuda", icon: Activity, description: "Panel de salud: verifica la coherencia y completitud de todos los datos del cuaderno." }
     ]

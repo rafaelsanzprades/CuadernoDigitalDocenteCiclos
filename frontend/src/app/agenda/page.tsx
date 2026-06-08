@@ -16,7 +16,7 @@ import { PlanificacionMensualTab } from "@/components/features/dashboard/Planifi
 import { WeeklyClasses } from "@/components/features/dashboard/WeeklyClasses";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 
-export default function HoyPage() {
+export default function AgendaPage() {
   const { moduleData, cursoData, setModuleData, setCursoData, isWizardOpen, setWizardOpen, activeModuleId, setActiveModuleId, activeCursoId, setActiveCursoId } = useAppStore();
   const [activeTab, setActiveTab] = useState("actual");
   const { data: modulesList, mutate: fetchModules } = useModulesList();
@@ -80,7 +80,7 @@ export default function HoyPage() {
             {/* Título */}
             <div>
               <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                <span className="inline-flex"><Calendar className="w-[1.2em] h-[1.2em] mr-1" /></span> Tu día y semana
+                <span className="inline-flex"><Calendar className="w-[1.2em] h-[1.2em] mr-1" /></span> Agenda de clase
               </h1>
               <p className="text-muted mt-2 text-lg">Revisa lo que toca impartir hoy y el estado general de tu clase.</p>
             </div>
