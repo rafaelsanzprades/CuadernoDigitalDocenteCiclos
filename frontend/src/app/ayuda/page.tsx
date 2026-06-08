@@ -154,6 +154,7 @@ const FAQS = [
   {
     group: "Seguridad y Gestión de Datos",
     items: [
+      { q: "¿Qué es la arquitectura Local-First y BYOC?", a: "Utilizamos una filosofía moderna llamada 'Local-First' (Prioridad Local) y BYOC (Trae Tu Propia Nube). Esto significa que tus datos personales (alumnos, notas) viven físicamente en tu dispositivo, garantizando privacidad absoluta y riesgo legal cero (cumplimiento RGPD). Para hacer copias o cambiar de dispositivo, la app puede conectarse a tu propio Google Drive, sin que nosotros almacenemos jamás tus datos en servidores centrales." },
       { q: "¿Dónde se guardan mis datos?", a: "Todos los datos se procesan localmente en tu sistema a través del almacenamiento de tu navegador (IndexedDB). No se envían a servidores externos ni bases de datos en la nube, garantizando el 100% de privacidad y cumpliendo estrictamente con la LOPD." },
       { q: "¿Cómo hago una copia de seguridad (backup)?", a: "Puedes exportar todos tus datos desde la sección 'Entorno' utilizando el botón de exportación. Esto generará un archivo .json con toda tu información. Te recomendamos descargar este archivo de respaldo al menos una vez por semana." },
       { q: "¿Qué pasa si borro los datos o caché de mi navegador?", a: "Si limpias el almacenamiento local de tu navegador (IndexedDB/Local Storage), perderás todos los datos que no hayas exportado. Asegúrate siempre de exportar tu trabajo a un archivo .json antes de hacer limpiezas de navegador." },
