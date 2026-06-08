@@ -5,7 +5,7 @@ psycopg2-binary==2.9.10; sys_platform != 'win32'
 pandas==3.0.3
 reportlab==4.4.0
 python-multipart==0.0.20
-alembic==1.14.1
+alembic==1.18.4
 bcrypt==4.2.1
 python-jose[cryptography]==3.3.0
 pytest==8.3.5
