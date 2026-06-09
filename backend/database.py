@@ -2,10 +2,10 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-# Use DATABASE_URL env var if set (Render PostgreSQL), fallback to local SQLite
+# Use DATABASE_URL env var if set, fallback to local SQLite
 DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///./cdd_pro.db")
 
-# Render uses "postgres://" prefix but SQLAlchemy requires "postgresql://"
+# Some providers use "postgres://" prefix but SQLAlchemy requires "postgresql://"
 if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 

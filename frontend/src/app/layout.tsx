@@ -12,13 +12,13 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "CDD PRO - Cuaderno Digital Docente",
+  title: "Cuaderno FP",
   description: "Cuaderno Digital Docente para Ciclos Formativos",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "CDD PRO",
+    title: "Cuaderno FP",
   },
 };
 

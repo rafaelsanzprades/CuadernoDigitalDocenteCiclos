@@ -1,5 +1,5 @@
 "use client";
-import { Building2, Check, ClipboardList, Edit, Mail, MapPin, Phone, Trash2, UserPlus, Users } from "lucide-react";
+import { Building2, Check, ClipboardList, Edit, Mail, MapPin, Phone, Trash2, UserPlus, Users, AlertTriangle } from "lucide-react";
 import { useState, useEffect, useMemo } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
@@ -465,7 +465,10 @@ export default function FeoePage() {
             {/* Tab 3: Seguimiento */}
             {activeTab === "seguimiento" && (
               <Card className="p-12 text-center text-muted border border-[var(--glass-border)] rounded-xl bg-foreground/5">
-                <h2 className="text-2xl font-bold mb-4 text-foreground">Seguimiento FCT / Dual</h2>
+                <h2 className="text-2xl font-bold mb-4 text-foreground flex items-center justify-center gap-2">
+                  Seguimiento FCT / Dual
+                  <span className="flex items-center gap-1 bg-warning/20 text-warning px-2 py-0.5 rounded text-[10px] font-bold uppercase border border-warning/30"><AlertTriangle className="w-3 h-3" /> En obra</span>
+                </h2>
                 <p className="max-w-xl mx-auto">
                   Esta sección estará disponible próximamente para registrar las horas realizadas por los alumnado, las visitas de seguimiento y la valoración final de las prácticas.
                 </p>

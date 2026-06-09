@@ -1,5 +1,5 @@
 "use client";
-import { BookOpen, ChevronDown, ChevronUp, Clock, FolderTree, GraduationCap, Layers, ListChecks } from "lucide-react";
+import { BookOpen, ChevronDown, ChevronUp, Clock, FolderTree, GraduationCap, Layers, ListChecks, AlertTriangle } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
@@ -732,8 +732,10 @@ function TabModulos({ globalSelection, updateGlobalSelection }: { globalSelectio
               variant="primary"
               size="lg"
               onClick={() => console.log("Cargar módulo en programación:", modulo.codigo, modulo.nombre)}
+              className="flex items-center gap-2"
             >
               Cargar en mi programación
+              <span className="flex items-center gap-1 bg-warning/20 text-warning px-2 py-0.5 rounded text-[10px] font-bold uppercase border border-warning/30"><AlertTriangle className="w-3 h-3" /> En obra</span>
             </Button>
           </div>
         </>

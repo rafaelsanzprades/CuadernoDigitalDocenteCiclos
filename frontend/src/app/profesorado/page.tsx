@@ -1,5 +1,5 @@
 "use client";
-import { ClipboardList, School, Shield, UserCircle, Users } from "lucide-react";
+import { ClipboardList, School, Shield, UserCircle, Users, AlertTriangle } from "lucide-react";
 import { useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
@@ -15,8 +15,8 @@ export default function ProfesoradoPage() {
 
   const TABS = [
     { id: "acceso", label:  <span className="flex items-center gap-2"><Shield className="w-4 h-4 shrink-0" /> Acceso usuarios</span>, cleanLabel: "Acceso usuarios" },
-    { id: "gestion", label:  <span className="flex items-center gap-2"><Users className="w-4 h-4 shrink-0" /> Gestión de usuarios</span>, cleanLabel: "Gestión de usuarios" },
-    { id: "asignacion_docentes", label:  <span className="flex items-center gap-2"><School className="w-4 h-4 shrink-0"/> ‍ Asignación de docentes</span>, cleanLabel:"Asignación de docentes" },
+    { id: "gestion", label:  <span className="flex items-center gap-2"><Users className="w-4 h-4 shrink-0" /> Gestión de usuarios <span className="flex items-center gap-1 bg-warning/20 text-warning px-1.5 py-0.5 ml-2 rounded text-[10px] font-bold uppercase border border-warning/30"><AlertTriangle className="w-3 h-3" /> En obra</span></span>, cleanLabel: "Gestión de usuarios" },
+    { id: "asignacion_docentes", label:  <span className="flex items-center gap-2"><School className="w-4 h-4 shrink-0"/> ‍ Asignación de docentes <span className="flex items-center gap-1 bg-warning/20 text-warning px-1.5 py-0.5 ml-2 rounded text-[10px] font-bold uppercase border border-warning/30"><AlertTriangle className="w-3 h-3" /> En obra</span></span>, cleanLabel:"Asignación de docentes" },
     { id: "asignacion_modulos", label:  <span className="flex items-center gap-2"><ClipboardList className="w-4 h-4 shrink-0" /> Asignación de módulos</span>, cleanLabel: "Asignación de módulos" }
   ];
 

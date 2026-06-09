@@ -1,5 +1,5 @@
 "use client";
-import { AlertTriangle, ArrowRight, BookOpen, CheckCircle, Cloud, Download, FileText, FolderOpen, Lightbulb, LogIn, Power, PowerOff, RefreshCw, Save, Shield, ShieldAlert, Sparkles, Target, Upload, Users, Zap } from "lucide-react";
+import { AlertTriangle, ArrowRight, BookOpen, CheckCircle, Cloud, Database, Download, FileDown, FileJson, FileText, FolderDown, FolderOpen, Lightbulb, LogIn, Power, PowerOff, RefreshCw, Save, Server, ServerOff, Shield, ShieldAlert, Sparkles, Target, Upload, Users, Zap, CheckCircle2, Copy } from "lucide-react";
 import { useEffect, useState, useRef } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
@@ -566,9 +566,10 @@ export default function EntornoTrabajoPage() {
 
                       <Button
                         onClick={() => setAiModalOpen(true)}
-                        className="text-sm font-semibold flex items-center gap-2 bg-accent/10 hover:bg-accent/20 text-accent border border-accent/30 px-5 py-3 rounded-xl transition-all w-full justify-center"
+                        className="text-sm font-semibold flex items-center gap-2 bg-accent/10 hover:bg-accent/20 text-accent border border-accent/30 px-5 py-3 rounded-xl transition-all w-full justify-center relative overflow-hidden"
                       >
                         <Sparkles className="w-4 h-4 text-accent" /> Importar Currículo con Asistente IA (PDF)
+                        <span className="flex items-center gap-1 bg-warning/20 text-warning px-1.5 py-0.5 ml-2 rounded text-[10px] font-bold uppercase border border-warning/30"><AlertTriangle className="w-3 h-3" /> En obra</span>
                       </Button>
 
                       <Button
@@ -591,8 +592,9 @@ export default function EntornoTrabajoPage() {
                     <div>
                       <div className="flex justify-between items-center mb-1">
                         <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
-                          <Cloud className="w-5 h-5 text-accent" /> Sincronizar tus datos locales en tu nube
-                        </h2>
+                        <Cloud className="w-5 h-5 text-accent" /> Sincronizar tus datos locales en tu nube
+                        <span className="flex items-center gap-1 ml-2 bg-warning/20 text-warning px-2 py-0.5 rounded text-[10px] font-bold uppercase border border-warning/30"><AlertTriangle className="w-3 h-3" /> En obra</span>
+                      </h2>
                         {dataSource === 'local' && (googleConnected || onedriveConnected) && (
                           <Badge variant="success">Activo</Badge>
                         )}

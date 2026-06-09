@@ -10,7 +10,7 @@ const withPWA = withPWAInit({
 const nextConfig: NextConfig = {
   turbopack: {},
   async rewrites() {
-    // En producción (Vercel), usaremos la URL de Render. En desarrollo, localhost.
+    // URL de la API según el entorno.
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
     return {
       fallback: [

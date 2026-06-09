@@ -40,7 +40,7 @@ export default function Sidebar() {
         {isSidebarOpen && (
           <Link href="/inicio" onClick={() => { if (window.innerWidth < 1024) toggleSidebar(); }}>
             <h1 className="text-[1.3rem] font-extrabold leading-tight text-foreground hover:text-info transition-colors mb-4 tracking-tight whitespace-nowrap cursor-pointer">
-              Cuaderno Ciclos FP
+              Cuaderno FP
             </h1>
           </Link>
         )}
@@ -122,9 +122,9 @@ export default function Sidebar() {
                 Legal
               </Link>
               <span className="text-[0.7rem] text-muted/40">•</span>
-              <a href="https://github.com/rafaelsanzprades/CuadernoCiclosFP/blob/main/LICENSE.md" target="_blank" rel="noopener noreferrer" className="text-[0.7rem] text-info hover:text-info hover:underline">
-                Licencia
-              </a>
+              <Link href="/licencia" className="text-[0.7rem] text-info hover:text-info hover:underline">
+                Licencia y Términos
+              </Link>
             </div>
           </>
         )}

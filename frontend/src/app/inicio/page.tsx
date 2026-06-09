@@ -19,7 +19,7 @@ export default function InicioPage() {
             {/* Header / Hero */}
             <div className="mb-10 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
               <h1 className="text-2xl font-extrabold tracking-tight text-foreground mb-4">
-                Bienvenido al Cuaderno Ciclos FP
+                Bienvenido al Cuaderno FP
               </h1>
               <p className="text-xl text-muted max-w-3xl mx-auto">
                 Accede rápidamente a todas las herramientas para la gestión de tus módulos, alumnado y evaluación.
