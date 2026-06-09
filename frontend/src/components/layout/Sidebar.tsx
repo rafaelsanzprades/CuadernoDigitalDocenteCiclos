@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAppStore } from '@/store/useAppStore';
 import { navGroups } from '@/config/navigation';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import React from 'react';
 import { Tooltip } from '@/components/ui/Tooltip';
 
@@ -30,6 +30,22 @@ export default function Sidebar() {
     return () => { document.body.style.overflow = ''; };
   }, [isSidebarOpen]);
 
+  const [timeStr, setTimeStr] = useState<string>("");
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      const day = String(now.getDate()).padStart(2, '0');
+      const month = now.toLocaleString('es-ES', { month: 'short' });
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      setTimeStr(`${day}/${month} - ${hours}:${minutes}h`);
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 60000); // update every minute
+    return () => clearInterval(interval);
+  }, []);
+
   const handleScroll = (e: React.UIEvent<HTMLElement>) => {
     sessionStorage.setItem('sidebar-scroll', e.currentTarget.scrollTop.toString());
   };
@@ -38,11 +54,16 @@ export default function Sidebar() {
     <>
       <div className={`px-4 pt-4 pb-2 flex ${isSidebarOpen ? 'justify-between' : 'justify-center'} items-center`}>
         {isSidebarOpen && (
-          <Link href="/inicio" onClick={() => { if (window.innerWidth < 1024) toggleSidebar(); }}>
-            <h1 className="text-[1.3rem] font-extrabold leading-tight text-foreground hover:text-info transition-colors mb-4 tracking-tight whitespace-nowrap cursor-pointer">
-              Cuaderno FP
-            </h1>
-          </Link>
+          <div className="flex flex-col mb-4">
+            <Link href="/inicio" onClick={() => { if (window.innerWidth < 1024) toggleSidebar(); }}>
+              <h1 className="text-[1.3rem] font-extrabold leading-tight text-foreground hover:text-info transition-colors tracking-tight whitespace-nowrap cursor-pointer">
+                Cuaderno FP
+              </h1>
+            </Link>
+            <div className="text-[0.75rem] text-muted font-medium mt-0.5 ml-0.5">
+              {timeStr}
+            </div>
+          </div>
         )}
         <button onClick={toggleSidebar} className="text-muted hover:text-foreground p-1 rounded-md hover:bg-foreground/10 transition-colors mb-3">
           {isSidebarOpen ? <ChevronLeft className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
