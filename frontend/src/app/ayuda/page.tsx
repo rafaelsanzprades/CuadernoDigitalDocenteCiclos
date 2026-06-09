@@ -154,11 +154,11 @@ const FAQS = [
   {
     group: "Seguridad y Gestión de Datos",
     items: [
-      { q: "¿Qué es la arquitectura Local-First y BYOC?", a: "Utilizamos una filosofía moderna llamada 'Local-First' (Prioridad Local) y BYOC (Trae Tu Propia Nube). Esto significa que tus datos personales (alumnos, notas) viven físicamente en tu dispositivo, garantizando privacidad absoluta y riesgo legal cero (cumplimiento RGPD). Para hacer copias o cambiar de dispositivo, la app puede conectarse a tu propio Google Drive, sin que nosotros almacenemos jamás tus datos en servidores centrales." },
-      { q: "¿Dónde se guardan mis datos?", a: "Todos los datos se procesan localmente en tu sistema a través del almacenamiento de tu navegador (IndexedDB). No se envían a servidores externos ni bases de datos en la nube, garantizando el 100% de privacidad y cumpliendo estrictamente con la LOPD." },
-      { q: "¿Cómo hago una copia de seguridad (backup)?", a: "Puedes exportar todos tus datos desde la sección 'Entorno' utilizando el botón de exportación. Esto generará un archivo .json con toda tu información. Te recomendamos descargar este archivo de respaldo al menos una vez por semana." },
-      { q: "¿Qué pasa si borro los datos o caché de mi navegador?", a: "Si limpias el almacenamiento local de tu navegador (IndexedDB/Local Storage), perderás todos los datos que no hayas exportado. Asegúrate siempre de exportar tu trabajo a un archivo .json antes de hacer limpiezas de navegador." },
-      { q: "¿Puedo trabajar desde varios ordenadores?", a: "Sí, pero como los datos son locales, tendrás que 'Exportar' tu progreso en el ordenador A, enviarte el archivo, y darle a 'Importar' en el ordenador B. No hay sincronización en la nube automática." }
+      { q: "¿Qué es la arquitectura Híbrida (Local-First + Cloud)?", a: "Utilizamos una arquitectura moderna. Tus datos de trabajo (alumnos, notas) se procesan localmente en tu navegador garantizando privacidad, mientras que las operaciones pesadas (generación de informes PDF, Inteligencia Artificial y bases de datos centralizadas) se apoyan en un servidor seguro (Backend en Cloud Run)." },
+      { q: "¿Dónde se guardan mis datos?", a: "Los datos de tu Programación y progreso se procesan en tu navegador (IndexedDB) para darte fluidez, pero se respaldan y conectan de forma segura con el servidor central para tareas como la exportación documental. Sigues teniendo control total sobre la exportación (BYOC)." },
+      { q: "¿Cómo hago una copia de seguridad (backup)?", a: "Puedes exportar todos tus datos desde la sección 'Entorno' o utilizar la API central para copias de seguridad en servidor." },
+      { q: "¿Qué pasa si borro los datos o caché de mi navegador?", a: "Si usas múltiples dispositivos, la arquitectura centralizada permite a Firebase Hosting y al servidor backend almacenar configuraciones, pero siempre te recomendamos exportar tu trabajo a un archivo .json periódicamente para evitar pérdidas de trabajo no sincronizado." },
+      { q: "¿Puedo trabajar desde varios ordenadores?", a: "Sí. Para transferir el estado exacto del entorno entre navegadores que no comparten la sesión, puedes 'Exportar' tu progreso en el ordenador A y darle a 'Importar' en el ordenador B." }
     ]
   },
   {

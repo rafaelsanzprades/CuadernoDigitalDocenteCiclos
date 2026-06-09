@@ -43,10 +43,10 @@ Herramientas de seguimiento para el aula viva. Administra el alumnado, coordina 
 
 La aplicación está construida sobre una arquitectura robusta, híbrida y escalable:
 
-- **Frontend (UI/UX):** Aplicación PWA construida con **Next.js**, React y Tailwind CSS. Utiliza Zustand para la gestión de estado global, almacenamiento local (IndexedDB/LocalStorage) para uso offline, y presenta una interfaz moderna con *glassmorphism* y modo oscuro nativo.
-- **Backend (API REST):** Desarrollado en Python con **FastAPI**, proporcionando endpoints rápidos y estables.
+- **Frontend (UI/UX):** Aplicación PWA construida con **Next.js**, React y Tailwind CSS. Utiliza Zustand para la gestión de estado global y almacenamiento local (IndexedDB) para fluidez instantánea. Alojado en **Firebase Hosting**.
+- **Backend (API REST):** Desarrollado en Python con **FastAPI**, proporcionando endpoints rápidos para generación documental y lógica de IA. Desplegado en **Google Cloud Run**.
 - **Base de Datos:** Motor **SQLite** gestionado a través de SQLAlchemy. Estructura de base de datos 100% relacional que mantiene la coherencia total de los datos académicos.
-- **Sincronización:** Posibilidad de almacenar, exportar e importar las bases de datos `.cdd` localmente o en la nube (Google Drive, OneDrive).
+- **Arquitectura Híbrida:** Funcionamiento "Local-First" en el navegador del usuario para una experiencia sin latencia, sincronizado de manera segura con el servidor en la nube para procesos pesados (PDFs, Bases de datos globales).
 
 ---
 
