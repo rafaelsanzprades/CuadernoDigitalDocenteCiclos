@@ -1,11 +1,11 @@
 @echo off
 echo ====================================================
-echo   Iniciando Entorno de Desarrollo - Cuaderno Digital
+echo   Iniciando Entorno de Desarrollo - Cuaderno FP
 echo ====================================================
 echo.
 
 echo [1/2] Levantando Backend (FastAPI) en puerto 8000...
-start "Backend FastAPI" cmd /k "cd backend && .venv313\Scripts\activate && uvicorn main:app --reload --port 8000"
+start "Backend FastAPI" cmd /k "cd backend && .venv313\Scripts\activate && python -m uvicorn main:app --reload --port 8000"
 
 echo [2/2] Levantando Frontend (Next.js) en puerto 3000...
 start "Frontend Next.js" cmd /k "cd frontend && npm run dev"

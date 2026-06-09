@@ -241,7 +241,7 @@ export function AccesoUsuariosTab() {
                 <div className="p-3 bg-info/10 text-info rounded-lg"><BookOpen className="w-6 h-6" /></div>
                 <div className="flex-1">
                   <h4 className="font-semibold text-info">Nivel Módulo (Profesorado)</h4>
-                  <p className="text-sm text-muted">El Cuaderno Digital Docente (<code className="text-accent bg-foreground/15 px-1 rounded">Module</code>) recalcula instantáneamente las horas disponibles para impartir los RAs, ya que su cálculo depende del calendario del centro.</p>
+                  <p className="text-sm text-muted">Cuaderno FP (<code className="text-accent bg-foreground/15 px-1 rounded">Module</code>) recalcula instantáneamente las horas disponibles para impartir los RAs, ya que su cálculo depende del calendario del centro.</p>
                 </div>
                 <ArrowRight className="w-6 h-6 text-muted hidden md:block" />
               </div>

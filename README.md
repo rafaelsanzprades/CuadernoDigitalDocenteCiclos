@@ -1,4 +1,4 @@
-# 📓 Cuaderno Digital Docente — Ciclos
+# 📓 Cuaderno FP — Ciclos
 
 ![License](https://img.shields.io/github/license/rafaelsanzprades/CuadernoFP?color=blue&style=flat-square)
 ![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=next.js)

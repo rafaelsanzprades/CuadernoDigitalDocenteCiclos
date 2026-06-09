@@ -1,7 +1,7 @@
 {
-  "name": "CDD PRO - Cuaderno Digital Docente",
-  "short_name": "CDD PRO",
-  "description": "Cuaderno Digital Docente para Ciclos Formativos",
+  "name": "Cuaderno FP",
+  "short_name": "Cuaderno FP",
+  "description": "Cuaderno FP para Ciclos Formativos",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0d1117",

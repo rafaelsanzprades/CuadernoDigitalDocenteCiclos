@@ -1,6 +1,6 @@
 # Guía de Contribución
 
-¡Gracias por tu interés en contribuir a **Cuaderno Ciclos FP**! Este proyecto es de código abierto y cualquier ayuda de docentes o desarrolladores es bienvenida.
+¡Gracias por tu interés en contribuir a **Cuaderno FP**! Este proyecto es de código abierto y cualquier ayuda de docentes o desarrolladores es bienvenida.
 
 ## ¿Cómo puedes colaborar?
 

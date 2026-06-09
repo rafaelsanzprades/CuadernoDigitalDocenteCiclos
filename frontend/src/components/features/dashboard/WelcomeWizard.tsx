@@ -82,7 +82,7 @@ export function WelcomeWizard({ onComplete, fetchModules, setActiveModuleId, set
           
           <div className="text-center mb-10">
             <h2 className="text-4xl font-extrabold text-foreground mb-4 flex items-center justify-center gap-3">
-              <span className="text-5xl"><span className="inline-flex"><Hand className="w-[1.2em] h-[1.2em] mr-1" /></span></span> ¡Bienvenido al Cuaderno Digital!
+              <span className="text-5xl"><span className="inline-flex"><Hand className="w-[1.2em] h-[1.2em] mr-1" /></span></span> ¡Bienvenido a Cuaderno FP!
             </h2>
             <p className="text-lg text-muted">
               Parece que es tu primera vez aquí. Vamos a preparar tu entorno de trabajo para que puedas empezar a volar.

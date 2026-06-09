@@ -13,7 +13,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "Cuaderno FP",
-  description: "Cuaderno Digital Docente para Ciclos Formativos",
+  description: "Cuaderno FP para Ciclos Formativos",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
@@ -25,14 +25,9 @@ export const metadata: Metadata = {
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AuthProvider } from "@/components/AuthProvider";
 import { Toaster } from "react-hot-toast";
-import { apiInterceptor } from "@/services/apiInterceptor";
 import { TourGuide } from "@/components/features/onboarding/TourGuide";
 import { GlobalErrorBoundary } from "@/components/GlobalErrorBoundary";
 import { PageTransition } from "@/components/layout/PageTransition";
-
-if (typeof window !== 'undefined') {
-  apiInterceptor.init();
-}
 
 export default function RootLayout({
   children,

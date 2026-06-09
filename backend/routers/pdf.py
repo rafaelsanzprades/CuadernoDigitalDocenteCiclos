@@ -19,12 +19,10 @@ def generate_pdf(type: str, pd_id: str, curso_id: str, al_id: str = None, db: Se
         from pdf_clases_ud import generar_pdf_clases_ud
         
         # Load Data from DB
-        def load_db(m_id):
-            doc = db.query(ModuleDocument).filter(ModuleDocument.id == m_id).first()
-            return doc.data if doc else {}
-                
-        module_data = load_db(pd_id)
-        curso_data = load_db(curso_id)
+        from services.module_service import get_module_data
+        
+        module_data = get_module_data(pd_id, db) if pd_id else {}
+        curso_data = get_module_data(curso_id, db) if curso_id else {}
         
         # Helper to get df
         def get_df(data_dict, key):
@@ -44,7 +42,8 @@ def generate_pdf(type: str, pd_id: str, curso_id: str, al_id: str = None, db: Se
                     info_fechas[k] = v
             else:
                 info_fechas[k] = v
-        horario = module_data.get("horario", {})
+        horario_raw = module_data.get("horario", {})
+        horario = {k: int(v) if str(v).isdigit() else 0 for k, v in horario_raw.items()}
         planning_ledger = module_data.get("planning_ledger", {})
         calendar_notes = module_data.get("calendar_notes", {})
         df_sesiones = get_df(module_data, "df_sesiones")

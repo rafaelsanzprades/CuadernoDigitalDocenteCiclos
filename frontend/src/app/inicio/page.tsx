@@ -1,5 +1,7 @@
 "use client";
 import Link from "next/link";
+import { useEffect } from "react";
+import { useAppStore } from "@/store/useAppStore";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
 import { navGroups } from "@/config/navigation";
@@ -7,6 +9,30 @@ import { Card } from "@/components/ui/Card";
 import { MotionWrapper } from "@/components/ui/MotionWrapper";
 
 export default function InicioPage() {
+  const { moduleData, cursoData, setModuleData, setCursoData, activeModuleId, activeCursoId } = useAppStore();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (activeModuleId && !moduleData) {
+          const res = await fetch(`/api/module/${activeModuleId}`);
+          const data = await res.json();
+          if (data.status === "success") setModuleData(data.data);
+        }
+        if (activeCursoId && !cursoData) {
+          const res = await fetch(`/api/module/${activeCursoId}`);
+          const data = await res.json();
+          if (data.status === "success") setCursoData(data.data);
+        }
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+    if ((activeModuleId && !moduleData) || (activeCursoId && !cursoData)) {
+      fetchData();
+    }
+  }, [activeModuleId, moduleData, activeCursoId, cursoData, setModuleData, setCursoData]);
+
   return (
     <div className="flex min-h-screen bg-background relative">
       <Sidebar />

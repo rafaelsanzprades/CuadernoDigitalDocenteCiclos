@@ -31,13 +31,20 @@ logger = logging.getLogger("cdd-pro")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # Inicializacin automtica de BD si est vaca
+    from init_db import check_and_seed_db
+    try:
+        check_and_seed_db()
+    except Exception as e:
+        logger.error(f"Error initializing DB: {e}")
+
     task = asyncio.create_task(backup_task())
     yield
     task.cancel()
 
 app = FastAPI(
-    title="Cuaderno Digital Docente API",
-    description="Backend for the Cuaderno Digital Docente Next.js app",
+    title="Cuaderno FP API",
+    description="Backend for the Cuaderno FP Next.js app",
     version="1.0.0",
     lifespan=lifespan,
 )
