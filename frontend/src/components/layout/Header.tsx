@@ -1,5 +1,5 @@
 "use client";
-import { AlertTriangle, ChevronRight, Cloud, Hourglass, Moon, Redo2, Save, Shield, Sun, Undo2, XCircle } from "lucide-react";
+import { AlertTriangle, ChevronRight, Cloud, Hourglass, Moon, Redo2, Save, Shield, Sun, Undo2, XCircle, CalendarDays } from "lucide-react";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useAppStore, useTemporalStore } from "@/store/useAppStore";
 import Link from "next/link";
@@ -45,12 +45,17 @@ export default function Header({ title, breadcrumbSuffix }: { title?: React.Reac
 
   let currentGroup = "";
   let currentItem = "";
-  for (const group of navGroups) {
-    const found = group.items.find(item => item.href === pathname);
-    if (found) {
-      currentGroup = group.title;
-      currentItem = found.label;
-      break;
+  if (pathname === '/agenda') {
+    currentGroup = "Agenda";
+    currentItem = "Agenda de clase";
+  } else {
+    for (const group of navGroups) {
+      const found = group.items.find(item => item.href === pathname);
+      if (found) {
+        currentGroup = group.title;
+        currentItem = found.label;
+        break;
+      }
     }
   }
 
@@ -171,6 +176,19 @@ export default function Header({ title, breadcrumbSuffix }: { title?: React.Reac
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isSidebarOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
             </svg>
           </button>
+          
+          <Link
+            href="/agenda"
+            className={`px-5 py-2.5 rounded-lg hover:bg-foreground/5 transition-all flex items-center gap-3 cursor-pointer group ${pathname === '/agenda' ? 'bg-accent/10 border-accent/30 shadow-[0_0_15px_rgba(var(--accent-color-rgb),0.3)]' : ''}`}
+          >
+            <div className="flex flex-col items-start gap-1">
+              <span className={`text-[0.95rem] font-bold tracking-wide leading-none ${pathname === '/agenda' ? 'text-accent' : 'text-foreground group-hover:text-accent'}`}>Agenda</span>
+              <div className="px-2 py-0.5 rounded text-[0.65rem] border font-semibold tracking-wider leading-none text-accent bg-accent/10 border-accent/30">
+                {sourceType === 'demo' ? '2/may' : new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}
+              </div>
+            </div>
+          </Link>
+
           {navGroups.map(group => {
             let badgeText = "";
             const badgeColor = "text-accent bg-accent/10 border-accent/30";

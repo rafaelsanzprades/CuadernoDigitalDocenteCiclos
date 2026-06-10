@@ -17,7 +17,7 @@ export const WeeklyClasses = () => {
 
   // 2. Compute current and next week dates
   const isDemo = activeModuleId === '0237-ictve-pd';
-  const now = isDemo ? new Date('2025-10-06T10:00:00') : new Date();
+  const now = isDemo ? new Date('2026-05-02T10:00:00') : new Date();
   const dayOfWeek = now.getDay(); // 0 = Sun, 1 = Mon, ..., 6 = Sat
   const isThursdayOrLater = dayOfWeek === 0 || dayOfWeek >= 4;
 

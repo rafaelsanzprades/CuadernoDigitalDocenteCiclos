@@ -93,11 +93,19 @@ export const apiInterceptor = {
 
       const dataSourceType = fileManager.getDataSourceType();
 
+      const getProxiedInput = () => {
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+        if (apiUrl && urlStr.startsWith('/api/')) {
+          return typeof input === 'string' ? apiUrl + urlStr : new Request(apiUrl + urlStr, input as any);
+        }
+        return input;
+      };
+
       if ((isModuleApi || isAttendanceApi) && originalFetch) {
         try {
           // In 'local' mode, pass through to the real backend
           if (dataSourceType === 'local') {
-            return originalFetch(input, init);
+            return originalFetch(getProxiedInput(), init);
           }
 
           if (isModuleApi && method === 'GET') {
@@ -138,7 +146,7 @@ export const apiInterceptor = {
       }
 
       if (originalFetch) {
-        return originalFetch(input, init);
+        return originalFetch(getProxiedInput(), init);
       } else {
         return Promise.reject("Original fetch not available");
       }

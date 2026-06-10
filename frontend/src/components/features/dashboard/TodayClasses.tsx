@@ -12,7 +12,7 @@ export const TodayClasses = () => {
   if (!moduleData) return null;
 
   const isDemo = activeModuleId === '0237-ictve-pd';
-  const now = isDemo ? new Date('2025-10-06T10:00:00') : new Date();
+  const now = isDemo ? new Date('2026-05-02T10:00:00') : new Date();
 
   // Simulate schedule to get exact classroom programming for today
   const simulation = simulateSchedule(moduleData);

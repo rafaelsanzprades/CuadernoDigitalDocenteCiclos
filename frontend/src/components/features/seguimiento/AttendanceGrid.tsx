@@ -11,7 +11,8 @@ type AttendanceStatus = 'presente' | 'falta' | 'retraso' | null;
 
 export const AttendanceGrid = () => {
   const { cursoData, activeModuleId } = useAppStore();
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const isDemo = activeModuleId === '0237-ictve-pd';
+  const [currentDate, setCurrentDate] = useState(isDemo ? new Date('2026-05-02T10:00:00') : new Date());
   const [attendanceData, setAttendanceData] = useState<Record<string, AttendanceStatus>>({});
   const [loading, setLoading] = useState(false);
   const parentRef = useRef<HTMLDivElement>(null);
