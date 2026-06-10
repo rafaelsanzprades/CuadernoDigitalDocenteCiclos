@@ -31,6 +31,35 @@ export default function Header({ title, breadcrumbSuffix }: { title?: React.Reac
   const [mounted, setMounted] = useState(false);
   const [sourceType, setSourceType] = useState<"demo" | "local">("demo");
   const [cloudSynced, setCloudSynced] = useState(false);
+  const [timeStr, setTimeStr] = useState<string>("");
+
+  useEffect(() => {
+    const updateTime = () => {
+      const isDemo = useAppStore.getState().activeModuleId === '0237-ictve-pd';
+      const realNow = new Date();
+      const currentYear = realNow.getFullYear();
+      
+      let day, monthStr, year;
+      if (isDemo) {
+        day = 2;
+        monthStr = "mayo";
+        year = currentYear;
+      } else {
+        day = realNow.getDate();
+        const months = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+        monthStr = months[realNow.getMonth()];
+        year = currentYear;
+      }
+      
+      const hours = String(realNow.getHours()).padStart(2, '0');
+      const minutes = String(realNow.getMinutes()).padStart(2, '0');
+      
+      setTimeStr(`${day} de ${monthStr} de ${year} - ${hours}:${minutes}h`);
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     setMounted(true);
@@ -184,7 +213,7 @@ export default function Header({ title, breadcrumbSuffix }: { title?: React.Reac
             <div className="flex flex-col items-start gap-1">
               <span className={`text-[0.95rem] font-bold tracking-wide leading-none ${pathname === '/agenda' ? 'text-accent' : 'text-foreground group-hover:text-accent'}`}>Agenda</span>
               <div className="px-2 py-0.5 rounded text-[0.65rem] border font-semibold tracking-wider leading-none text-accent bg-accent/10 border-accent/30">
-                {sourceType === 'demo' ? '2/may' : new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}
+                {timeStr}
               </div>
             </div>
           </Link>

@@ -36,12 +36,24 @@ export default function Sidebar() {
     const updateTime = () => {
       const isDemo = useAppStore.getState().activeModuleId === '0237-ictve-pd';
       const realNow = new Date();
-      const now = isDemo ? new Date(2026, 4, 2, realNow.getHours(), realNow.getMinutes()) : realNow;
-      const day = String(now.getDate()).padStart(2, '0');
-      const month = now.toLocaleString('es-ES', { month: 'short' });
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      setTimeStr(`${day}/${month} - ${hours}:${minutes}h`);
+      const currentYear = realNow.getFullYear();
+      
+      let day, monthStr, year;
+      if (isDemo) {
+        day = 2;
+        monthStr = "mayo";
+        year = currentYear;
+      } else {
+        day = realNow.getDate();
+        const months = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+        monthStr = months[realNow.getMonth()];
+        year = currentYear;
+      }
+      
+      const hours = String(realNow.getHours()).padStart(2, '0');
+      const minutes = String(realNow.getMinutes()).padStart(2, '0');
+      
+      setTimeStr(`${day} de ${monthStr} de ${year} - ${hours}:${minutes}h`);
     };
     updateTime();
     const interval = setInterval(updateTime, 60000); // update every minute
@@ -62,9 +74,6 @@ export default function Sidebar() {
                 Cuaderno FP
               </h1>
             </Link>
-            <div className="text-[0.75rem] text-muted font-medium mt-0.5 ml-0.5">
-              {timeStr}
-            </div>
           </div>
         )}
         <button onClick={toggleSidebar} className="text-muted hover:text-foreground p-1 rounded-md hover:bg-foreground/10 transition-colors mb-3">
@@ -94,7 +103,7 @@ export default function Sidebar() {
                       Agenda de clase
                     </span>
                     <span className="px-2 py-0.5 rounded text-[0.65rem] border font-semibold tracking-wider leading-none text-accent bg-accent/10 border-accent/30">
-                      {useAppStore.getState().activeModuleId === '0237-ictve-pd' ? '2/may' : new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}
+                      {timeStr}
                     </span>
                   </div>
                 )}
