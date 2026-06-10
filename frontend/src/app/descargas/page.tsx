@@ -60,11 +60,7 @@ export default function DocumentosPage() {
       .finally(() => setLoadingDocs(false));
   };
 
-  useEffect(() => {
-    if (activeTab === "legislacion" || activeTab === "varios") {
-      fetchDocuments(activeTab === "legislacion" ? "Legislación general" : "Varios");
-    }
-  }, [activeTab]);
+
 
   useEffect(() => {
     const fetchData = async () => {
