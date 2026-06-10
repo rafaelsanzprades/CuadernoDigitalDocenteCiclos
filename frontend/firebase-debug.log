@@ -1,0 +1,52 @@
+[debug] [2026-06-10T11:56:58.809Z] ----------------------------------------------------------------------
+[debug] [2026-06-10T11:56:58.812Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\rafae\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting
+[debug] [2026-06-10T11:56:58.812Z] CLI Version:   15.19.1
+[debug] [2026-06-10T11:56:58.812Z] Platform:      win32
+[debug] [2026-06-10T11:56:58.812Z] Node Version:  v26.2.0
+[debug] [2026-06-10T11:56:58.812Z] Time:          Wed Jun 10 2026 13:56:58 GMT+0200 (hora de verano de Europa central)
+[debug] [2026-06-10T11:56:58.812Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-06-10T11:57:01.053Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-06-10T11:57:01.054Z] > authorizing via signed-in user (rafaelsanzprades@gmail.com)
+[debug] [2026-06-10T11:57:01.054Z] [iam] checking project cuadernofp for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-06-10T11:57:01.055Z] Checked if tokens are valid: true, expires at: 1781094931909
+[debug] [2026-06-10T11:57:01.055Z] Checked if tokens are valid: true, expires at: 1781094931909
+[debug] [2026-06-10T11:57:01.055Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/cuadernofp:testIamPermissions [none]
+[debug] [2026-06-10T11:57:01.055Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/cuadernofp:testIamPermissions  x-goog-user-project=cuadernofp
+[debug] [2026-06-10T11:57:01.055Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/cuadernofp:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-06-10T11:57:01.834Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/cuadernofp:testIamPermissions 200
+[debug] [2026-06-10T11:57:01.834Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/cuadernofp:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-06-10T11:57:01.835Z] Checked if tokens are valid: true, expires at: 1781094931909
+[debug] [2026-06-10T11:57:01.835Z] Checked if tokens are valid: true, expires at: 1781094931909
+[debug] [2026-06-10T11:57:01.835Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/cuadernofp [none]
+[debug] [2026-06-10T11:57:02.163Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/cuadernofp 200
+[debug] [2026-06-10T11:57:02.163Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/cuadernofp {"projectId":"cuadernofp","projectNumber":"215337606799","displayName":"CuadernoFP","name":"projects/cuadernofp","resources":{"hostingSite":"cuadernofp"},"state":"ACTIVE","etag":"1_ea56ac18-8eae-4571-8ff1-6ae856c6d31e"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+   The integration is known to work with Next.js version 12 - 16.0. You may encounter errors.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2026-06-10T11:57:08.216Z] Checked if tokens are valid: true, expires at: 1781094931909
+[debug] [2026-06-10T11:57:08.216Z] Checked if tokens are valid: true, expires at: 1781094931909
+[debug] [2026-06-10T11:57:08.216Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/cuadernofp/sites/cuadernofp [none]
+[debug] [2026-06-10T11:57:09.166Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/cuadernofp/sites/cuadernofp 200
+[debug] [2026-06-10T11:57:09.166Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/cuadernofp/sites/cuadernofp {"name":"projects/cuadernofp/sites/cuadernofp","defaultUrl":"https://cuadernofp.web.app","type":"DEFAULT_SITE"}
+[info] ▲ Next.js 16.2.7 (Turbopack)
+
+[info] - Environments: .env.local, .env.production
+
+
+[info]   Creating an optimized production build ...
+
+[info] (node:10736) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+[info] (node:24852) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+

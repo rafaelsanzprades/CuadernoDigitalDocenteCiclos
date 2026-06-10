@@ -58,7 +58,7 @@ export default function Sidebar() {
     updateTime();
     const interval = setInterval(updateTime, 60000); // update every minute
     return () => clearInterval(interval);
-  }, []);
+  }, [activeModuleId]);
 
   const handleScroll = (e: React.UIEvent<HTMLElement>) => {
     sessionStorage.setItem('sidebar-scroll', e.currentTarget.scrollTop.toString());

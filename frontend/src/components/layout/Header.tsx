@@ -59,7 +59,7 @@ export default function Header({ title, breadcrumbSuffix }: { title?: React.Reac
     updateTime();
     const interval = setInterval(updateTime, 60000);
     return () => clearInterval(interval);
-  }, []);
+  }, [activeModuleId]);
 
   useEffect(() => {
     setMounted(true);
