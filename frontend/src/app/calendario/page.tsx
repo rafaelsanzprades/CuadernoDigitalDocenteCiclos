@@ -362,13 +362,13 @@ export default function CalendarioPage() {
   // Load data if not in store
   useEffect(() => {
     if (activeCursoId && !cursoData) {
-      fetch(`/api/module/${activeCursoId}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/module/${activeCursoId}`)
         .then(r => r.json())
         .then(json => { if (json.status === "success") setCursoData(json.data); })
         .catch(console.error);
     }
     if (activeModuleId && !moduleData) {
-      fetch(`/api/module/${activeModuleId}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/module/${activeModuleId}`)
         .then(r => r.json())
         .then(json => { if (json.status === "success") setModuleData(json.data); })
         .catch(console.error);

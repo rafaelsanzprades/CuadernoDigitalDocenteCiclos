@@ -31,7 +31,7 @@ export const AttendanceAccumulated = () => {
   const fetchAttendance = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/attendance/${activeModuleId}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/attendance/${activeModuleId}`);
       const data = await res.json();
       setAttendanceData(data);
     } catch (err) {

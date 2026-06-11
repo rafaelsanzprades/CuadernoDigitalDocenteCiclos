@@ -25,12 +25,12 @@ export default function AgendaPage() {
     const fetchData = async () => {
       try {
         if (activeModuleId && !moduleData) {
-          const res = await fetch(`/api/module/${activeModuleId}`);
+          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/module/${activeModuleId}`);
           const data = await res.json();
           if (data.status === "success") setModuleData(data.data);
         }
         if (activeCursoId && !cursoData) {
-          const res = await fetch(`/api/module/${activeCursoId}`);
+          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/module/${activeCursoId}`);
           const data = await res.json();
           if (data.status === "success") setCursoData(data.data);
         }

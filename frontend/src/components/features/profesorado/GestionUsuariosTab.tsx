@@ -64,7 +64,7 @@ export function GestionUsuariosTab() {
     e.preventDefault();
     if (!newUserCenterId || !newUserName || !newUserSurname || !newUserEmail) return;
     
-    fetch("/api/users", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

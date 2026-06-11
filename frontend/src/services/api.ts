@@ -14,7 +14,7 @@ export const fetcher = async (url: string) => {
 };
 
 export const updateModule = async (moduleId: string, data: any) => {
-  const res = await fetch(`/api/module/${moduleId}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/module/${moduleId}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)

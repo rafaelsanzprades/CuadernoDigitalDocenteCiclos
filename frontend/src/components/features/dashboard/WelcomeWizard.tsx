@@ -50,14 +50,14 @@ export function WelcomeWizard({ onComplete, fetchModules, setActiveModuleId, set
 
     try {
       // 1. Crear PD
-      await fetch(`/api/module/${pdId}`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/module/${pdId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({})
       });
 
       // 2. Crear Curso
-      await fetch(`/api/module/${cursoId}`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/module/${cursoId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({})

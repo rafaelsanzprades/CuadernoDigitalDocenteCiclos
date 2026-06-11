@@ -40,7 +40,7 @@ export default function DocumentosPage() {
   const fetchDocuments = (path: string) => {
     setLoadingDocs(true);
     setError(null);
-    fetch(`/api/documents/list?path=${encodeURIComponent(path)}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/documents/list?path=${encodeURIComponent(path)}`)
       .then((res) => {
         if (!res.ok) throw new Error("Error al acceder a los documentos");
         return res.json();
@@ -67,12 +67,12 @@ export default function DocumentosPage() {
       setLoadingData(true);
       try {
         if (activeModuleId && !moduleData) {
-          const res = await fetch(`/api/module/${activeModuleId}`);
+          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/module/${activeModuleId}`);
           const data = await res.json();
           if (data.status === "success") setModuleData(data.data);
         }
         if (activeCursoId && !cursoData) {
-          const res = await fetch(`/api/module/${activeCursoId}`);
+          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/module/${activeCursoId}`);
           const data = await res.json();
           if (data.status === "success") setCursoData(data.data);
         }

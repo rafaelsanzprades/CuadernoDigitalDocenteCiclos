@@ -41,7 +41,7 @@ export function AIWizardModal({ isOpen, onClose, onSuccess }: AIWizardModalProps
       formData.append("provider", provider);
 
       // Llama a tu backend pasándole el texto extraído y el modelo
-      const res = await fetch("/api/ai/parse-curriculum", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/ai/parse-curriculum`, {
         method: "POST",
         body: formData,
       });

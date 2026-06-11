@@ -31,7 +31,7 @@ export default function InstrumentosPage() {
       setLoading(true);
       try {
         if (activeModuleId && !moduleData) {
-          const res = await fetch(`/api/module/${activeModuleId}`);
+          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/module/${activeModuleId}`);
           const data = await res.json();
           if (data.status === "success") setModuleData(data.data);
         } else if (moduleData && (!moduleData.df_act || moduleData.df_act.length < 21)) {

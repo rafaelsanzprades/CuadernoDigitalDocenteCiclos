@@ -43,7 +43,7 @@ export default function AlumnadoPage() {
       setLoading(true);
       try {
         if (activeCursoId && !cursoData) {
-          const res = await fetch(`/api/module/${activeCursoId}`);
+          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/module/${activeCursoId}`);
           const data = await res.json();
           if (data.status === "success") setCursoData(data.data);
         }

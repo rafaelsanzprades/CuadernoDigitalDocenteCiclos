@@ -17,7 +17,7 @@ export default function ModuloConfigPage() {
   const [activeTab, setActiveTab] = useState("datos");
 
   useEffect(() => {
-    fetch(`/api/module/${activeModuleId}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/module/${activeModuleId}`)
       .then(res => res.json())
       .then(json => {
         if (json.status === "success") setModuleData(json.data);

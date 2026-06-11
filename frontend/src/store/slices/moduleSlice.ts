@@ -16,7 +16,7 @@ async function saveToApi(id: string, data: ModuleData | CursoData): Promise<bool
     const currentVersion = data.__version__ || 0;
     const payload = { ...data, __version__: currentVersion };
     
-    const res = await fetch(`/api/module/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/module/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),

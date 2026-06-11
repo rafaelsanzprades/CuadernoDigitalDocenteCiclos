@@ -66,7 +66,7 @@ export function useAssignments() {
 }
 
 export const saveAssignments = async (userId: string, moduleIds: number[]) => {
-  const res = await fetch(`/api/assignments/${userId}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/assignments/${userId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ module_ids: moduleIds })

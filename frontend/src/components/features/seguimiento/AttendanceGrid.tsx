@@ -31,7 +31,7 @@ export const AttendanceGrid = () => {
   const fetchAttendance = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/attendance/${activeModuleId}?date_str=${dateStr}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/attendance/${activeModuleId}?date_str=${dateStr}`);
       const data = await res.json();
       const newAtt: Record<string, AttendanceStatus> = {};
       data.forEach((record: any) => {
@@ -59,7 +59,7 @@ export const AttendanceGrid = () => {
     setAttendanceData(prev => ({ ...prev, [studentId]: nextStatus }));
 
     try {
-      const res = await fetch('/api/attendance/', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/attendance/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

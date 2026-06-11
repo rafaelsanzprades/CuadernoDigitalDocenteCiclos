@@ -74,7 +74,7 @@ export const ChatbotWidget = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/ai/chat', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/ai/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
