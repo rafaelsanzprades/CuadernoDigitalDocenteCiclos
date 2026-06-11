@@ -1,4 +1,3 @@
-import fitz  # PyMuPDF
 from fastapi import UploadFile
 
 async def extract_text_from_pdf(file: UploadFile) -> str:
@@ -6,6 +5,7 @@ async def extract_text_from_pdf(file: UploadFile) -> str:
     Extracts raw text from an uploaded PDF file using PyMuPDF.
     """
     try:
+        import fitz  # PyMuPDF – lazy import to avoid startup failure if lib unavailable
         # Read the file bytes asynchronously
         file_bytes = await file.read()
         
@@ -19,5 +19,7 @@ async def extract_text_from_pdf(file: UploadFile) -> str:
             
         doc.close()
         return extracted_text
+    except ImportError:
+        raise ValueError("PyMuPDF no está disponible en este entorno.")
     except Exception as e:
         raise ValueError(f"Error extracting text from PDF: {str(e)}")

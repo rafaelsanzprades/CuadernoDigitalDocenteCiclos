@@ -4,11 +4,12 @@ __pycache__/
 .env
 tests/
 *.db
+!cdd_pro.db
 alembic/versions/
+backups/
+documentos/
 
 .venv
 .venv313
 *.err
 *.log
-cdd.db
-cdd_pro.db
