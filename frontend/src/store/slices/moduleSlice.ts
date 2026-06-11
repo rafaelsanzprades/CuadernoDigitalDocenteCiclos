@@ -78,21 +78,31 @@ export const createModuleSlice: StateCreator<AppState, [], [], ModuleSlice> = (s
   })),
 
   saveModuleData: async () => {
-    const { activeModuleId, moduleData } = get();
+    const { activeModuleId, moduleData, isDriveConnected, autoSyncDrive } = get();
     if (!activeModuleId || !moduleData) return false;
     const ok = await saveToApi(activeModuleId, moduleData);
     if (ok === true) {
       set({ moduleData: { ...moduleData, __version__: (moduleData.__version__ || 0) + 1 } });
+      if (isDriveConnected && autoSyncDrive) {
+        import('@/services/driveService').then(({ driveService }) => {
+          driveService.saveFile(`${activeModuleId}.cddp`, moduleData);
+        });
+      }
     }
     return ok;
   },
 
   saveCursoData: async () => {
-    const { activeCursoId, cursoData } = get();
+    const { activeCursoId, cursoData, isDriveConnected, autoSyncDrive } = get();
     if (!activeCursoId || !cursoData) return false;
     const ok = await saveToApi(activeCursoId, cursoData);
     if (ok === true) {
       set({ cursoData: { ...cursoData, __version__: (cursoData.__version__ || 0) + 1 } });
+      if (isDriveConnected && autoSyncDrive) {
+        import('@/services/driveService').then(({ driveService }) => {
+          driveService.saveFile(`${activeCursoId}.cddc`, cursoData);
+        });
+      }
     }
     return ok;
   },

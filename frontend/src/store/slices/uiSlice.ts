@@ -1,7 +1,7 @@
 import { StateCreator } from 'zustand';
 import { AppState } from '@/types';
 
-type UiSlice = Pick<AppState, 'isSidebarOpen' | 'toggleSidebar' | 'isWizardOpen' | 'setWizardOpen' | 'dataSource' | 'setDataSource' | 'isDriveConnected' | 'setDriveConnected' | 'driveUserEmail' | 'setDriveUserEmail' | 'autoSyncDrive' | 'setAutoSyncDrive'>;
+type UiSlice = Pick<AppState, 'isSidebarOpen' | 'toggleSidebar' | 'isWizardOpen' | 'setWizardOpen' | 'dataSource' | 'setDataSource' | 'isDriveConnected' | 'setDriveConnected' | 'driveUserEmail' | 'setDriveUserEmail' | 'autoSyncDrive' | 'setAutoSyncDrive' | 'googleClientId' | 'setGoogleClientId'>;
 
 export const createUiSlice: StateCreator<AppState, [], [], UiSlice> = (set) => ({
   isSidebarOpen: true,
@@ -16,4 +16,6 @@ export const createUiSlice: StateCreator<AppState, [], [], UiSlice> = (set) => (
   setDriveUserEmail: (email: string | null) => set({ driveUserEmail: email }),
   autoSyncDrive: false,
   setAutoSyncDrive: (sync: boolean) => set({ autoSyncDrive: sync }),
+  googleClientId: "",
+  setGoogleClientId: (id: string) => set({ googleClientId: id }),
 });

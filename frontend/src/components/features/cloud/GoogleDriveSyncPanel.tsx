@@ -3,23 +3,37 @@
 import { useAppStore } from "@/store/useAppStore";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
-import { CheckCircle2, Cloud, CloudOff, Info, RefreshCw, XCircle } from "lucide-react";
+import { CheckCircle2, Cloud, CloudOff, Info, RefreshCw, XCircle, Key } from "lucide-react";
 import toast from "react-hot-toast";
+import { driveService } from "@/services/driveService";
+import { Input } from "@/components/ui/Input";
 
 export function GoogleDriveSyncPanel() {
-  const { isDriveConnected, driveUserEmail, autoSyncDrive, setDriveConnected, setDriveUserEmail, setAutoSyncDrive } = useAppStore();
+  const { 
+    isDriveConnected, driveUserEmail, autoSyncDrive, googleClientId,
+    setDriveConnected, setDriveUserEmail, setAutoSyncDrive, setGoogleClientId
+  } = useAppStore();
 
-  const handleConnect = () => {
-    // Mock logic for now, until OAuth Client ID is provided
-    toast.success("Conectando con Google Drive...");
-    setTimeout(() => {
-      setDriveUserEmail("profesor@ejemplo.com");
+  const handleConnect = async () => {
+    if (!googleClientId) {
+      toast.error("Por favor, introduce tu Google Client ID primero.");
+      return;
+    }
+    
+    toast.loading("Conectando con Google Drive...", { id: "drive-connect" });
+    const result = await driveService.login(googleClientId);
+    
+    if (result.success) {
+      setDriveUserEmail(result.email || "Usuario de Drive");
       setDriveConnected(true);
-      toast.success("Google Drive conectado correctamente");
-    }, 1500);
+      toast.success("Google Drive conectado correctamente", { id: "drive-connect" });
+    } else {
+      toast.error("Fallo al conectar con Google Drive", { id: "drive-connect" });
+    }
   };
 
   const handleDisconnect = () => {
+    driveService.logout();
     setDriveConnected(false);
     setDriveUserEmail(null);
     setAutoSyncDrive(false);
@@ -103,14 +117,25 @@ export function GoogleDriveSyncPanel() {
           </button>
         </div>
 
+        {/* Configuración de Client ID */}
         {!isDriveConnected && (
-          <div className="flex items-start gap-3 p-4 rounded-lg bg-warning/10 text-warning border border-warning/20 text-sm">
-            <Info className="w-5 h-5 shrink-0 mt-0.5" />
-            <p>
-              Requiere que el administrador configure el <strong>Client ID de OAuth de Google Cloud</strong> para activar la funcionalidad real. Actualmente la interfaz está en modo "mock" para visualización.
+          <div className="flex flex-col gap-3 p-5 rounded-xl border bg-background/50 border-[var(--glass-border)]">
+            <h3 className="font-bold text-foreground flex items-center gap-2">
+              <Key className="w-5 h-5 text-info" /> Credenciales OAuth
+            </h3>
+            <p className="text-sm text-muted">
+              Introduce el <strong>Client ID</strong> de tu proyecto de Google Cloud para autorizar la aplicación. Este dato se guarda en tu navegador de forma segura.
             </p>
+            <Input
+              type="password"
+              placeholder="Ej: 123456789-abcde.apps.googleusercontent.com"
+              value={googleClientId}
+              onChange={(e) => setGoogleClientId(e.target.value)}
+              className="font-mono text-sm"
+            />
           </div>
         )}
+
       </div>
     </Card>
   );

@@ -213,4 +213,6 @@ export interface AppState {
   setDriveUserEmail: (email: string | null) => void;
   autoSyncDrive: boolean;
   setAutoSyncDrive: (sync: boolean) => void;
+  googleClientId: string;
+  setGoogleClientId: (id: string) => void;
 }
