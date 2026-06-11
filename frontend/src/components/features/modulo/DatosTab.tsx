@@ -14,6 +14,8 @@ export function DatosTab() {
     setModuleData,
     updateInfoModulo,
     updateModuleData,
+    cursoData,
+    updateCursoData,
     groups
   } = useAppStore();
 
@@ -115,13 +117,13 @@ export function DatosTab() {
 
   // --- Data Extraction ---
   const data = moduleData?.info_modulo || {};
-  const horario = moduleData?.horario || { Lun: 0, Mar: 0, "Mié": 0, Jue: 0, Vie: 0 };
-  const info_fechas = moduleData?.info_fechas || {};
-  const calendar_notes = moduleData?.calendar_notes || {};
+  const horario = cursoData?.horario || { Lun: 0, Mar: 0, "Mié": 0, Jue: 0, Vie: 0 };
+  const info_fechas = cursoData?.info_fechas || {};
+  const calendar_notes = cursoData?.calendar_notes || {};
 
   // --- Horarios / Trimestres ---
   const handleUpdateHorario = (day: string, val: number) =>
-    updateModuleData("horario", { ...horario, [day]: val });
+    updateCursoData("horario", { ...horario, [day]: val });
 
   const h_sem = Number(data.h_sem) || 0;
   const suma_horario = ["Lun", "Mar", "Mié", "Jue", "Vie"].reduce((acc, day) => acc + (Number(horario[day]) || 0), 0);

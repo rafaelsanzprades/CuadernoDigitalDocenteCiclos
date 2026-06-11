@@ -31,7 +31,7 @@ def generate_pdf(type: str, pd_id: str, curso_id: str, al_id: str = None, db: Se
             
         info_modulo = module_data.get("info_modulo", {})
         from datetime import datetime
-        info_fechas_raw = module_data.get("info_fechas", {})
+        info_fechas_raw = curso_data.get("info_fechas", {})
         info_fechas = {}
         for k, v in info_fechas_raw.items():
             if isinstance(v, str) and v.strip():
@@ -42,10 +42,10 @@ def generate_pdf(type: str, pd_id: str, curso_id: str, al_id: str = None, db: Se
                     info_fechas[k] = v
             else:
                 info_fechas[k] = v
-        horario_raw = module_data.get("horario", {})
+        horario_raw = curso_data.get("horario", {})
         horario = {k: int(v) if str(v).isdigit() else 0 for k, v in horario_raw.items()}
-        planning_ledger = module_data.get("planning_ledger", {})
-        calendar_notes = module_data.get("calendar_notes", {})
+        planning_ledger = curso_data.get("planning_ledger", {})
+        calendar_notes = curso_data.get("calendar_notes", {})
         df_sesiones = get_df(module_data, "df_sesiones")
         
         df_al = get_df(curso_data, "df_al")

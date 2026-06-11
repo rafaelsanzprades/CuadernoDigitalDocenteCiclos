@@ -19,7 +19,7 @@ export const AttendanceAccumulated = () => {
 
   const alumnado = cursoData?.df_al || [];
   const menores = alumnado.filter((a: any) => parseInt(a.Edad || '18') < 18).length;
-  const info_fechas = moduleData?.info_fechas || {};
+  const info_fechas = cursoData?.info_fechas || {};
   const info_modulo = moduleData?.info_modulo || {};
 
   useEffect(() => {
@@ -59,8 +59,8 @@ export const AttendanceAccumulated = () => {
       const start = new Date(sy, sm - 1, sd);
       const end = new Date(ey, em - 1, ed);
       const dayMap = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
-      const horario = moduleData?.horario || { Lun: 0, Mar: 0, "Mié": 0, Jue: 0, Vie: 0 };
-      const calendar_notes = moduleData?.calendar_notes || {};
+      const horario = cursoData?.horario || { Lun: 0, Mar: 0, "Mié": 0, Jue: 0, Vie: 0 };
+      const calendar_notes = cursoData?.calendar_notes || {};
       
       let total = 0, curr = new Date(start);
       const pad = (n: number) => String(n).padStart(2, "0");

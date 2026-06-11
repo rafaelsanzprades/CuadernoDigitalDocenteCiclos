@@ -2613,3 +2613,63 @@
 [debug] [2026-06-10T06:28:42.940Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/cuadernofp/locations/europe-west1/operations/operation-1781072571985-653e045f8ee17-e889d49c-02b6c914 [none]
 [debug] [2026-06-10T06:28:43.064Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/cuadernofp/locations/europe-west1/operations/operation-1781072571985-653e045f8ee17-e889d49c-02b6c914 200
 [debug] [2026-06-10T06:28:43.064Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/cuadernofp/locations/europe-west1/operations/operation-1781072571985-653e045f8ee17-e889d49c-02b6c914 {"name":"projects/cuadernofp/locations/europe-west1/operations/operation-1781072571985-653e045f8ee17-e889d49c-02b6c914","metadata":{"@type":"type.googleapis.com/google.cloud.functions.v2.OperationMetadata","createTime":"2026-06-10T06:22:52.957608406Z","target":"projects/cuadernofp/locations/europe-west1/functions/ssrcuadernofp","verb":"update","cancelRequested":false,"apiVersion":"v2","requestResource":{"@type":"type.googleapis.com/google.cloud.functions.v2.Function","name":"projects/cuadernofp/locations/europe-west1/functions/ssrcuadernofp","buildConfig":{"runtime":"nodejs24","entryPoint":"ssrcuadernofp","source":{"storageSource":{"bucket":"gcf-v2-sources-215337606799-europe-west1","object":"ssrcuadernofp/function-source.zip","generation":"1781072572898230"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"dockerRepository":"projects/cuadernofp/locations/europe-west1/repositories/gcf-artifacts","sourceProvenance":{"resolvedStorageSource":{"bucket":"gcf-v2-sources-215337606799-europe-west1","object":"ssrcuadernofp/function-source.zip","generation":"1781071773790786"}},"dockerRegistry":"ARTIFACT_REGISTRY","serviceAccount":"projects/cuadernofp/serviceAccounts/215337606799-compute@developer.gserviceaccount.com","automaticUpdatePolicy":{}},"serviceConfig":{"service":"projects/cuadernofp/locations/europe-west1/services/ssrcuadernofp","timeoutSeconds":60,"environmentVariables":{"VERCEL_URL":"cuadernofp.web.app","__FIREBASE_FRAMEWORKS_ENTRY__":"next.js","FIREBASE_CONFIG":"{\"projectId\":\"cuadernofp\",\"storageBucket\":\"cuadernofp.firebasestorage.app\"}","GCLOUD_PROJECT":"cuadernofp","EVENTARC_CLOUD_EVENT_SOURCE":"projects/cuadernofp/locations/europe-west1/services/ssrcuadernofp","FUNCTION_TARGET":"ssrcuadernofp","LOG_EXECUTION_ID":"true"},"ingressSettings":"ALLOW_ALL","uri":"https://ssrcuadernofp-ksqnfs2byq-ew.a.run.app","serviceAccountEmail":"215337606799-compute@developer.gserviceaccount.com","availableMemory":"256Mi","allTrafficOnLatestRevision":true,"revision":"ssrcuadernofp-00005-nav","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"state":"ACTIVE","labels":{"deployment-tool":"cloudfunctions","firebase-functions-codebase":"firebase-frameworks-cuadernofp","firebase-functions-hash":"e7431b6d98054952eaaadef752111f34729e2edc"},"environment":"GEN_2","url":"https://europe-west1-cuadernofp.cloudfunctions.net/ssrcuadernofp","satisfiesPzi":true},"stages":[{"name":"BUILD","message":"Build in progress","state":"IN_PROGRESS","resource":"projects/215337606799/locations/europe-west1/builds/b7a5b08d-0fb3-4fa6-9312-d97c69841946","resourceUri":"https://console.cloud.google.com/cloud-build/builds;region=europe-west1/b7a5b08d-0fb3-4fa6-9312-d97c69841946?project=215337606799"},{"name":"SERVICE","state":"NOT_STARTED"}],"operationType":"UPDATE_FUNCTION","buildName":"projects/215337606799/locations/europe-west1/builds/b7a5b08d-0fb3-4fa6-9312-d97c69841946"},"done":false}
+[debug] [2026-06-11T11:10:12.305Z] ----------------------------------------------------------------------
+[debug] [2026-06-11T11:10:12.307Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\rafae\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting
+[debug] [2026-06-11T11:10:12.307Z] CLI Version:   15.19.1
+[debug] [2026-06-11T11:10:12.307Z] Platform:      win32
+[debug] [2026-06-11T11:10:12.307Z] Node Version:  v26.2.0
+[debug] [2026-06-11T11:10:12.308Z] Time:          Thu Jun 11 2026 13:10:12 GMT+0200 (hora de verano de Europa central)
+[debug] [2026-06-11T11:10:12.308Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-06-11T11:10:12.309Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2026-06-11T11:10:14.564Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-06-11T11:10:14.564Z] > authorizing via signed-in user (rafaelsanzprades@gmail.com)
+[debug] [2026-06-11T11:10:14.564Z] [iam] checking project cuadernofp for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-06-11T11:10:14.565Z] Checked if tokens are valid: false, expires at: 1781094931909
+[debug] [2026-06-11T11:10:14.565Z] Checked if tokens are valid: false, expires at: 1781094931909
+[debug] [2026-06-11T11:10:14.565Z] > refreshing access token with scopes: []
+[debug] [2026-06-11T11:10:14.566Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-06-11T11:10:14.566Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-11T11:10:14.699Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-06-11T11:10:14.699Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-11T11:10:14.704Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/cuadernofp:testIamPermissions [none]
+[debug] [2026-06-11T11:10:14.704Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/cuadernofp:testIamPermissions  x-goog-user-project=cuadernofp
+[debug] [2026-06-11T11:10:14.704Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/cuadernofp:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-06-11T11:10:14.810Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2026-06-11T11:10:14.810Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2026-06-11T11:10:15.447Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/cuadernofp:testIamPermissions 200
+[debug] [2026-06-11T11:10:15.447Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/cuadernofp:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-06-11T11:10:15.448Z] Checked if tokens are valid: true, expires at: 1781179813699
+[debug] [2026-06-11T11:10:15.448Z] Checked if tokens are valid: true, expires at: 1781179813699
+[debug] [2026-06-11T11:10:15.448Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/cuadernofp [none]
+[debug] [2026-06-11T11:10:15.777Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/cuadernofp 200
+[debug] [2026-06-11T11:10:15.778Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/cuadernofp {"projectId":"cuadernofp","projectNumber":"215337606799","displayName":"CuadernoFP","name":"projects/cuadernofp","resources":{"hostingSite":"cuadernofp"},"state":"ACTIVE","etag":"1_ea56ac18-8eae-4571-8ff1-6ae856c6d31e"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+   The integration is known to work with Next.js version 12 - 16.0. You may encounter errors.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2026-06-11T11:10:21.234Z] Checked if tokens are valid: true, expires at: 1781179813699
+[debug] [2026-06-11T11:10:21.234Z] Checked if tokens are valid: true, expires at: 1781179813699
+[debug] [2026-06-11T11:10:21.234Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/cuadernofp/sites/cuadernofp [none]
+[debug] [2026-06-11T11:10:22.438Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/cuadernofp/sites/cuadernofp 200
+[debug] [2026-06-11T11:10:22.439Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/cuadernofp/sites/cuadernofp {"name":"projects/cuadernofp/sites/cuadernofp","defaultUrl":"https://cuadernofp.web.app","type":"DEFAULT_SITE"}
+[info] ▲ Next.js 16.2.7 (Turbopack)
+
+[info] - Environments: .env.local, .env.production
+
+
+[info]   Creating an optimized production build ...
+
+[info] (node:40164) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+[info] (node:24084) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+

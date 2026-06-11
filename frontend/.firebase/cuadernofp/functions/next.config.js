@@ -42,7 +42,7 @@ var withPWA = (0, import_next_pwa.default)({
 var nextConfig = {
   turbopack: {},
   async rewrites() {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://cdd-backend-215337606799.europe-west1.run.app";
     return {
       fallback: [
         {

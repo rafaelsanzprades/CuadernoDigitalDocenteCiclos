@@ -107,8 +107,8 @@ export default function ProgresoPage() {
   const df_feoe = cursoData?.df_feoe || [];
   const df_ud = moduleData?.df_ud || [];
   const df_pr = moduleData?.df_pr || [];
-  const info_fechas = moduleData?.info_fechas || {};
-  const planning_ledger = moduleData?.planning_ledger || {};
+  const info_fechas = cursoData?.info_fechas || {};
+  const planning_ledger = cursoData?.planning_ledger || {};
 
   const df_evaluable = df_al.filter((al: any) => al.Estado !== "Baja");
   df_evaluable.sort((a: any, b: any) => String(a.Apellidos || "").localeCompare(String(b.Apellidos || "")));

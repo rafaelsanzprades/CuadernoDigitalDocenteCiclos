@@ -90,10 +90,10 @@ export default function SeguimientoPage() {
 
   const df_sgmt = cursoData?.df_sgmt || [];
   const daily_ledger = cursoData?.daily_ledger || {};
-  const planning_ledger = moduleData?.planning_ledger || {};
-  const info_fechas = moduleData?.info_fechas || {};
-  const horario = moduleData?.horario || {};
-  const calendar_notes = moduleData?.calendar_notes || {};
+  const planning_ledger = cursoData?.planning_ledger || {};
+  const info_fechas = cursoData?.info_fechas || {};
+  const horario = cursoData?.horario || {};
+  const calendar_notes = cursoData?.calendar_notes || {};
 
   // Calculo de horas sin docencia
   let h_real_total = 0;

@@ -424,7 +424,6 @@ export default function CalendarioPage() {
   const info_fechas   = cursoData?.info_fechas   || {};
   const horario       = cursoData?.horario       || { Lun: 0, Mar: 0, "Mié": 0, Jue: 0, Vie: 0 };
   const calendar_notes = cursoData?.calendar_notes || {};
-  const info_modulo   = cursoData?.info_modulo   || {};
 
   const handleUpdateFechas = (field: string, value: string | number) =>
     updateCursoData("info_fechas", { ...info_fechas, [field]: value });
@@ -483,7 +482,7 @@ export default function CalendarioPage() {
                   <Button
                     variant="ghost"
                     onClick={() => {
-                      const ledger = moduleData?.planning_ledger || {};
+                      const ledger = cursoData?.planning_ledger || {};
                       const dates = Object.keys(ledger)
                         .map(d => { const [dd,mm,yyyy] = d.split("/"); return `${yyyy}-${mm}-${dd}`; })
                         .sort();
@@ -507,7 +506,7 @@ export default function CalendarioPage() {
                     <div key={field}>
                       <label className="text-sm text-muted mb-1 block">{label}</label>
                       <DatePicker
-                        value={info_fechas[field] || ""}
+                        value={typeof info_fechas[field] === 'string' ? info_fechas[field] : ""}
                         onChange={v => handleUpdateFechas(field, v)}
                       />
                     </div>
@@ -531,11 +530,11 @@ export default function CalendarioPage() {
                       <div className="space-y-3">
                         <div>
                           <label className="text-xs text-muted">Inicio</label>
-                          <DatePicker value={info_fechas[t.ini] || ""} onChange={v => handleUpdateFechas(t.ini, v)} />
+                          <DatePicker value={typeof info_fechas[t.ini] === 'string' ? info_fechas[t.ini] : ""} onChange={v => handleUpdateFechas(t.ini, v)} />
                         </div>
                         <div>
                           <label className="text-xs text-muted">Fin</label>
-                          <DatePicker value={info_fechas[t.fin] || ""} onChange={v => handleUpdateFechas(t.fin, v)} />
+                          <DatePicker value={typeof info_fechas[t.fin] === 'string' ? info_fechas[t.fin] : ""} onChange={v => handleUpdateFechas(t.fin, v)} />
                         </div>
                       </div>
                     </div>

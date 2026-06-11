@@ -28,15 +28,9 @@ export const navGroups = [
       { href: "/entorno", label: "Entorno de trabajo", icon: FolderOpen, description: "Gestión de las programaciones didácticas, cursos y base de datos activa." },
       { href: "/documentacion", label: "Documentación", icon: FolderOpen, description: "Explorador de archivos oficiales, legislación y otros documentos." },
       { href: "/descargas", label: "Descargas .PDF", icon: FileText, description: "Generación de reportes y boletines en PDF." },
-      { href: "/ayuda", label: "Centro de ayuda", icon: Activity, description: "Panel de salud: verifica la coherencia y completitud de todos los datos del cuaderno." }
-    ]
-  },
-  {
-    title: "Datos",
-    sectionDescription: "Catálogos y bases de datos maestras para la aplicación.",
-    items: [
       { href: "/ciclos", label: "Ciclos formativos", icon: GraduationCap, description: "Catálogo oficial de Ciclos Formativos. Grados Básico, Medio y Superior." },
-      { href: "/feoe", label: "Empresas FEOE", icon: Building2, description: "Catálogo de empresas colaboradoras para formación dual y FCT." }
+      { href: "/feoe", label: "Empresas FEOE", icon: Building2, description: "Catálogo de empresas colaboradoras para formación dual y FCT." },
+      { href: "/ayuda", label: "Centro de ayuda", icon: Activity, description: "Panel de salud: verifica la coherencia y completitud de todos los datos del cuaderno." }
     ]
   }
 ];

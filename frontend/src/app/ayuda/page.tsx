@@ -249,8 +249,8 @@ export default function AyudaPage() {
     return !(m?.df_ud ?? []).some((ud: any) => ud.id_ud === s.id_ud);
   }).length;
 
-  const tieneHorario = !!(m?.horario && Object.keys(m.horario).length > 0);
-  const tieneFechas = !!(m?.info_fechas && Object.keys(m.info_fechas).length > 0);
+  const tieneHorario = !!(cursoData?.horario && Object.keys(cursoData.horario).length > 0);
+  const tieneFechas = !!(cursoData?.info_fechas && Object.keys(cursoData.info_fechas).length > 0);
   const tieneContexto = !!(m?.config_contexto && Object.keys(m.config_contexto).length > 0);
 
   const moduleChecks: CheckItem[] = [

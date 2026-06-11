@@ -6,12 +6,13 @@ import { Input } from "@/components/ui/Input";
 import DatePicker from "@/components/ui/DatePicker";
 
 export function FeoeTab() {
-  const { moduleData, updateModuleData } = useAppStore();
+  const { cursoData, updateCursoData } = useAppStore();
 
-  const info_fechas = moduleData?.info_fechas || {};
+  const info_fechas = cursoData?.info_fechas || {};
 
-  const handleUpdateFechas = (field: string, value: string | number) =>
-    updateModuleData("info_fechas", { ...info_fechas, [field]: value });
+  const handleUpdateFechas = (field: string, value: string | number) => {
+    updateCursoData("info_fechas", { ...info_fechas, [field]: value });
+  };
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">

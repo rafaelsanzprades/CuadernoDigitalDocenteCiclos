@@ -19,14 +19,14 @@ export interface DaySchedule {
   }[];
 }
 
-export function simulateSchedule(moduleData: any): Record<string, DaySchedule> {
+export function simulateSchedule(moduleData: any, cursoData: any, startDateStr?: string): Record<string, DaySchedule> {
   const simulation: Record<string, DaySchedule> = {};
-  if (!moduleData) return simulation;
+  if (!moduleData || !cursoData) return simulation;
 
-  const info_fechas = moduleData.info_fechas || {};
-  const horario = moduleData.horario || {};
-  const calendar_notes = moduleData.calendar_notes || {};
-  const planning_ledger = moduleData.planning_ledger || {};
+  const info_fechas = cursoData.info_fechas || {};
+  const horario = cursoData.horario || {};
+  const calendar_notes = cursoData.calendar_notes || {};
+  const planning_ledger = cursoData.planning_ledger || {};
   const df_sesiones = moduleData.df_sesiones || [];
   const df_ud = moduleData.df_ud || [];
 

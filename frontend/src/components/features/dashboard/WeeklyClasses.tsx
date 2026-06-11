@@ -7,13 +7,13 @@ import { es } from 'date-fns/locale';
 import { simulateSchedule, DaySchedule } from '@/utils/scheduleSimulator';
 
 export const WeeklyClasses = () => {
-  const { moduleData, activeModuleId } = useAppStore();
+  const { moduleData, activeModuleId, cursoData } = useAppStore();
   const [activeWeekTab, setActiveWeekTab] = useState<'current' | 'next'>('current');
 
   if (!moduleData) return null;
 
   // 1. Simulate the entire schedule
-  const simulation = simulateSchedule(moduleData);
+  const simulation = simulateSchedule(moduleData, cursoData);
 
   // 2. Compute current and next week dates
   const isDemo = activeModuleId === '0237-ictve-pd';

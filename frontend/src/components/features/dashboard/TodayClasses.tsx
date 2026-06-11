@@ -7,7 +7,7 @@ import { es } from 'date-fns/locale';
 import { simulateSchedule } from '@/utils/scheduleSimulator';
 
 export const TodayClasses = () => {
-  const { moduleData, activeModuleId } = useAppStore();
+  const { moduleData, cursoData, activeModuleId } = useAppStore();
 
   if (!moduleData) return null;
 
@@ -15,7 +15,7 @@ export const TodayClasses = () => {
   const now = isDemo ? new Date('2026-05-02T10:00:00') : new Date();
 
   // Simulate schedule to get exact classroom programming for today
-  const simulation = simulateSchedule(moduleData);
+  const simulation = simulateSchedule(moduleData, cursoData);
   const todayStr = format(now, 'dd/MM/yyyy');
   const todaySchedule = simulation[todayStr];
 
