@@ -357,6 +357,7 @@ export default function CalendarioPage() {
   const { activeCursoId, cursoData, setCursoData, updateCursoData, saveCursoData, activeModuleId, moduleData, setModuleData } = useAppStore();
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
+  const [activeTab, setActiveTab] = useState("fechas");
 
   // Load data if not in store
   useEffect(() => {
@@ -437,7 +438,6 @@ export default function CalendarioPage() {
     { id: "visual", label: <><span className="inline-flex"><Calendar className="w-[1.2em] h-[1.2em] mr-1" /></span> Calendario visual</>, cleanLabel: "Calendario visual" }
   ];
 
-  const [activeTab, setActiveTab] = useState("fechas");
   const activeTabCleanLabel = TABS.find(t => t.id === activeTab)?.cleanLabel;
 
   return (
