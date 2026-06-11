@@ -50,7 +50,7 @@ app = FastAPI(
 )
 
 # CORS from env (comma-separated) or default for dev
-cors_origins = os.environ.get("CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000").split(",")
+cors_origins = os.environ.get("CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000,https://cuadernofp.web.app").split(",")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[o.strip() for o in cors_origins],

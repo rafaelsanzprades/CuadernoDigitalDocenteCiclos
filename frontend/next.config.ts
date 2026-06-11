@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
   turbopack: {},
   async rewrites() {
     // URL de la API según el entorno.
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://cdd-backend-215337606799.europe-west1.run.app";
     return {
       fallback: [
         {

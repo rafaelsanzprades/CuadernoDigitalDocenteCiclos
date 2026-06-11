@@ -40,8 +40,8 @@ export function AIWizardModal({ isOpen, onClose, onSuccess }: AIWizardModalProps
       formData.append("api_key", apiKey);
       formData.append("provider", provider);
 
-      // Usando ruta relativa si el frontend proxyea, o absoluta si hay CORS.
-      const res = await fetch("http://localhost:8000/api/ai/parse-curriculum", {
+      // Llama a tu backend pasándole el texto extraído y el modelo
+      const res = await fetch("/api/ai/parse-curriculum", {
         method: "POST",
         body: formData,
       });
