@@ -34,12 +34,12 @@ const idbStorage: StateStorage = {
 export const useAppStore = create<AppState>()(
   temporal(
     persist(
-      (...a) => ({
-        ...createAuthSlice(...a),
-        ...createUiSlice(...a),
-        ...createModuleSlice(...a),
-        ...createGroupsSlice(...a),
-        ...createGlobalSlice(...a),
+      (set, get, api) => ({
+        ...createAuthSlice(set, get, api),
+        ...createUiSlice(set, get, api),
+        ...createModuleSlice(set, get, api),
+        ...createGroupsSlice(set, get, api),
+        ...createGlobalSlice(set, get, api),
       }),
       {
         name: 'cdd-store-cache-v3',
