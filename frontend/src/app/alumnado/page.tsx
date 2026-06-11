@@ -31,8 +31,8 @@ export default function AlumnadoPage() {
     { id: "matriz", label:  <span className="flex items-center gap-2"><BarChart className="w-4 h-4 shrink-0" /> Matriz de Tutoría</span>, cleanLabel: "Matriz de Tutoría" },
     { id: "feoe", label: <span className="flex items-center gap-2"><Building2 className="w-4 h-4 shrink-0" /> Prácticas FEOE</span>, cleanLabel: "Prácticas FEOE" },
     { id: "perfil", label: <span className="flex items-center gap-2"><Compass className="w-4 h-4 shrink-0" /> Perfil individual</span>, cleanLabel: "Perfil individual" },
-    { id: "resumen", label: <span className="flex items-center gap-2"><ClipboardList className="w-4 h-4 shrink-0" /> Resumen alumnado</span>, cleanLabel: "Resumen del alumnado" },
-    { id: "tendencias", label: <span className="flex items-center gap-2"><BarChart className="w-4 h-4 shrink-0" /> Mapa tendencias</span>, cleanLabel: "Mapa de tendencias" }
+    { id: "resumen", label: <span className="flex items-center gap-2"><ClipboardList className="w-4 h-4 shrink-0" /> Resumen</span>, cleanLabel: "Resumen" },
+    { id: "tendencias", label: <span className="flex items-center gap-2"><BarChart className="w-4 h-4 shrink-0" /> Tendencias</span>, cleanLabel: "Tendencias" }
   ];
 
   const [activeTab, setActiveTab] = useState("alumnado");
