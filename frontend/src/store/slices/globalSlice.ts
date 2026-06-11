@@ -14,6 +14,6 @@ export const createGlobalSlice: StateCreator<AppState, [], [], GlobalSlice> = (s
       globalData: state.globalData ? {
         ...state.globalData,
         [key]: data
-      } : null
+      } : { [key]: data } as unknown as GlobalData
     })),
 });
