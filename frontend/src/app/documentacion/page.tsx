@@ -20,7 +20,7 @@ type DocumentItem = {
 };
 
 export default function DocumentosPage() {
-  const [activeTab, setActiveTab] = useState<"legislacion" | "varios" | "inicio" | "seguimiento" | "evaluacion">("legislacion");
+  const [activeTab, setActiveTab] = useState<"inicio" | "seguimiento" | "evaluacion">("inicio");
 
   // State for Explorador
   const [currentPath, setCurrentPath] = useState<string>("");
@@ -61,10 +61,8 @@ export default function DocumentosPage() {
   };
 
   useEffect(() => {
-    if (activeTab === "legislacion" || activeTab === "varios") {
-      fetchDocuments(activeTab === "legislacion" ? "Legislación general" : "Varios");
-    }
-  }, [activeTab]);
+    fetchDocuments("");
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -179,12 +177,17 @@ export default function DocumentosPage() {
     return <File className="w-8 h-8 text-muted" />;
   };
 
-  const pathParts = currentPath.split("/").filter(Boolean);
+  const basePath = "";
+  const relativePath = currentPath.startsWith(basePath) && currentPath !== basePath
+    ? currentPath.slice(basePath.length + 1)
+    : "";
+  const relParts = relativePath.split("/").filter(Boolean);
+
   const breadcrumbs = [
-    { label: "Raíz", path: "" },
-    ...pathParts.map((part, idx) => ({
+    { label: "Raíz", path: basePath },
+    ...relParts.map((part, idx) => ({
       label: part,
-      path: pathParts.slice(0, idx + 1).join("/")
+      path: basePath + "/" + relParts.slice(0, idx + 1).join("/")
     }))
   ];
 
@@ -212,19 +215,7 @@ export default function DocumentosPage() {
               </div>
             </div>
 
-            <Tabs value={activeTab} onValueChange={(val: any) => setActiveTab(val)}>
-              <TabsList className="mb-6 max-w-full">
-                <TabsTrigger value="legislacion">
-                  <div className="flex items-center gap-2"><Scale className="w-4 h-4" /> Legislación general</div>
-                </TabsTrigger>
-                <TabsTrigger value="varios">
-                  <div className="flex items-center gap-2"><Folder className="w-4 h-4" /> Varios</div>
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
-
-            {(activeTab === 'legislacion' || activeTab === 'varios') && (
-              <div className="space-y-6 animate-in fade-in duration-500">
+            <div className="space-y-6 animate-in fade-in duration-500">
                 <div className="flex flex-col md:flex-row justify-between gap-4">
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
@@ -338,7 +329,6 @@ export default function DocumentosPage() {
                   )}
                 </div>
               </div>
-            )}
 
 
 

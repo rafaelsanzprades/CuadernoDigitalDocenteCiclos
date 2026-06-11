@@ -16,6 +16,7 @@ import { createAuthSlice } from './slices/authSlice';
 import { createUiSlice } from './slices/uiSlice';
 import { createModuleSlice } from './slices/moduleSlice';
 import { createGroupsSlice } from './slices/groupsSlice';
+import { createGlobalSlice } from './slices/globalSlice';
 
 // IndexedDB storage engine
 const idbStorage: StateStorage = {
@@ -38,6 +39,7 @@ export const useAppStore = create<AppState>()(
         ...createUiSlice(...a),
         ...createModuleSlice(...a),
         ...createGroupsSlice(...a),
+        ...createGlobalSlice(...a),
       }),
       {
         name: 'cdd-store-cache-v3',
@@ -51,7 +53,8 @@ export const useAppStore = create<AppState>()(
       handleSet: (handleSet) => debounce(handleSet, 1000),
       partialize: (state) => ({
         moduleData: state.moduleData,
-        cursoData: state.cursoData
+        cursoData: state.cursoData,
+        globalData: state.globalData
       })
     }
   )

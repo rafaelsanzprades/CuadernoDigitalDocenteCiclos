@@ -135,10 +135,19 @@ export default function DocumentosPage() {
   const handleDownloadPdf = async (type: string, al_id?: string) => {
     try {
       setDownloadingStr(type);
-      let url = `/api/pdf?type=${type}&pd_id=${activeModuleId}&curso_id=${activeCursoId}`;
+      let url = `/api/pdf?type=${type}`;
       if (al_id) url += `&al_id=${al_id}`;
 
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          module_data: moduleData || {},
+          curso_data: cursoData || {}
+        })
+      });
       if (!response.ok) throw new Error("Error generating PDF");
 
       const blob = await response.blob();

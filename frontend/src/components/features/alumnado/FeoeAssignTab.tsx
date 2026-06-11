@@ -6,14 +6,14 @@ import { Card } from "@/components/ui/Card";
 import type { CrmEmpresa } from "@/types";
 
 export function FeoeAssignTab() {
-  const { cursoData, updateCursoData } = useAppStore();
+  const { cursoData, globalData, updateGlobalData } = useAppStore();
   const [asignEmpresa, setAsignEmpresa] = useState<string | null>(null);
 
-  const empresas = (cursoData?.crm_empresas || []) as CrmEmpresa[];
+  const empresas = (globalData?.crm_empresas || []) as CrmEmpresa[];
   const alumnado = (cursoData?.df_al || []).filter((a: any) => a.Estado !== "Baja");
 
   function setEmpresas(list: CrmEmpresa[]) {
-    updateCursoData("crm_empresas", list);
+    updateGlobalData("crm_empresas", list);
   }
 
   function toggleStudent(empId: string, studentId: string) {

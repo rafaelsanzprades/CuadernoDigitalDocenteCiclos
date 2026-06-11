@@ -26,56 +26,16 @@ function formatDate(d: Date): string {
 }
 
 export default function FeoePage() {
-  const { activeCursoId, cursoData, setCursoData, updateCursoData, saveCursoData } = useAppStore();
-  const [loading, setLoading] = useState(true);
+  const { activeCursoId, cursoData, globalData, updateGlobalData } = useAppStore();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    let cancelled = false;
-    const fetchData = async () => {
-      if (!activeCursoId) { setLoading(false); return; }
-      
+    // Si no hay empresas globales, cargar las de demo iniciales (solo la primera vez)
+    if (!globalData?.crm_empresas || globalData.crm_empresas.length === 0) {
       const seedEmpresas = (Object.values(demoSeed).find((d: any) => d?.crm_empresas) as any)?.crm_empresas || [];
-      
-      if (cursoData) { 
-        if (!cursoData.crm_empresas || cursoData.crm_empresas.length === 0) {
-          updateCursoData("crm_empresas", seedEmpresas);
-        }
-        setLoading(false); 
-        return; 
-      }
-      setLoading(true);
-      try {
-
-        // Try fileManager first
-        const db = fileManager.getDb();
-        const cursos = Object.keys(db).filter(k => k.includes('-curso-'));
-        if (cursos.length > 0 && db[cursos[0]]) {
-          const data = { ...db[cursos[0]], crm_empresas: seedEmpresas };
-          if (!cancelled) setCursoData(data as CursoData);
-        } else {
-          // Try API with activeCursoId first, then fallback to seed keys
-          const seedKeys = Object.keys(demoSeed).filter(k => k.includes('-curso-'));
-          const tryKeys = [activeCursoId, ...seedKeys.filter(k => k !== activeCursoId)];
-          for (const k of tryKeys) {
-            if (cancelled) break;
-            try {
-              const res = await fetch(`/api/module/${k}`);
-              const data = await res.json();
-              if (data.status === "success") {
-                setCursoData({ ...data.data, crm_empresas: seedEmpresas } as CursoData);
-                break;
-              }
-            } catch { /* try next key */ }
-          }
-        }
-      } catch (err) {
-        console.error("Error fetching data:", err);
-      }
-      if (!cancelled) setLoading(false);
-    };
-    fetchData();
-    return () => { cancelled = true; };
-  }, [activeCursoId, cursoData]);
+      updateGlobalData("crm_empresas", seedEmpresas);
+    }
+  }, [globalData, updateGlobalData]);
 
 
 
@@ -94,7 +54,7 @@ export default function FeoePage() {
 
   const [asignEmpresa, setAsignEmpresa] = useState<string | null>(null);
 
-  const empresas = (cursoData?.crm_empresas || []) as CrmEmpresa[];
+  const empresas = (globalData?.crm_empresas || []) as CrmEmpresa[];
   const alumnado = (cursoData?.df_al || []).filter((a: any) => a.Estado !== "Baja");
 
   const nextId = () => {
@@ -122,7 +82,7 @@ export default function FeoePage() {
   const sectores = useMemo(() => Array.from(new Set(empresas.map((e: CrmEmpresa) => e.sector))).sort(), [empresas]);
 
   function setEmpresas(list: CrmEmpresa[]) {
-    updateCursoData("crm_empresas", list);
+    updateGlobalData("crm_empresas", list);
   }
 
   function handleSave() {

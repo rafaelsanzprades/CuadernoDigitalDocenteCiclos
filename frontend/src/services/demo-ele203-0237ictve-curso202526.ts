@@ -3,6 +3,35 @@ export const CRM_SEED_VERSION = 21;
 export const demoSeed = {
   "0237-ictve-curso-2025-26": {
     "tipo": "curso",
+    "info_fechas": {
+      "ini_curso": "2025-09-01",
+      "fin_curso": "2026-06-30",
+      "ini_1t": "2025-09-12",
+      "fin_1t": "2025-12-18",
+      "ini_2t": "2025-12-19",
+      "fin_2t": "2026-03-25",
+      "ini_3t": "2026-03-26",
+      "fin_3t": "2026-06-20",
+      "ini_feoe": "2026-02-01",
+      "fin_feoe": "2026-03-05"
+    },
+    "horario": {
+      "Lun": 3,
+      "Mar": 0,
+      "Mié": 0,
+      "Jue": 0,
+      "Vie": 2
+    },
+    "calendar_notes": {
+      "f_2025-10-12": "Fiesta Nacional de España",
+      "f_2025-11-01": "Día de Todos los Santos",
+      "f_2025-12-06": "Día de la Constitución",
+      "f_2025-12-08": "Inmaculada Concepción",
+      "f_2026-05-01": "Día del Trabajo",
+      "r_2025-12-05": "Examen 1T",
+      "r_2026-03-06": "Examen 2T",
+      "r_2026-06-12": "Examen final"
+    },
     "df_al": [
       {
         "ID": "AN01",
@@ -2539,12 +2568,12 @@ export const demoSeed = {
     "info_fechas": {
       "ini_curso": "2025-09-01",
       "fin_curso": "2026-06-30",
-      "ini_1t": "2025-09-15",
+      "ini_1t": "2025-09-12",
       "fin_1t": "2025-12-18",
       "ini_2t": "2025-12-19",
       "fin_2t": "2026-03-25",
       "ini_3t": "2026-03-26",
-      "fin_3t": "2026-06-18",
+      "fin_3t": "2026-06-20",
       "ini_feoe": "2026-02-01",
       "fin_feoe": "2026-03-05",
       "h_sem_feoe": 8

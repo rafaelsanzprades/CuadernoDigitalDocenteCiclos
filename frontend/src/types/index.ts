@@ -135,11 +135,15 @@ export const CursoDataSchema = z.object({
   planning_ledger: z.record(z.string(), z.any()).optional(),
   info_modulo: z.record(z.string(), z.any()).optional(),
   plano_clase: z.any().optional(),
-  crm_empresas: z.array(CrmEmpresaSchema).optional(),
   competencias_cpps: z.array(z.string()).optional(),
   __version__: z.number().optional(),
 });
 export type CursoData = z.infer<typeof CursoDataSchema>;
+
+export const GlobalDataSchema = z.object({
+  crm_empresas: z.array(CrmEmpresaSchema).optional(),
+});
+export type GlobalData = z.infer<typeof GlobalDataSchema>;
 
 export interface ModuleAssignment {
   id: number;
@@ -186,6 +190,10 @@ export interface AppState {
   cursoData: CursoData | null;
   setCursoData: (data: CursoData | null) => void;
   updateCursoData: (key: keyof CursoData, data: any) => void;
+  
+  globalData: GlobalData | null;
+  setGlobalData: (data: GlobalData | null) => void;
+  updateGlobalData: (key: keyof GlobalData, data: any) => void;
   
   saveModuleData: () => Promise<boolean | 'conflict'>;
   saveCursoData: () => Promise<boolean | 'conflict'>;

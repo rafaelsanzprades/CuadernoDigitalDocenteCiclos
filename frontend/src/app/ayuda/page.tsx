@@ -206,7 +206,7 @@ const FAQS = [
 
 // ── Página Principal ──────────────────────────────────────────────────────
 export default function AyudaPage() {
-  const { moduleData, cursoData, activeModuleId, activeCursoId } = useAppStore();
+  const { moduleData, cursoData, globalData, activeModuleId, activeCursoId } = useAppStore();
   const [activeTab, setActiveTab] = useState("verificacion");
 
   // ── Comprobaciones Programación didáctica ────────────────────────────
@@ -404,9 +404,9 @@ export default function AyudaPage() {
   const alumnosCount = c?.df_al?.length ?? 0;
   const alumnosIncompletos = (c?.df_al ?? []).filter((a: any) => !a.Nombre || !a.Apellidos).length;
   const sgmtCount = Object.keys(c?.daily_ledger ?? {}).length;
-  const tieneFeoe = (c?.crm_empresas?.length ?? 0) > 0;
-  const empresasCount = c?.crm_empresas?.length ?? 0;
-  const alumnosAsignados = (c?.crm_empresas ?? []).reduce((a: number, e: any) => a + (e.alumnado_asignados?.length ?? 0), 0);
+  const tieneFeoe = (globalData?.crm_empresas?.length ?? 0) > 0;
+  const empresasCount = globalData?.crm_empresas?.length ?? 0;
+  const alumnosAsignados = (globalData?.crm_empresas ?? []).reduce((a: number, e: any) => a + (e.alumnado_asignados?.length ?? 0), 0);
   const tieneProfesional = !!(c?.profesional_ledger && Object.keys(c.profesional_ledger).length > 0);
   const tutoriaEntradas = Object.keys(c?.tutoria_ledger ?? {}).length;
 
