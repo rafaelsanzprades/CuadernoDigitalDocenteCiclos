@@ -37,7 +37,7 @@ export function GestionUsuariosTab() {
   const [newUserRole, setNewUserRole] = useState("Profesorado");
 
   const fetchUsers = () => {
-    fetch("/api/users")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`)
       .then(res => res.json())
       .then(json => {
         if (json.status === "success") {
@@ -48,7 +48,7 @@ export function GestionUsuariosTab() {
   };
 
   useEffect(() => {
-    fetch("/api/centers")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/centers`)
       .then(res => res.json())
       .then(json => {
         if (json.status === "success") {

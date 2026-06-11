@@ -137,7 +137,7 @@ function TabFamilias({ onSelectTitulo }: { onSelectTitulo: (familiaName: string,
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/families")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/families`)
       .then((res) => res.json())
       .then((json) => {
         if (json.status === "success") {
@@ -241,7 +241,7 @@ function TabTitulo({ onSelectTitulo, globalSelection, updateGlobalSelection }: {
   const [famLoading, setFamLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/families")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/families`)
       .then((res) => res.json())
       .then((json) => {
         if (json.status === "success") setFamilies(json.data);
@@ -378,7 +378,7 @@ function TabCursos({ globalSelection, updateGlobalSelection, onSelectModulo }: {
   const [famLoading, setFamLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/families")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/families`)
       .then((res) => res.json())
       .then((json) => {
         if (json.status === "success") setFamilies(json.data);
@@ -566,7 +566,7 @@ function TabModulos({ globalSelection, updateGlobalSelection }: { globalSelectio
   const [expandedRAs, setExpandedRAs] = useState<Set<string>>(new Set());
 
   useEffect(() => {
-    fetch("/api/families")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/families`)
       .then((res) => res.json())
       .then((json) => {
         if (json.status === "success") setFamilies(json.data);

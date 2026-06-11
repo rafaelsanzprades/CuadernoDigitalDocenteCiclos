@@ -26,7 +26,7 @@ export default function FamiliasPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/families")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/families`)
       .then(res => res.json())
       .then(json => {
         if (json.status === "success") {

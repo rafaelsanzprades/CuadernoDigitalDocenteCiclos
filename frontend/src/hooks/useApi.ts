@@ -54,15 +54,15 @@ export function useCurso(cursoId: string | null) {
 }
 
 export function useUsers() {
-  return useSWR('/api/users', fetcher);
+  return useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/users`, fetcher);
 }
 
 export function useAdminModules() {
-  return useSWR('/api/admin/modules', fetcher);
+  return useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/admin/modules`, fetcher);
 }
 
 export function useAssignments() {
-  return useSWR('/api/assignments', fetcher);
+  return useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/assignments`, fetcher);
 }
 
 export const saveAssignments = async (userId: string, moduleIds: number[]) => {
@@ -79,9 +79,9 @@ export const saveAssignments = async (userId: string, moduleIds: number[]) => {
 };
 
 export function useFamilies() {
-  return useSWR('/api/families', fetcher);
+  return useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/families`, fetcher);
 }
 
 export function useLearningOutcomes() {
-  return useSWR('/api/learning_outcomes', fetcher);
+  return useSWR(`${process.env.NEXT_PUBLIC_API_URL}/api/learning_outcomes`, fetcher);
 }

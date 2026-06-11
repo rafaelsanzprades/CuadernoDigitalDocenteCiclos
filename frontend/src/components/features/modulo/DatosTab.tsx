@@ -36,7 +36,7 @@ export function DatosTab() {
   const [selectedModuleCode, setSelectedModuleCode] = useState("");
 
   useEffect(() => {
-    fetch("/api/families")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/families`)
       .then(r => r.json())
       .then(json => { if (json.status === "success") setFamilies(json.data); });
   }, []);
@@ -100,7 +100,7 @@ export function DatosTab() {
     updateInfoModulo("h_feoe", h_feoe);
     updateInfoModulo("curso", curso);
 
-    fetch("/api/learning_outcomes")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/learning_outcomes`)
       .then(r => r.json())
       .then(json => {
         if (json.status === "success" && json.data[code]) {
