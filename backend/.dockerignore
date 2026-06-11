@@ -7,7 +7,6 @@ tests/
 !cdd_pro.db
 alembic/versions/
 backups/
-documentos/
 
 .venv
 .venv313
