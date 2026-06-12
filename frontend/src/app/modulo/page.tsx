@@ -5,7 +5,6 @@ import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
 import { useAppStore } from "@/store/useAppStore";
 import { DatosTab } from "@/components/features/modulo/DatosTab";
-import { FeoeTab } from "@/components/features/modulo/FeoeTab";
 import { ContextoTab } from "@/components/features/modulo/ContextoTab";
 import { PlanesTab } from "@/components/features/modulo/PlanesTab";
 import { MotionWrapper } from "@/components/ui/MotionWrapper";
@@ -28,7 +27,6 @@ export default function ModuloConfigPage() {
 
   const TABS = [
     { id: "datos", label: <><span className="inline-flex"><FileText className="w-[1.2em] h-[1.2em] mr-1" /></span> Datos</>, cleanLabel: "Datos del módulo" },
-    { id: "feoe", label: <><span className="inline-flex"><Building2 className="w-[1.2em] h-[1.2em] mr-1" /></span> Formación en Empresa (FEOE)</>, cleanLabel: "Formación en Empresa (FEOE)" },
     { id: "contexto", label: <><span className="inline-flex"><FileEdit className="w-[1.2em] h-[1.2em] mr-1" /></span> Contexto</>, cleanLabel: "Contexto" },
     { id: "planes", label: <><span className="inline-flex"><FileText className="w-[1.2em] h-[1.2em] mr-1" /></span> Planes</>, cleanLabel: "Planes" }
   ];
@@ -75,7 +73,6 @@ export default function ModuloConfigPage() {
             </Tabs>
 
             {activeTab === "datos" && <DatosTab />}
-            {activeTab === "feoe" && <FeoeTab />}
             {activeTab === "contexto" && <ContextoTab />}
             {activeTab === "planes" && <PlanesTab />}
 

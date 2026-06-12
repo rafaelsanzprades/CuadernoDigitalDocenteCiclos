@@ -547,37 +547,47 @@ export default function CalendarioPage() {
                 </div>
               </Card>
 
-              {/* FP Dual / FEOE */}
+              {/* FP Dual / FEOE - 4 columnas */}
               <Card className="p-6 border-t-4 border-t-orange-500">
-                <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-xl font-bold">FP Dual (FEOE)</h2>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-4">
-                    <h3 className="font-bold mb-4 text-yellow-600">Dual General</h3>
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <label className="text-xs text-muted block mb-1">Inicio</label>
-                        <DatePicker value={typeof info_fechas.ini_dual_gen === 'string' ? info_fechas.ini_dual_gen : ""} onChange={v => handleUpdateFechas("ini_dual_gen", v)} />
-                      </div>
-                      <div>
-                        <label className="text-xs text-muted block mb-1">Fin</label>
-                        <DatePicker value={typeof info_fechas.fin_dual_gen === 'string' ? info_fechas.fin_dual_gen : ""} onChange={v => handleUpdateFechas("fin_dual_gen", v)} />
-                      </div>
-                    </div>
+                <h2 className="text-xl font-bold mb-6">FP Dual (FEOE)</h2>
+                <div className="grid grid-cols-4 gap-4 items-end">
+                  {/* Col 1: Selector de tipo */}
+                  <div>
+                    <label className="text-sm text-muted mb-2 block font-semibold">Tipo de Dual</label>
+                    <select
+                      value={info_fechas.tipo_dual || "general"}
+                      onChange={e => handleUpdateFechas("tipo_dual", e.target.value)}
+                      className="w-full bg-foreground/10 border border-[var(--glass-border)] rounded-lg px-3 py-2 text-foreground focus:border-orange-500 focus:outline-none"
+                    >
+                      <option value="general">Dual General</option>
+                      <option value="intensiva">Dual Intensiva</option>
+                    </select>
                   </div>
-                  <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-4">
-                    <h3 className="font-bold mb-4 text-orange-500">Dual Intensiva</h3>
-                    <div className="grid grid-cols-2 gap-3">
-                      <div>
-                        <label className="text-xs text-muted block mb-1">Inicio</label>
-                        <DatePicker value={typeof info_fechas.ini_dual_int === 'string' ? info_fechas.ini_dual_int : ""} onChange={v => handleUpdateFechas("ini_dual_int", v)} />
-                      </div>
-                      <div>
-                        <label className="text-xs text-muted block mb-1">Fin</label>
-                        <DatePicker value={typeof info_fechas.fin_dual_int === 'string' ? info_fechas.fin_dual_int : ""} onChange={v => handleUpdateFechas("fin_dual_int", v)} />
-                      </div>
-                    </div>
+                  {/* Col 2: Inicio */}
+                  <div>
+                    <label className="text-sm text-muted mb-2 block font-semibold">Inicio FEOE</label>
+                    <DatePicker
+                      value={typeof info_fechas.ini_feoe === 'string' ? info_fechas.ini_feoe : ""}
+                      onChange={v => handleUpdateFechas("ini_feoe", v)}
+                    />
+                  </div>
+                  {/* Col 3: Fin */}
+                  <div>
+                    <label className="text-sm text-muted mb-2 block font-semibold">Fin FEOE</label>
+                    <DatePicker
+                      value={typeof info_fechas.fin_feoe === 'string' ? info_fechas.fin_feoe : ""}
+                      onChange={v => handleUpdateFechas("fin_feoe", v)}
+                    />
+                  </div>
+                  {/* Col 4: Horas/día */}
+                  <div>
+                    <label className="text-sm text-muted mb-2 block font-semibold">Horas/día FEOE</label>
+                    <input
+                      type="number"
+                      value={Number(info_fechas.h_sem_feoe) || 8}
+                      onChange={e => handleUpdateFechas("h_sem_feoe", Number(e.target.value))}
+                      className="w-full bg-foreground/10 border border-[var(--glass-border)] rounded-lg px-3 py-2 text-foreground focus:border-orange-500 focus:outline-none text-center"
+                    />
                   </div>
                 </div>
               </Card>
