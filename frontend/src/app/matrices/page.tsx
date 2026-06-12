@@ -23,6 +23,16 @@ export default function MatricesPage() {
   const [openCEs, setOpenCEs] = useState<Set<string>>(new Set());
   const [activeTab, setActiveTab] = useState("ra");
 
+  const [isDragging, setIsDragging] = useState(false);
+  const [selectedCells, setSelectedCells] = useState<Set<string>>(new Set());
+  const [selectionValue, setSelectionValue] = useState<string>("");
+
+  useEffect(() => {
+    const handleMouseUp = () => setIsDragging(false);
+    window.addEventListener('mouseup', handleMouseUp);
+    return () => window.removeEventListener('mouseup', handleMouseUp);
+  }, []);
+
   const TABS = [
     { id: "ra", label: "RA y sus CE", icon: <><span className="inline-flex"><GraduationCap className="w-[1.2em] h-[1.2em] mr-1" /></span></> },
     { id: "ud", label: "UD Unidades didácticas", icon: <><span className="inline-flex"><BookOpen className="w-[1.2em] h-[1.2em] mr-1" /></span></> },
@@ -446,20 +456,42 @@ export default function MatricesPage() {
                           className="w-full bg-foreground/15 border border-[var(--glass-border)] rounded px-3 py-1 text-foreground text-sm focus:border-info focus:outline-none"
                         />
                       </td>
-                      {df_ra.map((ra: any, raIdx: number) => (
-                        <td key={raIdx} className="p-3 text-center">
-                          <input
-                            type="number"
-                            value={ud[ra.id_ra] || ""}
-                            onChange={(e) => {
-                              const newUd = [...df_ud];
-                              (newUd[idx] as any)[ra.id_ra] = parseFloat(e.target.value) || 0;
-                              updateDataFrame("df_ud", newUd);
+                      {df_ra.map((ra: any, raIdx: number) => {
+                        const cellId = `${ud.id_ud}-${ra.id_ra}`;
+                        const isSelected = selectedCells.has(cellId);
+                        return (
+                          <td 
+                            key={raIdx} 
+                            className={`p-3 text-center border transition-colors select-none ${isSelected ? 'bg-info/20 border-info' : 'border-transparent'}`}
+                            onMouseDown={() => {
+                              setIsDragging(true);
+                              setSelectedCells(new Set([cellId]));
                             }}
-                            className="w-14 text-center bg-foreground/15 border border-[var(--glass-border)] rounded px-1 py-1 text-foreground text-sm focus:border-info focus:outline-none"
-                          />
-                        </td>
-                      ))}
+                            onMouseEnter={() => {
+                              if (isDragging) {
+                                const newSet = new Set(selectedCells);
+                                newSet.add(cellId);
+                                setSelectedCells(newSet);
+                              }
+                            }}
+                          >
+                            <input
+                              type="number"
+                              value={ud[ra.id_ra] || ""}
+                              onChange={(e) => {
+                                const newUd = [...df_ud];
+                                (newUd[idx] as any)[ra.id_ra] = parseFloat(e.target.value) || 0;
+                                updateDataFrame("df_ud", newUd);
+                              }}
+                              onFocus={() => {
+                                if (!isDragging) setSelectedCells(new Set());
+                              }}
+                              className={`w-14 text-center border rounded px-1 py-1 text-sm focus:outline-none ${isSelected ? 'bg-info/10 border-info text-info font-bold' : 'bg-foreground/15 border-[var(--glass-border)] text-foreground focus:border-info'}`}
+                              readOnly={selectedCells.size > 1 && isSelected}
+                            />
+                          </td>
+                        );
+                      })}
                     </tr>
                   ))}
                 </tbody>
@@ -488,6 +520,54 @@ export default function MatricesPage() {
                 </span>
               </Card>
             </div>
+
+            {selectedCells.size > 1 && (
+              <div className="fixed bottom-8 left-1/2 -translate-x-1/2 bg-background border border-info shadow-2xl shadow-info/20 p-4 rounded-xl flex items-center gap-4 z-50 animate-in slide-in-from-bottom-4">
+                <span className="font-bold text-info">{selectedCells.size} celdas seleccionadas</span>
+                <input 
+                  type="number" 
+                  placeholder="Peso..." 
+                  value={selectionValue}
+                  onChange={e => setSelectionValue(e.target.value)}
+                  className="w-24 bg-foreground/10 border border-[var(--glass-border)] rounded px-3 py-2 focus:border-info focus:outline-none font-bold"
+                  autoFocus
+                  onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                      const val = parseFloat(selectionValue) || 0;
+                      const newUd = [...df_ud];
+                      selectedCells.forEach(cellId => {
+                        const [udId, raId] = cellId.split('-');
+                        const udToUpdate = newUd.find(u => u.id_ud === udId);
+                        if (udToUpdate) udToUpdate[raId] = val;
+                      });
+                      updateDataFrame("df_ud", newUd);
+                      setSelectedCells(new Set());
+                      setSelectionValue("");
+                    }
+                  }}
+                />
+                <Button 
+                  onClick={() => {
+                    const val = parseFloat(selectionValue) || 0;
+                    const newUd = [...df_ud];
+                    selectedCells.forEach(cellId => {
+                      const [udId, raId] = cellId.split('-');
+                      const udToUpdate = newUd.find(u => u.id_ud === udId);
+                      if (udToUpdate) udToUpdate[raId] = val;
+                    });
+                    updateDataFrame("df_ud", newUd);
+                    setSelectedCells(new Set());
+                    setSelectionValue("");
+                  }}
+                  className="px-6"
+                >
+                  Aplicar a {selectedCells.size} celdas
+                </Button>
+                <Button variant="ghost" onClick={() => setSelectedCells(new Set())} className="text-muted hover:text-foreground">
+                  Cancelar
+                </Button>
+              </div>
+            )}
           </Card>
             </div>
           )}

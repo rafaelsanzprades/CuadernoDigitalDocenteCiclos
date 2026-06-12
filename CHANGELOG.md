@@ -1,6 +1,10 @@
 # Histórico de Cambios (UX/UI y Optimizaciones)
 
 ## [Unreleased]
+- **Mejoras UX (Tareas 4, 5 y 6):** 
+  - **Matrices:** Implementada selección por arrastre y edición masiva tipo Excel para asignar ponderaciones a múltiples UDs simultáneamente.
+  - **Recuperaciones:** Añadido un Workflow completo y automatizado que clona instrumentos originales, hereda Criterios de Evaluación y cuenta automáticamente en el resumen trimestral.
+  - **FP Dual:** Reemplazado el soporte genérico "FEOE" por la terminología oficial de la nueva FP Dual, separando y renderizando con colores distintos la "Dual General" y "Dual Intensiva" en el calendario interactivo.
 - **Migración a SQL (Fase 3):** Finalizada la migración absoluta al modelo relacional. Se eliminó la dependencia del campo JSON para guardar `info_fechas`, `horario`, `info_modulo` y `planning_ledger`. Creadas tablas `ConfigDates`, `ScheduleItem`, `ModuleInfo` y `PlanningLedgerItem`.
 - **UI:** Fusión de las pestañas de Inicio y Datos de Módulos. Modificados los subtítulos de las pestañas a "Resumen" y "Gestión de ficheros".
 - **Navegación y Arquitectura:** Reestructuración de la barra lateral, eliminando el bloque "Centro", agrupando opciones en "Programación", y moviendo "Entorno de trabajo" a la primera posición de "Gestión".

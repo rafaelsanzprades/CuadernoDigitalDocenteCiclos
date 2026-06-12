@@ -149,6 +149,8 @@ function InteractiveCalendar({ info_fechas, horario, calendar_notes, onUpdateNot
   const t3s = toDate(info_fechas.ini_3t), t3e = toDate(info_fechas.fin_3t);
   const cs  = toDate(info_fechas.ini_curso), ce = toDate(info_fechas.fin_curso);
   const feoS = toDate(info_fechas.ini_feoe), feoE = toDate(info_fechas.fin_feoe);
+  const dgenS = toDate(info_fechas.ini_dual_gen), dgenE = toDate(info_fechas.fin_dual_gen);
+  const dintS = toDate(info_fechas.ini_dual_int), dintE = toDate(info_fechas.fin_dual_int);
 
   // Months to show: from course start to course end (default Sep–Jun)
   const refYear = cs ? cs.getFullYear() : new Date().getFullYear();
@@ -174,6 +176,8 @@ function InteractiveCalendar({ info_fechas, horario, calendar_notes, onUpdateNot
     if (isFestivo)            return "bg-danger/10 text-foreground font-bold ring-1 ring-danger";
     if (isEvento)             return "bg-info/10 text-foreground font-bold ring-1 ring-info";
     if (isWeekend)            return "bg-foreground/5 text-muted/80 cursor-default";
+    if (inRange(date, dintS, dintE)) return "bg-orange-500/20 text-orange-600 hover:bg-orange-500/30 font-semibold cursor-pointer";
+    if (inRange(date, dgenS, dgenE)) return "bg-yellow-500/20 text-yellow-600 hover:bg-yellow-500/30 font-semibold cursor-pointer";
     if (inRange(date, feoS, feoE)) return "bg-warning/10 text-warning hover:bg-warning/10 cursor-pointer";
     if (inRange(date, t1s, t1e))   return "bg-info/10 text-info hover:bg-info/10 cursor-pointer";
     if (inRange(date, t2s, t2e))   return "bg-success/10 text-success hover:bg-success/10 cursor-pointer";
@@ -210,9 +214,10 @@ function InteractiveCalendar({ info_fechas, horario, calendar_notes, onUpdateNot
           { cls: "bg-info/10 border-info/30",      label: "1er trimestre" },
           { cls: "bg-success/10 border-success/30", label: "2º trimestre" },
           { cls: "bg-info/10 border-info/30",  label: "3er trimestre" },
-          { cls: "bg-danger/10 border-danger/30",        label: "Festivo (clic para añadir/quitar)" },
-          { cls: "bg-info/10 border-info/30",      label: "Evento relevante" },
-          { cls: "bg-warning/10 border-warning/30",  label: "FEOE" },
+          { cls: "bg-yellow-500/20 border-yellow-500/30 text-yellow-600",  label: "FP Dual General" },
+          { cls: "bg-orange-500/20 border-orange-500/30 text-orange-600",  label: "FP Dual Intensiva" },
+          { cls: "bg-danger/10 border-danger/30",        label: "Festivo" },
+          { cls: "bg-info/10 border-info/30",      label: "Evento" },
         ].map(l => (
           <span key={l.label} className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border ${l.cls}`}>
             <span className="text-foreground/80">{l.label}</span>
@@ -539,6 +544,41 @@ export default function CalendarioPage() {
                       </div>
                     </div>
                   ))}
+                </div>
+              </Card>
+
+              {/* FP Dual / FEOE */}
+              <Card className="p-6 border-t-4 border-t-orange-500">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-xl font-bold">FP Dual (FEOE)</h2>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-4">
+                    <h3 className="font-bold mb-4 text-yellow-600">Dual General</h3>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-xs text-muted block mb-1">Inicio</label>
+                        <DatePicker value={typeof info_fechas.ini_dual_gen === 'string' ? info_fechas.ini_dual_gen : ""} onChange={v => handleUpdateFechas("ini_dual_gen", v)} />
+                      </div>
+                      <div>
+                        <label className="text-xs text-muted block mb-1">Fin</label>
+                        <DatePicker value={typeof info_fechas.fin_dual_gen === 'string' ? info_fechas.fin_dual_gen : ""} onChange={v => handleUpdateFechas("fin_dual_gen", v)} />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-4">
+                    <h3 className="font-bold mb-4 text-orange-500">Dual Intensiva</h3>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="text-xs text-muted block mb-1">Inicio</label>
+                        <DatePicker value={typeof info_fechas.ini_dual_int === 'string' ? info_fechas.ini_dual_int : ""} onChange={v => handleUpdateFechas("ini_dual_int", v)} />
+                      </div>
+                      <div>
+                        <label className="text-xs text-muted block mb-1">Fin</label>
+                        <DatePicker value={typeof info_fechas.fin_dual_int === 'string' ? info_fechas.fin_dual_int : ""} onChange={v => handleUpdateFechas("fin_dual_int", v)} />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </Card>
             </div>
