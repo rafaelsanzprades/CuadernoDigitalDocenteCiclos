@@ -93,6 +93,48 @@ def generate_pdf(type: str, request: PdfRequest, al_id: Optional[str] = None):
                 info_fechas=info_fechas, planning_ledger=planning_ledger,
                 df_ud=df_ud, df_pr=df_pr
             )
+        elif type == "programacion":
+            import generador_pd
+            import tempfile
+            import os
+            import zipfile
+            from io import BytesIO
+            
+            data_pd = {
+                "departamento": module_data.get("info_modulo", {}).get("departamento", "Departamento"),
+                "ciclo": module_data.get("info_modulo", {}).get("ciclo", "Ciclo Formativo"),
+                "modulo": module_data.get("info_modulo", {}).get("modulo", "Módulo Profesional"),
+                "curso_academico": curso_data.get("info_curso", {}).get("curso_academico", "2024/2025"),
+                "horas_totales": module_data.get("info_modulo", {}).get("horas", 0),
+                "df_ra": module_data.get("df_ra", []),
+                "df_ud": module_data.get("df_ud", []),
+                "df_act": module_data.get("df_act", []),
+                "df_ce": module_data.get("df_ce", []),
+                "config_redondeo": curso_data.get("config_redondeo", {"nota_aprobado": 5.0, "umbral_redondeo": 4.5}),
+                "info_modulo": module_data.get("info_modulo", {})
+            }
+            
+            with tempfile.TemporaryDirectory() as tmpdir:
+                fname = f"PD_{data_pd['modulo'][:30].replace(' ', '_').replace('/', '-')}"
+                out_docx = os.path.join(tmpdir, fname + ".docx")
+                out_pdf = os.path.join(tmpdir, fname + ".pdf")
+                
+                generador_pd.generate(data_pd, out_docx, out_pdf)
+                
+                if os.path.exists(out_pdf):
+                    zip_buffer = BytesIO()
+                    with zipfile.ZipFile(zip_buffer, "w", zipfile.ZIP_DEFLATED) as zf:
+                        zf.write(out_docx, os.path.basename(out_docx))
+                        zf.write(out_pdf, os.path.basename(out_pdf))
+                    zip_buffer.seek(0)
+                    return Response(content=zip_buffer.getvalue(), media_type="application/zip")
+                else:
+                    with open(out_docx, "rb") as f:
+                        docx_bytes = f.read()
+                    return Response(
+                        content=docx_bytes,
+                        media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    )
         else:
             raise HTTPException(status_code=400, detail=f"Unknown PDF type: {type}")
             

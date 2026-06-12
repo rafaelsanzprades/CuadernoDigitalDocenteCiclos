@@ -181,6 +181,20 @@ export default function DocumentosPage() {
       let filename = `${type}_${modName}.pdf`;
       if (al_id) filename = `Boletin_${al_id}_${modName}.pdf`;
 
+      const contentType = response.headers.get("content-type");
+      if (type === 'programacion' && contentType) {
+        if (contentType.includes("zip")) {
+          filename = `PD_${modName}.zip`;
+        } else if (contentType.includes("wordprocessingml")) {
+          filename = `PD_${modName}.docx`;
+        }
+        const a = document.createElement("a");
+        a.href = downloadUrl;
+        a.download = filename;
+        a.click();
+        return;
+      }
+
       setPreviewUrl(downloadUrl);
       setPreviewFilename(filename);
     } catch (err) {
@@ -348,6 +362,15 @@ export default function DocumentosPage() {
                               </div>
                               <Button onClick={() => handleDownloadPdf('matrices')} disabled={downloadingStr === 'matrices'} className="w-full">
                                 {downloadingStr === 'matrices' ? '⏳ Generando PDF...' : 'PDF Matrices'}
+                              </Button>
+                            </div>
+                            <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between border-l-4 border-l-info">
+                              <div>
+                                <h3 className="text-lg font-bold mb-2"><span className="inline-flex"><FileText className="w-[1.2em] h-[1.2em] mr-1" /></span> Programación Didáctica</h3>
+                                <p className="text-sm text-muted mb-6">Documento oficial completo con secuenciación, metodologías y criterios.</p>
+                              </div>
+                              <Button onClick={() => handleDownloadPdf('programacion')} disabled={downloadingStr === 'programacion'} className="w-full bg-info hover:bg-info/90 text-white">
+                                {downloadingStr === 'programacion' ? '⏳ Generando...' : 'Descargar DOCX / PDF'}
                               </Button>
                             </div>
                           </div>
