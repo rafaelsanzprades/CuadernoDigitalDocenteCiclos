@@ -30,6 +30,7 @@ export default function Sidebar() {
     return () => { document.body.style.overflow = ''; };
   }, [isSidebarOpen]);
 
+  const [dateStr, setDateStr] = useState<string>("");
   const [timeStr, setTimeStr] = useState<string>("");
 
   useEffect(() => {
@@ -53,7 +54,8 @@ export default function Sidebar() {
       const hours = String(realNow.getHours()).padStart(2, '0');
       const minutes = String(realNow.getMinutes()).padStart(2, '0');
       
-      setTimeStr(`${day} de ${monthStr} de ${year} - ${hours}:${minutes}h`);
+      setDateStr(`${day} de ${monthStr} de ${year}`);
+      setTimeStr(`${hours}:${minutes} h`);
     };
     updateTime();
     const interval = setInterval(updateTime, 60000); // update every minute
@@ -66,17 +68,18 @@ export default function Sidebar() {
 
   const sidebarContent = (
     <>
-      <div className={`px-4 pt-4 pb-2 flex ${isSidebarOpen ? 'justify-between' : 'justify-center'} items-center`}>
+      <div className={`px-4 pt-4 pb-2 flex ${isSidebarOpen ? 'justify-between' : 'justify-center'} items-start`}>
         {isSidebarOpen && (
-          <div className="flex flex-col mb-4">
+          <div className="flex flex-col mb-3">
             <Link href="/inicio" onClick={() => { if (window.innerWidth < 1024) toggleSidebar(); }}>
               <h1 className="text-[1.3rem] font-extrabold leading-tight text-foreground hover:text-info transition-colors tracking-tight whitespace-nowrap cursor-pointer">
                 Cuaderno FP
               </h1>
             </Link>
+            <span className="text-[0.7rem] text-muted/80 font-mono mt-0.5 ml-0.5">{timeStr}</span>
           </div>
         )}
-        <button onClick={toggleSidebar} className="text-muted hover:text-foreground p-1 rounded-md hover:bg-foreground/10 transition-colors mb-3">
+        <button onClick={toggleSidebar} className="text-muted hover:text-foreground p-1 rounded-md hover:bg-foreground/10 transition-colors mb-4">
           {isSidebarOpen ? <ChevronLeft className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
         </button>
       </div>
@@ -103,7 +106,7 @@ export default function Sidebar() {
                       Agenda de clase
                     </span>
                     <span className={`px-2 py-0.5 rounded text-[0.65rem] border font-semibold tracking-wider leading-none ${dataSource === 'demo' ? 'text-warning bg-warning/10 border-warning/30' : 'text-accent bg-accent/10 border-accent/30'}`}>
-                      {timeStr}
+                      {dateStr}
                     </span>
                   </div>
                 )}
