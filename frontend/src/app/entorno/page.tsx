@@ -141,10 +141,16 @@ export default function EntornoTrabajoPage() {
   };
 
   const TABS = [
-    { id: "datos", label: <span className="flex items-center gap-2"><Database className="w-4 h-4 shrink-0" /> Datos Locales</span> },
-    { id: "ia", label: <span className="flex items-center gap-2"><Sparkles className="w-4 h-4 shrink-0" /> Inteligencia Artificial</span> },
-    { id: "nube", label: <span className="flex items-center gap-2"><Cloud className="w-4 h-4 shrink-0" /> Sincronización</span> }
+    { id: "datos", label: <span className="flex items-center gap-2"><Database className="w-4 h-4 shrink-0" /> Gestor de archivos</span> },
+    { id: "ia", label: <span className="flex items-center gap-2"><Sparkles className="w-4 h-4 shrink-0" /> Inteligencia artificial</span> },
+    { id: "nube", label: <span className="flex items-center gap-2"><Cloud className="w-4 h-4 shrink-0" /> Sincronización con Google Drive</span> }
   ];
+
+  const breadcrumbSuffixMap: Record<string, string> = {
+    "datos": "Gestor de archivos",
+    "ia": "Inteligencia artificial",
+    "nube": "Sincronización con Google Drive"
+  };
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -158,7 +164,7 @@ export default function EntornoTrabajoPage() {
         }}
       />
       <div className="flex-1 flex flex-col h-screen min-w-0">
-        <Header breadcrumbSuffix="Gestor de Archivos" />
+        <Header breadcrumbSuffix={breadcrumbSuffixMap[activeTab] || "Gestor de archivos"} />
 
         <div className="flex-1 p-8 overflow-y-auto scrollbar-hide">
           <MotionWrapper className="w-full space-y-8 pb-12">
@@ -166,7 +172,7 @@ export default function EntornoTrabajoPage() {
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
               <div>
                 <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                  <FolderOpen className="w-6 h-6 text-accent" /> Entorno de trabajo local
+                  <FolderOpen className="w-6 h-6 text-accent" /> Entorno de trabajo
                 </h1>
                 <p className="text-muted mt-2 text-lg">
                   CuadernoFP funciona directamente en tu navegador sin requerir base de datos externa. Abre tus ficheros de Programación y Curso para trabajar con ellos, y guárdalos cuando termines.
