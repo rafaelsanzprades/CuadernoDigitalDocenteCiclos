@@ -191,7 +191,9 @@ export default function DocumentosPage() {
         const a = document.createElement("a");
         a.href = downloadUrl;
         a.download = filename;
+        document.body.appendChild(a);
         a.click();
+        document.body.removeChild(a);
         return;
       }
 
