@@ -165,7 +165,7 @@ export default function Header({ title, breadcrumbSuffix }: { title?: React.Reac
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [undo, redo, pastStates.length, futureStates.length, handleSave]);
 
-  let friendlyModuleName = "—";
+  let friendlyModuleName = "xxxx - Nombre módulo";
   if (activeModuleId) {
     const code = activeModuleId.split('-')[0];
     let foundName = "";
@@ -176,7 +176,7 @@ export default function Header({ title, breadcrumbSuffix }: { title?: React.Reac
     friendlyModuleName = foundName ? `${code} - ${foundName}` : activeModuleId;
   }
 
-  let friendlyCursoName = "—";
+  let friendlyCursoName = "xº Título";
   if (activeCursoId) {
     const parts = activeCursoId.split('-');
     const code = parts[0];
