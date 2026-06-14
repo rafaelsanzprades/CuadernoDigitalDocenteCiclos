@@ -11,6 +11,7 @@ import { initialGroups } from "@/store/initialData";
 import { showRichToast } from "@/utils/toast";
 import { motion } from "framer-motion";
 import { fileManager } from "@/services/fileManager";
+import { searchGlobal, type SearchResult } from "@/services/searchService";
 
 
 export default function Header({ title, breadcrumbSuffix }: { title?: React.ReactNode; breadcrumbSuffix?: React.ReactNode }) {
@@ -29,6 +30,11 @@ export default function Header({ title, breadcrumbSuffix }: { title?: React.Reac
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [cloudSynced, setCloudSynced] = useState(false);
+  
+  // Estado para búsqueda
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [showResults, setShowResults] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -298,9 +304,43 @@ export default function Header({ title, breadcrumbSuffix }: { title?: React.Reac
           <div className="relative">
             <input
               type="text"
-              placeholder="Buscar..." aria-label="Buscar en la aplicación" role="searchbox"
+              placeholder="Buscar..."
+              aria-label="Buscar en la aplicación"
+              role="searchbox"
+              value={searchQuery}
+              onChange={(e) => {
+                const query = e.target.value;
+                setSearchQuery(query);
+                const results = searchGlobal(query);
+                setSearchResults(results);
+                setShowResults(results.length > 0);
+              }}
+              onFocus={() => setShowResults(searchResults.length > 0)}
+              onBlur={() => setTimeout(() => setShowResults(false), 200)}
               className="bg-foreground/5 border border-[var(--glass-border)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-accent/50 w-40"
             />
+            {showResults && searchResults.length > 0 && (
+              <div className="absolute top-full left-0 right-0 mt-1 bg-[var(--glass-bg)] border border-[var(--glass-border)] rounded-lg shadow-lg z-50 max-h-60 overflow-y-auto">
+                {searchResults.map((result, index) => (
+                  <div
+                    key={index}
+                    className="px-3 py-2 hover:bg-foreground/10 cursor-pointer text-sm"
+                    onClick={() => {
+                      if (result.href) {
+                        router.push(result.href);
+                        setSearchQuery("");
+                        setShowResults(false);
+                      }
+                    }}
+                  >
+                    <div className="font-medium text-[var(--text-primary)]">{result.title}</div>
+                    {result.subtitle && (
+                      <div className="text-xs text-[var(--text-muted)]">{result.subtitle}</div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {mounted && (
