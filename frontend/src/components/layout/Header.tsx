@@ -204,15 +204,15 @@ export default function Header({ title, breadcrumbSuffix }: { title?: React.Reac
               }`}>
                 <FolderOpen className="w-5 h-5" strokeWidth={2} />
               </span>
-              <div className="flex flex-col gap-0.5 items-start">
-                <span className={`text-[0.85rem] leading-none whitespace-nowrap font-bold ${
+              <div className="flex flex-col gap-1 items-start">
+                <span className={`text-base leading-tight whitespace-nowrap font-extrabold ${
                   pathname === '/entorno' 
                     ? (dataSource === 'demo' ? 'text-warning' : cloudSynced ? 'text-success' : 'text-info') 
                     : ''
                 }`}>
-                  Entorno de trabajo
+                  Entorno
                 </span>
-                <span className={`px-1.5 py-0.5 rounded text-[0.65rem] border font-bold tracking-wider leading-none ${
+                <span className={`px-2.5 py-1 rounded text-sm border font-bold tracking-wide leading-none ${
                   dataSource === 'demo' 
                     ? 'text-warning bg-warning/10 border-warning/30' 
                     : cloudSynced

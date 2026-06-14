@@ -61,38 +61,38 @@ function CiclosContent() {
 
   const handleTabChange = (tab: Tab) => {
     setActiveTab(tab);
-    router.replace(`/ciclos?tab=${tab}`, { scroll: false });
+    router.replace(`/catalogo?tab=${tab}`, { scroll: false });
   };
 
   const handleSelectTitulo = (familiaName: string, tituloCodigo: string) => {
     updateGlobalSelection({ familia: familiaName, tituloCodigo });
     setActiveTab("cursos");
-    router.replace(`/ciclos?tab=cursos`, { scroll: false });
+    router.replace(`/catalogo?tab=cursos`, { scroll: false });
   };
 
   const handleSelectFamiliaToTitulo = (familiaName: string, tituloCodigo: string) => {
     updateGlobalSelection({ familia: familiaName, tituloCodigo });
     setActiveTab("titulo");
-    router.replace(`/ciclos?tab=titulo`, { scroll: false });
+    router.replace(`/catalogo?tab=titulo`, { scroll: false });
   };
 
   const handleSelectModulo = (familia: string, tituloCodigo: string, moduloCodigo: string) => {
     updateGlobalSelection({ familia, tituloCodigo, moduloCodigo });
     setActiveTab("modulos");
-    router.replace(`/ciclos?tab=modulos`, { scroll: false });
+    router.replace(`/catalogo?tab=modulos`, { scroll: false });
   };
 
   return (
     <div className="flex min-h-screen bg-background">
       <Sidebar />
       <main className="flex-1 flex flex-col relative z-10 min-w-0">
-        <Header breadcrumbSuffix="Ciclos formativos" />
+        <Header breadcrumbSuffix="Catálogo" />
 
         <div className="flex-1 p-8 overflow-y-auto scrollbar-hide">
           <MotionWrapper className="w-full space-y-6 pb-12">
             <div>
               <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                Ciclos formativos
+                Catálogo
               </h1>
               <p className="text-muted mt-2 text-lg">
                 Catálogo oficial de Familias profesionales, Títulos y desglose de módulos del BOE/BOA.

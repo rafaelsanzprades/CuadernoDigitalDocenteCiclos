@@ -103,7 +103,7 @@ export default function Sidebar() {
                 {isSidebarOpen && (
                   <div className="flex flex-col gap-1 items-start">
                     <span className={`text-[0.95rem] leading-tight whitespace-nowrap font-bold ${pathname === '/agenda' ? (dataSource === 'demo' ? 'text-warning' : 'text-accent') : ''}`}>
-                      Agenda de clase
+                      Agenda
                     </span>
                     <span className={`px-2 py-0.5 rounded text-xs border font-semibold tracking-wider leading-none ${dataSource === 'demo' ? 'text-warning bg-warning/10 border-warning/30' : 'text-accent bg-accent/10 border-accent/30'}`}>
                       {dateStr}
@@ -113,7 +113,7 @@ export default function Sidebar() {
               </Link>
             );
             return !isSidebarOpen ? (
-              <Tooltip content="Agenda de clase" position="right" delay={0.1}>
+              <Tooltip content="Agenda" position="right" delay={0.1}>
                 {linkContent}
               </Tooltip>
             ) : linkContent;
@@ -183,19 +183,15 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      <div className={`px-4 py-3 border-t border-[var(--glass-border)] flex flex-col items-center gap-1`}>
+      <div className={`px-4 py-3 border-t border-[var(--glass-border)] flex flex-col items-center gap-1.5`}>
         {isSidebarOpen && (
           <>
-            <p className="text-center text-xs text-muted/80 mt-1 whitespace-nowrap">
+            <p className="text-center text-sm font-medium text-muted/90 mt-1 whitespace-nowrap">
               © {new Date().getFullYear()} Rafael Sanz Prades
             </p>
-            <div className="flex items-center gap-2">
-              <Link href="/avisolegal" className="text-xs text-info hover:text-info hover:underline" onClick={() => { if (window.innerWidth < 1024) toggleSidebar(); }}>
+            <div className="flex items-center justify-center w-full">
+              <Link href="/legal" className="text-sm font-semibold text-info hover:text-info hover:underline" onClick={() => { if (window.innerWidth < 1024) toggleSidebar(); }}>
                 Legal
-              </Link>
-              <span className="text-xs text-muted/40">•</span>
-              <Link href="/licencia" className="text-xs text-info hover:text-info hover:underline">
-                Licencia y Términos
               </Link>
             </div>
           </>

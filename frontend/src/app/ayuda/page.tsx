@@ -9,6 +9,11 @@ import { Badge } from "@/components/ui/Badge";
 import Link from "next/link";
 import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import { AIWizardModal } from "@/components/features/ai/AIWizardModal";
+import { AISettingsPanel } from "@/components/features/ai/AISettingsPanel";
+import { Button } from "@/components/ui/Button";
+import { Sparkles } from "lucide-react";
+import toast from "react-hot-toast";
 
 // ── Tipos ─────────────────────────────────────────────────────────────────
 type CheckStatus = "ok" | "warning" | "empty";
@@ -113,7 +118,7 @@ const STEPS = [
   { 
     title: "Paso 1: Configurar el Entorno", 
     desc: "Ve a la pantalla 'Entorno' y crea una nueva Programación Didáctica. Luego, crea un Curso y vincúlalo a esa programación para poder empezar a trabajar.",
-    links: [{ href: "/entorno", label: "Entorno de trabajo" }]
+    links: [{ href: "/entorno", label: "Entorno" }]
   },
   { 
     title: "Paso 2: Detalles del Módulo", 
@@ -207,7 +212,8 @@ const FAQS = [
 // ── Página Principal ──────────────────────────────────────────────────────
 export default function AyudaPage() {
   const { moduleData, cursoData, globalData, activeModuleId, activeCursoId } = useAppStore();
-  const [activeTab, setActiveTab] = useState("verificacion");
+  const [activeTab, setActiveTab] = useState("asistente");
+  const [aiModalOpen, setAiModalOpen] = useState(false);
 
   // ── Comprobaciones Programación didáctica ────────────────────────────
   const m = moduleData;
@@ -511,6 +517,7 @@ export default function AyudaPage() {
   const emptyCount = allChecks.filter(c => c.status === "empty").length;
 
   const TABS = [
+    { id: "asistente", label: <><span className="inline-flex"><Sparkles className="w-[1.2em] h-[1.2em] mr-1" /></span> Asistente IA</> },
     { id: "verificacion", label: <><span className="inline-flex"><ListChecks className="w-[1.2em] h-[1.2em] mr-1" /></span> Verificación de datos</> },
     { id: "guia", label: <><span className="inline-flex"><BookOpen className="w-[1.2em] h-[1.2em] mr-1" /></span> Guía paso a paso</> },
     { id: "faq", label: <><span className="inline-flex"><Info className="w-[1.2em] h-[1.2em] mr-1" /></span> Preguntas frecuentes (FAQ)</> },
@@ -519,6 +526,14 @@ export default function AyudaPage() {
   return (
     <div className="flex min-h-screen bg-background">
       <Sidebar />
+      <AIWizardModal
+        isOpen={aiModalOpen}
+        onClose={() => setAiModalOpen(false)}
+        onSuccess={(data) => {
+          console.log("Datos recibidos de la IA:", data);
+          toast.success("Estructura guardada.");
+        }}
+      />
       <div className="flex-1 flex flex-col relative z-10 min-w-0">
         <Header />
         <div className="flex-1 p-8 overflow-y-auto scrollbar-hide">
@@ -544,6 +559,59 @@ export default function AyudaPage() {
                 ))}
               </TabsList>
             </Tabs>
+
+            {/* ── CONTENIDO: ASISTENTE IA ──────────────────────────────── */}
+            {activeTab === "asistente" && (
+              <div className="space-y-8 animate-in fade-in duration-500 w-full max-w-6xl mx-auto">
+                <div className="flex justify-center">
+                  <Button
+                    onClick={() => setAiModalOpen(true)}
+                    className="text-base font-semibold flex items-center justify-center gap-3 bg-accent/10 hover:bg-accent/20 text-accent border border-accent/30 px-8 py-6 h-auto rounded-xl transition-all relative overflow-hidden w-full max-w-lg"
+                  >
+                    <Sparkles className="w-6 h-6 text-accent shrink-0" /> 
+                    <span className="flex-1 text-left">Crear Nueva Programación con IA (PDF)</span>
+                    <span className="flex items-center gap-1 bg-warning/20 text-warning px-2 py-1 rounded text-[10px] font-bold uppercase border border-warning/30 shrink-0"><AlertTriangle className="w-3 h-3" /> Beta</span>
+                  </Button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div>
+                    <AISettingsPanel />
+                  </div>
+
+                  <div className="flex flex-col gap-4 p-6 rounded-2xl bg-info/5 border border-info/20 text-foreground">
+                    <h3 className="text-xl font-bold flex items-center gap-2">
+                      <Sparkles className="w-5 h-5 text-info" /> ¿Cómo obtengo mi API Key?
+                    </h3>
+                    <p className="text-muted text-sm">
+                      CuadernoFP utiliza un modelo "Bring Your Own Key" (Trae tu propia clave) para garantizar que tus datos no pasan por servidores intermedios y mantener la herramienta 100% gratuita.
+                    </p>
+                    
+                    <ol className="list-decimal pl-5 space-y-3 text-sm text-foreground/90 font-medium">
+                      <li>
+                        Entra en <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">Google AI Studio</a>.
+                      </li>
+                      <li>
+                        Inicia sesión con tu cuenta de Google habitual.
+                      </li>
+                      <li>
+                        Pulsa el botón azul <strong>"Create API key"</strong>.
+                      </li>
+                      <li>
+                        Copia la larga cadena de texto (tu clave secreta) y pégala en la caja de la izquierda.
+                      </li>
+                    </ol>
+
+                    <div className="mt-auto pt-4 flex items-start gap-3 text-sm text-warning/80 bg-warning/5 p-4 rounded-xl border border-warning/10">
+                      <AlertTriangle className="w-5 h-5 shrink-0" />
+                      <p>
+                        <strong>Importante:</strong> Esta clave es personal e intransferible. Da acceso al motor de IA usando tu cupo gratuito de desarrollador de Google.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* ── CONTENIDO: VERIFICACIÓN ──────────────────────────────── */}
             {activeTab === "verificacion" && (

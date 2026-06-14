@@ -159,7 +159,7 @@ export default function EntornoTrabajoPage() {
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
               <div>
                 <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                  <FolderOpen className="w-6 h-6 text-accent" /> Entorno de trabajo
+                  <FolderOpen className="w-6 h-6 text-accent" /> Entorno
                 </h1>
                 <p className="text-muted mt-2 text-lg">
                   CuadernoFP funciona directamente en tu navegador sin requerir base de datos externa. Abre tus ficheros de Programación y Curso para trabajar con ellos, y guárdalos cuando termines.

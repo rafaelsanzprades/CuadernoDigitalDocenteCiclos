@@ -27,7 +27,7 @@ export function AIWizardModal({ isOpen, onClose, onSuccess }: AIWizardModalProps
     const provider = localStorage.getItem("cdd_ai_provider") || "gemini";
 
     if (!apiKey) {
-      setErrorMsg("No hay API Key. Configúrala primero en la pestaña 'Respaldo y sincronización' del Entorno de trabajo.");
+      setErrorMsg("No hay API Key. Configúrala primero en la pestaña 'Respaldo y sincronización' del Entorno.");
       return;
     }
 

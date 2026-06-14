@@ -1,5 +1,5 @@
 "use client";
-import { Building2, FileEdit, FileText, Settings } from "lucide-react";
+import { Building2, FileEdit, FileText, Settings, Map, Target, CheckCircle2, Layers } from "lucide-react";
 import { useEffect, useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
@@ -7,6 +7,10 @@ import { useAppStore } from "@/store/useAppStore";
 import { DatosTab } from "@/components/features/modulo/DatosTab";
 import { ContextoTab } from "@/components/features/modulo/ContextoTab";
 import { PlanesTab } from "@/components/features/modulo/PlanesTab";
+import { ContextoFEOETab } from "@/components/features/modulo/ContextoFEOETab";
+import { MetodologiaTab } from "@/components/features/modulo/MetodologiaTab";
+import { EvaluacionRecursosTab } from "@/components/features/modulo/EvaluacionRecursosTab";
+import { OtrosElementosTab } from "@/components/features/modulo/OtrosElementosTab";
 import { MotionWrapper } from "@/components/ui/MotionWrapper";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 
@@ -28,7 +32,11 @@ export default function ModuloConfigPage() {
   const TABS = [
     { id: "datos", label: <><span className="inline-flex"><FileText className="w-[1.2em] h-[1.2em] mr-1" /></span> Datos</>, cleanLabel: "Datos del módulo" },
     { id: "contexto", label: <><span className="inline-flex"><FileEdit className="w-[1.2em] h-[1.2em] mr-1" /></span> Contexto</>, cleanLabel: "Contexto" },
-    { id: "planes", label: <><span className="inline-flex"><FileText className="w-[1.2em] h-[1.2em] mr-1" /></span> Planes</>, cleanLabel: "Planes" }
+    { id: "planes", label: <><span className="inline-flex"><FileText className="w-[1.2em] h-[1.2em] mr-1" /></span> Planes</>, cleanLabel: "Planes" },
+    { id: "contexto_feoe", label: <><span className="inline-flex"><Map className="w-[1.2em] h-[1.2em] mr-1" /></span> Contexto y FEOE</>, cleanLabel: "Contexto y FEOE" },
+    { id: "metodologia", label: <><span className="inline-flex"><Target className="w-[1.2em] h-[1.2em] mr-1" /></span> Metodología</>, cleanLabel: "Metodología" },
+    { id: "evaluacion", label: <><span className="inline-flex"><CheckCircle2 className="w-[1.2em] h-[1.2em] mr-1" /></span> Eval. y Recursos</>, cleanLabel: "Eval. y Recursos" },
+    { id: "otros", label: <><span className="inline-flex"><Layers className="w-[1.2em] h-[1.2em] mr-1" /></span> Otros Elementos</>, cleanLabel: "Otros Elementos" }
   ];
 
   const activeTabCleanLabel = TABS.find(t => t.id === activeTab)?.cleanLabel;
@@ -75,6 +83,10 @@ export default function ModuloConfigPage() {
             {activeTab === "datos" && <DatosTab />}
             {activeTab === "contexto" && <ContextoTab />}
             {activeTab === "planes" && <PlanesTab />}
+            {activeTab === "contexto_feoe" && <ContextoFEOETab />}
+            {activeTab === "metodologia" && <MetodologiaTab />}
+            {activeTab === "evaluacion" && <EvaluacionRecursosTab />}
+            {activeTab === "otros" && <OtrosElementosTab />}
 
           </MotionWrapper>
         </div>
