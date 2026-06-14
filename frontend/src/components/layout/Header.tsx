@@ -200,7 +200,7 @@ export default function Header({ title, breadcrumbSuffix }: { title?: React.Reac
           </button>
           
           {/* Botón Datos Reales/Ficticios (Entorno de trabajo) */}
-          <div className="shrink-0">
+          <div className="shrink-0 flex items-center gap-3">
             <Link 
               href="/entorno" 
               className={`inline-flex items-center gap-2.5 px-3 py-1.5 rounded-lg transition-all duration-150 group shadow-sm border ${
@@ -237,6 +237,7 @@ export default function Header({ title, breadcrumbSuffix }: { title?: React.Reac
                   {dataSource === 'demo' ? 'Datos DEMO' : cloudSynced ? 'Datos en nube' : 'Datos Reales'}
                 </span>
               </div>
+            </Link>
 
           {/* Busqueda global */}
           <div className="relative">
@@ -246,7 +247,6 @@ export default function Header({ title, breadcrumbSuffix }: { title?: React.Reac
               className="bg-foreground/5 border border-foreground/10 rounded-lg px-3 py-1.5 text-sm text-foreground placeholder-muted focus:outline-none focus:ring-2 focus:ring-accent/50 w-40"
             />
           </div>
-            </Link>
           </div>
 
           {/* Nombres del módulo y curso (Oculto en pantallas muy pequeñas, con ellipsis si es muy largo) */}
