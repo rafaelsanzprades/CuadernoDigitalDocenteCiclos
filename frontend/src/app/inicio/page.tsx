@@ -60,7 +60,7 @@ export default function InicioPage() {
       <div className="flex-1 flex flex-col relative z-10 min-w-0">
         <Header breadcrumbSuffix="Inicio" />
 
-        <div className="flex-1 p-8 overflow-y-auto scrollbar-hide">
+        <main className="flex-1 p-8 overflow-y-auto scrollbar-hide content-area">
           <div className="w-full space-y-12 pb-12">
 
             <div>
@@ -113,7 +113,7 @@ export default function InicioPage() {
             </div>
 
           </div>
-        </div>
+        </main>
       </div>
     </div>
   );
