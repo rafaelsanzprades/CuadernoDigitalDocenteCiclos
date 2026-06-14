@@ -222,6 +222,15 @@ export default function Header({ title, breadcrumbSuffix }: { title?: React.Reac
                   {dataSource === 'demo' ? 'Datos DEMO' : cloudSynced ? 'Datos en nube' : 'Datos Reales'}
                 </span>
               </div>
+
+          {/* Busqueda global */}
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Buscar..."
+              className="bg-foreground/5 border border-foreground/10 rounded-lg px-3 py-1.5 text-sm text-foreground placeholder-muted focus:outline-none focus:ring-2 focus:ring-accent/50 w-40"
+            />
+          </div>
             </Link>
           </div>
 
@@ -277,6 +286,15 @@ export default function Header({ title, breadcrumbSuffix }: { title?: React.Reac
             >
               <Redo2 size={16} />
             </button>
+          </div>
+
+          {/* Busqueda global */}
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Buscar..."
+              className="bg-foreground/5 border border-[var(--glass-border)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-accent/50 w-40"
+            />
           </div>
 
           {mounted && (
