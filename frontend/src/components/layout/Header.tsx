@@ -141,7 +141,7 @@ export default function Header({ title, breadcrumbSuffix }: { title?: React.Reac
       } else if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
         e.preventDefault();
         // Focus search input
-        const searchInput = document.querySelector('input[placeholder="Buscar..."]') as HTMLInputElement;
+        const searchInput = document.querySelector('input[placeholder="Buscar..." aria-label="Buscar en la aplicación" role="searchbox"]') as HTMLInputElement;
         if (searchInput) {
           searchInput.focus();
         }
@@ -192,7 +192,7 @@ export default function Header({ title, breadcrumbSuffix }: { title?: React.Reac
           <button
             onClick={toggleSidebar}
             className="lg:hidden text-muted hover:text-foreground p-2 rounded-lg hover:bg-foreground/5 transition-colors shrink-0"
-            aria-label="Toggle sidebar"
+            aria-label="Toggle sidebar" aria-expanded={isSidebarOpen} aria-controls="sidebar"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isSidebarOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
@@ -242,7 +242,7 @@ export default function Header({ title, breadcrumbSuffix }: { title?: React.Reac
           <div className="relative">
             <input
               type="text"
-              placeholder="Buscar..."
+              placeholder="Buscar..." aria-label="Buscar en la aplicación" role="searchbox"
               className="bg-foreground/5 border border-foreground/10 rounded-lg px-3 py-1.5 text-sm text-foreground placeholder-muted focus:outline-none focus:ring-2 focus:ring-accent/50 w-40"
             />
           </div>
@@ -289,7 +289,7 @@ export default function Header({ title, breadcrumbSuffix }: { title?: React.Reac
               onClick={() => undo()}
               disabled={pastStates.length === 0}
               className={`p-2 rounded-md transition-colors ${pastStates.length > 0 ? 'text-foreground hover:bg-foreground/10 cursor-pointer' : 'text-muted opacity-50 cursor-not-allowed'}`}
-              title="Deshacer (Ctrl+Z)"
+              title="Deshacer (Ctrl+Z)" aria-label="Deshacer"
             >
               <Undo2 size={16} />
             </button>
@@ -297,7 +297,7 @@ export default function Header({ title, breadcrumbSuffix }: { title?: React.Reac
               onClick={() => redo()}
               disabled={futureStates.length === 0}
               className={`p-2 rounded-md transition-colors ${futureStates.length > 0 ? 'text-foreground hover:bg-foreground/10 cursor-pointer' : 'text-muted opacity-50 cursor-not-allowed'}`}
-              title="Rehacer (Ctrl+Y)"
+              title="Rehacer (Ctrl+Y)" aria-label="Rehacer"
             >
               <Redo2 size={16} />
             </button>
@@ -307,7 +307,7 @@ export default function Header({ title, breadcrumbSuffix }: { title?: React.Reac
           <div className="relative">
             <input
               type="text"
-              placeholder="Buscar..."
+              placeholder="Buscar..." aria-label="Buscar en la aplicación" role="searchbox"
               className="bg-foreground/5 border border-[var(--glass-border)] rounded-lg px-3 py-1.5 text-sm text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-accent/50 w-40"
             />
           </div>
