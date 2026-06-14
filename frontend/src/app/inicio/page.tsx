@@ -1,18 +1,21 @@
 "use client";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppStore } from "@/store/useAppStore";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
 import { navGroups } from "@/config/navigation";
 import { Card } from "@/components/ui/Card";
+import { Spinner } from "@/components/common/Spinner";
 import { MotionWrapper } from "@/components/ui/MotionWrapper";
 
 export default function InicioPage() {
   const { moduleData, cursoData, setModuleData, setCursoData, activeModuleId, activeCursoId } = useAppStore();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         if (activeModuleId && !moduleData) {
           const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/module/${activeModuleId}`);
@@ -26,12 +29,30 @@ export default function InicioPage() {
         }
       } catch (err) {
         console.error("Error fetching data:", err);
+      } finally {
+        setLoading(false);
       }
     };
     if ((activeModuleId && !moduleData) || (activeCursoId && !cursoData)) {
       fetchData();
+    } else {
+      setLoading(false);
     }
   }, [activeModuleId, moduleData, activeCursoId, cursoData, setModuleData, setCursoData]);
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen bg-background relative">
+        <Sidebar />
+        <div className="flex-1 flex flex-col relative z-10 min-w-0">
+          <Header breadcrumbSuffix="Inicio" />
+          <div className="flex-1 flex items-center justify-center">
+            <Spinner label="Cargando datos..." />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen bg-background relative">
