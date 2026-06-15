@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { AlertTriangle, BarChart, BookOpen, Calculator, Calendar, CalendarDays, ChevronRight, Construction, CornerLeftUp, Download, DownloadCloud, File, FileEdit, FileSpreadsheet, FileText, Folder, FolderOpen, GraduationCap, MapPin, Play, Scale, Search, Settings, UploadCloud, User, Users, X } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import Sidebar from "@/components/layout/Sidebar";
@@ -184,7 +184,7 @@ export default function DocumentosPage() {
   const relParts = relativePath.split("/").filter(Boolean);
 
   const breadcrumbs = [
-    { label: "RaÃ­z", path: basePath },
+    { label: "Raíz", path: basePath },
     ...relParts.map((part, idx) => ({
       label: part,
       path: basePath + "/" + relParts.slice(0, idx + 1).join("/")
@@ -209,126 +209,126 @@ export default function DocumentosPage() {
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
               <div>
                 <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                  <span className="text-3xl text-info"><FolderOpen className="w-8 h-8" strokeWidth={2.5} /></span> DocumentaciÃ³n
+                  <span className="text-3xl text-info"><FolderOpen className="w-8 h-8" strokeWidth={2.5} /></span> Documentos
                 </h1>
-                <p className="text-muted mt-2 text-lg">Explorador de archivos oficiales, legislaciÃ³n y otros documentos.</p>
+                <p className="text-muted mt-2 text-lg">Explorador de archivos oficiales, legislación y otros documentos.</p>
               </div>
             </div>
 
             <div className="space-y-6 animate-in fade-in duration-500">
-                <div className="flex flex-col md:flex-row justify-between gap-4">
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
-                    <input
-                      type="text"
-                      placeholder="Buscar archivo..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="bg-foreground/15 border border-[var(--glass-border)] text-foreground pl-10 pr-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-info transition-all w-full md:w-64 placeholder-gray-500"
-                    />
-                  </div>
-                  <button 
-                    onClick={() => toast("FunciÃ³n de subida prÃ³ximamente.", { icon: <><span className="inline-flex"><Construction className="w-[1.2em] h-[1.2em] mr-1" /></span></> })}
-                    className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-foreground font-bold py-2 px-5 rounded-xl shadow-lg shadow-blue-500/30 flex items-center gap-2 transition-all hover:scale-105 active:scale-95"
-                  >
-                    <UploadCloud className="w-5 h-5" />
-                    <span>Subir documento</span>
-                  </button>
+              <div className="flex flex-col md:flex-row justify-between gap-4">
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
+                  <input
+                    type="text"
+                    placeholder="Buscar archivo..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="bg-foreground/15 border border-[var(--glass-border)] text-foreground pl-10 pr-4 py-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-info transition-all w-full md:w-64 placeholder-gray-500"
+                  />
                 </div>
-
-                <Card className="p-4 flex items-center gap-2 overflow-x-auto whitespace-nowrap bg-foreground/5 border border-[var(--glass-border)] rounded-xl shadow-lg">
-                  {currentPath && (
-                    <button
-                      onClick={handleGoUp}
-                      className="flex items-center justify-center p-2 mr-2 text-muted hover:text-foreground hover:bg-foreground/10 rounded-lg transition-colors"
-                      title="Subir un nivel"
-                    >
-                      <CornerLeftUp className="w-5 h-5" />
-                    </button>
-                  )}
-                  {breadcrumbs.map((crumb, idx) => (
-                    <React.Fragment key={crumb.path}>
-                      <button
-                        onClick={() => handleNavigate(crumb.path)}
-                        className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${idx === breadcrumbs.length - 1
-                          ? 'bg-accent/20 text-accent border border-accent/30'
-                          : 'text-muted hover:text-foreground hover:bg-foreground/10'
-                          }`}
-                      >
-                        {crumb.label}
-                      </button>
-                      {idx < breadcrumbs.length - 1 && (
-                        <ChevronRight className="w-4 h-4 text-muted/80 flex-shrink-0" />
-                      )}
-                    </React.Fragment>
-                  ))}
-                </Card>
-
-                <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-2xl overflow-hidden shadow-2xl backdrop-blur-md">
-                  {loadingDocs ? (
-                    <div className="p-12 text-center text-muted flex flex-col items-center">
-                      <div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin mb-4"></div>
-                      <p>Cargando documentos...</p>
-                    </div>
-                  ) : error ? (
-                    <div className="p-12 text-center">
-                      <div className="text-danger mb-2"><span className="inline-flex"><AlertTriangle className="w-[1.2em] h-[1.2em] mr-1" /></span> Error</div>
-                      <p className="text-foreground/80">{error}</p>
-                    </div>
-                  ) : items.length === 0 ? (
-                    <div className="p-16 text-center text-muted">
-                      <div className="text-4xl mb-4"><span className="inline-flex"><FolderOpen className="w-[1.2em] h-[1.2em] mr-1" /></span></div>
-                      <p className="text-lg">El directorio estÃ¡ vacÃ­o.</p>
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-6">
-                      {filteredItems.length === 0 ? (
-                        <div className="col-span-full p-12 text-center text-muted">
-                          <Search className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                          <p>No se encontraron resultados para "{searchQuery}"</p>
-                        </div>
-                      ) : filteredItems.map((item, idx) => (
-                        <div
-                          key={idx}
-                          className="group flex flex-col items-center p-6 bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 hover:border-[var(--glass-border)] rounded-xl transition-all cursor-pointer duration-300 shadow-md hover:shadow-xl hover:-translate-y-1 relative"
-                          onClick={() => item.is_dir ? handleNavigate(item.path) : handleDownloadDoc(item.path, item.name)}
-                        >
-                          <div className="mb-4 transform group-hover:scale-110 transition-transform duration-300 relative">
-                            {downloadingStr === item.path ? (
-                              <div className="w-12 h-12 flex items-center justify-center animate-spin border-4 border-accent border-t-transparent rounded-full" />
-                            ) : item.is_dir ? (
-                              <Folder className="w-12 h-12 text-info drop-shadow-md" />
-                            ) : (
-                              getFileIcon(item.name)
-                            )}
-                          </div>
-
-                          <h3 className="text-sm font-semibold text-foreground/90 group-hover:text-foreground text-center line-clamp-2 w-full break-words">
-                            {item.name}
-                          </h3>
-
-                          {!item.is_dir && (
-                            <p className="text-xs text-muted mt-2 font-mono">
-                              {formatSize(item.size)}
-                            </p>
-                          )}
-
-                          {!item.is_dir && (
-                            <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                              <button
-                                className="p-1.5 bg-accent/20 text-accent rounded-md hover:bg-accent hover:text-foreground transition-colors"
-                                onClick={(e) => { e.stopPropagation(); handleDownloadDoc(item.path, item.name); }}
-                              >
-                                <Download className="w-4 h-4" />
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                <button
+                  onClick={() => toast("Función de subida próximamente.", { icon: <><span className="inline-flex"><Construction className="w-[1.2em] h-[1.2em] mr-1" /></span></> })}
+                  className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-foreground font-bold py-2 px-5 rounded-xl shadow-lg shadow-blue-500/30 flex items-center gap-2 transition-all hover:scale-105 active:scale-95"
+                >
+                  <UploadCloud className="w-5 h-5" />
+                  <span>Subir documento</span>
+                </button>
               </div>
+
+              <Card className="p-4 flex items-center gap-2 overflow-x-auto whitespace-nowrap bg-foreground/5 border border-[var(--glass-border)] rounded-xl shadow-lg">
+                {currentPath && (
+                  <button
+                    onClick={handleGoUp}
+                    className="flex items-center justify-center p-2 mr-2 text-muted hover:text-foreground hover:bg-foreground/10 rounded-lg transition-colors"
+                    title="Subir un nivel"
+                  >
+                    <CornerLeftUp className="w-5 h-5" />
+                  </button>
+                )}
+                {breadcrumbs.map((crumb, idx) => (
+                  <React.Fragment key={crumb.path}>
+                    <button
+                      onClick={() => handleNavigate(crumb.path)}
+                      className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${idx === breadcrumbs.length - 1
+                        ? 'bg-accent/20 text-accent border border-accent/30'
+                        : 'text-muted hover:text-foreground hover:bg-foreground/10'
+                        }`}
+                    >
+                      {crumb.label}
+                    </button>
+                    {idx < breadcrumbs.length - 1 && (
+                      <ChevronRight className="w-4 h-4 text-muted/80 flex-shrink-0" />
+                    )}
+                  </React.Fragment>
+                ))}
+              </Card>
+
+              <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-2xl overflow-hidden shadow-2xl backdrop-blur-md">
+                {loadingDocs ? (
+                  <div className="p-12 text-center text-muted flex flex-col items-center">
+                    <div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin mb-4"></div>
+                    <p>Cargando documentos...</p>
+                  </div>
+                ) : error ? (
+                  <div className="p-12 text-center">
+                    <div className="text-danger mb-2"><span className="inline-flex"><AlertTriangle className="w-[1.2em] h-[1.2em] mr-1" /></span> Error</div>
+                    <p className="text-foreground/80">{error}</p>
+                  </div>
+                ) : items.length === 0 ? (
+                  <div className="p-16 text-center text-muted">
+                    <div className="text-4xl mb-4"><span className="inline-flex"><FolderOpen className="w-[1.2em] h-[1.2em] mr-1" /></span></div>
+                    <p className="text-lg">El directorio está vacío.</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-6">
+                    {filteredItems.length === 0 ? (
+                      <div className="col-span-full p-12 text-center text-muted">
+                        <Search className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                        <p>No se encontraron resultados para "{searchQuery}"</p>
+                      </div>
+                    ) : filteredItems.map((item, idx) => (
+                      <div
+                        key={idx}
+                        className="group flex flex-col items-center p-6 bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 hover:border-[var(--glass-border)] rounded-xl transition-all cursor-pointer duration-300 shadow-md hover:shadow-xl hover:-translate-y-1 relative"
+                        onClick={() => item.is_dir ? handleNavigate(item.path) : handleDownloadDoc(item.path, item.name)}
+                      >
+                        <div className="mb-4 transform group-hover:scale-110 transition-transform duration-300 relative">
+                          {downloadingStr === item.path ? (
+                            <div className="w-12 h-12 flex items-center justify-center animate-spin border-4 border-accent border-t-transparent rounded-full" />
+                          ) : item.is_dir ? (
+                            <Folder className="w-12 h-12 text-info drop-shadow-md" />
+                          ) : (
+                            getFileIcon(item.name)
+                          )}
+                        </div>
+
+                        <h3 className="text-sm font-semibold text-foreground/90 group-hover:text-foreground text-center line-clamp-2 w-full break-words">
+                          {item.name}
+                        </h3>
+
+                        {!item.is_dir && (
+                          <p className="text-xs text-muted mt-2 font-mono">
+                            {formatSize(item.size)}
+                          </p>
+                        )}
+
+                        {!item.is_dir && (
+                          <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button
+                              className="p-1.5 bg-accent/20 text-accent rounded-md hover:bg-accent hover:text-foreground transition-colors"
+                              onClick={(e) => { e.stopPropagation(); handleDownloadDoc(item.path, item.name); }}
+                            >
+                              <Download className="w-4 h-4" />
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
 
 
 
@@ -336,7 +336,7 @@ export default function DocumentosPage() {
           </MotionWrapper>
         </div>
 
-        {/* Modal de PrevisualizaciÃ³n (Compartido para ambos) */}
+        {/* Modal de Previsualización (Compartido para ambos) */}
         {previewUrl && (
           <div className="fixed inset-0 z-50 flex flex-col bg-black/90 backdrop-blur-md">
             <div className="flex items-center justify-between p-4 bg-[var(--glass-bg)] border-b border-[var(--glass-border)]">

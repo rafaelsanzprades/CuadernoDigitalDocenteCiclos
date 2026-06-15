@@ -1,4 +1,4 @@
-﻿import { BarChart, BarChart3, CheckCircle, Clock, Users } from "lucide-react";
+import { BarChart, BarChart3, CheckCircle, Clock, Users } from "lucide-react";
 import React, { useEffect } from "react";
 import { Card } from "@/components/ui/Card";
 import { motion, animate, useMotionValue, useTransform } from "framer-motion";

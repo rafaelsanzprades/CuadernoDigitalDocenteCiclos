@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { AlertTriangle, BookOpen, CheckCircle, Cloud, Database, Download, FileJson, FolderOpen, Save, Shield, ShieldAlert, Sparkles, Upload, Users, Zap } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import Sidebar from "@/components/layout/Sidebar";
@@ -139,7 +139,7 @@ export default function EntornoTrabajoPage() {
 
   const TABS = [
     { id: "datos", label: <span className="flex items-center gap-2"><Database className="w-4 h-4 shrink-0" /> Gestor de archivos</span> },
-    { id: "nube", label: <span className="flex items-center gap-2"><Cloud className="w-4 h-4 shrink-0" /> Sincronización con Google Drive</span> }
+    ...(dataSource !== 'demo' ? [{ id: "nube", label: <span className="flex items-center gap-2"><Cloud className="w-4 h-4 shrink-0" /> Sincronización con Google Drive</span> }] : [])
   ];
 
   const breadcrumbSuffixMap: Record<string, string> = {
@@ -166,148 +166,8 @@ export default function EntornoTrabajoPage() {
                 </p>
               </div>
 
-              {/* Selector de Modo */}
-              {activeTab === "datos" && (
-                <div className="bg-foreground/5 p-1 rounded-xl flex border border-white/10 shadow-inner">
-                  <button
-                    onClick={switchToDemo}
-                    className={`px-5 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2 ${isDemoLoaded
-                        ? 'bg-warning/20 text-warning shadow-md'
-                        : 'text-muted hover:text-foreground hover:bg-foreground/5'
-                      }`}
-                  >
-                    <Zap className="w-4 h-4" /> Datos DEMO
-                  </button>
-                  <button
-                    onClick={switchToLocal}
-                    className={`px-5 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2 ${!isDemoLoaded
-                        ? 'bg-info/20 text-info shadow-md'
-                        : 'text-muted hover:text-foreground hover:bg-foreground/5'
-                      }`}
-                  >
-                    <Shield className="w-4 h-4" /> Datos reales
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {/* Navigation Tabs */}
-            <Tabs value={activeTab} onValueChange={setActiveTab}>
-              <TabsList className="mb-2 max-w-full overflow-x-auto flex flex-nowrap scrollbar-hide border-b border-[var(--glass-border)] rounded-none bg-transparent">
-                {TABS.map(tab => (
-                  <TabsTrigger key={tab.id} value={tab.id} className="whitespace-nowrap shrink-0">
-                    {tab.label}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-            </Tabs>
-
-            <div className="space-y-8 animate-in fade-in duration-300 pt-4">
-              {/* PESTAÁ‘A: DATOS LOCALES */}
-              {activeTab === "datos" && (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-                {/* Panel Programación */}
-                <Card className={`p-8 border rounded-2xl shadow-lg space-y-6 flex flex-col relative overflow-hidden group ${isDemoLoaded ? 'bg-foreground/5 border-warning/20' : 'bg-foreground/5 border-info/20'}`}>
-                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                    <BookOpen className={`w-24 h-24 ${isDemoLoaded ? 'text-warning' : 'text-info'}`} />
-                  </div>
-                  <div>
-                    <div className="flex justify-between items-center mb-1">
-                      <h3 className="text-xl font-bold text-foreground flex items-center gap-2 relative z-10">
-                        <BookOpen className={`w-5 h-5 ${isDemoLoaded ? 'text-warning' : 'text-info'}`} /> Archivo de Programación (.cddp)
-                      </h3>
-                      {moduleData && <Badge variant={isDemoLoaded ? 'warning' : 'info'}>Cargada</Badge>}
-                    </div>
-                    <p className="text-sm text-muted mt-1 relative z-10">
-                      Contiene tu currÁ­culo, unidades didácticas, instrumentos de evaluación y criterios.
-                    </p>
-                  </div>
-
-                  {moduleData ? (
-                    <div className={`${isDemoLoaded ? 'bg-warning/10 border-warning/30' : 'bg-info/10 border-info/30'} border rounded-xl p-4 flex flex-col gap-2 relative z-10`}>
-                      <span className={`text-xs font-bold ${isDemoLoaded ? 'text-warning' : 'text-info'} uppercase tracking-wider`}>Activa actualmente:</span>
-                      <span className="text-lg font-medium text-foreground">{getFriendlyPdName(activeModuleId)}</span>
-                    </div>
-                  ) : (
-                    <div className="bg-info/5 border border-info/20 rounded-xl p-4 flex flex-col gap-2 items-center justify-center text-info/80 relative z-10 shadow-inner">
-                      <span className="font-medium">Ninguna programación cargada</span>
-                    </div>
-                  )}
-
-                  <div className="flex flex-col sm:flex-row gap-3 pt-2 mt-auto relative z-10">
-                    {isDemoLoaded ? (
-                      <Button onClick={handleLoadDemo} className="flex-1 bg-warning/20 hover:bg-warning/30 text-warning border border-warning/30">
-                        <Zap className="w-4 h-4 mr-2" /> Recargar Datos DEMO
-                      </Button>
-                    ) : (
-                      <>
-                        <input type="file" ref={pdInputRef} onChange={handleImportPd} accept=".cddp,.json" className="hidden" />
-                        <Button onClick={triggerImportPd} className="flex-1 bg-info/10 hover:bg-info/20 text-info border border-info/30 transition-all">
-                          <FolderOpen className="w-4 h-4 mr-2" /> Abrir
-                        </Button>
-                        <Button onClick={handleExportPd} disabled={!moduleData} className="flex-1 border bg-info/20 hover:bg-info/30 text-info border-info/40 disabled:opacity-40 disabled:hover:bg-info/20 transition-all">
-                          <Save className="w-4 h-4 mr-2" /> Guardar
-                        </Button>
-                      </>
-                    )}
-                  </div>
-                </Card>
-
-                {/* Panel Curso */}
-                <Card className={`p-8 border rounded-2xl shadow-lg space-y-6 flex flex-col relative overflow-hidden group ${isDemoLoaded ? 'bg-foreground/5 border-warning/20' : 'bg-foreground/5 border-success/20'}`}>
-                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                    <Users className={`w-24 h-24 ${isDemoLoaded ? 'text-warning' : 'text-success'}`} />
-                  </div>
-                  <div>
-                    <div className="flex justify-between items-center mb-1">
-                      <h3 className="text-xl font-bold text-foreground flex items-center gap-2 relative z-10">
-                        <Users className={`w-5 h-5 ${isDemoLoaded ? 'text-warning' : 'text-success'}`} /> Archivo de Curso (.cddc)
-                      </h3>
-                      {cursoData && <Badge variant={isDemoLoaded ? 'warning' : 'success'}>Cargado</Badge>}
-                    </div>
-                    <p className="text-sm text-muted mt-1 relative z-10">
-                      Contiene tu lista de alumnado, calificaciones, partes de asistencia y anotaciones diarias.
-                    </p>
-                  </div>
-
-                  {cursoData ? (
-                    <div className={`${isDemoLoaded ? 'bg-warning/10 border-warning/30' : 'bg-success/10 border-success/30'} border rounded-xl p-4 flex flex-col gap-2 relative z-10`}>
-                      <span className={`text-xs font-bold ${isDemoLoaded ? 'text-warning' : 'text-success'} uppercase tracking-wider`}>Activo actualmente:</span>
-                      <span className="text-lg font-medium text-foreground">{getFriendlyCursoName(activeCursoId)}</span>
-                    </div>
-                  ) : (
-                    <div className="bg-info/5 border border-info/20 rounded-xl p-4 flex flex-col gap-2 items-center justify-center text-info/80 relative z-10 shadow-inner">
-                      <span className="font-medium">Ningún curso cargado</span>
-                    </div>
-                  )}
-
-                  <div className="flex flex-col sm:flex-row gap-3 pt-2 mt-auto relative z-10">
-                    {isDemoLoaded ? (
-                      <Button onClick={handleLoadDemo} className="flex-1 bg-warning/20 hover:bg-warning/30 text-warning border border-warning/30">
-                        <Zap className="w-4 h-4 mr-2" /> Recargar Datos DEMO
-                      </Button>
-                    ) : (
-                      <>
-                        <input type="file" ref={cursoInputRef} onChange={handleImportCurso} accept=".cddc,.json" className="hidden" />
-                        <Button onClick={triggerImportCurso} className="flex-1 bg-info/10 hover:bg-info/20 text-info border border-info/30 transition-all">
-                          <FolderOpen className="w-4 h-4 mr-2" /> Abrir
-                        </Button>
-                        <Button onClick={handleExportCurso} disabled={!cursoData} className="flex-1 border bg-info/20 hover:bg-info/30 text-info border-info/40 disabled:opacity-40 disabled:hover:bg-info/20 transition-all">
-                          <Save className="w-4 h-4 mr-2" /> Guardar
-                        </Button>
-                      </>
-                    )}
-                  </div>
-                </Card>
-
-              </div>
-              )}
-
-
-
-              {/* PESTAÁ‘A: NUBE */}
-              {activeTab === "nube" && (
+              {/* PESTAÑA: NUBE (solo en modo datos reales) */}
+              {activeTab === "nube" && dataSource !== 'demo' && (
                 <GoogleDriveSyncPanel />
               )}
 

@@ -115,38 +115,38 @@ function AccordionItem({ question, answer }: { question: string, answer: React.R
 }
 
 const STEPS = [
-  { 
-    title: "Paso 1: Configurar el Entorno", 
+  {
+    title: "Paso 1: Configurar el Entorno",
     desc: "Ve a la pantalla 'Entorno' y crea una nueva Programación Didáctica. Luego, crea un Curso y vincúlalo a esa programación para poder empezar a trabajar.",
     links: [{ href: "/entorno", label: "Entorno" }]
   },
-  { 
-    title: "Paso 2: Detalles del Módulo", 
+  {
+    title: "Paso 2: Detalles del Módulo",
     desc: "Entra en 'Módulo' y rellena los datos básicos: nombre, código, horas totales y contexto del aula. Asegúrate de guardar los cambios.",
     links: [{ href: "/modulo", label: "Módulo didáctico" }]
   },
-  { 
-    title: "Paso 3: Unidades y Resultados (Matrices)", 
+  {
+    title: "Paso 3: Unidades y Resultados (Matrices)",
     desc: "En la sección 'Matrices', define tus Unidades Didácticas (UD) y Resultados de Aprendizaje (RA). No olvides configurar los porcentajes de cada RA para que sumen 100%.",
     links: [{ href: "/matrices", label: "Matrices OG→RA→CE→UD" }]
   },
-  { 
-    title: "Paso 4: Criterios de Evaluación", 
+  {
+    title: "Paso 4: Criterios de Evaluación",
     desc: "También en 'Matrices', vincula cada Criterio de Evaluación (CE) a sus respectivos RA y UD.",
     links: [{ href: "/matrices", label: "Matrices OG→RA→CE→UD" }]
   },
-  { 
-    title: "Paso 5: Instrumentos y Ponderaciones", 
+  {
+    title: "Paso 5: Instrumentos y Ponderaciones",
     desc: "En 'Instrumentos', configura qué herramientas usarás para evaluar (ej. Exámenes, Trabajos, Observación) y asígnales el peso que tendrán dentro de cada RA.",
     links: [{ href: "/instrumentos", label: "Instrumentos de evaluación" }]
   },
-  { 
-    title: "Paso 6: Añadir Alumnado", 
+  {
+    title: "Paso 6: Añadir Alumnado",
     desc: "Ve a 'Alumnado' y añade tu lista de estudiantes usando la tabla interactiva.",
     links: [{ href: "/alumnado", label: "Alumnado y tutoría" }]
   },
-  { 
-    title: "Paso 7: Tareas y Seguimiento", 
+  {
+    title: "Paso 7: Tareas y Seguimiento",
     desc: "Por último, utiliza 'Programación' para planificar y 'Seguimiento' para llevar el día a día de tu aula. ¡Ya estás listo para arrancar el curso!",
     links: [
       { href: "/programacion", label: "Programación de aula" },
@@ -538,11 +538,11 @@ export default function AyudaPage() {
         <Header />
         <div className="flex-1 p-8 overflow-y-auto scrollbar-hide">
           <MotionWrapper className="space-y-8 pb-12">
-            
+
             {/* Título de la página */}
             <div>
               <h1 className="text-[1.3rem] font-extrabold text-foreground tracking-tight flex items-center gap-3">
-                <Activity className="w-6 h-6 text-accent" /> Centro de Ayuda
+                <Activity className="w-6 h-6 text-accent" /> Ayuda
               </h1>
               <p className="text-muted mt-2 text-base">
                 Verifica la coherencia de tus datos, consulta la guía de inicio o encuentra respuestas a dudas comunes.
@@ -568,7 +568,7 @@ export default function AyudaPage() {
                     onClick={() => setAiModalOpen(true)}
                     className="text-base font-semibold flex items-center justify-center gap-3 bg-accent/10 hover:bg-accent/20 text-accent border border-accent/30 px-8 py-6 h-auto rounded-xl transition-all relative overflow-hidden w-full max-w-lg"
                   >
-                    <Sparkles className="w-6 h-6 text-accent shrink-0" /> 
+                    <Sparkles className="w-6 h-6 text-accent shrink-0" />
                     <span className="flex-1 text-left">Crear Nueva Programación con IA (PDF)</span>
                     <span className="flex items-center gap-1 bg-warning/20 text-warning px-2 py-1 rounded text-[10px] font-bold uppercase border border-warning/30 shrink-0"><AlertTriangle className="w-3 h-3" /> Beta</span>
                   </Button>
@@ -586,7 +586,7 @@ export default function AyudaPage() {
                     <p className="text-muted text-sm">
                       CuadernoFP utiliza un modelo "Bring Your Own Key" (Trae tu propia clave) para garantizar que tus datos no pasan por servidores intermedios y mantener la herramienta 100% gratuita.
                     </p>
-                    
+
                     <ol className="list-decimal pl-5 space-y-3 text-sm text-foreground/90 font-medium">
                       <li>
                         Entra en <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">Google AI Studio</a>.
@@ -685,8 +685,8 @@ export default function AyudaPage() {
                         {step.links && step.links.length > 0 && (
                           <div className="flex flex-wrap gap-3">
                             {step.links.map((link, i) => (
-                              <Link 
-                                key={i} 
+                              <Link
+                                key={i}
                                 href={link.href}
                                 className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border border-accent/30 bg-accent/10 text-accent hover:bg-accent/20 transition-all"
                               >

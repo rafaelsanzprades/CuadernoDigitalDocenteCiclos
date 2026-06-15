@@ -1,4 +1,4 @@
-﻿import { Gift, Hand, Rocket } from "lucide-react";
+import { Gift, Hand, Rocket } from "lucide-react";
 import React, { useState } from "react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";

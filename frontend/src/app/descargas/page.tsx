@@ -21,7 +21,7 @@ type DocumentItem = {
 };
 
 export default function DocumentosPage() {
-  const [activeTab, setActiveTab] = useState<"inicio" | "seguimiento" | "grupales" | "individuales">("inicio");
+  const [activeTab, setActiveTab] = useState<"inicio" | "programacion" | "curso">("inicio");
 
   // State for Explorador
   const [currentPath, setCurrentPath] = useState<string>("");
@@ -68,8 +68,6 @@ export default function DocumentosPage() {
       .finally(() => setLoadingDocs(false));
   };
 
-
-
   useEffect(() => {
     const fetchData = async () => {
       setLoadingData(true);
@@ -86,16 +84,12 @@ export default function DocumentosPage() {
         }
       } catch (err) {
         console.error("Error fetching data:", err);
+      } finally {
+        setLoadingData(false);
       }
-      setLoadingData(false);
     };
-
-    if (activeModuleId || activeCursoId) {
-      fetchData();
-    } else {
-      setLoadingData(false);
-    }
-  }, [activeModuleId, moduleData, activeCursoId, cursoData, setModuleData, setCursoData]);
+    fetchData();
+  }, [activeModuleId, activeCursoId, moduleData, cursoData, setModuleData, setCursoData]);
 
   useEffect(() => {
     if (cursoData?.info_fechas) {
@@ -165,7 +159,7 @@ export default function DocumentosPage() {
       // Find matching curriculum data for the active module
       let activeCurriculoData: any = {};
       if (type === 'programacion') {
-        const modId = moduleData?.info_modulo?.codigo_modulo; // this is the module code
+        const modId = moduleData?.info_modulo?.codigo_modulo;
         let foundCurriculo = null;
         let foundModulo = null;
         
@@ -197,57 +191,39 @@ export default function DocumentosPage() {
 
       const response = await fetch(url, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          module_data: moduleData || {},
           curso_data: dynamicCursoData,
-          fecha_corte: fechaCorte || null
+          module_data: moduleData,
+          fecha_corte: fechaCorte
         })
       });
-      if (!response.ok) throw new Error("Error generating PDF");
+
+      if (!response.ok) throw new Error("Error generando PDF");
 
       const blob = await response.blob();
-      const downloadUrl = window.URL.createObjectURL(blob);
-      const modName = moduleData?.info_modulo?.modulo || "Modulo";
-
-      let filename = `${type}_${modName}.pdf`;
-      if (al_id) filename = `Boletin_${al_id}_${modName}.pdf`;
-
-      const contentType = response.headers.get("content-type");
-      if (type === 'programacion' && contentType) {
-        if (contentType.includes("zip")) {
-          filename = `PD_${modName}.zip`;
-        } else if (contentType.includes("wordprocessingml")) {
-          filename = `PD_${modName}.docx`;
-        }
-        const a = document.createElement("a");
-        a.href = downloadUrl;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        return;
-      }
-
-      setPreviewUrl(downloadUrl);
-      setPreviewFilename(filename);
+      const urlBlob = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = urlBlob;
+      a.download = `${type}_${Date.now()}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(urlBlob);
     } catch (err) {
       console.error(err);
-      toast.error("Error al generar el PDF. Asegúrate de que el backend está configurado correctamente.");
+      toast.error("Error al generar el PDF. Verifica la conexión con el backend.");
     } finally {
       setDownloadingStr(null);
     }
   };
 
   const handleExportCSV = (triKey: string, fechaCorte: string) => {
-    if (!cursoData || !cursoData.df_eval) return;
-    const df_eval = cursoData.df_eval;
-    const activeAl = activeAlumnado;
-    
-    let csvContent = `data:text/csv;charset=utf-8,\uFEFF`;
-    csvContent += `Boletin de Calificaciones - ${triKey}\n`;
+    const df_al = cursoData?.df_al || [];
+    const df_eval = cursoData?.df_eval || [];
+    const activeAl = df_al.filter((al: Alumnado) => al.Estado !== "Baja");
+
+    let csvContent = `Boletin de Calificaciones - ${triKey}\n`;
     csvContent += `Modulo: ${moduleData?.info_modulo?.modulo || ""}\n`;
     csvContent += `Fecha de corte (Acta): ${fechaCorte}\n\n`;
     
@@ -325,23 +301,18 @@ export default function DocumentosPage() {
             <Tabs value={activeTab} onValueChange={(val: any) => setActiveTab(val)}>
               <TabsList className="mb-6 max-w-full flex-wrap h-auto">
                 <TabsTrigger value="inicio">
-                  <div className="flex items-center gap-2"><Play className="w-4 h-4" /> PDF Inicio</div>
+                  <div className="flex items-center gap-2"><Play className="w-4 h-4" /> Inicio (Agenda)</div>
                 </TabsTrigger>
-                <TabsTrigger value="seguimiento">
-                  <div className="flex items-center gap-2"><MapPin className="w-4 h-4" /> PDF Seguimiento</div>
+                <TabsTrigger value="programacion">
+                  <div className="flex items-center gap-2"><FileText className="w-4 h-4" /> Programación</div>
                 </TabsTrigger>
-                <TabsTrigger value="grupales">
-                  <div className="flex items-center gap-2"><BarChart className="w-4 h-4" /> PDF Boletines grupales</div>
-                </TabsTrigger>
-                <TabsTrigger value="individuales">
-                  <div className="flex items-center gap-2"><User className="w-4 h-4" /> PDF Boletines individuales</div>
+                <TabsTrigger value="curso">
+                  <div className="flex items-center gap-2"><Calendar className="w-4 h-4" /> Curso</div>
                 </TabsTrigger>
               </TabsList>
             </Tabs>
 
-
-
-            {['inicio', 'seguimiento', 'grupales', 'individuales'].includes(activeTab) && (
+            {['inicio', 'programacion', 'curso'].includes(activeTab) && (
               <div className="space-y-8 animate-in fade-in duration-500">
                 {(!activeCursoId || !activeModuleId) ? (
                   <Card className="p-12 text-center flex flex-col items-center justify-center gap-4">
@@ -364,18 +335,9 @@ export default function DocumentosPage() {
                     {activeTab === 'inicio' && (
                       <div className="space-y-8 animate-in fade-in duration-500">
                         <Card className="p-6 border-t-4 border-t-purple-500">
-                          <h2 className="text-2xl font-bold mb-1"><span className="inline-flex"><Calendar className="w-[1.2em] h-[1.2em] mr-1" /></span> Gestión temporal global</h2>
-                          <p className="text-sm text-muted mb-6">Planificación del módulo</p>
+                          <h2 className="text-2xl font-bold mb-1"><span className="inline-flex"><Play className="w-4 h-4" /></span> Inicio (Agenda)</h2>
+                          <p className="text-sm text-muted mb-6">Planificación y programación del módulo</p>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between">
-                              <div>
-                                <h3 className="text-lg font-bold mb-2"><span className="inline-flex"><CalendarDays className="w-[1.2em] h-[1.2em] mr-1" /></span> Calendario académico</h3>
-                                <p className="text-sm text-muted mb-6">Vista global del curso con fechas, sesiones y eventos.</p>
-                              </div>
-                              <Button onClick={() => handleDownloadPdf('calendario')} disabled={downloadingStr === 'calendario'} className="w-full">
-                                {downloadingStr === 'calendario' ? '⏳ Generando PDF...' : 'PDF Calendario'}
-                              </Button>
-                            </div>
                             <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between">
                               <div>
                                 <h3 className="text-lg font-bold mb-2"><span className="inline-flex"><BarChart className="w-[1.2em] h-[1.2em] mr-1" /></span> Planificación mensual</h3>
@@ -383,21 +345,6 @@ export default function DocumentosPage() {
                               </div>
                               <Button onClick={() => handleDownloadPdf('planificacion')} disabled={downloadingStr === 'planificacion'} className="w-full">
                                 {downloadingStr === 'planificacion' ? '⏳ Generando PDF...' : 'PDF Planificación'}
-                              </Button>
-                            </div>
-                          </div>
-                        </Card>
-                        <Card className="p-6 border-t-4 border-t-accent">
-                          <h2 className="text-2xl font-bold mb-1"><span className="inline-flex"><Settings className="w-[1.2em] h-[1.2em] mr-1" /></span> Gestión del aprendizaje</h2>
-                          <p className="text-sm text-muted mb-6">Matrices y programación del módulo</p>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between">
-                              <div>
-                                <h3 className="text-lg font-bold mb-2"><span className="inline-flex"><Calculator className="w-[1.2em] h-[1.2em] mr-1" /></span> Matrices RA → UD</h3>
-                                <p className="text-sm text-muted mb-6">Relación y ponderación entre RA y UD del módulo.</p>
-                              </div>
-                              <Button onClick={() => handleDownloadPdf('matrices')} disabled={downloadingStr === 'matrices'} className="w-full">
-                                {downloadingStr === 'matrices' ? '⏳ Generando PDF...' : 'PDF Matrices'}
                               </Button>
                             </div>
                             <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between border-l-4 border-l-info">
@@ -414,8 +361,62 @@ export default function DocumentosPage() {
                       </div>
                     )}
 
-                    {activeTab === 'seguimiento' && (
+                    {activeTab === 'programacion' && (
                       <div className="space-y-8 animate-in fade-in duration-500">
+                        <Card className="p-6 border-t-4 border-t-purple-500">
+                          <h2 className="text-2xl font-bold mb-1"><span className="inline-flex"><FileText className="w-4 h-4" /></span> Programación</h2>
+                          <p className="text-sm text-muted mb-6">Documentos de programación del módulo</p>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between border-l-4 border-l-info">
+                              <div>
+                                <h3 className="text-lg font-bold mb-2"><span className="inline-flex"><FileText className="w-[1.2em] h-[1.2em] mr-1" /></span> Programación Didáctica</h3>
+                                <p className="text-sm text-muted mb-6">Documento oficial completo con secuenciación, metodologías y criterios.</p>
+                              </div>
+                              <Button onClick={() => handleDownloadPdf('programacion')} disabled={downloadingStr === 'programacion'} className="w-full bg-info hover:bg-info/90 text-white">
+                                {downloadingStr === 'programacion' ? '⏳ Generando...' : 'Descargar DOCX / PDF'}
+                              </Button>
+                            </div>
+                            <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between">
+                              <div>
+                                <h3 className="text-lg font-bold mb-2"><span className="inline-flex"><Calculator className="w-[1.2em] h-[1.2em] mr-1" /></span> Matrices RA → UD</h3>
+                                <p className="text-sm text-muted mb-6">Relación y ponderación entre RA y UD del módulo.</p>
+                              </div>
+                              <Button onClick={() => handleDownloadPdf('matrices')} disabled={downloadingStr === 'matrices'} className="w-full">
+                                {downloadingStr === 'matrices' ? '⏳ Generando PDF...' : 'PDF Matrices'}
+                              </Button>
+                            </div>
+                          </div>
+                        </Card>
+                      </div>
+                    )}
+
+                    {activeTab === 'curso' && (
+                      <div className="space-y-8 animate-in fade-in duration-500">
+                        <Card className="p-6 border-t-4 border-t-emerald-500">
+                          <h2 className="text-2xl font-bold mb-1"><span className="inline-flex"><Calendar className="w-4 h-4" /></span> Curso</h2>
+                          <p className="text-sm text-muted mb-6">Gestión del curso académico</p>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between">
+                              <div>
+                                <h3 className="text-lg font-bold mb-2"><span className="inline-flex"><CalendarDays className="w-[1.2em] h-[1.2em] mr-1" /></span> Calendario académico</h3>
+                                <p className="text-sm text-muted mb-6">Vista global del curso con fechas, sesiones y eventos.</p>
+                              </div>
+                              <Button onClick={() => handleDownloadPdf('calendario')} disabled={downloadingStr === 'calendario'} className="w-full">
+                                {downloadingStr === 'calendario' ? '⏳ Generando PDF...' : 'PDF Calendario'}
+                              </Button>
+                            </div>
+                            <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between">
+                              <div>
+                                <h3 className="text-lg font-bold mb-2"><span className="inline-flex"><Users className="w-[1.2em] h-[1.2em] mr-1" /></span> Alumnado. Ubicación en el aula</h3>
+                                <p className="text-sm text-muted mb-6">Distribución y ubicación del alumnado en el aula.</p>
+                              </div>
+                              <Button onClick={() => handleDownloadPdf('alumnado_ubicacion')} disabled={downloadingStr === 'alumnado_ubicacion'} className="w-full">
+                                {downloadingStr === 'alumnado_ubicacion' ? '⏳ Generando PDF...' : 'PDF Alumnado Ubicación'}
+                              </Button>
+                            </div>
+                          </div>
+                        </Card>
+
                         <Card className="p-6 border-t-4 border-t-emerald-500">
                           <h2 className="text-2xl font-bold mb-1"><span className="inline-flex"><FileEdit className="w-[1.2em] h-[1.2em] mr-1" /></span> Clases mensual - por UD</h2>
                           <p className="text-sm text-muted mb-6">Registro detallado de clases impartidas y secuenciación por unidad didáctica.</p>
@@ -440,11 +441,7 @@ export default function DocumentosPage() {
                             </div>
                           </div>
                         </Card>
-                      </div>
-                    )}
 
-                    {activeTab === 'grupales' && (
-                      <div className="space-y-8 animate-in fade-in duration-500">
                         <Card className="p-6 border-t-4 border-t-blue-500">
                           <h2 className="text-2xl font-bold mb-6"><span className="inline-flex"><BarChart className="w-[1.2em] h-[1.2em] mr-1" /></span> Boletines grupales trimestrales</h2>
                           
@@ -493,7 +490,7 @@ export default function DocumentosPage() {
                                 </Button>
                               </div>
                             </div>
-
+                            
                             <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between text-center gap-4">
                               <div>
                                 <h3 className="text-lg font-bold mb-1"><span className="inline-flex"><Users className="w-[1.2em] h-[1.2em] mr-1" /></span> 3er trimestre</h3>
@@ -516,32 +513,28 @@ export default function DocumentosPage() {
                               </div>
                             </div>
                           </div>
-                        </Card>
 
-                        <Card className="p-6 border-t-4 border-t-blue-500">
-                          <h2 className="text-2xl font-bold mb-6"><span className="inline-flex"><GraduationCap className="w-[1.2em] h-[1.2em] mr-1" /></span> Boletines grupales finales</h2>
-                          
-                          {/* Segunda fila: Finales */}
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between text-center border-l-4 border-l-yellow-400 gap-4">
+                          {/* Segunda fila: Final y Extraordinaria */}
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                            <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between text-center gap-4">
                               <div>
-                                <h3 className="text-lg font-bold mb-1"><span className="inline-flex"><GraduationCap className="w-[1.2em] h-[1.2em] mr-1" /></span> Eval. Final Ordinaria</h3>
+                                <h3 className="text-lg font-bold mb-1"><span className="inline-flex"><GraduationCap className="w-[1.2em] h-[1.2em] mr-1" /></span> Evaluación Final</h3>
                                 <div className="text-xs text-muted mb-2">
-                                  Inicio: <span className="font-mono text-foreground">{formatD(cursoData?.info_fechas?.ini_curso)}</span><br/>
-                                  Fin: <span className="font-mono text-foreground">{formatD(cursoData?.info_fechas?.fin_curso)}</span>
+                                  Inicio: <span className="font-mono text-foreground">{formatD(cursoData?.info_fechas?.ini_final)}</span><br/>
+                                  Fin: <span className="font-mono text-foreground">{formatD(cursoData?.info_fechas?.fin_final)}</span>
                                 </div>
                               </div>
                               <div className="flex flex-col gap-2 mt-auto">
-                                <Button variant="secondary" onClick={() => handleDownloadPdf('grupal_final')} disabled={downloadingStr === 'grupal_final'} className="w-full text-xs">
-                                  {downloadingStr === 'grupal_final' ? '⏳' : 'PDF Boletín Final'}
+                                <Button variant="secondary" onClick={() => handleDownloadPdf('grupal_final', undefined, fechaFinal)} disabled={downloadingStr === 'grupal_final'} className="w-full text-xs">
+                                  {downloadingStr === 'grupal_final' ? '⏳' : 'PDF Boletín'}
                                 </Button>
                                 <Button variant="ghost" onClick={() => handleExportCSV('Final', fechaFinal)} className="w-full border border-success/30 text-success hover:bg-success/10 text-xs flex items-center justify-center gap-2">
                                   <FileSpreadsheet className="w-4 h-4" /> Excel / CSV
                                 </Button>
                               </div>
                             </div>
-
-                            <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between text-center border-l-4 border-l-purple-500 gap-4 opacity-50">
+                            
+                            <div className="bg-foreground/10 border border-[var(--glass-border)] rounded-xl p-6 flex flex-col justify-between text-center gap-4">
                               <div>
                                 <h3 className="text-lg font-bold mb-1"><span className="inline-flex"><GraduationCap className="w-[1.2em] h-[1.2em] mr-1" /></span> Eval. Final Extraordinaria</h3>
                                 <div className="text-xs text-muted mb-2">
@@ -561,11 +554,7 @@ export default function DocumentosPage() {
                             </div>
                           </div>
                         </Card>
-                      </div>
-                    )}
 
-                    {activeTab === 'individuales' && (
-                      <div className="space-y-8 animate-in fade-in duration-500">
                         <Card className="p-6 border-t-4 border-t-blue-500">
                           <h2 className="text-2xl font-bold mb-6"><span className="inline-flex"><User className="w-[1.2em] h-[1.2em] mr-1" /></span> Boletines individuales</h2>
                           {activeAlumnado.length > 0 ? (
@@ -589,7 +578,7 @@ export default function DocumentosPage() {
                               </Button>
                             </div>
                           ) : (
-                            <p className="text-muted italic">No hay estudiantes activos para generar boletines individuales.</p>
+                            <p className="text-muted italic">No hay estudiantes activos en el curso.</p>
                           )}
                         </Card>
                       </div>
@@ -599,46 +588,8 @@ export default function DocumentosPage() {
               </div>
             )}
 
-
           </MotionWrapper>
         </div>
-
-        {/* Modal de Previsualización (Compartido para ambos) */}
-        {previewUrl && (
-          <div className="fixed inset-0 z-50 flex flex-col bg-black/90 backdrop-blur-md">
-            <div className="flex items-center justify-between p-4 bg-[var(--glass-bg)] border-b border-[var(--glass-border)]">
-              <h2 className="text-2xl font-bold flex items-center gap-3 text-foreground">
-                <FileText className="w-6 h-6 text-info" /> {previewFilename}
-              </h2>
-              <div className="flex gap-4">
-                <button
-                  onClick={() => {
-                    const a = document.createElement("a");
-                    a.href = previewUrl;
-                    a.download = previewFilename || "documento.pdf";
-                    a.click();
-                  }}
-                  className="bg-info hover:bg-info text-foreground px-4 py-2 rounded-lg font-bold flex items-center gap-2 transition-colors"
-                >
-                  <DownloadCloud className="w-5 h-5" /> Descargar
-                </button>
-                <button
-                  onClick={() => {
-                    setPreviewUrl(null);
-                    setPreviewFilename(null);
-                  }}
-                  className="bg-danger hover:bg-danger text-foreground px-4 py-2 rounded-lg font-bold flex items-center gap-2 transition-colors"
-                >
-                  <X className="w-5 h-5" /> Cerrar
-                </button>
-              </div>
-            </div>
-            <div className="flex-1 w-full h-full p-4 bg-[#525659]">
-              <iframe src={`${previewUrl}#toolbar=0`} className="w-full h-full rounded-lg shadow-2xl" title="PDF Preview" />
-            </div>
-          </div>
-        )}
-
       </main>
     </div>
   );

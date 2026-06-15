@@ -1,5 +1,14 @@
 # 📋 Changelog — Cuaderno FP
 
+## [1.0.1] - 2026-06-15
+
+### ✨ Nuevas Funcionalidades
+
+#### Modo DEMO vs Datos Reales
+- **Datos DEMO**: Inmutables, sin opción de "Guardar" ni "Sincronizar"
+- **Datos Reales**: Opción "Abrir" (.cddp/.cddc), "Guardar" local y "Sincronizar" con Google Drive
+- **Tab "Nube" oculto en modo DEMO**: Solo visible en modo datos reales
+
 ## [1.0.0] - 2026-06-14
 
 ### ✨ Nuevas Funcionalidades

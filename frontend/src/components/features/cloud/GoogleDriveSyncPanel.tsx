@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useAppStore } from "@/store/useAppStore";
 import { Card } from "@/components/ui/Card";
