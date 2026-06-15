@@ -66,7 +66,7 @@ export function WelcomeWizard({ onComplete, fetchModules, setActiveModuleId, set
       await fetchModules();
       setActiveModuleId(pdId);
       setActiveCursoId(cursoId);
-      toast.success("Â¡Entorno creado con éxito!", { id: toastId });
+      toast.success("¡Entorno creado con éxito!", { id: toastId });
       onComplete();
 
     } catch (error: any) {
@@ -82,7 +82,7 @@ export function WelcomeWizard({ onComplete, fetchModules, setActiveModuleId, set
           
           <div className="text-center mb-10">
             <h2 className="text-4xl font-extrabold text-foreground mb-4 flex items-center justify-center gap-3">
-              <span className="text-5xl"><span className="inline-flex"><Hand className="w-[1.2em] h-[1.2em] mr-1" /></span></span> Â¡Bienvenido a Cuaderno FP!
+              <span className="text-5xl"><span className="inline-flex"><Hand className="w-[1.2em] h-[1.2em] mr-1" /></span></span> ¡Bienvenido a Cuaderno FP!
             </h2>
             <p className="text-lg text-muted">
               Parece que es tu primera vez aquÁ­. Vamos a preparar tu entorno de trabajo para que puedas empezar a volar.
@@ -105,7 +105,7 @@ export function WelcomeWizard({ onComplete, fetchModules, setActiveModuleId, set
                 <span className="text-6xl group-hover:scale-110 transition-transform"><span className="inline-flex"><Gift className="w-[1.2em] h-[1.2em] mr-1" /></span></span>
                 <h3 className="text-[1.1rem] font-bold text-foreground">Cargar Demo</h3>
                 <p className="text-sm text-muted">
-                  Inyecta un entorno ficticio completo con Resultados de Aprendizaje, Unidades y Alumnado para ver cÁ³mo funciona todo al instante.
+                  Inyecta un entorno ficticio completo con Resultados de Aprendizaje, Unidades y Alumnado para ver cómo funciona todo al instante.
                 </p>
                 <Button className="w-full mt-auto bg-info hover:bg-info">
                   Explorar Demo
@@ -119,10 +119,10 @@ export function WelcomeWizard({ onComplete, fetchModules, setActiveModuleId, set
                 <span className="text-6xl group-hover:scale-110 transition-transform"><span className="inline-flex"><Rocket className="w-[1.2em] h-[1.2em] mr-1" /></span></span>
                 <h3 className="text-[1.1rem] font-bold text-foreground">Empezar de Cero</h3>
                 <p className="text-sm text-muted">
-                  Crea tu propio MÁ³dulo vacÁ­o y empieza a introducir tus rúbricas y alumnado desde cero.
+                  Crea tu propio Módulo vacÁ­o y empieza a introducir tus rúbricas y alumnado desde cero.
                 </p>
                 <Button className="w-full mt-auto bg-accent hover:bg-accent/80 text-background">
-                  Crear mi MÁ³dulo
+                  Crear mi Módulo
                 </Button>
               </div>
             </div>
@@ -131,7 +131,7 @@ export function WelcomeWizard({ onComplete, fetchModules, setActiveModuleId, set
           {step === "CREATE_FORM" && (
             <div className="space-y-6 animate-in slide-in-from-right-8 duration-300">
               <div className="space-y-2">
-                <label className="text-sm font-semibold text-foreground">Nombre de tu MÁ³dulo (La Programación)</label>
+                <label className="text-sm font-semibold text-foreground">Nombre de tu Módulo (La Programación)</label>
                 <div className="relative">
                   <Input 
                     value={newPdName}

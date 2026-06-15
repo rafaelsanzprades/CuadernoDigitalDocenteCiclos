@@ -171,7 +171,7 @@ export default function EntornoTrabajoPage() {
                 <GoogleDriveSyncPanel />
               )}
 
-              {/* Aviso de Seguridad y RGPD (SÁ³lo en Datos Locales) */}
+              {/* Aviso de Seguridad y RGPD (Sólo en Datos Locales) */}
               {activeTab === "datos" && (
                 <div className="flex items-start gap-4 pt-12 max-w-2xl mx-auto">
                   <span className="text-info mt-1 shrink-0"><ShieldAlert className="w-6 h-6" /></span>
